@@ -1,1420 +1,677 @@
-<aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
-    <div class="app-brand demo">
-        <a href="index.html" class="app-brand-link">
-            <span class="app-brand-logo demo">
-                <svg width="25" viewBox="0 0 25 42" version="1.1" xmlns="http://www.w3.org/2000/svg"
-                    xmlns:xlink="http://www.w3.org/1999/xlink">
-                    <defs>
-                        <path
-                            d="M13.7918663,0.358365126 L3.39788168,7.44174259 C0.566865006,9.69408886 -0.379795268,12.4788597 0.557900856,15.7960551 C0.68998853,16.2305145 1.09562888,17.7872135 3.12357076,19.2293357 C3.8146334,19.7207684 5.32369333,20.3834223 7.65075054,21.2172976 L7.59773219,21.2525164 L2.63468769,24.5493413 C0.445452254,26.3002124 0.0884951797,28.5083815 1.56381646,31.1738486 C2.83770406,32.8170431 5.20850219,33.2640127 7.09180128,32.5391577 C8.347334,32.0559211 11.4559176,30.0011079 16.4175519,26.3747182 C18.0338572,24.4997857 18.6973423,22.4544883 18.4080071,20.2388261 C17.963753,17.5346866 16.1776345,15.5799961 13.0496516,14.3747546 L10.9194936,13.4715819 L18.6192054,7.984237 L13.7918663,0.358365126 Z"
-                            id="path-1"></path>
-                        <path
-                            d="M5.47320593,6.00457225 C4.05321814,8.216144 4.36334763,10.0722806 6.40359441,11.5729822 C8.61520715,12.571656 10.0999176,13.2171421 10.8577257,13.5094407 L15.5088241,14.433041 L18.6192054,7.984237 C15.5364148,3.11535317 13.9273018,0.573395879 13.7918663,0.358365126 C13.5790555,0.511491653 10.8061687,2.3935607 5.47320593,6.00457225 Z"
-                            id="path-3"></path>
-                        <path
-                            d="M7.50063644,21.2294429 L12.3234468,23.3159332 C14.1688022,24.7579751 14.397098,26.4880487 13.008334,28.506154 C11.6195701,30.5242593 10.3099883,31.790241 9.07958868,32.3040991 C5.78142938,33.4346997 4.13234973,34 4.13234973,34 C4.13234973,34 2.75489982,33.0538207 2.37032616e-14,31.1614621 C-0.55822714,27.8186216 -0.55822714,26.0572515 -4.05231404e-15,25.8773518 C0.83734071,25.6075023 2.77988457,22.8248993 3.3049379,22.52991 C3.65497346,22.3332504 5.05353963,21.8997614 7.50063644,21.2294429 Z"
-                            id="path-4"></path>
-                        <path
-                            d="M20.6,7.13333333 L25.6,13.8 C26.2627417,14.6836556 26.0836556,15.9372583 25.2,16.6 C24.8538077,16.8596443 24.4327404,17 24,17 L14,17 C12.8954305,17 12,16.1045695 12,15 C12,14.5672596 12.1403557,14.1461923 12.4,13.8 L17.4,7.13333333 C18.0627417,6.24967773 19.3163444,6.07059163 20.2,6.73333333 C20.3516113,6.84704183 20.4862915,6.981722 20.6,7.13333333 Z"
-                            id="path-5"></path>
-                    </defs>
-                    <g id="g-app-brand" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                        <g id="Brand-Logo" transform="translate(-27.000000, -15.000000)">
-                            <g id="Icon" transform="translate(27.000000, 15.000000)">
-                                <g id="Mask" transform="translate(0.000000, 8.000000)">
-                                    <mask id="mask-2" fill="white">
-                                        <use xlink:href="#path-1"></use>
-                                    </mask>
-                                    <use fill="#696cff" xlink:href="#path-1"></use>
-                                    <g id="Path-3" mask="url(#mask-2)">
-                                        <use fill="#696cff" xlink:href="#path-3"></use>
-                                        <use fill-opacity="0.2" fill="#FFFFFF" xlink:href="#path-3"></use>
-                                    </g>
-                                    <g id="Path-4" mask="url(#mask-2)">
-                                        <use fill="#696cff" xlink:href="#path-4"></use>
-                                        <use fill-opacity="0.2" fill="#FFFFFF" xlink:href="#path-4"></use>
-                                    </g>
-                                </g>
-                                <g id="Triangle"
-                                    transform="translate(19.000000, 11.000000) rotate(-300.000000) translate(-19.000000, -11.000000) ">
-                                    <use fill="#696cff" xlink:href="#path-5"></use>
-                                    <use fill-opacity="0.2" fill="#FFFFFF" xlink:href="#path-5"></use>
-                                </g>
-                            </g>
-                        </g>
-                    </g>
-                </svg>
-            </span>
-            <span class="app-brand-text demo menu-text fw-bolder ms-2">Sneat</span>
-        </a>
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="index3.html" class="brand-link">
+        <img src="{{ asset('dashboard') }}/assets/dist/img/AdminLTELogo.png" alt="AdminLTE Logo"
+            class="brand-image img-circle elevation-3" style="opacity: .8">
+        <span class="brand-text font-weight-light">AdminLTE 3</span>
+    </a>
 
-        <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto">
-            <i class="bx bx-chevron-left bx-sm align-middle"></i>
-        </a>
-    </div>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <!-- Sidebar user panel (optional) -->
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+            <div class="image">
+                <img src="{{ asset('dashboard') }}/assets/dist/img/user2-160x160.jpg"
+                    class="img-circle elevation-2" alt="User Image">
+            </div>
+            <div class="info">
+                <a href="#" class="d-block">Alexander Pierce</a>
+            </div>
+        </div>
 
-    <div class="menu-inner-shadow"></div>
+        <!-- SidebarSearch Form -->
+        <div class="form-inline">
+            <div class="input-group" data-widget="sidebar-search">
+                <input class="form-control form-control-sidebar" type="search" placeholder="Search"
+                    aria-label="Search">
+                <div class="input-group-append">
+                    <button class="btn btn-sidebar">
+                        <i class="fas fa-search fa-fw"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
 
-    <ul class="menu-inner py-1">
-        <!-- Dashboards -->
-
-        <li class="menu-item @yield('active-dashboard')">
-            <a href="{{ route('dashboard.index') }}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                <div data-i18n="لوحة التحكم">لوحة التحكم</div>
-            </a>
-        </li>
-
-
-        <li class="menu-header small text-uppercase"><span class="menu-header-text">الأعدادات</span></li>
-        <!-- Layouts -->
-        <li
-            class="menu-item {{ request()->is('dashboard/financeCalendars*') ||
-            request()->is('dashboard/admin_panel_settings*') ||
-            request()->is('dashboard/branches*') ||
-            request()->is('dashboard/shiftTypes*') ||
-            request()->is('dashboard/countries*') ||
-            request()->is('dashboard/currencies*') ||
-            request()->is('dashboard/departments*') ||
-            request()->is('dashboard/job_categories*') ||
-            request()->is('dashboard/qualifications*') ||
-            request()->is('dashboard/bloodTypes*') ||
-            request()->is('dashboard/nationalities*') ||
-            request()->is('dashboard/governorates*') ||
-            request()->is('dashboard/cities*') ||
-            request()->is('dashboard/job_grades*') ||
-            request()->is('dashboard/languages*')
-                ? 'open active'
-                : '' }}">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon fa-solid fa-gear"></i>
-                <div data-i18n="الأعدادت">الأعدادت</div>
-            </a>
-
-            <ul class="menu-sub">
-                <li class="menu-item @yield('active-admin_panel_settings')">
-                    <a href="{{ route('dashboard.admin_panel_settings.index') }}" class="menu-link">
-                        <div data-i18n="إعدادت الشركة">إعدادت الشركة</div>
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                data-accordion="false">
+                <!-- Add icons to the links using the .nav-icon class
+       with font-awesome or any other icon font library -->
+                <li class="nav-item menu-open">
+                    <a href="#" class="nav-link active">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>
+                            Dashboard
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
                     </a>
-                </li>
-
-                <li class="menu-item @yield('active-financeCalendars')">
-                    <a href="{{ route('dashboard.financeCalendars.index') }}" class="menu-link">
-                        <div data-i18n="السنوات المالية">السنوات المالية</div>
-                    </a>
-                </li>
-
-                <li class="menu-item @yield('active-branches')">
-                    <a href="{{ route('dashboard.branches.index') }}" class="menu-link">
-                        <div data-i18n="الفروع">الفروع</div>
-                    </a>
-                </li>
-                <li class="menu-item @yield('active-shiftTypes')">
-                    <a href="{{ route('dashboard.shiftTypes.index') }}" class="menu-link">
-                        <div data-i18n="مواعيد الشفتات">مواعيد الشفتات</div>
-                    </a>
-                </li>
-
-                <li class="menu-item @yield('active-currencies')">
-                    <a href="{{ route('dashboard.currencies.index') }}" class="menu-link">
-                        <div data-i18n="العملات">العملات</div>
-                    </a>
-                </li>
-                <li class="menu-item @yield('active-departments')">
-                    <a href="{{ route('dashboard.departments.index') }}" class="menu-link">
-                        <div data-i18n="الادارات">الادارات</div>
-                    </a>
-                </li>
-                <li class="menu-item @yield('active-job_categories')">
-                    <a href="{{ route('dashboard.job_categories.index') }}" class="menu-link">
-                        <div data-i18n="الوظائف">الوظائف</div>
-                    </a>
-                </li>
-                <li class="menu-item @yield('active-qualifications')">
-                    <a href="{{ route('dashboard.qualifications.index') }}" class="menu-link">
-                        <div data-i18n="المؤهلات">المؤهلات</div>
-                    </a>
-                </li>
-                <li class="menu-item @yield('active-bloodTypes')">
-                    <a href="{{ route('dashboard.bloodTypes.index') }}" class="menu-link">
-                        <div data-i18n="فصيلة الدم">فصيلة الدم</div>
-                    </a>
-                </li>
-                <li class="menu-item @yield('active-nationalities')">
-                    <a href="{{ route('dashboard.nationalities.index') }}" class="menu-link">
-                        <div data-i18n="الجنسيات">الجنسيات</div>
-                    </a>
-                </li>
-                <li class="menu-item @yield('active-languages')">
-                    <a href="{{ route('dashboard.languages.index') }}" class="menu-link">
-                        <div data-i18n="اللغات">اللغات</div>
-                    </a>
-                </li>
-                <li class="menu-item @yield('active-countries')">
-                    <a href="{{ route('dashboard.countries.index') }}" class="menu-link">
-                        <div data-i18n="الدول">الدول</div>
-                    </a>
-                </li>
-                <li class="menu-item @yield('active-governorates')">
-                    <a href="{{ route('dashboard.governorates.index') }}" class="menu-link">
-                        <div data-i18n="المحافظات">المحافظات</div>
-                    </a>
-                </li>
-                <li class="menu-item @yield('active-cities')">
-                    <a href="{{ route('dashboard.cities.index') }}" class="menu-link">
-                        <div data-i18n="المدن">المدن</div>
-                    </a>
-                </li>
-                <li class="menu-item @yield('active-job_grades')">
-                    <a href="{{ route('dashboard.job_grades.index') }}" class="menu-link">
-                        <div data-i18n="الدرجات الوظيفية">الدرجات الوظيفية</div>
-                    </a>
-                </li>
-
-
-            </ul>
-        </li>
-
-        <li class="menu-header small text-uppercase"><span class="menu-header-text">إدارة شئون الموظفين</span></li>
-        <li
-            class="menu-item {{ request()->is('dashboard/additional_types*') ||
-            request()->is('dashboard/allowances*') ||
-            request()->is('dashboard/discount_types*') ||
-            request()->is('dashboard/employees*')
-                ? 'open active'
-                : '' }}">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon fa-solid fa-users-line"></i>
-                <div data-i18n="شئون الموظفين">شئون الموظفين</div>
-            </a>
-
-            <ul class="menu-sub">
-                <li class="menu-item @yield('active-employees')">
-                    <a href="{{ route('dashboard.employees.index') }}" class="menu-link">
-                        <div data-i18n="بيانات الموظفين">بيانات الموظفين</div>
-                    </a>
-                </li>
-                <li class="menu-item @yield('active-additional_types')">
-                    <a href="{{ route('dashboard.additional_types.index') }}" class="menu-link">
-                        <div data-i18n="أنواع الأضافى">أنواع الأضافى</div>
-                    </a>
-                </li>
-                <li class="menu-item @yield('active-allowances')">
-                    <a href="{{ route('dashboard.allowances.index') }}" class="menu-link">
-                        <div data-i18n="أنواع البدلات">أنواع البدلات</div>
-                    </a>
-                </li>
-                <li class="menu-item @yield('active-discount_types')">
-                    <a href="{{ route('dashboard.discount_types.index') }}" class="menu-link">
-                        <div data-i18n="أنواع الخصومات">أنواع الخصومات</div>
-                    </a>
-                </li>
-            </ul>
-        </li>
-    </ul>
-</aside>
-
-
-
-
-
-
-
-
-<aside id="layout-menu" class="layout-menu menu-vertical menu">
-    <div class="app-brand demo">
-        <a href="index.html" class="app-brand-link">
-            <span class="app-brand-logo demo">
-                <span class="text-primary">
-                    <svg width="32" height="22" viewBox="0 0 32 22" fill="none"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" clip-rule="evenodd"
-                            d="M0.00172773 0V6.85398C0.00172773 6.85398 -0.133178 9.01207 1.98092 10.8388L13.6912 21.9964L19.7809 21.9181L18.8042 9.88248L16.4951 7.17289L9.23799 0H0.00172773Z"
-                            fill="currentColor" />
-                        <path opacity="0.06" fill-rule="evenodd" clip-rule="evenodd"
-                            d="M7.69824 16.4364L12.5199 3.23696L16.5541 7.25596L7.69824 16.4364Z" fill="#161616" />
-                        <path opacity="0.06" fill-rule="evenodd" clip-rule="evenodd"
-                            d="M8.07751 15.9175L13.9419 4.63989L16.5849 7.28475L8.07751 15.9175Z" fill="#161616" />
-                        <path fill-rule="evenodd" clip-rule="evenodd"
-                            d="M7.77295 16.3566L23.6563 0H32V6.88383C32 6.88383 31.8262 9.17836 30.6591 10.4057L19.7824 22H13.6938L7.77295 16.3566Z"
-                            fill="currentColor" />
-                    </svg>
-                </span>
-            </span>
-            <span class="app-brand-text demo menu-text fw-bold ms-3">Vuexy</span>
-        </a>
-
-        <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto">
-            <i class="icon-base ti menu-toggle-icon d-none d-xl-block"></i>
-            <i class="icon-base ti tabler-x d-block d-xl-none"></i>
-        </a>
-    </div>
-
-    <div class="menu-inner-shadow"></div>
-
-    <ul class="menu-inner py-1">
-        <!-- Dashboards -->
-        <li class="menu-item active open">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon icon-base ti tabler-smart-home"></i>
-                <div data-i18n="Dashboards">Dashboards</div>
-                <div class="badge text-bg-danger rounded-pill ms-auto">5</div>
-            </a>
-            <ul class="menu-sub">
-                <li class="menu-item active">
-                    <a href="index.html" class="menu-link">
-                        <div data-i18n="Analytics">Analytics</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="dashboards-crm.html" class="menu-link">
-                        <div data-i18n="CRM">CRM</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="app-ecommerce-dashboard.html" class="menu-link">
-                        <div data-i18n="eCommerce">eCommerce</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="app-logistics-dashboard.html" class="menu-link">
-                        <div data-i18n="Logistics">Logistics</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="app-academy-dashboard.html" class="menu-link">
-                        <div data-i18n="Academy">Academy</div>
-                    </a>
-                </li>
-            </ul>
-        </li>
-
-        <!-- Layouts -->
-        <li
-            class="menu-item {{ request()->is('dashboard/financeCalendars*') ||
-            request()->is('dashboard/admin_panel_settings*') ||
-            request()->is('dashboard/branches*') ||
-            request()->is('dashboard/shiftTypes*') ||
-            request()->is('dashboard/countries*') ||
-            request()->is('dashboard/currencies*') ||
-            request()->is('dashboard/departments*') ||
-            request()->is('dashboard/job_categories*') ||
-            request()->is('dashboard/qualifications*') ||
-            request()->is('dashboard/bloodTypes*') ||
-            request()->is('dashboard/nationalities*') ||
-            request()->is('dashboard/governorates*') ||
-            request()->is('dashboard/cities*') ||
-            request()->is('dashboard/job_grades*') ||
-            request()->is('dashboard/languages*')
-                ? 'open active'
-                : '' }}">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon icon-base ti tabler-layout-sidebar"></i>
-                <div data-i18n="Layouts">Layouts</div>
-            </a>
-
-            <ul class="menu-sub">
-                <li class="menu-item">
-                    <a href="layouts-collapsed-menu.html" class="menu-link">
-                        <div data-i18n="Collapsed menu">Collapsed menu</div>
-                    </a>
-                </li>
-
-                <li class="menu-item @yield('active-admin_panel_settings')">
-                    <a href="{{ route('dashboard.admin_panel_settings.index') }}" class="menu-link">
-                        <div data-i18n="إعدادت الشركة">إعدادت الشركة</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="layouts-content-navbar.html" class="menu-link">
-                        <div data-i18n="Content navbar">Content navbar</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="layouts-content-navbar-with-sidebar.html" class="menu-link">
-                        <div data-i18n="Content nav + Sidebar">Content nav + Sidebar</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="../horizontal-menu-template/" class="menu-link" target="_blank">
-                        <div data-i18n="Horizontal">Horizontal</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="layouts-without-menu.html" class="menu-link">
-                        <div data-i18n="Without menu">Without menu</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="layouts-without-navbar.html" class="menu-link">
-                        <div data-i18n="Without navbar">Without navbar</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="layouts-fluid.html" class="menu-link">
-                        <div data-i18n="Fluid">Fluid</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="layouts-container.html" class="menu-link">
-                        <div data-i18n="Container">Container</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="layouts-blank.html" class="menu-link">
-                        <div data-i18n="Blank">Blank</div>
-                    </a>
-                </li>
-            </ul>
-        </li>
-
-        <!-- Front Pages -->
-        <li
-            class="menu-item {{ request()->is('dashboard/additional_types*') ||
-            request()->is('dashboard/allowances*') ||
-            request()->is('dashboard/discount_types*') ||
-            request()->is('dashboard/employees*')
-                ? 'open active'
-                : '' }}">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon icon-base ti tabler-files"></i>
-                <div data-i18n="Front Pages">Front Pages</div>
-            </a>
-            <ul class="menu-sub">
-                <li class="menu-item">
-                    <a href="../front-pages/landing-page.html" class="menu-link" target="_blank">
-                        <div data-i18n="Landing">Landing</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="../front-pages/pricing-page.html" class="menu-link" target="_blank">
-                        <div data-i18n="Pricing">Pricing</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="../front-pages/payment-page.html" class="menu-link" target="_blank">
-                        <div data-i18n="Payment">Payment</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="../front-pages/checkout-page.html" class="menu-link" target="_blank">
-                        <div data-i18n="Checkout">Checkout</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="../front-pages/help-center-landing.html" class="menu-link" target="_blank">
-                        <div data-i18n="Help Center">Help Center</div>
-                    </a>
-                </li>
-            </ul>
-        </li>
-
-        <!-- Apps & Pages -->
-        <li class="menu-header small">
-            <span class="menu-header-text" data-i18n="Apps & Pages">Apps &amp; Pages</span>
-        </li>
-        <li class="menu-item">
-            <a href="app-email.html" class="menu-link">
-                <i class="menu-icon icon-base ti tabler-mail"></i>
-                <div data-i18n="Email">Email</div>
-            </a>
-        </li>
-        <li class="menu-item">
-            <a href="app-chat.html" class="menu-link">
-                <i class="menu-icon icon-base ti tabler-messages"></i>
-                <div data-i18n="Chat">Chat</div>
-            </a>
-        </li>
-        <li class="menu-item">
-            <a href="app-calendar.html" class="menu-link">
-                <i class="menu-icon icon-base ti tabler-calendar"></i>
-                <div data-i18n="Calendar">Calendar</div>
-            </a>
-        </li>
-        <li class="menu-item">
-            <a href="app-kanban.html" class="menu-link">
-                <i class="menu-icon icon-base ti tabler-layout-kanban"></i>
-                <div data-i18n="Kanban">Kanban</div>
-            </a>
-        </li>
-        <!-- e-commerce-app menu start -->
-        <li class="menu-item">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon icon-base ti tabler-shopping-cart"></i>
-                <div data-i18n="eCommerce">eCommerce</div>
-            </a>
-            <ul class="menu-sub">
-                <li class="menu-item">
-                    <a href="app-ecommerce-dashboard.html" class="menu-link">
-                        <div data-i18n="Dashboard">Dashboard</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="javascript:void(0);" class="menu-link menu-toggle">
-                        <div data-i18n="Products">Products</div>
-                    </a>
-                    <ul class="menu-sub">
-                        <li class="menu-item">
-                            <a href="app-ecommerce-product-list.html" class="menu-link">
-                                <div data-i18n="Product List">Product List</div>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="./index.html" class="nav-link active">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Dashboard v1</p>
                             </a>
                         </li>
-                        <li class="menu-item">
-                            <a href="app-ecommerce-product-add.html" class="menu-link">
-                                <div data-i18n="Add Product">Add Product</div>
+                        <li class="nav-item">
+                            <a href="./index2.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Dashboard v2</p>
                             </a>
                         </li>
-                        <li class="menu-item">
-                            <a href="app-ecommerce-category-list.html" class="menu-link">
-                                <div data-i18n="Category List">Category List</div>
+                        <li class="nav-item">
+                            <a href="./index3.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Dashboard v3</p>
                             </a>
                         </li>
                     </ul>
                 </li>
-                <li class="menu-item">
-                    <a href="javascript:void(0);" class="menu-link menu-toggle">
-                        <div data-i18n="Order">Order</div>
+                <li class="nav-item">
+                    <a href="pages/widgets.html" class="nav-link">
+                        <i class="nav-icon fas fa-th"></i>
+                        <p>
+                            Widgets
+                            <span class="right badge badge-danger">New</span>
+                        </p>
                     </a>
-                    <ul class="menu-sub">
-                        <li class="menu-item">
-                            <a href="app-ecommerce-order-list.html" class="menu-link">
-                                <div data-i18n="Order List">Order List</div>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-copy"></i>
+                        <p>
+                            Layout Options
+                            <i class="fas fa-angle-left right"></i>
+                            <span class="badge badge-info right">6</span>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="pages/layout/top-nav.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Top Navigation</p>
                             </a>
                         </li>
-                        <li class="menu-item">
-                            <a href="app-ecommerce-order-details.html" class="menu-link">
-                                <div data-i18n="Order Details">Order Details</div>
+                        <li class="nav-item">
+                            <a href="pages/layout/top-nav-sidebar.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Top Navigation + Sidebar</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/layout/boxed.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Boxed</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/layout/fixed-sidebar.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Fixed Sidebar</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/layout/fixed-sidebar-custom.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Fixed Sidebar <small>+ Custom Area</small></p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/layout/fixed-topnav.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Fixed Navbar</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/layout/fixed-footer.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Fixed Footer</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/layout/collapsed-sidebar.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Collapsed Sidebar</p>
                             </a>
                         </li>
                     </ul>
                 </li>
-                <li class="menu-item">
-                    <a href="javascript:void(0);" class="menu-link menu-toggle">
-                        <div data-i18n="Customer">Customer</div>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-chart-pie"></i>
+                        <p>
+                            Charts
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
                     </a>
-                    <ul class="menu-sub">
-                        <li class="menu-item">
-                            <a href="app-ecommerce-customer-all.html" class="menu-link">
-                                <div data-i18n="All Customers">All Customers</div>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="pages/charts/chartjs.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>ChartJS</p>
                             </a>
                         </li>
-                        <li class="menu-item">
-                            <a href="javascript:void(0);" class="menu-link menu-toggle">
-                                <div data-i18n="Customer Details">Customer Details</div>
+                        <li class="nav-item">
+                            <a href="pages/charts/flot.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Flot</p>
                             </a>
-                            <ul class="menu-sub">
-                                <li class="menu-item">
-                                    <a href="app-ecommerce-customer-details-overview.html" class="menu-link">
-                                        <div data-i18n="Overview">Overview</div>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/charts/inline.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Inline</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/charts/uplot.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>uPlot</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-tree"></i>
+                        <p>
+                            UI Elements
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="pages/UI/general.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>General</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/UI/icons.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Icons</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/UI/buttons.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Buttons</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/UI/sliders.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Sliders</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/UI/modals.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Modals & Alerts</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/UI/navbar.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Navbar & Tabs</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/UI/timeline.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Timeline</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/UI/ribbons.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Ribbons</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-edit"></i>
+                        <p>
+                            Forms
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="pages/forms/general.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>General Elements</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/forms/advanced.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Advanced Elements</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/forms/editors.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Editors</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/forms/validation.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Validation</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-table"></i>
+                        <p>
+                            Tables
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="pages/tables/simple.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Simple Tables</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/tables/data.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>DataTables</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/tables/jsgrid.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>jsGrid</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-header">EXAMPLES</li>
+                <li class="nav-item">
+                    <a href="pages/calendar.html" class="nav-link">
+                        <i class="nav-icon far fa-calendar-alt"></i>
+                        <p>
+                            Calendar
+                            <span class="badge badge-info right">2</span>
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="pages/gallery.html" class="nav-link">
+                        <i class="nav-icon far fa-image"></i>
+                        <p>
+                            Gallery
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="pages/kanban.html" class="nav-link">
+                        <i class="nav-icon fas fa-columns"></i>
+                        <p>
+                            Kanban Board
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon far fa-envelope"></i>
+                        <p>
+                            Mailbox
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="pages/mailbox/mailbox.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Inbox</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/mailbox/compose.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Compose</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/mailbox/read-mail.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Read</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-book"></i>
+                        <p>
+                            Pages
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="pages/examples/invoice.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Invoice</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/examples/profile.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Profile</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/examples/e-commerce.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>E-commerce</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/examples/projects.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Projects</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/examples/project-add.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Project Add</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/examples/project-edit.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Project Edit</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/examples/project-detail.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Project Detail</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/examples/contacts.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Contacts</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/examples/faq.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>FAQ</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/examples/contact-us.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Contact us</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon far fa-plus-square"></i>
+                        <p>
+                            Extras
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>
+                                    Login & Register v1
+                                    <i class="fas fa-angle-left right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="pages/examples/login.html" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Login v1</p>
                                     </a>
                                 </li>
-                                <li class="menu-item">
-                                    <a href="app-ecommerce-customer-details-security.html" class="menu-link">
-                                        <div data-i18n="Security">Security</div>
+                                <li class="nav-item">
+                                    <a href="pages/examples/register.html" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Register v1</p>
                                     </a>
                                 </li>
-                                <li class="menu-item">
-                                    <a href="app-ecommerce-customer-details-billing.html" class="menu-link">
-                                        <div data-i18n="Address & Billing">Address & Billing</div>
+                                <li class="nav-item">
+                                    <a href="pages/examples/forgot-password.html" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Forgot Password v1</p>
                                     </a>
                                 </li>
-                                <li class="menu-item">
-                                    <a href="app-ecommerce-customer-details-notifications.html" class="menu-link">
-                                        <div data-i18n="Notifications">Notifications</div>
+                                <li class="nav-item">
+                                    <a href="pages/examples/recover-password.html" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Recover Password v1</p>
                                     </a>
                                 </li>
                             </ul>
                         </li>
-                    </ul>
-                </li>
-                <li class="menu-item">
-                    <a href="app-ecommerce-manage-reviews.html" class="menu-link">
-                        <div data-i18n="Manage Reviews">Manage Reviews</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="app-ecommerce-referral.html" class="menu-link">
-                        <div data-i18n="Referrals">Referrals</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="javascript:void(0);" class="menu-link menu-toggle">
-                        <div data-i18n="Settings">Settings</div>
-                    </a>
-                    <ul class="menu-sub">
-                        <li class="menu-item">
-                            <a href="app-ecommerce-settings-detail.html" class="menu-link">
-                                <div data-i18n="Store Details">Store Details</div>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>
+                                    Login & Register v2
+                                    <i class="fas fa-angle-left right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="pages/examples/login-v2.html" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Login v2</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="pages/examples/register-v2.html" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Register v2</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="pages/examples/forgot-password-v2.html" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Forgot Password v2</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="pages/examples/recover-password-v2.html" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Recover Password v2</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/examples/lockscreen.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Lockscreen</p>
                             </a>
                         </li>
-                        <li class="menu-item">
-                            <a href="app-ecommerce-settings-payments.html" class="menu-link">
-                                <div data-i18n="Payments">Payments</div>
+                        <li class="nav-item">
+                            <a href="pages/examples/legacy-user-menu.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Legacy User Menu</p>
                             </a>
                         </li>
-                        <li class="menu-item">
-                            <a href="app-ecommerce-settings-checkout.html" class="menu-link">
-                                <div data-i18n="Checkout">Checkout</div>
+                        <li class="nav-item">
+                            <a href="pages/examples/language-menu.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Language Menu</p>
                             </a>
                         </li>
-                        <li class="menu-item">
-                            <a href="app-ecommerce-settings-shipping.html" class="menu-link">
-                                <div data-i18n="Shipping & Delivery">Shipping & Delivery</div>
+                        <li class="nav-item">
+                            <a href="pages/examples/404.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Error 404</p>
                             </a>
                         </li>
-                        <li class="menu-item">
-                            <a href="app-ecommerce-settings-locations.html" class="menu-link">
-                                <div data-i18n="Locations">Locations</div>
+                        <li class="nav-item">
+                            <a href="pages/examples/500.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Error 500</p>
                             </a>
                         </li>
-                        <li class="menu-item">
-                            <a href="app-ecommerce-settings-notifications.html" class="menu-link">
-                                <div data-i18n="Notifications">Notifications</div>
+                        <li class="nav-item">
+                            <a href="pages/examples/pace.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Pace</p>
                             </a>
                         </li>
-                    </ul>
-                </li>
-            </ul>
-        </li>
-        <!-- e-commerce-app menu end -->
-        <!-- Academy menu start -->
-        <li class="menu-item">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon icon-base ti tabler-book"></i>
-                <div data-i18n="Academy">Academy</div>
-            </a>
-            <ul class="menu-sub">
-                <li class="menu-item">
-                    <a href="app-academy-dashboard.html" class="menu-link">
-                        <div data-i18n="Dashboard">Dashboard</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="app-academy-course.html" class="menu-link">
-                        <div data-i18n="My Course">My Course</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="app-academy-course-details.html" class="menu-link">
-                        <div data-i18n="Course Details">Course Details</div>
-                    </a>
-                </li>
-            </ul>
-        </li>
-        <!-- Academy menu end -->
-        <li class="menu-item">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon icon-base ti tabler-truck"></i>
-                <div data-i18n="Logistics">Logistics</div>
-            </a>
-            <ul class="menu-sub">
-                <li class="menu-item">
-                    <a href="app-logistics-dashboard.html" class="menu-link">
-                        <div data-i18n="Dashboard">Dashboard</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="app-logistics-fleet.html" class="menu-link">
-                        <div data-i18n="Fleet">Fleet</div>
-                    </a>
-                </li>
-            </ul>
-        </li>
-        <li class="menu-item">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon icon-base ti tabler-file-dollar"></i>
-                <div data-i18n="Invoice">Invoice</div>
-            </a>
-            <ul class="menu-sub">
-                <li class="menu-item">
-                    <a href="app-invoice-list.html" class="menu-link">
-                        <div data-i18n="List">List</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="app-invoice-preview.html" class="menu-link">
-                        <div data-i18n="Preview">Preview</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="app-invoice-edit.html" class="menu-link">
-                        <div data-i18n="Edit">Edit</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="app-invoice-add.html" class="menu-link">
-                        <div data-i18n="Add">Add</div>
-                    </a>
-                </li>
-            </ul>
-        </li>
-        <li class="menu-item">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon icon-base ti tabler-users"></i>
-                <div data-i18n="Users">Users</div>
-            </a>
-            <ul class="menu-sub">
-                <li class="menu-item">
-                    <a href="app-user-list.html" class="menu-link">
-                        <div data-i18n="List">List</div>
-                    </a>
-                </li>
-
-                <li class="menu-item">
-                    <a href="javascript:void(0);" class="menu-link menu-toggle">
-                        <div data-i18n="View">View</div>
-                    </a>
-                    <ul class="menu-sub">
-                        <li class="menu-item">
-                            <a href="app-user-view-account.html" class="menu-link">
-                                <div data-i18n="Account">Account</div>
+                        <li class="nav-item">
+                            <a href="pages/examples/blank.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Blank Page</p>
                             </a>
                         </li>
-                        <li class="menu-item">
-                            <a href="app-user-view-security.html" class="menu-link">
-                                <div data-i18n="Security">Security</div>
-                            </a>
-                        </li>
-                        <li class="menu-item">
-                            <a href="app-user-view-billing.html" class="menu-link">
-                                <div data-i18n="Billing & Plans">Billing & Plans</div>
-                            </a>
-                        </li>
-                        <li class="menu-item">
-                            <a href="app-user-view-notifications.html" class="menu-link">
-                                <div data-i18n="Notifications">Notifications</div>
-                            </a>
-                        </li>
-                        <li class="menu-item">
-                            <a href="app-user-view-connections.html" class="menu-link">
-                                <div data-i18n="Connections">Connections</div>
+                        <li class="nav-item">
+                            <a href="starter.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Starter Page</p>
                             </a>
                         </li>
                     </ul>
                 </li>
-            </ul>
-        </li>
-        <li class="menu-item">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon icon-base ti tabler-settings"></i>
-                <div data-i18n="Roles & Permissions">Roles & Permissions</div>
-            </a>
-            <ul class="menu-sub">
-                <li class="menu-item">
-                    <a href="app-access-roles.html" class="menu-link">
-                        <div data-i18n="Roles">Roles</div>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-search"></i>
+                        <p>
+                            Search
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
                     </a>
-                </li>
-                <li class="menu-item">
-                    <a href="app-access-permission.html" class="menu-link">
-                        <div data-i18n="Permission">Permission</div>
-                    </a>
-                </li>
-            </ul>
-        </li>
-        <li class="menu-item">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon icon-base ti tabler-file"></i>
-                <div data-i18n="Pages">Pages</div>
-            </a>
-            <ul class="menu-sub">
-                <li class="menu-item">
-                    <a href="javascript:void(0);" class="menu-link menu-toggle">
-                        <div data-i18n="User Profile">User Profile</div>
-                    </a>
-                    <ul class="menu-sub">
-                        <li class="menu-item">
-                            <a href="pages-profile-user.html" class="menu-link">
-                                <div data-i18n="Profile">Profile</div>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="pages/search/simple.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Simple Search</p>
                             </a>
                         </li>
-                        <li class="menu-item">
-                            <a href="pages-profile-teams.html" class="menu-link">
-                                <div data-i18n="Teams">Teams</div>
-                            </a>
-                        </li>
-                        <li class="menu-item">
-                            <a href="pages-profile-projects.html" class="menu-link">
-                                <div data-i18n="Projects">Projects</div>
-                            </a>
-                        </li>
-                        <li class="menu-item">
-                            <a href="pages-profile-connections.html" class="menu-link">
-                                <div data-i18n="Connections">Connections</div>
+                        <li class="nav-item">
+                            <a href="pages/search/enhanced.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Enhanced</p>
                             </a>
                         </li>
                     </ul>
                 </li>
-                <li class="menu-item">
-                    <a href="javascript:void(0);" class="menu-link menu-toggle">
-                        <div data-i18n="Account Settings">Account Settings</div>
-                    </a>
-                    <ul class="menu-sub">
-                        <li class="menu-item">
-                            <a href="pages-account-settings-account.html" class="menu-link">
-                                <div data-i18n="Account">Account</div>
-                            </a>
-                        </li>
-                        <li class="menu-item">
-                            <a href="pages-account-settings-security.html" class="menu-link">
-                                <div data-i18n="Security">Security</div>
-                            </a>
-                        </li>
-                        <li class="menu-item">
-                            <a href="pages-account-settings-billing.html" class="menu-link">
-                                <div data-i18n="Billing & Plans">Billing & Plans</div>
-                            </a>
-                        </li>
-                        <li class="menu-item">
-                            <a href="pages-account-settings-notifications.html" class="menu-link">
-                                <div data-i18n="Notifications">Notifications</div>
-                            </a>
-                        </li>
-                        <li class="menu-item">
-                            <a href="pages-account-settings-connections.html" class="menu-link">
-                                <div data-i18n="Connections">Connections</div>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="menu-item">
-                    <a href="pages-faq.html" class="menu-link">
-                        <div data-i18n="FAQ">FAQ</div>
+                <li class="nav-header">MISCELLANEOUS</li>
+                <li class="nav-item">
+                    <a href="iframe.html" class="nav-link">
+                        <i class="nav-icon fas fa-ellipsis-h"></i>
+                        <p>Tabbed IFrame Plugin</p>
                     </a>
                 </li>
-                <li class="menu-item">
-                    <a href="pages-pricing.html" class="menu-link">
-                        <div data-i18n="Pricing">Pricing</div>
+                <li class="nav-item">
+                    <a href="https://adminlte.io/docs/3.1/" class="nav-link">
+                        <i class="nav-icon fas fa-file"></i>
+                        <p>Documentation</p>
                     </a>
                 </li>
-                <li class="menu-item">
-                    <a href="javascript:void(0);" class="menu-link menu-toggle">
-                        <div data-i18n="Misc">Misc</div>
+                <li class="nav-header">MULTI LEVEL EXAMPLE</li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-circle nav-icon"></i>
+                        <p>Level 1</p>
                     </a>
-                    <ul class="menu-sub">
-                        <li class="menu-item">
-                            <a href="pages-misc-error.html" class="menu-link" target="_blank">
-                                <div data-i18n="Error">Error</div>
-                            </a>
-                        </li>
-                        <li class="menu-item">
-                            <a href="pages-misc-under-maintenance.html" class="menu-link" target="_blank">
-                                <div data-i18n="Under Maintenance">Under Maintenance</div>
-                            </a>
-                        </li>
-                        <li class="menu-item">
-                            <a href="pages-misc-comingsoon.html" class="menu-link" target="_blank">
-                                <div data-i18n="Coming Soon">Coming Soon</div>
-                            </a>
-                        </li>
-                        <li class="menu-item">
-                            <a href="pages-misc-not-authorized.html" class="menu-link" target="_blank">
-                                <div data-i18n="Not Authorized">Not Authorized</div>
-                            </a>
-                        </li>
-                    </ul>
                 </li>
-            </ul>
-        </li>
-        <li class="menu-item">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon icon-base ti tabler-lock"></i>
-                <div data-i18n="Authentications">Authentications</div>
-            </a>
-            <ul class="menu-sub">
-                <li class="menu-item">
-                    <a href="javascript:void(0);" class="menu-link menu-toggle">
-                        <div data-i18n="Login">Login</div>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-circle"></i>
+                        <p>
+                            Level 1
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
                     </a>
-                    <ul class="menu-sub">
-                        <li class="menu-item">
-                            <a href="auth-login-basic.html" class="menu-link" target="_blank">
-                                <div data-i18n="Basic">Basic</div>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Level 2</p>
                             </a>
                         </li>
-                        <li class="menu-item">
-                            <a href="auth-login-cover.html" class="menu-link" target="_blank">
-                                <div data-i18n="Cover">Cover</div>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>
+                                    Level 2
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <i class="far fa-dot-circle nav-icon"></i>
+                                        <p>Level 3</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <i class="far fa-dot-circle nav-icon"></i>
+                                        <p>Level 3</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <i class="far fa-dot-circle nav-icon"></i>
+                                        <p>Level 3</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Level 2</p>
                             </a>
                         </li>
                     </ul>
                 </li>
-                <li class="menu-item">
-                    <a href="javascript:void(0);" class="menu-link menu-toggle">
-                        <div data-i18n="Register">Register</div>
-                    </a>
-                    <ul class="menu-sub">
-                        <li class="menu-item">
-                            <a href="auth-register-basic.html" class="menu-link" target="_blank">
-                                <div data-i18n="Basic">Basic</div>
-                            </a>
-                        </li>
-                        <li class="menu-item">
-                            <a href="auth-register-cover.html" class="menu-link" target="_blank">
-                                <div data-i18n="Cover">Cover</div>
-                            </a>
-                        </li>
-                        <li class="menu-item">
-                            <a href="auth-register-multisteps.html" class="menu-link" target="_blank">
-                                <div data-i18n="Multi-steps">Multi-steps</div>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="menu-item">
-                    <a href="javascript:void(0);" class="menu-link menu-toggle">
-                        <div data-i18n="Verify Email">Verify Email</div>
-                    </a>
-                    <ul class="menu-sub">
-                        <li class="menu-item">
-                            <a href="auth-verify-email-basic.html" class="menu-link" target="_blank">
-                                <div data-i18n="Basic">Basic</div>
-                            </a>
-                        </li>
-                        <li class="menu-item">
-                            <a href="auth-verify-email-cover.html" class="menu-link" target="_blank">
-                                <div data-i18n="Cover">Cover</div>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="menu-item">
-                    <a href="javascript:void(0);" class="menu-link menu-toggle">
-                        <div data-i18n="Reset Password">Reset Password</div>
-                    </a>
-                    <ul class="menu-sub">
-                        <li class="menu-item">
-                            <a href="auth-reset-password-basic.html" class="menu-link" target="_blank">
-                                <div data-i18n="Basic">Basic</div>
-                            </a>
-                        </li>
-                        <li class="menu-item">
-                            <a href="auth-reset-password-cover.html" class="menu-link" target="_blank">
-                                <div data-i18n="Cover">Cover</div>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="menu-item">
-                    <a href="javascript:void(0);" class="menu-link menu-toggle">
-                        <div data-i18n="Forgot Password">Forgot Password</div>
-                    </a>
-                    <ul class="menu-sub">
-                        <li class="menu-item">
-                            <a href="auth-forgot-password-basic.html" class="menu-link" target="_blank">
-                                <div data-i18n="Basic">Basic</div>
-                            </a>
-                        </li>
-                        <li class="menu-item">
-                            <a href="auth-forgot-password-cover.html" class="menu-link" target="_blank">
-                                <div data-i18n="Cover">Cover</div>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="menu-item">
-                    <a href="javascript:void(0);" class="menu-link menu-toggle">
-                        <div data-i18n="Two Steps">Two Steps</div>
-                    </a>
-                    <ul class="menu-sub">
-                        <li class="menu-item">
-                            <a href="auth-two-steps-basic.html" class="menu-link" target="_blank">
-                                <div data-i18n="Basic">Basic</div>
-                            </a>
-                        </li>
-                        <li class="menu-item">
-                            <a href="auth-two-steps-cover.html" class="menu-link" target="_blank">
-                                <div data-i18n="Cover">Cover</div>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </li>
-        <li class="menu-item">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon icon-base ti tabler-forms"></i>
-                <div data-i18n="Wizard Examples">Wizard Examples</div>
-            </a>
-            <ul class="menu-sub">
-                <li class="menu-item">
-                    <a href="wizard-ex-checkout.html" class="menu-link">
-                        <div data-i18n="Checkout">Checkout</div>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-circle nav-icon"></i>
+                        <p>Level 1</p>
                     </a>
                 </li>
-                <li class="menu-item">
-                    <a href="wizard-ex-property-listing.html" class="menu-link">
-                        <div data-i18n="Property Listing">Property Listing</div>
+                <li class="nav-header">LABELS</li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon far fa-circle text-danger"></i>
+                        <p class="text">Important</p>
                     </a>
                 </li>
-                <li class="menu-item">
-                    <a href="wizard-ex-create-deal.html" class="menu-link">
-                        <div data-i18n="Create Deal">Create Deal</div>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon far fa-circle text-warning"></i>
+                        <p>Warning</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon far fa-circle text-info"></i>
+                        <p>Informational</p>
                     </a>
                 </li>
             </ul>
-        </li>
-        <li class="menu-item">
-            <a href="modal-examples.html" class="menu-link">
-                <i class="menu-icon icon-base ti tabler-square"></i>
-                <div data-i18n="Modal Examples">Modal Examples</div>
-            </a>
-        </li>
-
-        <!-- Components -->
-        <li class="menu-header small">
-            <span class="menu-header-text" data-i18n="Components">Components</span>
-        </li>
-        <!-- Cards -->
-        <li class="menu-item">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon icon-base ti tabler-id"></i>
-                <div data-i18n="Cards">Cards</div>
-                <div class="badge text-bg-primary rounded-pill ms-auto">5</div>
-            </a>
-            <ul class="menu-sub">
-                <li class="menu-item">
-                    <a href="cards-basic.html" class="menu-link">
-                        <div data-i18n="Basic">Basic</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="cards-advance.html" class="menu-link">
-                        <div data-i18n="Advance">Advance</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="cards-statistics.html" class="menu-link">
-                        <div data-i18n="Statistics">Statistics</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="cards-analytics.html" class="menu-link">
-                        <div data-i18n="Analytics">Analytics</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="cards-actions.html" class="menu-link">
-                        <div data-i18n="Actions">Actions</div>
-                    </a>
-                </li>
-            </ul>
-        </li>
-        <!-- User interface -->
-        <li class="menu-item">
-            <a href="javascript:void(0)" class="menu-link menu-toggle">
-                <i class="menu-icon icon-base ti tabler-color-swatch"></i>
-                <div data-i18n="User interface">User interface</div>
-            </a>
-            <ul class="menu-sub">
-                <li class="menu-item">
-                    <a href="ui-accordion.html" class="menu-link">
-                        <div data-i18n="Accordion">Accordion</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="ui-alerts.html" class="menu-link">
-                        <div data-i18n="Alerts">Alerts</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="ui-badges.html" class="menu-link">
-                        <div data-i18n="Badges">Badges</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="ui-buttons.html" class="menu-link">
-                        <div data-i18n="Buttons">Buttons</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="ui-carousel.html" class="menu-link">
-                        <div data-i18n="Carousel">Carousel</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="ui-collapse.html" class="menu-link">
-                        <div data-i18n="Collapse">Collapse</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="ui-dropdowns.html" class="menu-link">
-                        <div data-i18n="Dropdowns">Dropdowns</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="ui-footer.html" class="menu-link">
-                        <div data-i18n="Footer">Footer</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="ui-list-groups.html" class="menu-link">
-                        <div data-i18n="List Groups">List groups</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="ui-modals.html" class="menu-link">
-                        <div data-i18n="Modals">Modals</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="ui-navbar.html" class="menu-link">
-                        <div data-i18n="Navbar">Navbar</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="ui-offcanvas.html" class="menu-link">
-                        <div data-i18n="Offcanvas">Offcanvas</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="ui-pagination-breadcrumbs.html" class="menu-link">
-                        <div data-i18n="Pagination & Breadcrumbs">Pagination &amp; Breadcrumbs</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="ui-progress.html" class="menu-link">
-                        <div data-i18n="Progress">Progress</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="ui-spinners.html" class="menu-link">
-                        <div data-i18n="Spinners">Spinners</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="ui-tabs-pills.html" class="menu-link">
-                        <div data-i18n="Tabs & Pills">Tabs &amp; Pills</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="ui-toasts.html" class="menu-link">
-                        <div data-i18n="Toasts">Toasts</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="ui-tooltips-popovers.html" class="menu-link">
-                        <div data-i18n="Tooltips & Popovers">Tooltips &amp; Popovers</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="ui-typography.html" class="menu-link">
-                        <div data-i18n="Typography">Typography</div>
-                    </a>
-                </li>
-            </ul>
-        </li>
-
-        <!-- Extended components -->
-        <li class="menu-item">
-            <a href="javascript:void(0)" class="menu-link menu-toggle">
-                <i class="menu-icon icon-base ti tabler-components"></i>
-                <div data-i18n="Extended UI">Extended UI</div>
-            </a>
-            <ul class="menu-sub">
-                <li class="menu-item">
-                    <a href="extended-ui-avatar.html" class="menu-link">
-                        <div data-i18n="Avatar">Avatar</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="extended-ui-blockui.html" class="menu-link">
-                        <div data-i18n="BlockUI">BlockUI</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="extended-ui-drag-and-drop.html" class="menu-link">
-                        <div data-i18n="Drag & Drop">Drag &amp; Drop</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="extended-ui-media-player.html" class="menu-link">
-                        <div data-i18n="Media Player">Media Player</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="extended-ui-perfect-scrollbar.html" class="menu-link">
-                        <div data-i18n="Perfect Scrollbar">Perfect Scrollbar</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="extended-ui-star-ratings.html" class="menu-link">
-                        <div data-i18n="Star Ratings">Star Ratings</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="extended-ui-sweetalert2.html" class="menu-link">
-                        <div data-i18n="SweetAlert2">SweetAlert2</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="extended-ui-text-divider.html" class="menu-link">
-                        <div data-i18n="Text Divider">Text Divider</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="javascript:void(0);" class="menu-link menu-toggle">
-                        <div data-i18n="Timeline">Timeline</div>
-                    </a>
-                    <ul class="menu-sub">
-                        <li class="menu-item">
-                            <a href="extended-ui-timeline-basic.html" class="menu-link">
-                                <div data-i18n="Basic">Basic</div>
-                            </a>
-                        </li>
-                        <li class="menu-item">
-                            <a href="extended-ui-timeline-fullscreen.html" class="menu-link">
-                                <div data-i18n="Fullscreen">Fullscreen</div>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="menu-item">
-                    <a href="extended-ui-tour.html" class="menu-link">
-                        <div data-i18n="Tour">Tour</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="extended-ui-treeview.html" class="menu-link">
-                        <div data-i18n="Treeview">Treeview</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="extended-ui-misc.html" class="menu-link">
-                        <div data-i18n="Miscellaneous">Miscellaneous</div>
-                    </a>
-                </li>
-            </ul>
-        </li>
-
-        <!-- Icons -->
-        <li class="menu-item">
-            <a href="javascript:void(0)" class="menu-link menu-toggle">
-                <i class="menu-icon icon-base ti tabler-brand-tabler"></i>
-                <div data-i18n="Icons">Icons</div>
-            </a>
-            <ul class="menu-sub">
-                <li class="menu-item">
-                    <a href="icons-tabler.html" class="menu-link">
-                        <div data-i18n="Tabler">Tabler</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="icons-font-awesome.html" class="menu-link">
-                        <div data-i18n="Font Awesome">Font Awesome</div>
-                    </a>
-                </li>
-            </ul>
-        </li>
-
-        <!-- Forms & Tables -->
-        <li class="menu-header small">
-            <span class="menu-header-text" data-i18n="Forms & Tables">Forms &amp; Tables</span>
-        </li>
-        <!-- Forms -->
-        <li class="menu-item">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon icon-base ti tabler-toggle-left"></i>
-                <div data-i18n="Form Elements">Form Elements</div>
-            </a>
-            <ul class="menu-sub">
-                <li class="menu-item">
-                    <a href="forms-basic-inputs.html" class="menu-link">
-                        <div data-i18n="Basic Inputs">Basic Inputs</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="forms-input-groups.html" class="menu-link">
-                        <div data-i18n="Input groups">Input groups</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="forms-custom-options.html" class="menu-link">
-                        <div data-i18n="Custom Options">Custom Options</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="forms-editors.html" class="menu-link">
-                        <div data-i18n="Editors">Editors</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="forms-file-upload.html" class="menu-link">
-                        <div data-i18n="File Upload">File Upload</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="forms-pickers.html" class="menu-link">
-                        <div data-i18n="Pickers">Pickers</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="forms-selects.html" class="menu-link">
-                        <div data-i18n="Select & Tags">Select &amp; Tags</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="forms-sliders.html" class="menu-link">
-                        <div data-i18n="Sliders">Sliders</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="forms-switches.html" class="menu-link">
-                        <div data-i18n="Switches">Switches</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="forms-extras.html" class="menu-link">
-                        <div data-i18n="Extras">Extras</div>
-                    </a>
-                </li>
-            </ul>
-        </li>
-        <li class="menu-item">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon icon-base ti tabler-layout-navbar"></i>
-                <div data-i18n="Form Layouts">Form Layouts</div>
-            </a>
-            <ul class="menu-sub">
-                <li class="menu-item">
-                    <a href="form-layouts-vertical.html" class="menu-link">
-                        <div data-i18n="Vertical Form">Vertical Form</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="form-layouts-horizontal.html" class="menu-link">
-                        <div data-i18n="Horizontal Form">Horizontal Form</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="form-layouts-sticky.html" class="menu-link">
-                        <div data-i18n="Sticky Actions">Sticky Actions</div>
-                    </a>
-                </li>
-            </ul>
-        </li>
-        <li class="menu-item">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon icon-base ti tabler-text-wrap-disabled"></i>
-                <div data-i18n="Form Wizard">Form Wizard</div>
-            </a>
-            <ul class="menu-sub">
-                <li class="menu-item">
-                    <a href="form-wizard-numbered.html" class="menu-link">
-                        <div data-i18n="Numbered">Numbered</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="form-wizard-icons.html" class="menu-link">
-                        <div data-i18n="Icons">Icons</div>
-                    </a>
-                </li>
-            </ul>
-        </li>
-        <li class="menu-item">
-            <a href="form-validation.html" class="menu-link">
-                <i class="menu-icon icon-base ti tabler-checkbox"></i>
-                <div data-i18n="Form Validation">Form Validation</div>
-            </a>
-        </li>
-        <!-- Tables -->
-        <li class="menu-item">
-            <a href="tables-basic.html" class="menu-link">
-                <i class="menu-icon icon-base ti tabler-table"></i>
-                <div data-i18n="Tables">Tables</div>
-            </a>
-        </li>
-        <li class="menu-item">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon icon-base ti tabler-layout-grid"></i>
-                <div data-i18n="Datatables">Datatables</div>
-            </a>
-            <ul class="menu-sub">
-                <li class="menu-item">
-                    <a href="tables-datatables-basic.html" class="menu-link">
-                        <div data-i18n="Basic">Basic</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="tables-datatables-advanced.html" class="menu-link">
-                        <div data-i18n="Advanced">Advanced</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="tables-datatables-extensions.html" class="menu-link">
-                        <div data-i18n="Extensions">Extensions</div>
-                    </a>
-                </li>
-            </ul>
-        </li>
-
-        <!-- Charts & Maps -->
-        <li class="menu-header small">
-            <span class="menu-header-text" data-i18n="Charts & Maps">Charts &amp; Maps</span>
-        </li>
-        <li class="menu-item">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon icon-base ti tabler-chart-pie"></i>
-                <div data-i18n="Charts">Charts</div>
-            </a>
-            <ul class="menu-sub">
-                <li class="menu-item">
-                    <a href="charts-apex.html" class="menu-link">
-                        <div data-i18n="Apex Charts">Apex Charts</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="charts-chartjs.html" class="menu-link">
-                        <div data-i18n="ChartJS">ChartJS</div>
-                    </a>
-                </li>
-            </ul>
-        </li>
-        <li class="menu-item">
-            <a href="maps-leaflet.html" class="menu-link">
-                <i class="menu-icon icon-base ti tabler-map"></i>
-                <div data-i18n="Leaflet Maps">Leaflet Maps</div>
-            </a>
-        </li>
-
-        <!-- Misc -->
-        <li class="menu-header small">
-            <span class="menu-header-text" data-i18n="Misc">Misc</span>
-        </li>
-
-        <!-- Multi Level Menu -->
-        <li class="menu-item">
-            <a href="javascript:void(0)" class="menu-link menu-toggle">
-                <i class="menu-icon icon-base ti tabler-layout-board"></i>
-                <div data-i18n="Multi Level">Multi Level</div>
-            </a>
-            <ul class="menu-sub">
-                <li class="menu-item">
-                    <a href="javascript:void(0)" class="menu-link menu-toggle">
-                        <div data-i18n="Level 2">Level 2</div>
-                    </a>
-                    <ul class="menu-sub">
-                        <li class="menu-item">
-                            <a href="javascript:void(0)" class="menu-link">
-                                <div data-i18n="Level 3">Level 3</div>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </li>
-        <li class="menu-item">
-            <a href="https://pixinvent.ticksy.com/" target="_blank" class="menu-link">
-                <i class="menu-icon icon-base ti tabler-lifebuoy"></i>
-                <div data-i18n="Support">Support</div>
-            </a>
-        </li>
-        <li class="menu-item">
-            <a href="https://demos.pixinvent.com/vuexy-html-admin-template/documentation/" target="_blank"
-                class="menu-link">
-                <i class="menu-icon icon-base ti tabler-file-description"></i>
-                <div data-i18n="Documentation">Documentation</div>
-            </a>
-        </li>
-    </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
 </aside>
