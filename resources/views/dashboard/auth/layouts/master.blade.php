@@ -1,7 +1,7 @@
-<!DOCTYPE html>
+{{-- <!DOCTYPE html>
 
 <html lang="en" class="light-style customizer-hide" dir="rtl" data-theme="theme-default"
-    data-assets-path="{{ asset('dashboard') }}/assets/" data-template="vertical-menu-template">
+    data-assets-path="{{ asset('dashboard') }}/assets/assets/" data-template="vertical-menu-template">
 
 <head>
     @include('dashboard.auth.layouts.css')
@@ -95,7 +95,7 @@
 <!doctype html>
 
 <html lang="en" class="layout-wide customizer-hide" dir="ltr" data-skin="default"
-    data-assets-path="{{ asset('dashboard') }}/assets/" data-template="vertical-menu-template" data-bs-theme="light">
+    data-assets-path="{{ asset('dashboard') }}/assets/assets/" data-template="vertical-menu-template" data-bs-theme="light">
 
 <head>
 
@@ -109,6 +109,47 @@
 
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/theme.js -->
+
+</body>
+
+</html>
+ --}}
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    @include('dashboard.auth.layouts.css')
+
+</head>
+
+<body class="hold-transition login-page">
+    <div class="login-box">
+        <div class="login-logo">
+            <a href="{{ asset('dashboard') }}/assets/index2.html"><b>Admin</b>LTE</a>
+        </div>
+        <!-- /.login-logo -->
+        <div class="card">
+            <div class="card-body login-card-body">
+                <p class="login-box-msg">قم بتسجيل الدخول لبدء جلستك</p>
+
+                @yield('content')
+
+                <div class="social-auth-links text-center mb-3">
+                    <p>- أو التواصل مع الدعم الفنى -</p>
+
+                </div>
+                <!-- /.social-auth-links -->
+
+
+            </div>
+            <!-- /.login-card-body -->
+        </div>
+    </div>
+    <!-- /.login-box -->
+    @include('dashboard.auth.layouts.js')
+
 
 </body>
 
