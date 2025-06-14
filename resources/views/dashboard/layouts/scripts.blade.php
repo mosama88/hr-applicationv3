@@ -1,75 +1,76 @@
-<!-- jQuery -->
-<script src="{{ asset('dashboard') }}/assets/plugins/jquery/jquery.min.js"></script>
-<!-- jQuery UI 1.11.4 -->
-<script src="{{ asset('dashboard') }}/assets/plugins/jquery-ui/jquery-ui.min.js"></script>
-<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-<script>
-    $.widget.bridge('uibutton', $.ui.button)
-</script>
-<!-- Bootstrap 4 -->
-<script src="{{ asset('dashboard') }}/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- ChartJS -->
-<script src="{{ asset('dashboard') }}/assets/plugins/chart.js/Chart.min.js"></script>
-<!-- Sparkline -->
-<script src="{{ asset('dashboard') }}/assets/plugins/sparklines/sparkline.js"></script>
-<!-- JQVMap -->
-<script src="{{ asset('dashboard') }}/assets/plugins/jqvmap/jquery.vmap.min.js"></script>
-<script src="{{ asset('dashboard') }}/assets/plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
-<!-- jQuery Knob Chart -->
-<script src="{{ asset('dashboard') }}/assets/plugins/jquery-knob/jquery.knob.min.js"></script>
-<!-- daterangepicker -->
-<script src="{{ asset('dashboard') }}/assets/plugins/moment/moment.min.js"></script>
-<script src="{{ asset('dashboard') }}/assets/plugins/daterangepicker/daterangepicker.js"></script>
-<!-- Tempusdominus Bootstrap 4 -->
-<script src="{{ asset('dashboard') }}/assets/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js">
-</script>
-<!-- Summernote -->
-<script src="{{ asset('dashboard') }}/assets/plugins/summernote/summernote-bs4.min.js"></script>
-<!-- overlayScrollbars -->
-<script src="{{ asset('dashboard') }}/assets/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
-<!-- AdminLTE App -->
-<script src="{{ asset('dashboard') }}/assets/dist/js/adminlte.js"></script>
-<script src="{{ asset('dashboard') }}/dist/js/demo.js"></script>
+  <!--begin::Third Party Plugin(OverlayScrollbars)-->
+  <script src="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.10.1/browser/overlayscrollbars.browser.es6.min.js"
+      integrity="sha256-dghWARbRe2eLlIJ56wNB+b760ywulqK3DzZYEpsg2fQ=" crossorigin="anonymous"></script>
+  <!--end::Third Party Plugin(OverlayScrollbars)--><!--begin::Required Plugin(popperjs for Bootstrap 5)-->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous">
+  </script>
+  <!--end::Required Plugin(popperjs for Bootstrap 5)--><!--begin::Required Plugin(Bootstrap 5)-->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+      integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous">
+  </script>
+  <!--end::Required Plugin(Bootstrap 5)--><!--begin::Required Plugin(AdminLTE)-->
+  <script src="{{ asset('dashboard') }}/assets/dist/js/adminlte.js"></script>
+  <!--end::Required Plugin(AdminLTE)--><!--begin::OverlayScrollbars Configure-->
 
-<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="{{ asset('dashboard') }}/assets/dist/js/pages/dashboard.js"></script>
+  @stack('js')
+
+  <script>
+      // حل بديل أكثر موثوقية
+      function disableButton() {
+          const submitButton = document.getElementById('submitButton');
+          submitButton.disabled = true;
+          submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الحفظ';
+
+          // إرسال النموذج تلقائيًا بعد تعطيل الزر
+          document.getElementById('storeForm').submit();
+      }
+
+      // أو يمكنك استخدام هذا الحدث
+      document.getElementById('storeForm').addEventListener('submit', function() {
+          const submitButton = document.getElementById('submitButton');
+          submitButton.disabled = true;
+          submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الحفظ';
+      });
+  </script>
+  <script>
+      // حل بديل أكثر موثوقية
+      function disableButton() {
+          const submitButton = document.getElementById('submitButton');
+          submitButton.disabled = true;
+          submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري التعديل';
+
+          // إرسال النموذج تلقائيًا بعد تعطيل الزر
+          document.getElementById('editForm').submit();
+      }
+
+      // أو يمكنك استخدام هذا الحدث
+      document.getElementById('editForm').addEventListener('submit', function() {
+          const submitButton = document.getElementById('submitButton');
+          submitButton.disabled = true;
+          submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري التعديل';
+      });
+  </script>
 
 
-@stack('js')
 
-<script>
-    // حل بديل أكثر موثوقية
-    function disableButton() {
-        const submitButton = document.getElementById('submitButton');
-        submitButton.disabled = true;
-        submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الحفظ';
-
-        // إرسال النموذج تلقائيًا بعد تعطيل الزر
-        document.getElementById('storeForm').submit();
-    }
-
-    // أو يمكنك استخدام هذا الحدث
-    document.getElementById('storeForm').addEventListener('submit', function() {
-        const submitButton = document.getElementById('submitButton');
-        submitButton.disabled = true;
-        submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الحفظ';
-    });
-</script>
-<script>
-    // حل بديل أكثر موثوقية
-    function disableButton() {
-        const submitButton = document.getElementById('submitButton');
-        submitButton.disabled = true;
-        submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري التعديل';
-
-        // إرسال النموذج تلقائيًا بعد تعطيل الزر
-        document.getElementById('editForm').submit();
-    }
-
-    // أو يمكنك استخدام هذا الحدث
-    document.getElementById('editForm').addEventListener('submit', function() {
-        const submitButton = document.getElementById('submitButton');
-        submitButton.disabled = true;
-        submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري التعديل';
-    });
-</script>
+  <script>
+      const SELECTOR_SIDEBAR_WRAPPER = '.sidebar-wrapper';
+      const Default = {
+          scrollbarTheme: 'os-theme-light',
+          scrollbarAutoHide: 'leave',
+          scrollbarClickScroll: true,
+      };
+      document.addEventListener('DOMContentLoaded', function() {
+          const sidebarWrapper = document.querySelector(SELECTOR_SIDEBAR_WRAPPER);
+          if (sidebarWrapper && typeof OverlayScrollbarsGlobal?.OverlayScrollbars !== 'undefined') {
+              OverlayScrollbarsGlobal.OverlayScrollbars(sidebarWrapper, {
+                  scrollbars: {
+                      theme: Default.scrollbarTheme,
+                      autoHide: Default.scrollbarAutoHide,
+                      clickScroll: Default.scrollbarClickScroll,
+                  },
+              });
+          }
+      });
+  </script>
