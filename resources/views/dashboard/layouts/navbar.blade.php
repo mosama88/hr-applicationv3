@@ -165,10 +165,21 @@
                       </li>
                       <!--end::Menu Body-->
                       <!--begin::Menu Footer-->
-                      <li class="user-footer">
-                          <a href="#" class="btn btn-default btn-flat">Profile</a>
-                          <a href="#" class="btn btn-default btn-flat float-end">Sign out</a>
+                      <li class="user-footer d-flex justify-content-between align-items-center">
+                          <a href="#" class="btn btn-default btn-flat">
+                              <i class="fa-regular fa-user mx-1"></i>
+                              الملف الشخصى
+                          </a>
+
+                          <form action="{{ route('logout') }}" method="POST" class="mb-0">
+                              @csrf
+                              <button type="submit" class="btn btn-default btn-flat">
+                                  <i class="fas fa-power-off text-primary mx-1"></i>
+                                  تسجيل الخروج
+                              </button>
+                          </form>
                       </li>
+
                       <!--end::Menu Footer-->
                   </ul>
               </li>
