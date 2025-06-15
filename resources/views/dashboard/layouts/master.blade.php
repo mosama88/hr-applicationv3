@@ -25,7 +25,7 @@
 
         <main class="app-main">
 
-        
+
 
 
             @yield('content')

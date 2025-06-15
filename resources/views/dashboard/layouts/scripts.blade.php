@@ -12,9 +12,6 @@
 <!--end::Required Plugin(AdminLTE)--><!--begin::OverlayScrollbars Configure-->
 <script src="{{ asset('dashboard') }}/assets/dist/js/fontawesome.min.js"></script>
 
-<!-- Toastr -->
-<script src="{{ asset('dashboard') }}/assets/dist/js/jquery.min.js"></script>
-<script src="{{ asset('dashboard') }}/assets/dist/toastr/toastr.min.js"></script>
 
 @stack('js')
 

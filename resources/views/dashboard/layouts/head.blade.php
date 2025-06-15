@@ -11,8 +11,7 @@
     <!--end::Primary Meta Tags-->
     <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/dist/css/all.min.css" />
 
-    <!-- Toastr -->
-    <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/dist/toastr/toastr.min.css">
+
 
 
     <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/dist/css/index.css">

@@ -1,4 +1,6 @@
 @push('css')
+    <!-- Toastr -->
+    <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/dist/toastr/toastr.min.css">
     <style>
         /* تخصيص Toastr */
         .toast-success {
@@ -39,6 +41,9 @@
     </style>
 @endpush
 @push('js')
+<!-- Toastr -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script>
         $(document).ready(function() {
             // تهيئة Toastr
@@ -60,9 +65,14 @@
                 "hideMethod": "fadeOut" // طريقة الاختفاء
             };
 
-           @if (session('toast_error'))
-                toastr.error('{{ session('toast_error') }}', 'خطأ');
+            //    @if (session('toast_error'))
+            //         toastr.error('{{ session('toast_error') }}', 'خطأ');
+            //     @endif
+
+            @if ($errors->has('error'))
+                toastr.error('{{ $errors->first('خطأ') }}');
             @endif
+
 
 
             @if (session('success'))
