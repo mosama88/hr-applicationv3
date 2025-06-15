@@ -5,12 +5,43 @@
 @section('active-shiftTypes', 'active')
 @section('title', 'الشفتات')
 @push('css')
+    <style>
+        /* تنسيق حقول الإدخال */
+        .time-picker {
+            direction: ltr;
+            text-align: center;
+        }
+
+        /* تنسيق حقل الساعات المحسوبة */
+        #total_hours {
+            font-weight: bold;
+            text-align: center;
+            background-color: #f8f9fa;
+        }
+
+        /* تنسيق التحذير للساعات الطويلة */
+        #total_hours.bg-warning {
+            background-color: #fff3cd !important;
+        }
+
+        /* تحسين مظهر الأيقونات */
+        .input-group-text {
+            min-width: 40px;
+            justify-content: center;
+        }
+    </style>
 @endpush
 @section('content')
 
     @include('dashboard.layouts.message')
     <!-- Content Header (Page header) -->
 
+    @include('dashboard.layouts.breadcrumbs', [
+        'titlePage' => 'أضافة شفت جديد',
+        'previousPage' => 'الشفتات',
+        'currentPage' => 'أضافة شفت جديد',
+        'url' => 'shiftTypes.index',
+    ])
 
     <section class="content">
         <div class="container-fluid">
@@ -31,7 +62,7 @@
                                     <div class="row">
                                         <div class="col-md-3 mb-3">
                                             <label for="exampleFormControlInput1" class="form-label">نوع الشفت</label>
-                                            <select name="type" class="custom-select @error('type') is-invalid @enderror"
+                                            <select name="type" class="form-select @error('type') is-invalid @enderror"
                                                 aria-label="Default select example">
                                                 <option selected value="">-- أختر الحالة--</option>
                                                 <option @if (old('type') == ShiftTypesEnum::MORNING) selected @endif
@@ -53,64 +84,65 @@
                                                 </span>
                                             @enderror
                                         </div>
-                                        <div class="col-md-3 mb-3">
-                                            @php
-                                                $configFromTime = ['format' => 'HH:mm:ss'];
-                                            @endphp
-                                            <x-adminlte-input-date label="من الساعة" name="from_time"
-                                                value="{{ old('from_time') }}" id="from_time" :config="$configFromTime"
-                                                placeholder="HH:MM" onchange="calculateHours()" autocomplete="off">
-                                                <x-slot name="prependSlot">
-                                                    <div
-                                                        class="input-group-text bg-gradient-info @error('from_time') is-invalid @enderror">
+
+                                            <!-- حقل من الساعة -->
+                                            <div class="col-md-3 mb-3">
+                                                <label for="from_time" class="form-label">من الساعة</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-text bg-primary text-white">
                                                         <i class="fas fa-clock"></i>
+                                                    </span>
+                                                    <input type="time"
+                                                        class="form-control time-picker @error('from_time') is-invalid @enderror"
+                                                        onchange="calculateHours()" name="from_time" id="from_time"
+                                                        value="{{ old('from_time') }}" step="300" min="08:00"
+                                                        max="20:00">
+                                                </div>
+                                                @error('from_time')
+                                                    <div class="invalid-feedback text-right d-block">
+                                                        {{ $message }}
                                                     </div>
-                                                </x-slot>
-                                            </x-adminlte-input-date>
+                                                @enderror
+                                            </div>
 
-
-                                            @error('from_time')
-                                                <span class="invalid-feedback text-right" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
-                                        <div class="col-md-3 mb-3">
-                                            @php
-                                                $configToTime = ['format' => 'HH:mm:ss'];
-
-                                            @endphp
-                                            <x-adminlte-input-date label="إلى الساعة" name="to_time"
-                                                value="{{ old('to_time') }}" id="to_time" :config="$configToTime"
-                                                placeholder="HH:MM" onchange="calculateHours()" autocomplete="off">
-                                                <x-slot name="prependSlot">
-                                                    <div
-                                                        class="input-group-text bg-gradient-info @error('to_time') is-invalid @enderror">
+                                            <!-- حقل إلى الساعة -->
+                                            <div class="col-md-3 mb-3">
+                                                <label for="to_time" class="form-label">إلى الساعة</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-text bg-primary text-white">
                                                         <i class="fas fa-clock"></i>
+                                                    </span>
+                                                    <input type="time"
+                                                        class="form-control time-picker @error('to_time') is-invalid @enderror"
+                                                        onchange="calculateHours()" name="to_time" id="to_time"
+                                                        value="{{ old('to_time') }}" step="300" min="08:00"
+                                                        max="20:00">
+                                                </div>
+                                                @error('to_time')
+                                                    <div class="invalid-feedback text-right d-block">
+                                                        {{ $message }}
                                                     </div>
-                                                </x-slot>
-                                            </x-adminlte-input-date>
+                                                @enderror
+                                            </div>
 
-
-                                            @error('to_time')
-                                                <span class="invalid-feedback text-right" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
+                                            <!-- حقل عدد الساعات -->
+                                            <div class="col-md-3 mb-3">
+                                                <label for="total_hours" class="form-label">عدد الساعات</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-text bg-success text-white">
+                                                        <i class="fas fa-calculator"></i>
+                                                    </span>
+                                                    <input type="text" name="total_hours"
+                                                        class="form-control @error('total_hours') is-invalid @enderror"
+                                                        id="total_hours" value="{{ old('total_hours') }}" readonly>
+                                                </div>
+                                                @error('total_hours')
+                                                    <div class="invalid-feedback text-right d-block">
+                                                        {{ $message }}
+                                                    </div>
+                                                @enderror
+                                            </div>
                                         </div>
-                                        <div class="col-md-3 mb-3">
-                                            <label for="exampleFormControlReadOnlyInput1" class="form-label">عدد
-                                                الساعات</label>
-                                            <input type="text" name="total_hours"
-                                                class="form-control @error('total_hours') is-invalid @enderror"
-                                                id="total_hours" value="{{ old('total_hours') }}" readonly="readonly">
-                                            @error('total_hours')
-                                                <span class="invalid-feedback text-right" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
-                                    </div>
 
                                     <!-- /.card-body -->
                                     <x-create-button-component></x-create-button-component>
@@ -124,29 +156,56 @@
 
 @endsection
 @push('js')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script>
         function calculateHours() {
-            const from = document.getElementById('from_time').value;
-            const to = document.getElementById('to_time').value;
+            const fromTimeInput = document.getElementById('from_time');
+            const toTimeInput = document.getElementById('to_time');
+            const totalHoursInput = document.getElementById('total_hours');
 
-            if (from && to) {
-                let fromTime = moment(from, 'HH:mm');
-                let toTime = moment(to, 'HH:mm');
+            const fromTime = fromTimeInput.value;
+            const toTime = toTimeInput.value;
 
-                // إذا كان الوقت "إلى" أصغر من "من" نضيف يوم
-                if (toTime.isBefore(fromTime)) {
-                    toTime.add(1, 'day');
+            if (!fromTime || !toTime) {
+                totalHoursInput.value = '';
+                return;
+            }
+
+            try {
+                let fromMoment = moment(fromTime, 'HH:mm');
+                let toMoment = moment(toTime, 'HH:mm');
+
+                // إذا كان وقت النهاية قبل وقت البداية (تجاوز منتصف الليل)
+                if (toMoment.isBefore(fromMoment)) {
+                    toMoment.add(1, 'day');
                 }
 
-                const duration = moment.duration(toTime.diff(fromTime));
-                const totalHoursDecimal = (duration.asMinutes() / 60).toFixed(2);
+                const duration = moment.duration(toMoment.diff(fromMoment));
+                const hours = Math.floor(duration.asHours());
+                const minutes = duration.minutes();
 
-                document.getElementById('total_hours').value = totalHoursDecimal;
+                // عرض النتيجة بتنسيق ٨.٥٠ ساعة بدلًا من ٨.٨٣
+                const formattedHours = hours + (minutes / 60);
+                totalHoursInput.value = formattedHours.toFixed(2);
+
+                // تغيير لون الحقل حسب عدد الساعات
+                if (formattedHours > 8) {
+                    totalHoursInput.classList.add('bg-warning', 'text-dark');
+                } else {
+                    totalHoursInput.classList.remove('bg-warning', 'text-dark');
+                }
+
+            } catch (error) {
+                console.error('Error calculating hours:', error);
+                totalHoursInput.value = '';
             }
         }
+
+        // حساب الساعات تلقائيًا عند تحميل الصفحة إذا كانت القيم موجودة
+        document.addEventListener('DOMContentLoaded', function() {
+            if (document.getElementById('from_time').value && document.getElementById('to_time').value) {
+                calculateHours();
+            }
+        });
     </script>
-
-
-
-    <script src="{{ asset('dashboard') }}/assets/js/forms-pickers.js"></script>
 @endpush
