@@ -7,19 +7,25 @@
 
     @include('dashboard.layouts.message')
     <!-- Content Header (Page header) -->
-
+    @include('dashboard.layouts.breadcrumbs', [
+        'titlePage' => 'أضافة سنه مالية جديدة',
+        'previousPage' => 'السنوات المالية',
+        'currentPage' => 'أضافة سنه مالية جديدة',
+        'url' => 'financeCalendars.index',
+    ])
 
     <section class="content">
         <div class="container-fluid">
 
             <div class="row">
                 <div class="col-12">
-                    <div class="card card-primary">
+                    <div class="card card-primary card-outline mb-4">
+                        <!--begin::Header-->
                         <div class="card-header">
                             <h3 class="card-title">أضافة سنه مالية جديده</h3>
                         </div>
-                        <!-- /.card-header -->
-                        <!-- form start -->
+                        <!--end::Header-->
+                        <!--begin::Form-->
                         <form action="{{ route('dashboard.financeCalendars.store') }}" method="POST" id="storeForm">
                             @csrf
                             <div class="card-body">
@@ -54,69 +60,26 @@
 
                                 <div class="row">
                                     <div class="form-group mb-3 col-6" dir="rtl">
-                                        @php
-                                            $configStart = [
-                                                'format' => 'YYYY-MM-DD',
-                                                'minDate' => "js:moment().startOf('month')",
-                                                'maxDate' => "js:moment().endOf('month')",
-                                                'daysOfWeekDisabled' => [0, 6],
-                                                'locale' => 'ar', // إضافة اللغة العربية (يدعم rtl تلقائيًا)
-                                                'icons' => [
-                                                    'time' => 'fas fa-clock',
-                                                    'date' => 'fas fa-calendar',
-                                                    'up' => 'fas fa-arrow-up',
-                                                    'down' => 'fas fa-arrow-down',
-                                                    'previous' => 'fas fa-chevron-right',
-                                                    'next' => 'fas fa-chevron-left',
-                                                    'today' => 'fas fa-calendar-check',
-                                                    'clear' => 'fas fa-trash',
-                                                    'close' => 'fas fa-times',
-                                                ],
-                                            ];
-                                        @endphp
-
-                                        <x-adminlte-input-date name="start_date" id="start_date_picker" label="من"
-                                            :config="$configStart" placeholder="YYYY-MM-DD HH:MM"
-                                            fgroup-class="@error('start_date') is-invalid @enderror" autocomplete="off">
-                                            <x-slot name="appendSlot">
-                                                <div class="input-group-text bg-dark">
-                                                    <i class="fas fa-calendar-day"></i>
-                                                </div>
-                                            </x-slot>
-                                        </x-adminlte-input-date>
+                                        <input type="text" placeholder="HH:i"
+                                            class="form-control @error('start_date') is-invalid @enderror" name="start_date"
+                                            id="start_date" value="{{ old('start_date') }}">
+                                        @error('start_date')
+                                            <span class="invalid-feedback text-right" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
                                     </div>
 
                                     <div class="form-group mb-3 col-6" dir="rtl">
-                                        @php
-                                            $configEnd = [
-                                                'format' => 'YYYY-MM-DD',
-                                                'minDate' => "js:moment().startOf('month')",
-                                                'maxDate' => "js:moment().endOf('month')",
-                                                'daysOfWeekDisabled' => [0, 6],
-                                                'locale' => 'ar', // إضافة اللغة العربية (يدعم rtl تلقائيًا)
-                                                'icons' => [
-                                                    'time' => 'fas fa-clock',
-                                                    'date' => 'fas fa-calendar',
-                                                    'up' => 'fas fa-arrow-up',
-                                                    'down' => 'fas fa-arrow-down',
-                                                    'previous' => 'fas fa-chevron-right',
-                                                    'next' => 'fas fa-chevron-left',
-                                                    'today' => 'fas fa-calendar-check',
-                                                    'clear' => 'fas fa-trash',
-                                                    'close' => 'fas fa-times',
-                                                ],
-                                            ];
-                                        @endphp
+                                        <input type="text" placeholder="HH:i"
+                                            class="form-control @error('end_date') is-invalid @enderror" name="end_date"
+                                            id="end_date" value="{{ old('end_date') }}">
+                                        @error('end_date')
+                                            <span class="invalid-feedback text-right" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
 
-                                        <x-adminlte-input-date name="end_date" id="end_date_picker" label="إلى"
-                                            :config="$configEnd" placeholder="YYYY-MM-DD HH:MM"
-                                            fgroup-class="@error('end_date') is-invalid @enderror" autocomplete="off">
-                                            <x-slot name="appendSlot">
-                                                <div class="input-group-text bg-dark">
-                                                    <i class="fas fa-calendar-day"></i>
-                                                </div>
-                                            </x-slot>
-                                        </x-adminlte-input-date>
                                     </div>
                                 </div>
 
@@ -126,6 +89,7 @@
                             <x-create-button-component></x-create-button-component>
 
                         </form>
+                        <!--end::Form-->
                     </div>
                 </div>
                 <!-- /.row (main row) -->

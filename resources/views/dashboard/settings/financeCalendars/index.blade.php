@@ -23,9 +23,9 @@
     <!-- Content Header (Page header) -->
 
     @include('dashboard.layouts.breadcrumbs', [
-        'titlePage' => 'إعدادات الشركة',
+        'titlePage' => 'السنوات المالية',
         'previousPage' => 'لوحة التحكم',
-        'currentPage' => 'إعدادات الشركة',
+        'currentPage' => 'السنوات المالية',
         'url' => 'index',
     ])
 
@@ -45,9 +45,8 @@
 
 
                                     <!-- النص على اليمين -->
-                                    <a href="{{ route('dashboard.financeCalendars.create') }}" class="btn btn-md btn-success">
-                                        <i class="mx-1 fas fa-plus"></i>إضافة
-                                        جديد</a>
+                                    <x-add-new-button route="financeCalendars.create" />
+
 
                                 </div>
                             </h3>
