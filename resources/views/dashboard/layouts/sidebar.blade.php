@@ -23,7 +23,7 @@
 
 
                   <li class="nav-item">
-                      <a href="{{ route('dashboard.index') }}" class="nav-link active">
+                      <a href="{{ route('dashboard.index') }}" class="nav-link  @yield('active-dashboard')">
                           <i class="nav-icon bi bi-speedometer"></i>
                           <p>
                               لوحة التحكم
@@ -48,9 +48,26 @@
                       request()->is('dashboard/cities*') ||
                       request()->is('dashboard/job_grades*') ||
                       request()->is('dashboard/languages*')
-                          ? 'open active'
+                          ? 'menu-open'
                           : '' }}">
-                      <a href="#" class="nav-link">
+                      <a href="#"
+                          class="nav-link {{ request()->is('financeCalendars*') ||
+                          request()->is('admin_panel_settings*') ||
+                          request()->is('branches*') ||
+                          request()->is('shiftTypes*') ||
+                          request()->is('countries*') ||
+                          request()->is('currencies*') ||
+                          request()->is('departments*') ||
+                          request()->is('job_categories*') ||
+                          request()->is('qualifications*') ||
+                          request()->is('bloodTypes*') ||
+                          request()->is('nationalities*') ||
+                          request()->is('governorates*') ||
+                          request()->is('cities*') ||
+                          request()->is('job_grades*') ||
+                          request()->is('languages*')
+                              ? 'active'
+                              : '' }}">
                           <i class="nav-icon fa-solid fa-sliders"></i>
                           <p>
                               الأعدادت
@@ -58,22 +75,24 @@
                           </p>
                       </a>
                       <ul class="nav nav-treeview">
-                          <li class="nav-item @yield('active-admin_panel_settings')">
-                              <a href="{{ route('dashboard.admin_panel_settings.index') }}" class="nav-link">
+                          <li class="nav-item">
+                              <a href="{{ route('dashboard.admin_panel_settings.index') }}"
+                                  class="nav-link @yield('active-admin_panel_settings')">
                                   <i class="nav-icon bi bi-circle"></i>
                                   <p>إعدادت الشركة</p>
                               </a>
                           </li>
 
-                          <li class="nav-item @yield('active-financeCalendars')">
-                              <a href="{{ route('dashboard.financeCalendars.index') }}" class="nav-link">
+                          <li class="nav-item">
+                              <a href="{{ route('dashboard.financeCalendars.index') }}"
+                                  class="nav-link @yield('active-financeCalendars')">
                                   <i class="nav-icon bi bi-circle"></i>
                                   <p>السنوات المالية</p>
                               </a>
                           </li>
 
-                          <li class="nav-item @yield('active-shiftTypes')">
-                              <a href="{{ route('dashboard.shiftTypes.index') }}" class="nav-link">
+                          <li class="nav-item">
+                              <a href="{{ route('dashboard.shiftTypes.index') }}" class="nav-link @yield('active-shiftTypes')">
                                   <i class="nav-icon bi bi-circle"></i>
                                   <p>مواعيد الشفتات</p>
                               </a>
@@ -81,86 +100,90 @@
 
 
 
-                          <li class="nav-item @yield('active-branches')">
-                              <a href="{{ route('dashboard.branches.index') }}" class="nav-link">
+                          <li class="nav-item">
+                              <a href="{{ route('dashboard.branches.index') }}" class="nav-link @yield('active-branches')">
                                   <i class="nav-icon bi bi-circle"></i>
                                   <p>الفروع</p>
                               </a>
                           </li>
 
-                          <li class="nav-item @yield('active-currencies')">
-                              <a href="{{ route('dashboard.currencies.index') }}" class="nav-link">
+                          <li class="nav-item">
+                              <a href="{{ route('dashboard.currencies.index') }}" class="nav-link @yield('active-currencies')">
                                   <i class="nav-icon bi bi-circle"></i>
                                   <p>العملات</p>
                               </a>
                           </li>
 
-                          <li class="nav-item @yield('active-departments')">
-                              <a href="{{ route('dashboard.departments.index') }}" class="nav-link">
+                          <li class="nav-item">
+                              <a href="{{ route('dashboard.departments.index') }}" class="nav-link @yield('active-departments')">
                                   <i class="nav-icon bi bi-circle"></i>
                                   <p>الادارات</p>
                               </a>
                           </li>
 
-                          <li class="nav-item @yield('active-job_categories')">
-                              <a href="{{ route('dashboard.job_categories.index') }}" class="nav-link">
+                          <li class="nav-item">
+                              <a href="{{ route('dashboard.job_categories.index') }}"
+                                  class="nav-link @yield('active-job_categories')">
                                   <i class="nav-icon bi bi-circle"></i>
                                   <p>الوظائف</p>
                               </a>
                           </li>
 
-                          <li class="nav-item @yield('active-qualifications')">
-                              <a href="{{ route('dashboard.qualifications.index') }}" class="nav-link">
+                          <li class="nav-item">
+                              <a href="{{ route('dashboard.qualifications.index') }}"
+                                  class="nav-link @yield('active-qualifications')">
                                   <i class="nav-icon bi bi-circle"></i>
                                   <p>المؤهلات</p>
                               </a>
                           </li>
 
-                          <li class="nav-item @yield('active-bloodTypes')">
-                              <a href="{{ route('dashboard.bloodTypes.index') }}" class="nav-link">
+                          <li class="nav-item">
+                              <a href="{{ route('dashboard.bloodTypes.index') }}" class="nav-link @yield('active-bloodTypes')">
                                   <i class="nav-icon bi bi-circle"></i>
                                   <p>فصيلة الدم</p>
                               </a>
                           </li>
 
-                          <li class="nav-item @yield('active-nationalities')">
-                              <a href="{{ route('dashboard.nationalities.index') }}" class="nav-link">
+                          <li class="nav-item">
+                              <a href="{{ route('dashboard.nationalities.index') }}"
+                                  class="nav-link @yield('active-nationalities')">
                                   <i class="nav-icon bi bi-circle"></i>
                                   <p>الجنسيات</p>
                               </a>
                           </li>
 
-                          <li class="nav-item @yield('active-languages')">
-                              <a href="{{ route('dashboard.languages.index') }}" class="nav-link">
+                          <li class="nav-item">
+                              <a href="{{ route('dashboard.languages.index') }}" class="nav-link @yield('active-languages')">
                                   <i class="nav-icon bi bi-circle"></i>
                                   <p>اللغات</p>
                               </a>
                           </li>
 
-                          <li class="nav-item @yield('active-countries')">
-                              <a href="{{ route('dashboard.countries.index') }}" class="nav-link">
+                          <li class="nav-item">
+                              <a href="{{ route('dashboard.countries.index') }}" class="nav-link @yield('active-countries')">
                                   <i class="nav-icon bi bi-circle"></i>
                                   <p>الدول</p>
                               </a>
                           </li>
 
-                          <li class="nav-item @yield('active-governorates')">
-                              <a href="{{ route('dashboard.governorates.index') }}" class="nav-link">
+                          <li class="nav-item">
+                              <a href="{{ route('dashboard.governorates.index') }}"
+                                  class="nav-link @yield('active-governorates')">
                                   <i class="nav-icon bi bi-circle"></i>
                                   <p>المحافظات</p>
                               </a>
                           </li>
 
-                          <li class="nav-item @yield('active-cities')">
-                              <a href="{{ route('dashboard.cities.index') }}" class="nav-link">
+                          <li class="nav-item">
+                              <a href="{{ route('dashboard.cities.index') }}" class="nav-link @yield('active-cities')">
                                   <i class="nav-icon bi bi-circle"></i>
                                   <p>المدن</p>
                               </a>
                           </li>
 
 
-                          <li class="nav-item @yield('active-job_grades')">
-                              <a href="{{ route('dashboard.job_grades.index') }}" class="nav-link">
+                          <li class="nav-item">
+                              <a href="{{ route('dashboard.job_grades.index') }}" class="nav-link @yield('active-job_grades')">
                                   <i class="nav-icon bi bi-circle"></i>
                                   <p>الدرجات الوظيفية</p>
                               </a>
@@ -176,9 +199,15 @@
                       request()->is('dashboard/allowances*') ||
                       request()->is('dashboard/discount_types*') ||
                       request()->is('dashboard/employees*')
-                          ? 'open active'
+                          ? 'menu-open'
                           : '' }}">
-                      <a href="#" class="nav-link">
+                      <a href="#"
+                          class="nav-link {{ request()->is('additional_types*') ||
+                          request()->is('allowances*') ||
+                          request()->is('discount_types*') ||
+                          request()->is('employees*')
+                              ? 'active'
+                              : '' }}">
                           <i class="nav-icon fa-solid fa-users"></i>
                           <p>
                               شئون الموظفين
@@ -186,16 +215,17 @@
                           </p>
                       </a>
                       <ul class="nav nav-treeview">
-                          <li class="nav-item @yield('active-employees')">
-                              <a href="{{ route('dashboard.employees.index') }}" class="nav-link">
+                          <li class="nav-item">
+                              <a href="{{ route('dashboard.employees.index') }}" class="nav-link @yield('active-employees')">
                                   <i class="nav-icon bi bi-circle"></i>
                                   <p>بيانات الموظفين</p>
                               </a>
                           </li>
 
 
-                          <li class="nav-item @yield('active-additional_types')">
-                              <a href="{{ route('dashboard.additional_types.index') }}" class="nav-link">
+                          <li class="nav-item">
+                              <a href="{{ route('dashboard.additional_types.index') }}"
+                                  class="nav-link @yield('active-additional_types')">
                                   <i class="nav-icon bi bi-circle"></i>
                                   <p>أنواع الأضافى</p>
                               </a>
@@ -203,8 +233,9 @@
 
 
 
-                          <li class="nav-item @yield('active-allowances')">
-                              <a href="{{ route('dashboard.allowances.index') }}" class="nav-link">
+                          <li class="nav-item">
+                              <a href="{{ route('dashboard.allowances.index') }}"
+                                  class="nav-link @yield('active-allowances')">
                                   <i class="nav-icon bi bi-circle"></i>
                                   <p>أنواع البدلات</p>
                               </a>
@@ -212,8 +243,9 @@
 
 
 
-                          <li class="nav-item @yield('active-discount_types')">
-                              <a href="{{ route('dashboard.discount_types.index') }}" class="nav-link">
+                          <li class="nav-item">
+                              <a href="{{ route('dashboard.discount_types.index') }}"
+                                  class="nav-link @yield('active-discount_types')">
                                   <i class="nav-icon bi bi-circle"></i>
                                   <p>أنواع الخصومات</p>
                               </a>

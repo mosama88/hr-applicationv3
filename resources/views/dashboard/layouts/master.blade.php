@@ -5,13 +5,14 @@
 <head>
 
     <!--end::Required Plugin(AdminLTE)-->
-        @include('dashboard.layouts.head')
+    @include('dashboard.layouts.head')
 
 </head>
 
 <body class="layout-fixed sidebar-expand-lg sidebar-mini bg-body-tertiary app-loaded sidebar-open">
     <!--begin::App Wrapper-->
     <div class="app-wrapper">
+
         <!--begin::Header-->
         @include('dashboard.layouts.navbar')
         <!--end::Header-->
@@ -21,9 +22,20 @@
         <!--end::Sidebar-->
         <!--begin::App Main-->
 
-        @yield('content')
-        <!--end::App Main-->
-        <!--begin::Footer-->
+
+        <main class="app-main">
+
+        
+
+
+            @yield('content')
+            <!--end::App Main-->
+            <!--begin::Footer-->
+
+        </main>
+
+
+
 
         @include('dashboard.layouts.footer')
 
@@ -37,8 +49,8 @@
 
     @include('dashboard.layouts.scripts')
 
-  
-  
+
+
     <!--end::OverlayScrollbars Configure-->
     <!-- OPTIONAL SCRIPTS -->
     <!-- apexcharts -->

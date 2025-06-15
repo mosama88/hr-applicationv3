@@ -11,6 +11,14 @@
     @include('dashboard.layouts.message')
     <!-- Content Header (Page header) -->
 
+    @include('dashboard.layouts.breadcrumbs', [
+        'titlePage' => 'إعدادات شركة ' . $adminPanelSetting->company_name,
+        'previousPage' => 'بيانات الشركة',
+        'currentPage' => 'إعدادات شركة ' . $adminPanelSetting->company_name,
+        'url' => 'admin_panel_settings.index',
+    ])
+
+
 
     <section class="content">
         <div class="container-fluid">
@@ -20,7 +28,8 @@
                 @method('PUT')
                 <div class="row">
                     <div class="col-12">
-                        <div class="card">
+                        <div class="card card-secondary card-outline mb-4">
+                            <!--begin::Header-->
                             <div class="card-header">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <!-- الزر على اليسار -->
@@ -30,13 +39,13 @@
                                     <!-- النص على اليمين -->
 
 
-                                    <button type="submit" id="submitButton" class="btn btn-md btn-info"> <i
-                                            class="fa-solid fa-key"></i>تعديل البيانات </button>
+                                    <button type="submit" id="submitButton" class="btn btn-md btn-info text-white"> <i
+                                            class="fa-solid fa-key mx-1"></i>تعديل البيانات </button>
 
                                 </div>
                             </div>
-                            <!-- /.card-header -->
-                            <div class="card-body p-0">
+                            <!--begin::Body-->
+                            <div class="card-body">
                                 <div class="mx-2 my-2">
 
                                     <div class="col-md-6 mb-3">
@@ -355,12 +364,11 @@
 
                                     </table>
                                 </div>
-
-
                                 <!-- /.card-body -->
                             </div>
-                            <!-- /.card -->
+                            <!--end::Body-->
                         </div>
+
                     </div>
                     <!-- /.row (main row) -->
 

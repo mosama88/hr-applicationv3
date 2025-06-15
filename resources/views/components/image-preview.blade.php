@@ -1,6 +1,6 @@
 <div class="box box-primary col-md-6">
     <div class="box-header with-border">
-        <h3 class="box-title">{{ $title }}</h3>
+        <h5 class="box-title">{{ $title }}</h5>
     </div>
     <div class="box-body">
         <input type="file" id="imageInput" name="{{ $name }}" />
@@ -10,13 +10,14 @@
     </div>
 </div>
 @push('css')
-    <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet" />
-    <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/dist/css/filepond.css" />
+    <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/dist/css/filepond-plugin-image-preview.css" />
 @endpush
 @push('js')
-    <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
-    <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
-    <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
+    <script src="{{ asset('dashboard') }}/assets/dist/js/filepond.js"></script>
+    <script src="{{ asset('dashboard') }}/assets/dist/js/filepond-plugin-image-preview.js"></script>
+    <script src="{{ asset('dashboard') }}/assets/dist/js/filepond-plugin-file-validate-type.js"></script>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             FilePond.registerPlugin(FilePondPluginImagePreview);
