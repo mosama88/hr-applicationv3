@@ -27,6 +27,7 @@ class BloodTypeSeeder extends Seeder
         foreach ($bloodTypes as $type) {
             DB::table('blood_types')->insert([
                 'name' => $type,
+                'slug' => strtolower($type), // Convert to lowercase for consistency
                 'active' => 1,
                 'com_code' => 6000,
                 'created_by' => 1,
