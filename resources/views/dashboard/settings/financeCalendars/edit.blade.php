@@ -26,9 +26,7 @@
                 <div class="col-12">
                     <div class="card card-info card-outline mb-4">
                         <!--begin::Header-->
-                        <div class="card-header">
-                            <h3 class="card-title">تعديل السنه المالية </h3>
-                        </div>
+                  
                         <!--end::Header-->
                         <!--begin::Form-->
                         <form action="{{ route('dashboard.financeCalendars.update', $financeCalendar->slug) }}"

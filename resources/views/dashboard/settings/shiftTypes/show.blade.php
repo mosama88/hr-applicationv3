@@ -47,23 +47,23 @@
 
     <section class="content">
         <div class="container-fluid">
-
             <div class="row">
                 <div class="col-12">
-                    <div class="card card-primary">
-                        <div class="card-header">
-                        </div>
-                        <!-- /.card-header -->
-                        <!-- form start -->
+                    <div class="card card-dark card-outline mb-4">
+                        <!--begin::Header-->
+
+                        <!--end::Header-->
+                        <!--begin::Form-->
+
 
                         <div class="col-md-12">
-                            <h5 class="card-header">عرض بيانات الشفت</h5>
+                            <h5 class="card-header">عرض بيانات الشفت </h5>
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-3 mb-3">
                                         <label for="exampleFormControlInput1" class="form-label">نوع الشفت</label>
                                         <select disabled name="type"
-                                            class="form-select @error('type') is-invalid @enderror"
+                                            class="form-select bg-white @error('type') is-invalid @enderror"
                                             aria-label="Default select example">
                                             <option selected value="">-- أختر الحالة--</option>
                                             <option @if (old('type', $shiftType->type) == ShiftTypesEnum::MORNING) selected @endif
@@ -94,7 +94,7 @@
                                                 <i class="fas fa-clock"></i>
                                             </span>
                                             <input disabled type="time"
-                                                class="form-control time-picker @error('from_time') is-invalid @enderror"
+                                                class="form-control time-picker bg-white @error('from_time') is-invalid @enderror"
                                                 onchange="calculateHours()" name="from_time" id="from_time"
                                                 value="{{ old('from_time', $shiftType->from_time) }}" step="300"
                                                 min="08:00" max="20:00">
@@ -114,7 +114,7 @@
                                                 <i class="fas fa-clock"></i>
                                             </span>
                                             <input disabled type="time"
-                                                class="form-control time-picker @error('to_time') is-invalid @enderror"
+                                                class="form-control time-picker bg-white @error('to_time') is-invalid @enderror"
                                                 onchange="calculateHours()" name="to_time" id="to_time"
                                                 value="{{ old('to_time', $shiftType->to_time) }}" step="300"
                                                 min="08:00" max="20:00">
@@ -134,7 +134,7 @@
                                                 <i class="fas fa-calculator"></i>
                                             </span>
                                             <input disabled type="text" name="total_hours"
-                                                class="form-control @error('total_hours') is-invalid @enderror"
+                                                class="form-control bg-white @error('total_hours') is-invalid @enderror"
                                                 id="total_hours" value="{{ old('total_hours', $shiftType->total_hours) }}"
                                                 readonly>
                                         </div>
@@ -148,7 +148,7 @@
                                     <div class="col-md-4 mb-3">
                                         <label for="exampleFormControlSelect1" class="form-label">حالة الشفت</label>
                                         <select disabled name="active"
-                                            class="form-select @error('active') is-invalid @enderror"
+                                            class="form-select bg-white @error('active') is-invalid @enderror"
                                             id="exampleFormControlSelect1" aria-label="Default select example">
                                             <option selected value="">-- أختر الحالة--</option>
                                             <option @if (old('active', $shiftType->active) == StatusActiveEnum::ACTIVE) selected @endif
@@ -167,12 +167,12 @@
                                 </div>
 
 
+                                <!--end::Form-->
                             </div>
-                            <!-- /.row (main row) -->
-                        </div><!-- /.container-fluid -->
+                        </div>
+                        <!-- /.row (main row) -->
                     </div><!-- /.container-fluid -->
     </section>
-
 
 @endsection
 @push('js')

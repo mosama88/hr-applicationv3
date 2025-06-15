@@ -8,17 +8,23 @@
     @include('dashboard.layouts.message')
     <!-- Content Header (Page header) -->
 
+    @include('dashboard.layouts.breadcrumbs', [
+        'titlePage' => 'أضافة فرع جديد',
+        'previousPage' => 'الفروع',
+        'currentPage' => 'أضافة فرع جديد',
+        'url' => 'branches.index',
+    ])
+
+
     <section class="content">
         <div class="container-fluid">
-
             <div class="row">
                 <div class="col-12">
-                    <div class="card card-primary">
-                        <div class="card-header">
-                            <h4>أضافة فرع جديد</h4>
-                        </div>
-                        <!-- /.card-header -->
-                        <!-- form start -->
+                    <div class="card card-primary card-outline mb-4">
+                        <!--begin::Header-->
+
+                        <!--end::Header-->
+                        <!--begin::Form-->
                         <form action="{{ route('dashboard.branches.store') }}" method="POST" id="storeForm">
                             @csrf
 
@@ -87,8 +93,8 @@
                             <x-create-button-component></x-create-button-component>
 
                         </form>
+                        <!--end::Form-->
                     </div>
-
                 </div>
                 <!-- /.row (main row) -->
             </div><!-- /.container-fluid -->

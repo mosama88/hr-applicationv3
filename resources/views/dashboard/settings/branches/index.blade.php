@@ -5,22 +5,20 @@
 @section('active-branches', 'active')
 @section('title', 'الفروع')
 @push('css')
-    <style>
-        .btn-actions {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 36px;
-            height: 36px;
-            border-radius: 6px;
-            padding: 0;
-        }
-    </style>
 @endpush
 @section('content')
 
     @include('dashboard.layouts.message')
     <!-- Content Header (Page header) -->
+
+
+    @include('dashboard.layouts.breadcrumbs', [
+        'titlePage' => 'جدول الفروع',
+        'previousPage' => 'لوحة التحكم',
+        'currentPage' => 'جدول الفروع',
+        'url' => 'index',
+    ])
+
 
     <section class="content">
         <div class="container-fluid">
@@ -30,18 +28,23 @@
 
                     <div class="card">
                         <div class="card-header">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <!-- العنوان على اليسار -->
+                            <h3 class="card-title">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <!-- الزر على اليسار -->
+
+
+                                    <!-- النص على اليمين -->
+                                    <x-add-new-button route="branches.create" />
+
+
+                                </div>
+                            </h3>
+
+                            <div class="card-tools">
                                 <h4 class="mb-0">جدول الفروع</h4>
 
-                                <!-- زر الإضافة على اليمين -->
-                                <a href="{{ route('dashboard.branches.create') }}" class="btn btn-success btn-md">
-                                    <i class="fas fa-plus-circle mx-1"></i>
-                                    <span>إضافة جديد</span>
-                                </a>
                             </div>
                         </div>
-
 
                         <div class="table-responsive text-nowrap">
                             <table class="table table-striped">

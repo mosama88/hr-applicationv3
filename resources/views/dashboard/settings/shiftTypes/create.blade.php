@@ -43,21 +43,21 @@
         'url' => 'shiftTypes.index',
     ])
 
+
+
     <section class="content">
         <div class="container-fluid">
-
             <div class="row">
                 <div class="col-12">
-                    <div class="card card-primary">
-                        <div class="card-header">
-                        </div>
-                        <!-- /.card-header -->
-                        <!-- form start -->
+                    <div class="card card-primary card-outline mb-4">
+                        <!--begin::Header-->
+
+                        <!--end::Header-->
+                        <!--begin::Form-->
                         <form action="{{ route('dashboard.shiftTypes.store') }}" method="POST" id="storeForm">
                             @csrf
 
                             <div class="col-md-12">
-                                <h5 class="card-header">أضافة شفت جديد</h5>
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-md-3 mb-3">
@@ -85,75 +85,74 @@
                                             @enderror
                                         </div>
 
-                                            <!-- حقل من الساعة -->
-                                            <div class="col-md-3 mb-3">
-                                                <label for="from_time" class="form-label">من الساعة</label>
-                                                <div class="input-group">
-                                                    <span class="input-group-text bg-primary text-white">
-                                                        <i class="fas fa-clock"></i>
-                                                    </span>
-                                                    <input type="time"
-                                                        class="form-control time-picker @error('from_time') is-invalid @enderror"
-                                                        onchange="calculateHours()" name="from_time" id="from_time"
-                                                        value="{{ old('from_time') }}" step="300" min="08:00"
-                                                        max="20:00">
-                                                </div>
-                                                @error('from_time')
-                                                    <div class="invalid-feedback text-right d-block">
-                                                        {{ $message }}
-                                                    </div>
-                                                @enderror
+                                        <!-- حقل من الساعة -->
+                                        <div class="col-md-3 mb-3">
+                                            <label for="from_time" class="form-label">من الساعة</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text bg-primary text-white">
+                                                    <i class="fas fa-clock"></i>
+                                                </span>
+                                                <input type="time"
+                                                    class="form-control time-picker @error('from_time') is-invalid @enderror"
+                                                    onchange="calculateHours()" name="from_time" id="from_time"
+                                                    value="{{ old('from_time') }}" step="300" min="08:00"
+                                                    max="20:00">
                                             </div>
-
-                                            <!-- حقل إلى الساعة -->
-                                            <div class="col-md-3 mb-3">
-                                                <label for="to_time" class="form-label">إلى الساعة</label>
-                                                <div class="input-group">
-                                                    <span class="input-group-text bg-primary text-white">
-                                                        <i class="fas fa-clock"></i>
-                                                    </span>
-                                                    <input type="time"
-                                                        class="form-control time-picker @error('to_time') is-invalid @enderror"
-                                                        onchange="calculateHours()" name="to_time" id="to_time"
-                                                        value="{{ old('to_time') }}" step="300" min="08:00"
-                                                        max="20:00">
+                                            @error('from_time')
+                                                <div class="invalid-feedback text-right d-block">
+                                                    {{ $message }}
                                                 </div>
-                                                @error('to_time')
-                                                    <div class="invalid-feedback text-right d-block">
-                                                        {{ $message }}
-                                                    </div>
-                                                @enderror
-                                            </div>
-
-                                            <!-- حقل عدد الساعات -->
-                                            <div class="col-md-3 mb-3">
-                                                <label for="total_hours" class="form-label">عدد الساعات</label>
-                                                <div class="input-group">
-                                                    <span class="input-group-text bg-success text-white">
-                                                        <i class="fas fa-calculator"></i>
-                                                    </span>
-                                                    <input type="text" name="total_hours"
-                                                        class="form-control @error('total_hours') is-invalid @enderror"
-                                                        id="total_hours" value="{{ old('total_hours') }}" readonly>
-                                                </div>
-                                                @error('total_hours')
-                                                    <div class="invalid-feedback text-right d-block">
-                                                        {{ $message }}
-                                                    </div>
-                                                @enderror
-                                            </div>
+                                            @enderror
                                         </div>
+
+                                        <!-- حقل إلى الساعة -->
+                                        <div class="col-md-3 mb-3">
+                                            <label for="to_time" class="form-label">إلى الساعة</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text bg-primary text-white">
+                                                    <i class="fas fa-clock"></i>
+                                                </span>
+                                                <input type="time"
+                                                    class="form-control time-picker @error('to_time') is-invalid @enderror"
+                                                    onchange="calculateHours()" name="to_time" id="to_time"
+                                                    value="{{ old('to_time') }}" step="300" min="08:00"
+                                                    max="20:00">
+                                            </div>
+                                            @error('to_time')
+                                                <div class="invalid-feedback text-right d-block">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+
+                                        <!-- حقل عدد الساعات -->
+                                        <div class="col-md-3 mb-3">
+                                            <label for="total_hours" class="form-label">عدد الساعات</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text bg-success text-white">
+                                                    <i class="fas fa-calculator"></i>
+                                                </span>
+                                                <input type="text" name="total_hours"
+                                                    class="form-control @error('total_hours') is-invalid @enderror"
+                                                    id="total_hours" value="{{ old('total_hours') }}" readonly>
+                                            </div>
+                                            @error('total_hours')
+                                                <div class="invalid-feedback text-right d-block">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                    </div>
 
                                     <!-- /.card-body -->
                                     <x-create-button-component></x-create-button-component>
                         </form>
+                        <!--end::Form-->
                     </div>
-                    <!-- /.row (main row) -->
-                </div><!-- /.container-fluid -->
+                </div>
+                <!-- /.row (main row) -->
             </div><!-- /.container-fluid -->
     </section>
-
-
 @endsection
 @push('js')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>

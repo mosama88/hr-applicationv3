@@ -45,23 +45,23 @@
         'url' => 'shiftTypes.index',
     ])
 
+
+
     <section class="content">
         <div class="container-fluid">
-
             <div class="row">
                 <div class="col-12">
-                    <div class="card card-primary">
-                        <div class="card-header">
-                        </div>
-                        <!-- /.card-header -->
-                        <!-- form start -->
+                    <div class="card card-info card-outline mb-4">
+                        <!--begin::Header-->
+
+                        <!--end::Header-->
+                        <!--begin::Form-->
                         <form action="{{ route('dashboard.shiftTypes.update', $shiftType->slug) }}" method="POST"
                             method="POST" id="updateForm">
                             @csrf
                             @method('PUT')
 
                             <div class="col-md-12">
-                                <h5 class="card-header">تعديل بيانات الشفت </h5>
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-md-3 mb-3">
@@ -171,13 +171,12 @@
                                     <!-- /.card-body -->
                                     <x-edit-button-component></x-edit-button-component>
                         </form>
+                        <!--end::Form-->
                     </div>
-                    <!-- /.row (main row) -->
-                </div><!-- /.container-fluid -->
+                </div>
+                <!-- /.row (main row) -->
             </div><!-- /.container-fluid -->
     </section>
-
-
 @endsection
 @push('js')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
