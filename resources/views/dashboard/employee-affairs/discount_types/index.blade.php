@@ -3,24 +3,22 @@
 @endphp
 @extends('dashboard.layouts.master')
 @section('active-discount_types', 'active')
-@section('title', 'أنواع الخصومات')
+@section('title', 'انواع الخصومات')
 @push('css')
-    <style>
-        .btn-actions {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 36px;
-            height: 36px;
-            border-radius: 6px;
-            padding: 0;
-        }
-    </style>
 @endpush
 @section('content')
 
     @include('dashboard.layouts.message')
     <!-- Content Header (Page header) -->
+
+
+    @include('dashboard.layouts.breadcrumbs', [
+        'titlePage' => 'جدول انواع الخصومات',
+        'previousPage' => 'لوحة التحكم',
+        'currentPage' => 'جدول انواع الخصومات',
+        'url' => 'index',
+    ])
+
 
     <section class="content">
         <div class="container-fluid">
@@ -29,21 +27,32 @@
                 <div class="col-12">
 
                     <div class="card">
-                        <h5 class="card-header d-flex justify-content-between align-items-center">
-                            <span class="ml-auto">جدول أنواع الخصومات</span>
-                            <a href="{{ route('dashboard.discount_types.create') }}" class="btn btn-info text-white">
-                                <i class="fa-solid fa-plus mx-1"></i>
-                                أضافة
-                            </a>
-                        </h5>
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <!-- الزر على اليسار -->
 
+
+                                    <!-- النص على اليمين -->
+                                    <x-add-new-button route="discount_types.create" />
+
+
+                                </div>
+                            </h3>
+
+                            <div class="card-tools">
+                                <h4 class="mb-0">جدول أنواع الخصومات</h4>
+
+                            </div>
+                        </div>
 
                         <div class="table-responsive text-nowrap">
+
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>أسم نوع الخصم</th>
+                                        <th>أسم نوع الخصم </th>
                                         <th>الحالة</th>
                                         <th>أضافة بواسطة</th>
                                         <th>تعديل بواسطة</th>

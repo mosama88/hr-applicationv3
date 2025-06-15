@@ -5,22 +5,20 @@
 @section('active-additional_types', 'active')
 @section('title', 'أنواع الأضافى')
 @push('css')
-    <style>
-        .btn-actions {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 36px;
-            height: 36px;
-            border-radius: 6px;
-            padding: 0;
-        }
-    </style>
 @endpush
 @section('content')
 
     @include('dashboard.layouts.message')
     <!-- Content Header (Page header) -->
+
+
+    @include('dashboard.layouts.breadcrumbs', [
+        'titlePage' => 'جدول أنواع الأضافى',
+        'previousPage' => 'لوحة التحكم',
+        'currentPage' => 'جدول أنواع الأضافى',
+        'url' => 'index',
+    ])
+
 
     <section class="content">
         <div class="container-fluid">
@@ -29,17 +27,27 @@
                 <div class="col-12">
 
                     <div class="card">
-                        <h5 class="card-header d-flex justify-content-between align-items-center">
-                          
-                            <a href="{{ route('dashboard.additional_types.create') }}" class="btn btn-info text-white">
-                                <i class="fas fa-plus-square mx-1"></i>
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <!-- الزر على اليسار -->
 
-                                أضافة
-                            </a>
-                        </h5>
 
+                                    <!-- النص على اليمين -->
+                                    <x-add-new-button route="additional_types.create" />
+
+
+                                </div>
+                            </h3>
+
+                            <div class="card-tools">
+                                <h4 class="mb-0">جدول أنواع الأضافى</h4>
+
+                            </div>
+                        </div>
 
                         <div class="table-responsive text-nowrap">
+
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
