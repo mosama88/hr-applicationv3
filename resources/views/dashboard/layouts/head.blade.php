@@ -28,3 +28,16 @@
     <!--begin::Required Plugin(AdminLTE)-->
     <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/dist/css/adminlte.rtl.css" />
     @stack('css')
+    <style>
+        .select2-container--default .select2-selection--single {
+            height: 35px;
+            /* لتحديد ارتفاع الحقل */
+            line-height: 30px;
+            /* لضبط النص في المنتصف */
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__arrow {
+            height: 40px;
+            /* لضبط السهم */
+        }
+    </style>

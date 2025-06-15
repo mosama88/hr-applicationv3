@@ -2,27 +2,35 @@
 @section('active-governorates', 'active')
 @section('title', 'المحافظات')
 @push('css')
+    <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/dist/css/select2.min.css" />
+
 @endpush
 @section('content')
 
     @include('dashboard.layouts.message')
     <!-- Content Header (Page header) -->
 
+    @include('dashboard.layouts.breadcrumbs', [
+        'titlePage' => 'أضافة محافظة جديدة',
+        'previousPage' => 'المحافظات',
+        'currentPage' => 'أضافة محافظة جديدة',
+        'url' => 'governorates.index',
+    ])
+
 
     <section class="content">
         <div class="container-fluid">
-
             <div class="row">
                 <div class="col-12">
-                    <div class="card card-primary">
-                        <div class="card-header">
-                        </div>
-                        <!-- /.card-header -->
-                        <!-- form start -->
+                    <div class="card card-primary card-outline mb-4">
+                        <!--begin::Header-->
+
+                        <!--end::Header-->
+                        <!--begin::Form-->
                         <form action="{{ route('dashboard.governorates.store') }}" method="POST" id="storeForm">
                             @csrf
+
                             <div class="col-md-12">
-                                <h5 class="card-header">أضافة محافظة جديدة</h5>
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-md-4 mb-3">
@@ -40,7 +48,7 @@
                                         <div class="col-md-4 mb-3">
                                             <label for="select2Basic" class="form-label">الدولة</label>
                                             <select name="country_id" id="select2Basic"
-                                                class="select2 custom-select custom-select-lg @error('country_id') is-invalid @enderror"
+                                                class="select2 form-select js-example-basic-single @error('country_id') is-invalid @enderror"
                                                 data-allow-clear="true">
                                                 <option selected value="">--أختر الدولة --</option>
                                                 @forelse ($countries as $country)
@@ -57,6 +65,8 @@
                                             @enderror
                                         </div>
                                     </div>
+
+
                                 </div>
                             </div>
                             <!-- /.card-body -->
@@ -64,15 +74,21 @@
                             <x-create-button-component></x-create-button-component>
 
                         </form>
+                        <!--end::Form-->
                     </div>
                 </div>
-            </div>
-            <!-- /.row (main row) -->
-        </div><!-- /.container-fluid -->
+                <!-- /.row (main row) -->
+            </div><!-- /.container-fluid -->
     </section>
 
 
 @endsection
 @push('js')
+    <script src="{{ asset('dashboard') }}/assets/dist/js/select2.min.js"></script>
 
+    <script>
+        $(document).ready(function() {
+            $('.js-example-basic-single').select2();
+        });
+    </script>
 @endpush
