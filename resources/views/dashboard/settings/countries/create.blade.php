@@ -8,21 +8,27 @@
     @include('dashboard.layouts.message')
     <!-- Content Header (Page header) -->
 
+    @include('dashboard.layouts.breadcrumbs', [
+        'titlePage' => 'أضافة دولة جديدة',
+        'previousPage' => 'الدول',
+        'currentPage' => 'أضافة دولة جديدة',
+        'url' => 'countries.index',
+    ])
+
 
     <section class="content">
         <div class="container-fluid">
-
             <div class="row">
                 <div class="col-12">
-                    <div class="card card-primary">
-                        <div class="card-header">
-                        </div>
-                        <!-- /.card-header -->
-                        <!-- form start -->
+                    <div class="card card-primary card-outline mb-4">
+                        <!--begin::Header-->
+
+                        <!--end::Header-->
+                        <!--begin::Form-->
                         <form action="{{ route('dashboard.countries.store') }}" method="POST" id="storeForm">
                             @csrf
+
                             <div class="col-md-12">
-                                <h5 class="card-header">أضافة دولة جديدة</h5>
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-md-4 mb-3">
@@ -49,6 +55,8 @@
                                             @enderror
                                         </div>
                                     </div>
+
+
                                 </div>
                             </div>
                             <!-- /.card-body -->
@@ -56,11 +64,11 @@
                             <x-create-button-component></x-create-button-component>
 
                         </form>
+                        <!--end::Form-->
                     </div>
                 </div>
-            </div>
-            <!-- /.row (main row) -->
-        </div><!-- /.container-fluid -->
+                <!-- /.row (main row) -->
+            </div><!-- /.container-fluid -->
     </section>
 
 
