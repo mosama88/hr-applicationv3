@@ -10,8 +10,13 @@
 @endpush
 @section('content')
 
-    @include('dashboard.layouts.message')
     <!-- Content Header (Page header) -->
+    @include('dashboard.layouts.breadcrumbs', [
+        'titlePage' => 'عرض السنة المالية - ' . $financeCalendar->finance_yr,
+        'previousPage' => 'السنوات المالية',
+        'currentPage' => 'عرض السنه المالية ',
+        'url' => 'financeCalendars.index',
+    ])
 
 
     <section class="content">
@@ -38,7 +43,7 @@
                                         <th>عدد الأيام</th>
                                         <th>حالة الشهر</th>
                                         <th>أضافة بواسطة</th>
-                                        <th>تعديل بواسطة</th>
+                                        <th>عرض بواسطة</th>
                                     </tr>
                                 </thead>
                                 <tbody>

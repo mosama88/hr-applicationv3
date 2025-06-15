@@ -1,0 +1,79 @@
+/* تخصيص الخط */
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap');
+
+
+/* إصلاح مشكلة الخطوط */
+.flatpickr-calendar {
+    font-family: 'Tajawal', sans-serif !important;
+}
+
+/* تحسين تباعد الأحرف */
+.flatpickr-weekday {
+    letter-spacing: 0.5px;
+    font-size: 74%;
+    font-weight: 300;
+    color: white !important;
+    background-color: #2C6391 !important;
+    margin-bottom: 8px !important;
+
+}
+
+
+/* تخصيص التقويم */
+.flatpickr-calendar {
+    font-family: 'Tajawal', sans-serif !important;
+    direction: rtl;
+    box-shadow: 0 5px 15px rgba(44, 99, 145, 0.2);
+    border: 1px solid #2C6391;
+}
+
+/* أيام التقويم */
+.flatpickr-day {
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+/* اليوم المحدد */
+.flatpickr-day.selected {
+    background: #2C6391;
+    border-color: #2C6391;
+    color: white;
+    font-weight: bold;
+}
+
+/* يوم اليوم */
+.flatpickr-day.today {
+    border: 1px solid #2C6391;
+}
+
+/* عند التحويم */
+.flatpickr-day:hover {
+    background: #E6EFF7;
+}
+
+/* رأس التقويم */
+.flatpickr-months .flatpickr-month,
+.flatpickr-weekdays {
+    background-color: #2C6391 !important;
+    color: white;
+    padding: 0px 0;
+    font-size: 80% !important;
+
+}
+
+/* أزرار التنقل */
+.flatpickr-prev-month:hover svg,
+.flatpickr-next-month:hover svg {
+    fill: #2C6391;
+}
+
+/* حقل الإدخال */
+.date-picker {
+    border: 1px solid #2C6391;
+    text-align: right;
+}
+
+.date-picker:focus {
+    box-shadow: 0 0 0 0.25rem rgba(44, 99, 145, 0.25);
+    border-color: #2C6391;
+}

@@ -6,13 +6,18 @@
 @section('active-shiftTypes', 'active')
 @section('title', 'الشفتات')
 @push('css')
-
 @endpush
 @section('content')
 
     @include('dashboard.layouts.message')
     <!-- Content Header (Page header) -->
 
+    @include('dashboard.layouts.breadcrumbs', [
+        'titlePage' => 'جدول الشفتات',
+        'previousPage' => 'لوحة التحكم',
+        'currentPage' => 'جدول الشفتات',
+        'url' => 'index',
+    ])
 
     <section class="content">
         <div class="container-fluid">
@@ -22,15 +27,21 @@
 
                     <div class="card">
                         <div class="card-header">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <!-- العنوان على اليسار -->
+                            <h3 class="card-title">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <!-- الزر على اليسار -->
+
+
+                                    <!-- النص على اليمين -->
+                                    <x-add-new-button route="shiftTypes.create" />
+
+
+                                </div>
+                            </h3>
+
+                            <div class="card-tools">
                                 <h4 class="mb-0">جدول الشفتات</h4>
 
-                                <!-- زر الإضافة على اليمين -->
-                                <a href="{{ route('dashboard.shiftTypes.create') }}" class="btn btn-success btn-md">
-                                    <i class="fas fa-plus-circle mx-1"></i>
-                                    <span>إضافة جديد</span>
-                                </a>
                             </div>
                         </div>
 

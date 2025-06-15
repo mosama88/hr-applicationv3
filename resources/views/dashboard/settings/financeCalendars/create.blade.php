@@ -2,6 +2,11 @@
 @section('active-financeCalendars', 'active')
 @section('title', 'أضافة سنه مالية')
 @push('css')
+    <!-- مكتبة Flatpickr CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <!-- ستايل إضافي للغة العربية -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/material_blue.css">
+    <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/dist/css/flatpicker.css">
 @endpush
 @section('content')
 
@@ -59,27 +64,42 @@
 
 
                                 <div class="row">
-                                    <div class="form-group mb-3 col-6" dir="rtl">
-                                        <input type="text" placeholder="HH:i"
-                                            class="form-control @error('start_date') is-invalid @enderror" name="start_date"
-                                            id="start_date" value="{{ old('start_date') }}">
-                                        @error('start_date')
-                                            <span class="invalid-feedback text-right" role="alert">
-                                                <strong>{{ $message }}</strong>
+                                    <div class="form-group mb-3 col-6">
+                                        <label for="start_date" class="form-label">تاريخ البدء</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text bg-primary"
+                                                style="background-color: #2C6391 !important; border-color: #2C6391;">
+                                                <i class="far fa-calendar-alt text-white"></i>
                                             </span>
+                                            <input type="text"
+                                                class="form-control date-picker @error('start_date') is-invalid @enderror"
+                                                name="start_date" id="start_date_picker" placeholder="اختر تاريخ البدء"
+                                                value="{{ old('start_date') }}">
+                                        </div>
+                                        @error('start_date')
+                                            <div class="invalid-feedback text-right d-block">
+                                                {{ $message }}
+                                            </div>
                                         @enderror
                                     </div>
 
-                                    <div class="form-group mb-3 col-6" dir="rtl">
-                                        <input type="text" placeholder="HH:i"
-                                            class="form-control @error('end_date') is-invalid @enderror" name="end_date"
-                                            id="end_date" value="{{ old('end_date') }}">
-                                        @error('end_date')
-                                            <span class="invalid-feedback text-right" role="alert">
-                                                <strong>{{ $message }}</strong>
+                                    <div class="form-group mb-3 col-6">
+                                        <label for="end_date" class="form-label">تاريخ الانتهاء</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text bg-primary"
+                                                style="background-color: #2C6391 !important; border-color: #2C6391;">
+                                                <i class="far fa-calendar-alt text-white"></i>
                                             </span>
+                                            <input type="text"
+                                                class="form-control date-picker @error('end_date') is-invalid @enderror"
+                                                name="end_date" id="end_date_picker" placeholder="اختر تاريخ الانتهاء"
+                                                value="{{ old('end_date') }}">
+                                        </div>
+                                        @error('end_date')
+                                            <div class="invalid-feedback text-right d-block">
+                                                {{ $message }}
+                                            </div>
                                         @enderror
-
                                     </div>
                                 </div>
 
@@ -99,14 +119,32 @@
 
 @endsection
 @push('js')
+    <!-- مكتبة Flatpickr JS -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <!-- ملف اللغة العربية -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ar.js"></script>
+
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            flatpickr("#start_date_picker", {
-                dateFormat: "Y-m-d"
+            flatpickr(".date-picker", {
+                locale: "ar", // تفعيل اللغة العربية
+                dateFormat: "Y-m-d", // صيغة التاريخ
+                allowInput: true, // السماح بالإدخال اليدوي
+                altInput: true, // عرض بديل للتاريخ
+                altFormat: "j F Y", // صيغة العرض: 15 أكتوبر 2023
+                minDate: "today", // لا تسمح بتواريخ قبل اليوم
+                disableMobile: true, // تعطيل المحرك الافتراضي على الموبايل
+                nextArrow: '<i class="fa fa-angle-right"></i>',
+                prevArrow: '<i class="fa fa-angle-left"></i>'
+            });
+            const startDate = flatpickr("#start_date", {
+                onChange: function(selectedDates) {
+                    endDate.set("minDate", selectedDates[0]);
+                }
             });
 
-            flatpickr("#end_date_picker", {
-                dateFormat: "Y-m-d"
+            const endDate = flatpickr("#end_date", {
+                minDate: "today"
             });
         });
     </script>

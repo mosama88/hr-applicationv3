@@ -41,11 +41,11 @@
         submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري التعديل';
 
         // إرسال النموذج تلقائيًا بعد تعطيل الزر
-        document.getElementById('editForm').submit();
+        document.getElementById('updateForm').submit();
     }
 
     // أو يمكنك استخدام هذا الحدث
-    document.getElementById('editForm').addEventListener('submit', function() {
+    document.getElementById('updateForm').addEventListener('submit', function() {
         const submitButton = document.getElementById('submitButton');
         submitButton.disabled = true;
         submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري التعديل';
