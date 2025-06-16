@@ -1,4 +1,5 @@
 @php
+    use App\Models\Department;
     use Carbon\Carbon;
     use App\Enums\AdminGenderEnum;
     use App\Enums\ShiftTypesEnum;
@@ -1017,8 +1018,13 @@
                                                             لها الموظف</label>
                                                         <select name="department_id"
                                                             class="select2 form-select department_select2 @error('department_id') is-invalid @enderror"
-                                                            data-allow-clear="true">
-                                                            <option value=""></option>
+                                                            data-allow-clear="true"
+                                                            data-ajax-url="{{ route('dashboard.departments.searchDepartment') }}">
+                                                            @if (old('department_id'))
+                                                                <option value="{{ old('department_id') }}" selected>
+                                                                    {{ Department::find(old('department_id'))?->name }}
+                                                                </option>
+                                                            @endif
                                                         </select>
                                                         @error('department_id')
                                                             <span class="invalid-feedback text-right" role="alert">
