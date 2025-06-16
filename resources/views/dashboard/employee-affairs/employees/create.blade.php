@@ -16,6 +16,11 @@
 @section('active-discount_types', 'active')
 @section('title', 'أضافة موظف جديد')
 @push('css')
+    <!-- مكتبة Flatpickr CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <!-- ستايل إضافي للغة العربية -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/material_blue.css">
+    <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/dist/css/flatpicker.css">
     <style>
         /* تحسين مظهر التبويبات */
         .nav-tabs .nav-link {
@@ -263,16 +268,22 @@
 
                                                     <!-- تاريخ الميلاد -->
                                                     <div class="col-md-3">
-                                                        <label class="form-label" for="birth_date-input">تاريخ
-                                                            الميلاد</label>
-                                                        <input type="text" name="birth_date" id="birth_date-input"
-                                                            value="{{ old('birth_date') }}" autocomplete="none"
-                                                            class="form-control date-picker @error('birth_date') is-invalid @enderror"
-                                                            placeholder="YYYY-MM-DD" />
-                                                        @error('birth_date')
-                                                            <span class="invalid-feedback text-right" role="alert">
-                                                                <strong>{{ $message }}</strong>
+                                                        <label for="birth_date" class="form-label">تاريخ الميلاد</label>
+                                                        <div class="input-group">
+                                                            <span class="input-group-text bg-primary"
+                                                                style="background-color: #2C6391 !important; border-color: #2C6391;">
+                                                                <i class="far fa-calendar-alt text-white"></i>
                                                             </span>
+                                                            <input type="text"
+                                                                class="form-control date-input date-picker @error('birth_date') is-invalid @enderror"
+                                                                name="birth_date" id="birth_date_picker"
+                                                                placeholder="يوم / شهر / سنة"
+                                                                value="{{ old('birth_date') }}">
+                                                        </div>
+                                                        @error('birth_date')
+                                                            <div class="invalid-feedback text-right d-block">
+                                                                {{ $message }}
+                                                            </div>
                                                         @enderror
                                                     </div>
 
@@ -314,17 +325,25 @@
                                                     <div class="col-md-3">
                                                         <label class="form-label" for="end_national_id-input">تاريخ
                                                             انتهاء بطاقة الهوية</label>
-                                                        <input type="text" name="end_national_id"
-                                                            value="{{ old('end_national_id') }}" autocomplete="none"
-                                                            id="end_national_id-input"
-                                                            class="form-control date-picker @error('end_national_id') is-invalid @enderror"
-                                                            placeholder="YYYY-MM-DD" />
-                                                        @error('end_national_id')
-                                                            <span class="invalid-feedback text-right" role="alert">
-                                                                <strong>{{ $message }}</strong>
+                                                        <div class="input-group">
+                                                            <span class="input-group-text bg-primary"
+                                                                style="background-color: #2C6391 !important; border-color: #2C6391;">
+                                                                <i class="far fa-calendar-alt text-white"></i>
                                                             </span>
+                                                            <input type="text"
+                                                                class="form-control date-input date-picker @error('end_national_id') is-invalid @enderror"
+                                                                name="end_national_id" id="end_national_id_picker"
+                                                                placeholder="يوم / شهر / سنة"
+                                                                value="{{ old('end_national_id') }}">
+                                                        </div>
+                                                        @error('end_national_id')
+                                                            <div class="invalid-feedback text-right d-block">
+                                                                {{ $message }}
+                                                            </div>
                                                         @enderror
                                                     </div>
+
+
 
 
                                                     <!-- الحالة الأجتماعية -->
@@ -814,22 +833,30 @@
                                                     <!-- الحقول المخفية بشكل افتراضي -->
                                                     <div class="row mb-3" id="exemption_temporary_fields"
                                                         style="display: none;">
-                                                        <!-- تاريخ اعفاء الخدمة العسكرية -->
+                                                        <!-- تاريخ الاعفاء المؤقت الخدمة العسكرية -->
                                                         <div class="col-md-4 mb-3">
                                                             <label class="form-label" for="military_exemption_date">تاريخ
-                                                                اعفاء الخدمة
-                                                                العسكرية</label>
-                                                            <input type="text" name="military_exemption_date"
-                                                                value="{{ old('military_exemption_date') }}"
-                                                                id="military_exemption_date" autocomplete="none"
-                                                                class="form-control date-picker @error('military_exemption_date') is-invalid @enderror"
-                                                                placeholder="YYYY-MM-DD" />
-                                                            @error('military_exemption_date')
-                                                                <span class="invalid-feedback text-right" role="alert">
-                                                                    <strong>{{ $message }}</strong>
+                                                                الاعفاء المؤقت الخدمة العسكرية</label>
+                                                            <div class="input-group">
+                                                                <span class="input-group-text bg-primary"
+                                                                    style="background-color: #2C6391 !important; border-color: #2C6391;">
+                                                                    <i class="far fa-calendar-alt text-white"></i>
                                                                 </span>
+                                                                <input type="text"
+                                                                    class="form-control date-input date-picker @error('military_exemption_date') is-invalid @enderror"
+                                                                    name="military_exemption_date"
+                                                                    id="military_exemption_date_picker"
+                                                                    placeholder="يوم / شهر / سنة"
+                                                                    value="{{ old('military_exemption_date') }}">
+                                                            </div>
+                                                            @error('military_exemption_date')
+                                                                <div class="invalid-feedback text-right d-block">
+                                                                    {{ $message }}
+                                                                </div>
                                                             @enderror
+
                                                         </div>
+
 
                                                         <!-- سبب ومدة تأجيل الخدمة العسكرية -->
                                                         <div class="col-md-8 mb-3">
@@ -852,22 +879,30 @@
 
                                                     <div class="row mb-3" id="final_exemption_fields"
                                                         style="display: none;">
-                                                        <!-- تاريخ اعفاء الخدمة العسكرية -->
+                                                        <!-- تاريخ الاعفاء النهائى الخدمة العسكرية -->
                                                         <div class="col-md-4 mb-3">
                                                             <label class="form-label"
-                                                                for="military_exemption_date_final">تاريخ اعفاء الخدمة
-                                                                العسكرية</label>
-                                                            <input type="text" name="military_exemption_date"
-                                                                value="{{ old('military_exemption_date') }}"
-                                                                id="military_exemption_date_final" autocomplete="none"
-                                                                class="form-control date-picker @error('military_exemption_date') is-invalid @enderror"
-                                                                placeholder="YYYY-MM-DD" />
-                                                            @error('military_exemption_date')
-                                                                <span class="invalid-feedback text-right" role="alert">
-                                                                    <strong>{{ $message }}</strong>
+                                                                for="military_exemption_reason">تاريخ
+                                                                الاعفاء النهائى الخدمة العسكرية</label>
+                                                            <div class="input-group">
+                                                                <span class="input-group-text bg-primary"
+                                                                    style="background-color: #2C6391 !important; border-color: #2C6391;">
+                                                                    <i class="far fa-calendar-alt text-white"></i>
                                                                 </span>
+                                                                <input type="text"
+                                                                    class="form-control date-input date-picker @error('military_exemption_reason') is-invalid @enderror"
+                                                                    name="military_exemption_reason"
+                                                                    id="military_exemption_reason"
+                                                                    placeholder="يوم / شهر / سنة"
+                                                                    value="{{ old('military_exemption_reason') }}">
+                                                            </div>
+                                                            @error('military_exemption_reason')
+                                                                <div class="invalid-feedback text-right d-block">
+                                                                    {{ $message }}
+                                                                </div>
                                                             @enderror
                                                         </div>
+
 
                                                         <!-- سبب اعفاء الخدمة العسكرية -->
                                                         <div class="col-md-8 mb-3">
@@ -892,15 +927,22 @@
                                                         <div class="col-md-4 mb-3">
                                                             <label class="form-label" for="military_service_start_date">
                                                                 تاريخ بداية الخدمة العسكرية</label>
-                                                            <input type="text" name="military_service_start_date"
-                                                                id="military_service_start_date" autocomplete="none"
-                                                                value="{{ old('military_service_start_date') }}"
-                                                                class="form-control date-picker @error('military_service_start_date') is-invalid @enderror"
-                                                                placeholder="YYYY-MM-DD" />
-                                                            @error('military_service_start_date')
-                                                                <span class="invalid-feedback text-right" role="alert">
-                                                                    <strong>{{ $message }}</strong>
+                                                            <div class="input-group">
+                                                                <span class="input-group-text bg-primary"
+                                                                    style="background-color: #2C6391 !important; border-color: #2C6391;">
+                                                                    <i class="far fa-calendar-alt text-white"></i>
                                                                 </span>
+                                                                <input type="text"
+                                                                    class="form-control date-input date-picker @error('military_service_start_date') is-invalid @enderror"
+                                                                    name="military_service_start_date"
+                                                                    id="military_service_start_date"
+                                                                    placeholder="يوم / شهر / سنة"
+                                                                    value="{{ old('military_service_start_date') }}">
+                                                            </div>
+                                                            @error('military_service_start_date')
+                                                                <div class="invalid-feedback text-right d-block">
+                                                                    {{ $message }}
+                                                                </div>
                                                             @enderror
                                                         </div>
 
@@ -909,17 +951,25 @@
                                                             <label class="form-label"
                                                                 for="military_service_end_date">تاريخ نهاية الخدمة
                                                                 العسكرية</label>
-                                                            <input type="text" name="military_service_end_date"
-                                                                id="military_service_end_date" autocomplete="none"
-                                                                value="{{ old('military_service_end_date') }}"
-                                                                class="form-control date-picker @error('military_service_end_date') is-invalid @enderror"
-                                                                placeholder="YYYY-MM-DD" />
-                                                            @error('military_service_end_date')
-                                                                <span class="invalid-feedback text-right" role="alert">
-                                                                    <strong>{{ $message }}</strong>
+                                                            <div class="input-group">
+                                                                <span class="input-group-text bg-primary"
+                                                                    style="background-color: #2C6391 !important; border-color: #2C6391;">
+                                                                    <i class="far fa-calendar-alt text-white"></i>
                                                                 </span>
+                                                                <input type="text"
+                                                                    class="form-control date-input date-picker @error('military_service_end_date') is-invalid @enderror"
+                                                                    name="military_service_end_date"
+                                                                    id="military_service_end_date"
+                                                                    placeholder="يوم / شهر / سنة"
+                                                                    value="{{ old('military_service_end_date') }}">
+                                                            </div>
+                                                            @error('military_service_end_date')
+                                                                <div class="invalid-feedback text-right d-block">
+                                                                    {{ $message }}
+                                                                </div>
                                                             @enderror
                                                         </div>
+
 
                                                         <!-- سلاح الخدمة العسكرية -->
                                                         <div class="col-md-4 mb-3">
@@ -951,16 +1001,25 @@
                                                         <label class="form-label" for="hiring_date-input">تاريخ
                                                             التعيين
                                                         </label>
-                                                        <input type="text" name="hiring_date" id="hiring_date-input"
-                                                            value="{{ old('hiring_date') }}" autocomplete="none"
-                                                            class="form-control date-picker @error('hiring_date') is-invalid @enderror"
-                                                            placeholder="YYYY-MM-DD" />
-                                                        @error('hiring_date')
-                                                            <span class="invalid-feedback text-right" role="alert">
-                                                                <strong>{{ $message }}</strong>
+                                                        <div class="input-group">
+                                                            <span class="input-group-text bg-primary"
+                                                                style="background-color: #2C6391 !important; border-color: #2C6391;">
+                                                                <i class="far fa-calendar-alt text-white"></i>
                                                             </span>
+                                                            <input type="text"
+                                                                class="form-control date-input date-picker @error('hiring_date') is-invalid @enderror"
+                                                                name="hiring_date" id="hiring_date-input"
+                                                                placeholder="يوم / شهر / سنة"
+                                                                value="{{ old('hiring_date') }}">
+                                                        </div>
+                                                        @error('hiring_date')
+                                                            <div class="invalid-feedback text-right d-block">
+                                                                {{ $message }}
+                                                            </div>
                                                         @enderror
                                                     </div>
+
+
 
                                                     <!-- الحالة الوظيفية -->
                                                     <div class="col-md-4 ">
@@ -1568,6 +1627,33 @@
 @endsection
 @push('js')
     <script src="{{ asset('dashboard') }}/assets/dist/js/employees/create-scripts.js"></script>
+    <!-- مكتبة Flatpickr JS -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <!-- ملف اللغة العربية -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ar.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            flatpickr(".date-picker", {
+                locale: "ar", // تفعيل اللغة العربية
+                dateFormat: "Y-m-d", // صيغة التاريخ
+                allowInput: true, // السماح بالإدخال اليدوي
+                altInput: true, // عرض بديل للتاريخ
+                altFormat: "j F Y", // صيغة العرض: 15 أكتوبر 2023
+                minDate: "today", // لا تسمح بتواريخ قبل اليوم
+                disableMobile: true, // تعطيل المحرك الافتراضي على الموبايل
+                nextArrow: '<i class="fa fa-angle-right"></i>',
+                prevArrow: '<i class="fa fa-angle-left"></i>'
+            });
+            const startDate = flatpickr(".date-input", {
+                onChange: function(selectedDates) {
+                    endDate.set("minDate", selectedDates[0]);
+                }
+            });
+
+            const endDate = flatpickr(".end_national_id-input", {});
+        });
+    </script>
 
     <script>
         $(document).ready(function() {
