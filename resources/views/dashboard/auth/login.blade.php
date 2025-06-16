@@ -6,48 +6,52 @@
 
     <form action="{{ route('login.store') }}" method="POST" id="loginForm">
         @csrf
-        <div class="input-group mb-3">
-            <input type="text" name="username" class="form-control @error('username') is-invalid @enderror"
-                placeholder="أسم المستخدم">
-            <div class="input-group-append">
-                <div class="input-group-text">
-                    <span class="fas fa-envelope"></span>
-                </div>
+
+        <div class="input-group mb-1">
+            <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+
+            <div class="form-floating flex-grow-1">
+                <input id="loginEmail" type="text" name="username"
+                    class="form-control  @error('username') is-invalid @enderror" placeholder="أسم المستخدم" />
+                <label for="loginEmail">أسم المستخدم</label>
             </div>
-            @error('username')
-                <span class="invalid-feedback text-right" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-            @enderror
         </div>
-        <div class="input-group mb-3">
-            <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" placeholder="**********">
-            <div class="input-group-append">
-                <div class="input-group-text">
-                    <span class="fas fa-lock"></span>
-                </div>
+        @error('username')
+            <div class="text-danger small mt-1">{{ $message }}</div>
+        @enderror
+
+
+        <div class="input-group mb-1">
+            <div class="input-group-text"><span class="bi bi-lock-fill"></span></div>
+
+            <div class="form-floating flex-grow-1">
+                <input id="loginEmail" type="text" name="password"
+                    class="form-control @error('password') is-invalid @enderror" placeholder="**************" />
+                <label for="loginEmail">كلمة المرور</label>
             </div>
-            @error('password')
-                <span class="invalid-feedback text-right" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-            @enderror
         </div>
+        @error('password')
+            <div class="text-danger small mt-1">{{ $message }}</div>
+        @enderror
+
+        <!--begin::Row-->
         <div class="row">
-            <div class="col-8">
-                <div class="icheck-primary">
-                    <input type="checkbox" id="remember">
-                    <label for="remember">
-                        تذكرنى
-                    </label>
+            <div class="col-12 d-inline-flex align-items-center" dir="rtl">
+                <div class="form-check">
+                    <label class="form-check-label text-right" for="flexCheckDefault"> تذكرنى </label>
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
                 </div>
             </div>
             <!-- /.col -->
-            <div class="col-12">
-                <button type="submit" id="submitButton" class="btn btn-primary btn-block">تسجيل الدخول</button>
+            <div class="col-6 mx-auto mt-2">
+                <div class="d-grid gap-2">
+                    <button type="submit" id="submitButton" class="btn btn-primary">تسجيل الدخول</button>
+                </div>
             </div>
             <!-- /.col -->
         </div>
+        <!--end::Row-->
     </form>
+
 
 @endsection

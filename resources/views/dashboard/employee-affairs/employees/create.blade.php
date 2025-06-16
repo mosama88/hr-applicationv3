@@ -1526,7 +1526,7 @@
                                             </div>
                                         </div>
                                 </div>
-                                <x-edit-button-component></x-edit-button-component>
+                                <x-create-button-component></x-create-button-component>
                                 </form>
                             </div>
                         </div>

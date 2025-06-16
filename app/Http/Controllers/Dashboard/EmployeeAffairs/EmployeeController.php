@@ -72,6 +72,11 @@ class EmployeeController extends Controller
                 ->toMediaCollection('photo');
         }
 
+       if ($request->hasFile('cv')) {
+    $employee->addMediaFromRequest('cv')
+             ->toMediaCollection('cv');
+}
+
         return redirect()->route('dashboard.employees.index')->with('success', 'تم أضافة الموظف بنجاح');
     }
 
