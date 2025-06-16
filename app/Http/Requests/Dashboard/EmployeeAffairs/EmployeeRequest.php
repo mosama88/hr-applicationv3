@@ -50,7 +50,7 @@ class EmployeeRequest extends FormRequest
     //             Rule::in(array_column(GraduationEstimateEnum::cases(), 'value')),
     //         ],
     //         'birth_date' => 'required|date', // تاريخ الميلاد
-    //         'national_id' => 'required|unique:employees,national_id|max:14|min:14', //رقم الهوية
+    //         'national_id' => 'required|min:14|unique:employees,national_id,' . $employeeId, //رقم الهوية
     //         'end_national_id' => 'required|date', //
     //         'national_id_place' => 'required', //
     //         'blood_type_id' => 'nullable|exists:blood_types,id', // فصيلة الدم
@@ -181,7 +181,7 @@ class EmployeeRequest extends FormRequest
                 Rule::in(array_column(GraduationEstimateEnum::cases(), 'value')),
             ],
             'birth_date' => 'nullable|date', // تاريخ الميلاد
-            'national_id' => 'nullable|unique:employees,national_id|max:14|min:14', //رقم الهوية
+            'national_id' => 'nullable|min:7|unique:employees,national_id,' . $employeeId,
             'end_national_id' => 'nullable|date', //
             'national_id_place' => 'nullable', //
             'blood_type_id' => 'nullable|exists:blood_types,id', // فصيلة الدم

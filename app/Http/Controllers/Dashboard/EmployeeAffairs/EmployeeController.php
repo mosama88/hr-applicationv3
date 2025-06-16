@@ -72,10 +72,10 @@ class EmployeeController extends Controller
                 ->toMediaCollection('photo');
         }
 
-       if ($request->hasFile('cv')) {
-    $employee->addMediaFromRequest('cv')
-             ->toMediaCollection('cv');
-}
+        if ($request->hasFile('cv')) {
+            $employee->addMediaFromRequest('cv')
+                ->toMediaCollection('cv');
+        }
 
         return redirect()->route('dashboard.employees.index')->with('success', 'تم أضافة الموظف بنجاح');
     }
@@ -107,9 +107,19 @@ class EmployeeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(EmployeeRequest $request, Employee $employee)
     {
-        //
+        $com_code =  Auth::user()->com_code;
+        $validateData = $request->validated();
+        $dataUpdate = array_merge($validateData, [
+            'com_code' => $com_code,
+            'active' =>  $request->active,
+            'updated_by' => Auth::user()->id,
+        ]);
+
+        // إنشاء الموظف أولاً
+        $employee->update($dataUpdate);
+        return redirect()->route('dashboard.employees.index')->with('success', 'تم تعديل الموظف بنجاح');
     }
 
     /**

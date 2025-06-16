@@ -1,4 +1,5 @@
 @php
+    use App\Enums\StatusActiveEnum;
     use App\Models\Currency;
     use App\Models\City;
     use App\Models\Country;
@@ -1566,7 +1567,29 @@
                                                             </div>
                                                         @enderror
                                                     </div>
-
+                                                    <div class="row col-12 mt-3">
+                                                        <div class="col-md-4 mb-3">
+                                                            <label for="exampleFormControlSelect1" class="form-label">حالة
+                                                                حساب الموظف</label>
+                                                            <select name="active"
+                                                                class="form-select @error('active') is-invalid @enderror"
+                                                                id="exampleFormControlSelect1"
+                                                                aria-label="Default select example">
+                                                                <option selected value="">-- أختر الحالة--</option>
+                                                                <option @if (old('active', $employee->active) == StatusActiveEnum::ACTIVE) selected @endif
+                                                                    value="{{ StatusActiveEnum::ACTIVE }}">
+                                                                    {{ StatusActiveEnum::ACTIVE->label() }}</option>
+                                                                <option @if (old('active', $employee->active) == StatusActiveEnum::INACTIVE) selected @endif
+                                                                    value="{{ StatusActiveEnum::INACTIVE }}">
+                                                                    {{ StatusActiveEnum::INACTIVE->label() }}</option>
+                                                            </select>
+                                                            @error('active')
+                                                                <span class="invalid-feedback text-right" role="alert">
+                                                                    <strong>{{ $message }}</strong>
+                                                                </span>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
 
                                                     <div class="col-md-6">
                                                         <x-image-preview name='photo' title="أرفق صورة الموظف" />
