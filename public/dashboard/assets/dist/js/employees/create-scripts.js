@@ -1,10 +1,12 @@
+//For Tabs
 $(document).ready(function () {
-    $('.date-picker').flatpickr({
-        dateFormat: "Y-m-d",
-        allowInput: true,
-        appendTo: document.body
+    // منع تحديث الـ URL عند النقر على التبويبات
+    $('a[data-toggle="pill"]').on('click', function (e) {
+        e.preventDefault();
+        $(this).tab('show');
     });
 });
+
 
 // الحالة الأجتماعية
 $(document).ready(function () {
@@ -266,3 +268,5 @@ $(document).ready(function () {
         }
     });
 });
+
+

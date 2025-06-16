@@ -786,7 +786,7 @@
                                             <div class="tab-pane fade" id="military" role="tabpanel">
                                                 <div class="row g-3">
                                                     <!-- حالة الخدمة العسكرية -->
-                                                    <div class="col-md-6">
+                                                    <div class="col-md-6 mb-3">
                                                         <label for="military_status" class="form-label">حالة
                                                             الخدمة
                                                             العسكرية</label>
@@ -812,9 +812,10 @@
                                                     </div>
 
                                                     <!-- الحقول المخفية بشكل افتراضي -->
-                                                    <div id="exemption_temporary_fields" style="display: none;">
+                                                    <div class="row mb-3" id="exemption_temporary_fields"
+                                                        style="display: none;">
                                                         <!-- تاريخ اعفاء الخدمة العسكرية -->
-                                                        <div class="col-md-6">
+                                                        <div class="col-md-4 mb-3">
                                                             <label class="form-label" for="military_exemption_date">تاريخ
                                                                 اعفاء الخدمة
                                                                 العسكرية</label>
@@ -831,7 +832,7 @@
                                                         </div>
 
                                                         <!-- سبب ومدة تأجيل الخدمة العسكرية -->
-                                                        <div class="col-md-6">
+                                                        <div class="col-md-8 mb-3">
                                                             <label class="form-label"
                                                                 for="military_postponement_reason">سبب
                                                                 ومدة تأجيل
@@ -849,13 +850,12 @@
                                                         </div>
                                                     </div>
 
-                                                    <div id="final_exemption_fields" style="display: none;">
+                                                    <div class="row mb-3" id="final_exemption_fields"
+                                                        style="display: none;">
                                                         <!-- تاريخ اعفاء الخدمة العسكرية -->
-                                                        <div class="col-md-6">
+                                                        <div class="col-md-4 mb-3">
                                                             <label class="form-label"
-                                                                for="military_exemption_date_final">تاريخ
-                                                                اعفاء
-                                                                الخدمة
+                                                                for="military_exemption_date_final">تاريخ اعفاء الخدمة
                                                                 العسكرية</label>
                                                             <input type="text" name="military_exemption_date"
                                                                 value="{{ old('military_exemption_date') }}"
@@ -870,10 +870,9 @@
                                                         </div>
 
                                                         <!-- سبب اعفاء الخدمة العسكرية -->
-                                                        <div class="col-md-6">
+                                                        <div class="col-md-8 mb-3">
                                                             <label class="form-label" for="military_exemption_reason">سبب
-                                                                اعفاء الخدمة
-                                                                العسكرية</label>
+                                                                اعفاء الخدمة العسكرية</label>
                                                             <input type="text" id="military_exemption_reason"
                                                                 value="{{ old('military_exemption_reason') }}"
                                                                 class="form-control @error('military_exemption_reason') is-invalid @enderror"
@@ -887,14 +886,12 @@
                                                         </div>
                                                     </div>
 
-                                                    <div id="complete_service_fields" style="display: none;">
+                                                    <div class="mb-3 row" id="complete_service_fields"
+                                                        style="display: none;">
                                                         <!-- تاريخ بداية الخدمة العسكرية -->
-                                                        <div class="col-md-6">
-                                                            <label class="form-label"
-                                                                for="military_service_start_date">تاريخ
-                                                                بداية
-                                                                الخدمة
-                                                                العسكرية</label>
+                                                        <div class="col-md-4 mb-3">
+                                                            <label class="form-label" for="military_service_start_date">
+                                                                تاريخ بداية الخدمة العسكرية</label>
                                                             <input type="text" name="military_service_start_date"
                                                                 id="military_service_start_date" autocomplete="none"
                                                                 value="{{ old('military_service_start_date') }}"
@@ -908,10 +905,9 @@
                                                         </div>
 
                                                         <!-- تاريخ نهاية الخدمة العسكرية -->
-                                                        <div class="col-md-6">
+                                                        <div class="col-md-4 mb-3">
                                                             <label class="form-label"
-                                                                for="military_service_end_date">تاريخ
-                                                                نهاية الخدمة
+                                                                for="military_service_end_date">تاريخ نهاية الخدمة
                                                                 العسكرية</label>
                                                             <input type="text" name="military_service_end_date"
                                                                 id="military_service_end_date" autocomplete="none"
@@ -926,9 +922,9 @@
                                                         </div>
 
                                                         <!-- سلاح الخدمة العسكرية -->
-                                                        <div class="col-md-6">
-                                                            <label class="form-label" for="military_weapon">سلاح
-                                                                الخدمة العسكرية</label>
+                                                        <div class="col-md-4 mb-3">
+                                                            <label class="form-label" for="military_weapon">سلاح الخدمة
+                                                                العسكرية</label>
                                                             <input type="text" id="military_weapon"
                                                                 value="{{ old('military_weapon') }}"
                                                                 class="form-control @error('military_weapon') is-invalid @enderror"
@@ -940,6 +936,7 @@
                                                             @enderror
                                                         </div>
                                                     </div>
+
 
 
                                                 </div>
@@ -1529,49 +1526,49 @@
                                                     </div>
 
                                                     <div class="col-md-12">
-                                                        {{-- <x-image-preview name="photo" title="أرفق صورة الموظف" /> --}}
-                                                        <label for="formFile" class="form-label">ارف
-                                                            صورة
-                                                            الموظف</label>
-                                                        <input class="form-control" name="photo" type="file"
-                                                            id="formFile">
+                                                        <x-image-preview name='photo' title="أرفق صورة الموظف" />
                                                     </div>
+                                                </div>
 
-                                                    <div class="col-md-6">
-                                                        <label for="formFile" class="form-label">أرفاق
-                                                            السيرة
-                                                            الذاتية</label>
-                                                        <input class="form-control" name="cv" type="file"
-                                                            id="formFile">
-                                                    </div>
+                                                <div class="col-md-6">
+                                                    <label for="formFile" class="form-label">أرفاق
+                                                        السيرة
+                                                        الذاتية</label>
+                                                    <input class="form-control" name="cv" type="file"
+                                                        id="formFile">
                                                 </div>
                                             </div>
                                         </div>
-                                    </form>
-
-
-
-
-
-
-
                                 </div>
+                                <x-create-button-component></x-create-button-component>
+
+                                </form>
+
+
+
+
+
+
+
                             </div>
                         </div>
-                        <!--end::Header-->
-                        <!--begin::Form-->
-
-
-                        <!--end::Form-->
                     </div>
+                    <!--end::Header-->
+                    <!--begin::Form-->
+
+
+                    <!--end::Form-->
                 </div>
-                <!-- /.row (main row) -->
-            </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.row (main row) -->
+        </div><!-- /.container-fluid -->
     </section>
 
 
 @endsection
 @push('js')
+    <script src="{{ asset('dashboard') }}/assets/dist/js/employees/create-scripts.js"></script>
+
     <script>
         $(document).ready(function() {
             $('.select2').select2({
@@ -1583,55 +1580,6 @@
     </script>
 
 
-    <script>
-        $(document).ready(function() {
-            $('.date-picker').flatpickr({
-                dateFormat: "Y-m-d",
-                allowInput: true,
-                appendTo: document.body
-            });
-        });
-    </script>
-    <!-- Vendors JS -->
-    <script src="{{ asset('dashboard') }}/assets/vendor/libs/cleavejs/cleave.js"></script>
-    <script src="{{ asset('dashboard') }}/assets/vendor/libs/cleavejs/cleave-phone.js"></script>
-    <script src="{{ asset('dashboard') }}/assets/vendor/libs/moment/moment.js"></script>
-    <script src="{{ asset('dashboard') }}/assets/vendor/libs/select2/select2.js"></script>
-    <script src="{{ asset('dashboard') }}/assets/dist/js/employees/create-scripts.js"></script>
-
-    <!-- filepond -->
-    <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
-    <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
-    <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
-
-
-    <script>
-        $(document).ready(function() {
-            // منع تحديث الـ URL عند النقر على التبويبات
-            $('a[data-toggle="pill"]').on('click', function(e) {
-                e.preventDefault();
-                $(this).tab('show');
-            });
-        });
-    </script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var submitButton = document.getElementById('submitButton');
-            var form = document.getElementById('storeForm');
-
-            // لما تضغط على الزر
-            submitButton.addEventListener('click', function(e) {
-                e.preventDefault(); // نمنع الإفتراضي لو كان الزر داخل الفورم
-                form.submit();
-            });
-
-            // عند إرسال الفورم
-            form.addEventListener('submit', function(event) {
-                submitButton.disabled = true;
-                submitButton.innerHTML = 'جاري الحفظ...';
-            });
-        });
-    </script>
     <script>
         $(document).ready(function() {
             $('#country_id').change(function() {
