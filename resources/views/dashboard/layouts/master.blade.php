@@ -4,6 +4,7 @@
 
 <head>
 
+   
     <!--end::Required Plugin(AdminLTE)-->
     @include('dashboard.layouts.head')
 

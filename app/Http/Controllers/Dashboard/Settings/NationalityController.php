@@ -94,4 +94,13 @@ class NationalityController extends Controller
             'message' => 'تم حذف الجنسية بنجاح'
         ]);
     }
+
+
+    function searchNationality(Request $request)
+    {
+        $nationalities = Nationality::where('name', 'LIKE', "%{$request->q}%")->limit(5)->get();
+        return response()->json([
+            'data' => $nationalities
+        ]);
+    }
 }

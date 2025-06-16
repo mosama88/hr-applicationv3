@@ -94,4 +94,13 @@ class QualificationController extends Controller
             'message' => 'تم حذف المؤهل بنجاح'
         ]);
     }
+
+
+    function searchQualification(Request $request)
+    {
+        $qualifications = Qualification::where('name', 'LIKE', "%{$request->q}%")->limit(5)->get();
+        return response()->json([
+            'data' => $qualifications
+        ]);
+    }
 }

@@ -100,4 +100,13 @@ class GovernorateController extends Controller
             'message' => 'تم حذف الجنسية بنجاح'
         ]);
     }
+
+
+    function searchGovernorate(Request $request)
+    {
+        $governorates = Governorate::where('name', 'LIKE', "%{$request->q}%")->limit(5)->get();
+        return response()->json([
+            'data' => $governorates
+        ]);
+    }
 }

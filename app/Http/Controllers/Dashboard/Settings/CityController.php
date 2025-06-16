@@ -100,4 +100,13 @@ class CityController extends Controller
             'message' => 'تم حذف المدينة بنجاح'
         ]);
     }
+
+
+    function searchCity(Request $request)
+    {
+        $cities = City::where('name', 'LIKE', "%{$request->q}%")->limit(5)->get();
+        return response()->json([
+            'data' => $cities
+        ]);
+    }
 }

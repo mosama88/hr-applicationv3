@@ -94,4 +94,13 @@ class JobCategoryController extends Controller
             'message' => 'تم حذف الوظيفه بنجاح'
         ]);
     }
+
+
+    function searchJob_category(Request $request)
+    {
+        $jobCategories = JobCategory::where('name', 'LIKE', "%{$request->q}%")->limit(5)->get();
+        return response()->json([
+            'data' => $jobCategories
+        ]);
+    }
 }

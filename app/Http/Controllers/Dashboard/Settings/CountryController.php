@@ -91,4 +91,13 @@ class CountryController extends Controller
             'message' => 'تم حذف البلد بنجاح'
         ]);
     }
+
+
+    function searchCountry(Request $request)
+    {
+        $countries = Country::where('name', 'LIKE', "%{$request->q}%")->orWhere('country_code', 'LIKE', "%{$request->q}%")->limit(5)->get();
+        return response()->json([
+            'data' => $countries
+        ]);
+    }
 }

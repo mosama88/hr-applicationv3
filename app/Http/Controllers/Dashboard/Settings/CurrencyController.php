@@ -14,7 +14,7 @@ class CurrencyController extends Controller
     /**
      * Display a listing of the resource.
      */
-     public function index()
+    public function index()
     {
         /**
          * Display a listing of the resource.
@@ -92,6 +92,14 @@ class CurrencyController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'تم حذف العملة بنجاح'
+        ]);
+    }
+
+    function searchCurrency(Request $request)
+    {
+        $currencies = Currency::where('name', 'LIKE', "%{$request->q}%")->orWhere('currency_symbol', 'LIKE', "%{$request->q}%")->limit(5)->get();
+        return response()->json([
+            'data' => $currencies
         ]);
     }
 }

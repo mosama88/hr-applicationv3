@@ -94,4 +94,13 @@ class LanguageController extends Controller
             'message' => 'تم حذف اللغه بنجاح'
         ]);
     }
+
+
+    function searchlanguage(Request $request)
+    {
+        $languagess = Language::where('name', 'LIKE', "%{$request->q}%")->limit(5)->get();
+        return response()->json([
+            'data' => $languagess
+        ]);
+    }
 }

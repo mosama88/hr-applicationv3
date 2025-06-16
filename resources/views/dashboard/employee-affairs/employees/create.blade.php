@@ -16,6 +16,9 @@
 @section('active-discount_types', 'active')
 @section('title', 'أضافة موظف جديد')
 @push('css')
+    <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/dist/css/select2.min.css" />
+    <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/dist/css/select2-style.css" />
+
     <!-- مكتبة Flatpickr CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <!-- ستايل إضافي للغة العربية -->
@@ -182,17 +185,9 @@
                                                         <label class="form-label" for="qualification_id-input">المؤهل
                                                             الدراسي</label>
                                                         <select name="qualification_id"
-                                                            class="select2 form-select @error('qualification_id') is-invalid @enderror"
+                                                            class="select2 form-select qualification_select2 @error('qualification_id') is-invalid @enderror"
                                                             data-allow-clear="true">
-                                                            <option selected value="">-- أختر
-                                                                المؤهل --
-                                                            </option>
-                                                            @foreach ($other['qualifications'] as $qualification)
-                                                                <option @if (old('qualification_id') == $qualification->id) selected @endif
-                                                                    value="{{ $qualification->id }}">
-                                                                    {{ $qualification->name }}
-                                                                </option>
-                                                            @endforeach
+                                                            <option value=""></option>
                                                         </select>
                                                         @error('qualification_id')
                                                             <span class="invalid-feedback text-right" role="alert">
@@ -354,9 +349,7 @@
                                                             class="form-select @error('social_status') is-invalid @enderror"
                                                             name="social_status" id="social_status"
                                                             aria-label="Default select example">
-                                                            <option selected value="">-- أختر
-                                                                الحالة
-                                                                الأجتماعية --
+                                                            <option selected value="">-- أختر الحالة الأجتماعية --
                                                             </option>
                                                             @foreach (SocialStatus::cases() as $socialStatus)
                                                                 <option @if (old('social_status') == $socialStatus->value) selected @endif
@@ -397,11 +390,7 @@
                                                         <select name="blood_type_id" value="{{ old('blood_type_id') }}"
                                                             class="select2 form-select @error('blood_type_id') is-invalid @enderror"
                                                             data-allow-clear="true">
-                                                            <option selected value="">-- أختر
-                                                                نوع
-                                                                فصيلة
-                                                                الدم
-                                                                --
+                                                            <option selected value="">-- أختر نوع فصيلة الدم --
                                                             </option>
                                                             @foreach ($other['blood_types'] as $blood)
                                                                 <option @if (old('blood_type_id') == $blood->id) selected @endif
@@ -420,17 +409,9 @@
                                                     <div class="col-md-4">
                                                         <label class="form-label" for="formtabs-country">الجنسية</label>
                                                         <select name="nationality_id"
-                                                            class="select2 form-select @error('nationality_id') is-invalid @enderror"
+                                                            class="select2 form-select nationality_select2 @error('nationality_id') is-invalid @enderror"
                                                             data-allow-clear="true">
-                                                            <option selected value="">-- أختر
-                                                                الجنسية --
-                                                            </option>
-                                                            @foreach ($other['nationalities'] as $nationality)
-                                                                <option @if (old('nationality_id') == $nationality->id) selected @endif
-                                                                    value="{{ $nationality->id }}">
-                                                                    {{ $nationality->name }}
-                                                                </option>
-                                                            @endforeach
+                                                            <option value=""></option>
                                                         </select>
                                                         @error('nationality_id')
                                                             <span class="invalid-feedback text-right" role="alert">
@@ -444,16 +425,9 @@
                                                         <label class="form-label" for="formtabs-country">اللغة
                                                             الاساسية التي يتحدث بها </label>
                                                         <select name="language_id"
-                                                            class="select2 form-select @error('language_id') is-invalid @enderror"
+                                                            class="select2 form-select language_select2 @error('language_id') is-invalid @enderror"
                                                             data-allow-clear="true">
-                                                            <option selected value="">-- أختر
-                                                                اللغة --
-                                                            </option>
-                                                            @foreach ($other['languages'] as $language)
-                                                                <option @if (old('language_id') == $language->id) selected @endif
-                                                                    value="{{ $language->id }}">
-                                                                    {{ $language->name }}</option>
-                                                            @endforeach
+                                                            <option value=""></option>
                                                         </select>
                                                         @error('language_id')
                                                             <span class="invalid-feedback text-right" role="alert">
@@ -511,16 +485,9 @@
                                                         <label class="form-label" for="formtabs-country">الدولة
                                                             التابع لها الموظف</label>
                                                         <select name="country_id" id="country_id"
-                                                            class="select2 form-select @error('country_id') is-invalid @enderror"
+                                                            class="select2 form-select country_select2 @error('country_id') is-invalid @enderror"
                                                             data-allow-clear="true">
-                                                            <option selected value="">-- أختر
-                                                                الدولة --
-                                                            </option>
-                                                            @foreach ($other['countries'] as $country)
-                                                                <option @if (old('country_id') == $country->id) selected @endif
-                                                                    value="{{ $country->id }}">
-                                                                    {{ $country->name }}</option>
-                                                            @endforeach
+                                                            <option value=""></option>
                                                         </select>
                                                         @error('country_id')
                                                             <span class="invalid-feedback text-right" role="alert">
@@ -531,20 +498,12 @@
 
                                                     <!-- المحافظة التابع لها الموظف   -->
                                                     <div class="col-md-4">
-                                                        <label class="form-label" for="formtabs-country">المحافظة
+                                                        <label class="form-label" for="governorate_id">المحافظة
                                                             التابع لها الموظف</label>
                                                         <select name="governorate_id" id="governorate_id"
-                                                            class="select2 form-select @error('governorate_id') is-invalid @enderror"
+                                                            class="select2 form-select governorate_select2 @error('governorate_id') is-invalid @enderror"
                                                             data-allow-clear="true">
-                                                            <option selected value="">-- أختر
-                                                                المحافظة --
-                                                            </option>
-                                                            @foreach ($other['governorates'] as $governorate)
-                                                                <option @if (old('governorate_id') == $governorate->id) selected @endif
-                                                                    value="{{ $governorate->id }}">
-                                                                    {{ $governorate->name }}
-                                                                </option>
-                                                            @endforeach
+                                                            <option value=""></option>
                                                         </select>
                                                         @error('governorate_id')
                                                             <span class="invalid-feedback text-right" role="alert">
@@ -558,18 +517,9 @@
                                                         <label class="form-label"
                                                             for="formtabs-country">المدينة/المركز</label>
                                                         <select name="city_id" id="city_id"
-                                                            class="select2 form-select @error('city_id') is-invalid @enderror"
+                                                            class="select2 form-select city_select2 @error('city_id') is-invalid @enderror"
                                                             data-allow-clear="true">
-                                                            <option selected value="">-- أختر
-                                                                المدينة/المركز
-                                                                --
-                                                            </option>
-                                                            @foreach ($other['cities'] as $city)
-                                                                <option @if (old('city_id') == $city->id) selected @endif
-                                                                    value="{{ $city->id }}">
-                                                                    {{ $city->name }}
-                                                                </option>
-                                                            @endforeach
+                                                            <option value=""></option>
                                                         </select>
                                                         @error('city_id')
                                                             <span class="invalid-feedback text-right" role="alert">
@@ -767,9 +717,7 @@
                                                     <div class="col-md-12" id="disabilities_details_container"
                                                         style="display: none;">
                                                         <label class="form-label" for="disabilities_details">تفاصيل
-                                                            الاعاقة /
-                                                            عمليات
-                                                            سابقة</label>
+                                                            الاعاقة / عمليات سابقة</label>
                                                         <input type="text" id="disabilities_details"
                                                             value="{{ old('disabilities_details') }}"
                                                             class="form-control @error('disabilities_details') is-invalid @enderror"
@@ -806,8 +754,7 @@
                                                 <div class="row g-3">
                                                     <!-- حالة الخدمة العسكرية -->
                                                     <div class="col-md-6 mb-3">
-                                                        <label for="military_status" class="form-label">حالة
-                                                            الخدمة
+                                                        <label for="military_status" class="form-label">حالة الخدمة
                                                             العسكرية</label>
                                                         <select
                                                             class="form-select @error('military') is-invalid @enderror"
@@ -986,12 +933,8 @@
                                                             @enderror
                                                         </div>
                                                     </div>
-
-
-
                                                 </div>
                                             </div>
-
 
                                             <!-- تبويب البيانات الوظيفية -->
                                             <div class="tab-pane fade" id="job" role="tabpanel">
@@ -1020,7 +963,6 @@
                                                     </div>
 
 
-
                                                     <!-- الحالة الوظيفية -->
                                                     <div class="col-md-4 ">
                                                         <label for="functional_status-input" class="form-label">
@@ -1030,9 +972,7 @@
                                                             class="form-select @error('functional_status') is-invalid @enderror"
                                                             name="functional_status" id="functional_status-input"
                                                             aria-label="Default select example">
-                                                            <option selected value="">-- أختر
-                                                                الحالة --
-                                                            </option>
+                                                            <option selected value="">-- أختر الحالة -- </option>
                                                             @foreach (FunctionalStatus::cases() as $functional)
                                                                 <option @if (old('functional_status') == $functional->value) selected @endif
                                                                     value="{{ $functional->value }}">
@@ -1047,7 +987,6 @@
                                                         @enderror
                                                     </div>
 
-
                                                     <!-- الدرجه الوظيفية -->
                                                     <div class="col-md-4">
                                                         <label class="form-label" for="job_grade_id-input">الدرجه
@@ -1055,9 +994,7 @@
                                                         <select name="job_grade_id" id="job_grade_id-input"
                                                             class="select2 form-select @error('job_grade_id') is-invalid @enderror"
                                                             data-allow-clear="true">
-                                                            <option selected value="">-- أختر
-                                                                الدرجه --
-                                                            </option>
+                                                            <option selected value="">-- أختر الدرجه -- </option>
                                                             </option>
                                                             @foreach ($other['job_grades'] as $jobGrade)
                                                                 <option @if (old('job_grade_id') == $jobGrade->id) selected @endif
@@ -1076,20 +1013,12 @@
 
                                                     <!-- الادارة -->
                                                     <div class="col-md-4">
-                                                        <label class="form-label" for="department_id-input">الادارة
-                                                            التابع لها الموظف</label>
-                                                        <select
-                                                            class="select2 form-select @error('department_id') is-invalid @enderror"
-                                                            name="department_id" data-allow-clear="true"
-                                                            id="department_id-input">
-                                                            <option selected value="">-- أختر
-                                                                الادارة --
-                                                            </option>
-                                                            @foreach ($other['departments'] as $branch)
-                                                                <option @if (old('department_id') == $branch->id) selected @endif
-                                                                    value="{{ $branch->id }}">
-                                                                    {{ $branch->name }}</option>
-                                                            @endforeach
+                                                        <label class="form-label" for="department_id-input">الادارة التابع
+                                                            لها الموظف</label>
+                                                        <select name="department_id"
+                                                            class="select2 form-select department_select2 @error('department_id') is-invalid @enderror"
+                                                            data-allow-clear="true">
+                                                            <option value=""></option>
                                                         </select>
                                                         @error('department_id')
                                                             <span class="invalid-feedback text-right" role="alert">
@@ -1103,17 +1032,9 @@
                                                         <label class="form-label" for="job_category_id-input">وظيفة
                                                             الموظف</label>
                                                         <select name="job_category_id" id="job_category_id-input"
-                                                            class="select2 form-select @error('job_category_id') is-invalid @enderror"
+                                                            class="select2 form-select job_category_select2 @error('job_category_id') is-invalid @enderror"
                                                             data-allow-clear="true">
-                                                            <option selected value="">-- أختر
-                                                                الوظيفة --
-                                                            </option>
-                                                            @foreach ($other['job_categories'] as $jobCategory)
-                                                                <option @if (old('job_category_id') == $jobCategory->id) selected @endif
-                                                                    value="{{ $jobCategory->id }}">
-                                                                    {{ $jobCategory->name }}
-                                                                </option>
-                                                            @endforeach
+                                                            <option value=""></option>
                                                         </select>
                                                         @error('job_category_id')
                                                             <span class="invalid-feedback text-right" role="alert">
@@ -1263,17 +1184,9 @@
                                                             الموظف
                                                         </label>
                                                         <select name="currency_id" id="currency_id-input"
-                                                            class="select2 form-select @error('currency_id') is-invalid @enderror"
+                                                            class="select2 form-select js-example-basic-single currency_select2 @error('currency_id') is-invalid @enderror"
                                                             data-allow-clear="true">
-                                                            <option selected value="">-- أختر
-                                                                العملة --
-                                                            </option>
-                                                            @foreach ($other['currencies'] as $currency)
-                                                                <option @if (old('currency_id') == $currency->id) selected @endif
-                                                                    value="{{ $currency->id }}">
-                                                                    {{ $currency->name }}
-                                                                </option>
-                                                            @endforeach
+                                                            <option selected value=""></option>
                                                         </select>
                                                         @error('currency_id')
                                                             <span class="invalid-feedback text-right" role="alert">
@@ -1570,32 +1483,40 @@
                                                     </div>
                                                     <!-- تاريخ انتهاء الباسبور -->
                                                     <div class="col-md-4">
-                                                        <label class="form-label">تاريخ
+                                                        <label class="form-label" for="pasport_exp_date-input">تاريخ
                                                             انتهاء الباسبور
                                                         </label>
-                                                        <input type="text" name="pasport_exp_date"
-                                                            value="{{ old('pasport_exp_date') }}" autocomplete="none"
-                                                            class="form-control date-picker @error('pasport_exp_date') is-invalid @enderror"
-                                                            placeholder="YYYY-MM-DD" />
-                                                        @error('pasport_exp_date')
-                                                            <span class="invalid-feedback text-right" role="alert">
-                                                                <strong>{{ $message }}</strong>
+                                                        <div class="input-group">
+                                                            <span class="input-group-text bg-primary"
+                                                                style="background-color: #2C6391 !important; border-color: #2C6391;">
+                                                                <i class="far fa-calendar-alt text-white"></i>
                                                             </span>
+                                                            <input type="text"
+                                                                class="form-control date-input date-picker @error('pasport_exp_date') is-invalid @enderror"
+                                                                name="pasport_exp_date" id="pasport_exp_date-input"
+                                                                placeholder="يوم / شهر / سنة"
+                                                                value="{{ old('pasport_exp_date') }}">
+                                                        </div>
+                                                        @error('pasport_exp_date')
+                                                            <div class="invalid-feedback text-right d-block">
+                                                                {{ $message }}
+                                                            </div>
                                                         @enderror
                                                     </div>
 
-                                                    <div class="col-md-12">
+
+                                                    <div class="col-md-6">
                                                         <x-image-preview name='photo' title="أرفق صورة الموظف" />
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label for="formFile" class="form-label">أرفاق
+                                                            السيرة
+                                                            الذاتية</label>
+                                                        <input class="form-control" name="cv" type="file"
+                                                            id="formFile">
                                                     </div>
                                                 </div>
 
-                                                <div class="col-md-6">
-                                                    <label for="formFile" class="form-label">أرفاق
-                                                        السيرة
-                                                        الذاتية</label>
-                                                    <input class="form-control" name="cv" type="file"
-                                                        id="formFile">
-                                                </div>
                                             </div>
                                         </div>
                                 </div>
@@ -1627,6 +1548,8 @@
 @endsection
 @push('js')
     <script src="{{ asset('dashboard') }}/assets/dist/js/employees/create-scripts.js"></script>
+    <script src="{{ asset('dashboard') }}/assets/dist/js/select2.min.js"></script>
+
     <!-- مكتبة Flatpickr JS -->
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <!-- ملف اللغة العربية -->
@@ -1655,15 +1578,11 @@
         });
     </script>
 
-    <script>
+    {{-- <script>
         $(document).ready(function() {
-            $('.select2').select2({
-                placeholder: '-- أختر --',
-                allowClear: true,
-                width: '100%' // مهم جدًا عشان التنسيق
-            });
+            $('.js-example-basic-single').select2();
         });
-    </script>
+    </script> --}}
 
 
     <script>
@@ -1726,6 +1645,223 @@
                 } else {
                     $('#city_id').empty();
                     $('#city_id').append('<option value="">-- أختر المدينه --</option>');
+                }
+            });
+        });
+    </script>
+
+
+
+
+
+    <script>
+        $(document).ready(function() {
+            // country_select2
+            $('.country_select2').select2({
+                placeholder: '-- أختر الدولة --',
+                ajax: {
+                    url: "{{ route('dashboard.countries.searchCountry') }}",
+                    dataType: 'json',
+                    delay: 250, // Delay for better UX
+                    data: function(params) {
+                        return {
+                            q: params.term // Search query
+                        };
+                    },
+                    processResults: function(data) {
+                        return {
+                            results: data.data.map(countries => ({
+                                id: countries.id,
+                                text: `${countries.name} ➜ (${countries.country_code})`
+                            }))
+                        };
+                    }
+                }
+            });
+
+            // currency_select2
+            $('.currency_select2').select2({
+                placeholder: '-- أختر العملة --',
+                ajax: {
+                    url: "{{ route('dashboard.currencies.searchCurrency') }}",
+                    dataType: 'json',
+                    delay: 250, // Delay for better UX
+                    data: function(params) {
+                        return {
+                            q: params.term // Search query
+                        };
+                    },
+                    processResults: function(data) {
+                        return {
+                            results: data.data.map(currencies => ({
+                                id: currencies.id,
+                                text: `${currencies.name} ➜ (${currencies.currency_symbol})`
+                            }))
+                        };
+                    }
+                }
+            });
+
+            // nationality_select2
+            $('.nationality_select2').select2({
+                placeholder: '-- أختر الجنسية --',
+                ajax: {
+                    url: "{{ route('dashboard.nationalities.searchNationality') }}",
+                    dataType: 'json',
+                    delay: 250, // Delay for better UX
+                    data: function(params) {
+                        return {
+                            q: params.term // Search query
+                        };
+                    },
+                    processResults: function(data) {
+                        return {
+                            results: data.data.map(nationalities => ({
+                                id: nationalities.id,
+                                text: `${nationalities.name}`
+                            }))
+                        };
+                    }
+                }
+            });
+
+            // governorate_select2
+            $('.governorate_select2').select2({
+                placeholder: '-- أختر المحافظة --',
+                ajax: {
+                    url: "{{ route('dashboard.governorates.searchGovernorate') }}",
+                    dataType: 'json',
+                    delay: 250, // Delay for better UX
+                    data: function(params) {
+                        return {
+                            q: params.term // Search query
+                        };
+                    },
+                    processResults: function(data) {
+                        return {
+                            results: data.data.map(governorates => ({
+                                id: governorates.id,
+                                text: `${governorates.name}`
+                            }))
+                        };
+                    }
+                }
+            });
+
+            // city_select2
+            $('.city_select2').select2({
+                placeholder: '-- أختر المدينه --',
+                ajax: {
+                    url: "{{ route('dashboard.cities.searchCity') }}",
+                    dataType: 'json',
+                    delay: 250, // Delay for better UX
+                    data: function(params) {
+                        return {
+                            q: params.term // Search query
+                        };
+                    },
+                    processResults: function(data) {
+                        return {
+                            results: data.data.map(cities => ({
+                                id: cities.id,
+                                text: `${cities.name}`
+                            }))
+                        };
+                    }
+                }
+            });
+
+
+            // language_select2
+            $('.language_select2').select2({
+                placeholder: '-- أختر اللغه --',
+                ajax: {
+                    url: "{{ route('dashboard.languages.searchlanguage') }}",
+                    dataType: 'json',
+                    delay: 250, // Delay for better UX
+                    data: function(params) {
+                        return {
+                            q: params.term // Search query
+                        };
+                    },
+                    processResults: function(data) {
+                        return {
+                            results: data.data.map(languages => ({
+                                id: languages.id,
+                                text: `${languages.name}`
+                            }))
+                        };
+                    }
+                }
+            });
+
+
+            // qualification_select2
+            $('.qualification_select2').select2({
+                placeholder: '-- أختر المؤهل --',
+                ajax: {
+                    url: "{{ route('dashboard.qualifications.searchQualification') }}",
+                    dataType: 'json',
+                    delay: 250, // Delay for better UX
+                    data: function(params) {
+                        return {
+                            q: params.term // Search query
+                        };
+                    },
+                    processResults: function(data) {
+                        return {
+                            results: data.data.map(qualifications => ({
+                                id: qualifications.id,
+                                text: `${qualifications.name}`
+                            }))
+                        };
+                    }
+                }
+            });
+            // department_select2
+            $('.department_select2').select2({
+                placeholder: '-- أختر الادارة --',
+                ajax: {
+                    url: "{{ route('dashboard.departments.searchDepartment') }}",
+                    dataType: 'json',
+                    delay: 250, // Delay for better UX
+                    data: function(params) {
+                        return {
+                            q: params.term // Search query
+                        };
+                    },
+                    processResults: function(data) {
+                        return {
+                            results: data.data.map(departments => ({
+                                id: departments.id,
+                                text: `${departments.name}`
+                            }))
+                        };
+                    }
+                }
+            });
+
+
+            // job_category_select2
+            $('.job_category_select2').select2({
+                placeholder: '-- أختر الوظيفه --',
+                ajax: {
+                    url: "{{ route('dashboard.job_categories.searchJob_category') }}",
+                    dataType: 'json',
+                    delay: 250, // Delay for better UX
+                    data: function(params) {
+                        return {
+                            q: params.term // Search query
+                        };
+                    },
+                    processResults: function(data) {
+                        return {
+                            results: data.data.map(jobCategories => ({
+                                id: jobCategories.id,
+                                text: `${jobCategories.name}`
+                            }))
+                        };
+                    }
                 }
             });
         });

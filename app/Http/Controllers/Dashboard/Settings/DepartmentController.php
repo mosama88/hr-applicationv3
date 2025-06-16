@@ -91,4 +91,13 @@ class DepartmentController extends Controller
             'message' => 'تم حذف الاداره بنجاح'
         ]);
     }
+
+
+    function searchDepartment(Request $request)
+    {
+        $departments = Department::where('name', 'LIKE', "%{$request->q}%")->limit(5)->get();
+        return response()->json([
+            'data' => $departments
+        ]);
+    }
 }
