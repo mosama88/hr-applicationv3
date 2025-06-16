@@ -71,26 +71,26 @@
                                             <td>{{ $loop->iteration }}</td>
                                             <td>
                                                 @if ($info->getFirstMediaUrl('photo', 'preview'))
-                                                    <img class="img-fluid rounded my-4"
+                                                    <img class="img-thumbnail"
                                                         src="{{ $info->getFirstMediaUrl('photo', 'preview') }}"
-                                                        height="110" width="110" alt="{{ $info->name }}">
+                                                        style="max-width: 70px;max-height: 70px;" alt="{{ $info->name }}">
                                                 @elseif($info->gender === AdminGenderEnum::Male)
-                                                    <img class="img-fluid rounded my-4"
+                                                    <img class="img-thumbnail"
                                                         src="{{ asset('dashboard') }}/assets/img/employees-default.png"
-                                                        height="110" width="110" alt="{{ $info->name }}">
+                                                        style="max-width: 70px;max-height: 70px;" alt="{{ $info->name }}">
                                                 @elseif($info->gender === AdminGenderEnum::Female)
-                                                    <img class="img-fluid rounded my-4"
+                                                    <img class="img-thumbnail"
                                                         src="{{ asset('dashboard') }}/assets/img/employees-female-default.png"
-                                                        height="110" width="110" alt="{{ $info->name }}">
+                                                        style="max-width: 70px;max-height: 70px;" alt="{{ $info->name }}">
                                                 @else
-                                                    <img class="img-fluid rounded my-4"
+                                                    <img class="img-thumbnail"
                                                         src="{{ asset('dashboard') }}/assets/img/Employee.png"
-                                                        height="110" width="110" alt="{{ $info->name }}">
+                                                        style="max-width: 70px;max-height: 70px;" alt="{{ $info->name }}">
                                                 @endif
                                             </td>
                                             <td>{{ $info->employee_code }}</td>
                                             <td>{{ $info->name }}</td>
-                                            <td>{{ $info->branch->name }}</td>
+                                            <td>{{ $info->branch?->name }}</td>
                                             <td>{{ $info->jobCategory?->name }}</td>
                                             <td>{{ $info->mobile }}</td>
                                             <td>

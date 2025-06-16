@@ -13,7 +13,7 @@
     use App\Enums\Employee\GraduationEstimateEnum;
 @endphp
 @extends('dashboard.layouts.master')
-@section('active-discount_types', 'active')
+@section('active-employees', 'active')
 @section('title', 'أضافة موظف جديد')
 @push('css')
     <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/dist/css/select2.min.css" />
@@ -55,7 +55,7 @@
         'titlePage' => 'أضافة موظف جديد',
         'previousPage' => 'الموظفين',
         'currentPage' => 'أضافة موظف جديد',
-        'url' => 'discount_types.index',
+        'url' => 'employees.index',
     ])
 
 
@@ -1520,16 +1520,8 @@
                                             </div>
                                         </div>
                                 </div>
-                                <x-create-button-component></x-create-button-component>
-
+                                <x-edit-button-component></x-edit-button-component>
                                 </form>
-
-
-
-
-
-
-
                             </div>
                         </div>
                     </div>
@@ -1577,14 +1569,6 @@
             const endDate = flatpickr(".end_national_id-input", {});
         });
     </script>
-
-    {{-- <script>
-        $(document).ready(function() {
-            $('.js-example-basic-single').select2();
-        });
-    </script> --}}
-
-
     <script>
         $(document).ready(function() {
             $('#country_id').change(function() {
@@ -1614,12 +1598,7 @@
                     $('#governorate_id').append('<option value="">-- أختر المحافظة --</option>');
                 }
             });
-        });
-    </script>
 
-
-    <script>
-        $(document).ready(function() {
             $('#governorate_id').change(function() {
                 var governorateId = $(this).val();
                 if (governorateId) {
@@ -1649,10 +1628,6 @@
             });
         });
     </script>
-
-
-
-
 
     <script>
         $(document).ready(function() {
