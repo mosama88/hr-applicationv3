@@ -160,7 +160,7 @@
                                                             </option>
                                                             @foreach (AdminGenderEnum::cases() as $gender)
                                                                 <option value="{{ $gender->value }}"
-                                                                    @if (old('gender', $employee->value) == $gender->value) selected @endif>
+                                                                    @if (old('gender', $employee->gender->value) == $gender->value) selected @endif>
                                                                     {{ $gender->label() }}
                                                                 </option>
                                                             @endforeach
@@ -196,11 +196,11 @@
                                                         <select name="qualification_id"
                                                             class="select2 form-select qualification_select2 @error('qualification_id') is-invalid @enderror"
                                                             data-allow-clear="true">
-                                                            @if (old('qualification_id'))
+                                                            @if (old('qualification_id') || isset($employee->qualification_id))
                                                                 <option
-                                                                    value="{{ old('qualification_id', $employee->qualification_id) }}"
+                                                                    value="{{ old('qualification_id', $employee->qualification_id ?? '') }}"
                                                                     selected>
-                                                                    {{ Qualification::find(old('qualification_id')?->name) }}
+                                                                    {{ Qualification::find(old('qualification_id', $employee->qualification_id))->name }}
                                                                 </option>
                                                             @endif
                                                         </select>
@@ -225,7 +225,7 @@
                                                             </option>
                                                             @foreach (GraduationEstimateEnum::cases() as $estimate)
                                                                 <option value="{{ $estimate->value }}"
-                                                                    @if (old('graduation_estimate', $employee->value) == $estimate->value) selected @endif>
+                                                                    @if (old('graduation_estimate', $employee->graduation_estimate->value) == $estimate->value) selected @endif>
                                                                     {{ $estimate->label() }}
                                                                 </option>
                                                             @endforeach
@@ -367,7 +367,7 @@
                                                             <option selected value="">-- أختر الحالة الأجتماعية --
                                                             </option>
                                                             @foreach (SocialStatus::cases() as $socialStatus)
-                                                                <option @if (old('social_status', $employee->value) == $socialStatus->value) selected @endif
+                                                                <option @if (old('social_status', $employee->social_status->value) == $socialStatus->value) selected @endif
                                                                     value="{{ $socialStatus->value }}">
                                                                     {{ $socialStatus->label() }}
                                                                 </option>
@@ -426,11 +426,12 @@
                                                         <select name="nationality_id"
                                                             class="select2 form-select nationality_select2 @error('nationality_id') is-invalid @enderror"
                                                             data-allow-clear="true">
-                                                            @if (old('nationality_id'))
+
+                                                            @if (old('nationality_id') || isset($employee->nationality_id))
                                                                 <option
-                                                                    value="{{ old('nationality_id', $employee->nationality_id) }}"
+                                                                    value="{{ old('nationality_id', $employee->nationality_id ?? '') }}"
                                                                     selected>
-                                                                    {{ Nationality::find(old('nationality_id'))?->name }}
+                                                                    {{ Nationality::find(old('nationality_id', $employee->nationality_id))->name }}
                                                                 </option>
                                                             @endif
                                                         </select>
@@ -448,11 +449,11 @@
                                                         <select name="language_id"
                                                             class="select2 form-select language_select2 @error('language_id') is-invalid @enderror"
                                                             data-allow-clear="true">
-                                                            @if (old('language_id'))
+                                                            @if (old('language_id') || isset($employee->language_id))
                                                                 <option
-                                                                    value="{{ old('language_id', $employee->language_id) }}"
+                                                                    value="{{ old('language_id', $employee->language_id ?? '') }}"
                                                                     selected>
-                                                                    {{ Language::find(old('language_id'))?->name }}
+                                                                    {{ Language::find(old('language_id', $employee->language_id))->name }}
                                                                 </option>
                                                             @endif
                                                         </select>
@@ -474,7 +475,7 @@
                                                                 الديانة --
                                                             </option>
                                                             @foreach (ReligionEnum::cases() as $religion)
-                                                                <option @if (old('religion', $employee->value) == $religion->value) selected @endif
+                                                                <option @if (old('religion', $employee->religion->value) == $religion->value) selected @endif
                                                                     value="{{ $religion->value }}">
                                                                     {{ $religion->label() }}
                                                                 </option>
@@ -514,11 +515,11 @@
                                                         <select name="country_id" id="country_id"
                                                             class="select2 form-select country_select2 @error('country_id') is-invalid @enderror"
                                                             data-allow-clear="true">
-                                                            @if (old('country_id'))
+                                                            @if (old('country_id') || isset($employee->country_id))
                                                                 <option
-                                                                    value="{{ old('country_id', $employee->country_id) }}"
+                                                                    value="{{ old('country_id', $employee->country_id ?? '') }}"
                                                                     selected>
-                                                                    {{ Country::find(old('country_id'))?->name }}
+                                                                    {{ Country::find(old('country_id', $employee->country_id))->name }}
                                                                 </option>
                                                             @endif
                                                         </select>
@@ -536,11 +537,11 @@
                                                         <select name="governorate_id" id="governorate_id"
                                                             class="select2 form-select governorate_select2 @error('governorate_id') is-invalid @enderror"
                                                             data-allow-clear="true">
-                                                            @if (old('governorate_id'))
+                                                            @if (old('governorate_id') || isset($employee->governorate_id))
                                                                 <option
-                                                                    value="{{ old('governorate_id', $employee->governorate_id) }}"
+                                                                    value="{{ old('governorate_id', $employee->governorate_id ?? '') }}"
                                                                     selected>
-                                                                    {{ Governorate::find(old('governorate_id'))?->name }}
+                                                                    {{ Governorate::find(old('governorate_id', $employee->governorate_id))->name }}
                                                                 </option>
                                                             @endif
                                                         </select>
@@ -558,10 +559,11 @@
                                                         <select name="city_id" id="city_id"
                                                             class="select2 form-select city_select2 @error('city_id') is-invalid @enderror"
                                                             data-allow-clear="true">
-                                                            @if (old('city_id'))
-                                                                <option value="{{ old('city_id', $employee->city_id) }}"
+                                                            @if (old('city_id') || isset($employee->city_id))
+                                                                <option
+                                                                    value="{{ old('city_id', $employee->city_id ?? '') }}"
                                                                     selected>
-                                                                    {{ City::find(old('city_id'))?->name }}
+                                                                    {{ City::find(old('city_id', $employee->city_id))->name }}
                                                                 </option>
                                                             @endif
                                                         </select>
@@ -634,7 +636,7 @@
                                                                 الحالة --
                                                             </option>
                                                             @foreach (YesOrNoEnum::cases() as $license)
-                                                                <option @if (old('driving_license', $employee->value) == $license->value) selected @endif
+                                                                <option @if (old('driving_license', $employee->driving_license->value) == $license->value) selected @endif
                                                                     value="{{ $license->value }}">
                                                                     {{ $license->label() }}
                                                                 </option>
@@ -704,7 +706,7 @@
                                                                 الحالة --
                                                             </option>
                                                             @foreach (YesOrNoEnum::cases() as $relatives)
-                                                                <option @if (old('has_relatives', $employee->value) == $relatives->value) selected @endif
+                                                                <option @if (old('has_relatives', $employee->has_relatives->value) == $relatives->value) selected @endif
                                                                     value="{{ $relatives->value }}">
                                                                     {{ $relatives->label() }}
                                                                 </option>
@@ -746,7 +748,7 @@
                                                                 الحالة --
                                                             </option>
                                                             @foreach (YesOrNoEnum::cases() as $disabilities)
-                                                                <option @if (old('has_disabilities', $employee->value) == $disabilities->value) selected @endif
+                                                                <option @if (old('has_disabilities', $employee->has_disabilities->value) == $disabilities->value) selected @endif
                                                                     value="{{ $disabilities->value }}">
                                                                     {{ $disabilities->label() }}
                                                                 </option>
@@ -809,10 +811,10 @@
                                                             <option selected value="">-- أختر
                                                                 الحالة --
                                                             </option>
-                                                            @foreach (Military::cases() as $military)
-                                                                <option @if (old('military', $employee->value) == $military->value) selected @endif
-                                                                    value="{{ $military->value }}">
-                                                                    {{ $military->label() }}
+                                                            @foreach (Military::cases() as $militaries)
+                                                                <option @if (old('military', $employee->military->value) == $militaries->value) selected @endif
+                                                                    value="{{ $militaries->value }}">
+                                                                    {{ $militaries->label() }}
                                                                 </option>
                                                             @endforeach
                                                         </select>
@@ -824,11 +826,11 @@
                                                     </div>
 
                                                     <!-- الحقول المخفية بشكل افتراضي -->
-                                                    <div class="row mb-3" id="exemption_temporary_fields"
-                                                        style="display: none;">
+                                                    <div class="row mb-3">
                                                         <!-- تاريخ الاعفاء المؤقت الخدمة العسكرية -->
                                                         <div class="col-md-4 mb-3">
-                                                            <label class="form-label" for="military_exemption_date">تاريخ
+                                                            <label class="form-label"
+                                                                for="military_postponement_date">تاريخ
                                                                 الاعفاء المؤقت الخدمة العسكرية</label>
                                                             <div class="input-group">
                                                                 <span class="input-group-text bg-primary"
@@ -836,13 +838,13 @@
                                                                     <i class="far fa-calendar-alt text-white"></i>
                                                                 </span>
                                                                 <input type="text"
-                                                                    class="form-control date-input date-picker @error('military_exemption_date') is-invalid @enderror"
-                                                                    name="military_exemption_date"
-                                                                    id="military_exemption_date_picker"
+                                                                    class="form-control date-input date-picker @error('military_postponement_date') is-invalid @enderror"
+                                                                    name="military_postponement_date"
+                                                                    id="military_postponement_date_picker"
                                                                     placeholder="يوم / شهر / سنة"
-                                                                    value="{{ old('military_exemption_date', $employee->military_exemption_date) }}">
+                                                                    value="{{ old('military_postponement_date', $employee->military_postponement_date) }}">
                                                             </div>
-                                                            @error('military_exemption_date')
+                                                            @error('military_postponement_date')
                                                                 <div class="invalid-feedback text-right d-block">
                                                                     {{ $message }}
                                                                 </div>
@@ -870,12 +872,10 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="row mb-3" id="final_exemption_fields"
-                                                        style="display: none;">
+                                                    <div class="row mb-3">
                                                         <!-- تاريخ الاعفاء النهائى الخدمة العسكرية -->
                                                         <div class="col-md-4 mb-3">
-                                                            <label class="form-label"
-                                                                for="military_exemption_reason">تاريخ
+                                                            <label class="form-label" for="military_exemption_date">تاريخ
                                                                 الاعفاء النهائى الخدمة العسكرية</label>
                                                             <div class="input-group">
                                                                 <span class="input-group-text bg-primary"
@@ -883,13 +883,13 @@
                                                                     <i class="far fa-calendar-alt text-white"></i>
                                                                 </span>
                                                                 <input type="text"
-                                                                    class="form-control date-input date-picker @error('military_exemption_reason') is-invalid @enderror"
-                                                                    name="military_exemption_reason"
-                                                                    id="military_exemption_reason"
+                                                                    class="form-control date-input date-picker @error('military_exemption_date') is-invalid @enderror"
+                                                                    name="military_exemption_date"
+                                                                    id="military_exemption_date"
                                                                     placeholder="يوم / شهر / سنة"
-                                                                    value="{{ old('military_exemption_reason', $employee->military_exemption_reason) }}">
+                                                                    value="{{ old('military_exemption_date', $employee->military_exemption_date) }}">
                                                             </div>
-                                                            @error('military_exemption_reason')
+                                                            @error('military_exemption_date')
                                                                 <div class="invalid-feedback text-right d-block">
                                                                     {{ $message }}
                                                                 </div>
@@ -914,8 +914,7 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="mb-3 row" id="complete_service_fields"
-                                                        style="display: none;">
+                                                    <div class="mb-3 row">
                                                         <!-- تاريخ بداية الخدمة العسكرية -->
                                                         <div class="col-md-4 mb-3">
                                                             <label class="form-label" for="military_service_start_date">
@@ -981,7 +980,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-
                                             <!-- تبويب البيانات الوظيفية -->
                                             <div class="tab-pane fade" id="job" role="tabpanel">
                                                 <div class="row g-3">
@@ -1020,7 +1018,7 @@
                                                             aria-label="Default select example">
                                                             <option selected value="">-- أختر الحالة -- </option>
                                                             @foreach (FunctionalStatus::cases() as $functional)
-                                                                <option @if (old('functional_status', $employee->functional_status) == $functional->value) selected @endif
+                                                                <option @if (old('functional_status', $employee->functional_status->value) == $functional->value) selected @endif
                                                                     value="{{ $functional->value }}">
                                                                     {{ $functional->label() }}
                                                                 </option>
@@ -1065,11 +1063,11 @@
                                                             class="select2 form-select department_select2 @error('department_id') is-invalid @enderror"
                                                             data-allow-clear="true"
                                                             data-ajax-url="{{ route('dashboard.departments.searchDepartment') }}">
-                                                            @if (old('department_id'))
+                                                            @if (old('department_id') || isset($employee->department_id))
                                                                 <option
-                                                                    value="{{ old('department_id', $employee->department_id) }}"
+                                                                    value="{{ old('department_id', $employee->department_id ?? '') }}"
                                                                     selected>
-                                                                    {{ Department::find(old('department_id', $employee->department_id))?->name }}
+                                                                    {{ Department::find(old('department_id', $employee->department_id))->name }}
                                                                 </option>
                                                             @endif
                                                         </select>
@@ -1087,11 +1085,11 @@
                                                         <select name="job_category_id" id="job_category_id-input"
                                                             class="select2 form-select job_category_select2 @error('job_category_id') is-invalid @enderror"
                                                             data-allow-clear="true">
-                                                            @if (old('job_category_id'))
+                                                            @if (old('job_category_id') || isset($employee->job_category_id))
                                                                 <option
-                                                                    value="{{ old('job_category_id', $employee->job_category_id) }}"
+                                                                    value="{{ old('job_category_id', $employee->job_category_id ?? '') }}"
                                                                     selected>
-                                                                    {{ JobCategory::find(old('job_category_id'))?->name }}
+                                                                    {{ JobCategory::find(old('job_category_id', $employee->job_category_id))->name }}
                                                                 </option>
                                                             @endif
                                                         </select>
@@ -1115,7 +1113,7 @@
                                                                 الحالة --
                                                             </option>
                                                             @foreach (YesOrNoEnum::cases() as $attendance)
-                                                                <option @if (old('has_attendance', $employee->has_attendance) == $attendance->value) selected @endif
+                                                                <option @if (old('has_attendance', $employee->has_attendance->value) == $attendance->value) selected @endif
                                                                     value="{{ $attendance->value }}">
                                                                     {{ $attendance->label() }}
                                                                 </option>
@@ -1141,7 +1139,7 @@
                                                                 الحالة --
                                                             </option>
                                                             @foreach (YesOrNoEnum::cases() as $fixedShift)
-                                                                <option @if (old('has_fixed_shift', $employee->has_fixed_shift) == $fixedShift->value) selected @endif
+                                                                <option @if (old('has_fixed_shift', $employee->has_fixed_shift->value) == $fixedShift->value) selected @endif
                                                                     value="{{ $fixedShift->value }}">
                                                                     {{ $fixedShift->label() }}
                                                                 </option>
@@ -1245,11 +1243,11 @@
                                                         <select name="currency_id" id="currency_id-input"
                                                             class="select2 form-select js-example-basic-single currency_select2 @error('currency_id') is-invalid @enderror"
                                                             data-allow-clear="true">
-                                                            @if (old('currency_id'))
+                                                            @if (old('currency_id') || isset($employee->currency_id))
                                                                 <option
-                                                                    value="{{ old('currency_id', $employee->currency_id) }}"
+                                                                    value="{{ old('currency_id', $employee->currency_id ?? '') }}"
                                                                     selected>
-                                                                    {{ Currency::find(old('currency_id'))?->name }}
+                                                                    {{ Currency::find(old('currency_id', $employee->currency_id))->name }}
                                                                 </option>
                                                             @endif
                                                         </select>
@@ -1272,7 +1270,7 @@
                                                                 الحالة --
                                                             </option>
                                                             @foreach (YesOrNoEnum::cases() as $social)
-                                                                <option @if (old('has_social_insurance', $employee->has_social_insurance) == $social->value) selected @endif
+                                                                <option @if (old('has_social_insurance', $employee->has_social_insurance->value) == $social->value) selected @endif
                                                                     value="{{ $social->value }}">
                                                                     {{ $social->label() }}
                                                                 </option>
@@ -1334,7 +1332,7 @@
                                                                 الحالة --
                                                             </option>
                                                             @foreach (YesOrNoEnum::cases() as $medical)
-                                                                <option @if (old('has_medical_insurance', $employee->has_medical_insurance) == $medical->value) selected @endif
+                                                                <option @if (old('has_medical_insurance', $employee->has_medical_insurance->value) == $medical->value) selected @endif
                                                                     value="{{ $medical->value }}">
                                                                     {{ $medical->label() }}
                                                                 </option>
@@ -1397,7 +1395,7 @@
                                                                 الحالة --
                                                             </option>
                                                             @foreach (TypeSalaryReceipt::cases() as $salary)
-                                                                <option @if (old('type_salary_receipt', $employee->type_salary_receipt) == $salary->value) selected @endif
+                                                                <option @if (old('type_salary_receipt', $employee->type_salary_receipt->value) == $salary->value) selected @endif
                                                                     value="{{ $salary->value }}">
                                                                     {{ $salary->label() }}
                                                                 </option>
@@ -1422,7 +1420,7 @@
                                                                 الحالة --
                                                             </option>
                                                             @foreach (YesOrNoEnum::cases() as $allowances)
-                                                                <option @if (old('has_fixed_allowances', $employee->has_fixed_allowances) == $allowances->value) selected @endif
+                                                                <option @if (old('has_fixed_allowances', $employee->has_fixed_allowances->value) == $allowances->value) selected @endif
                                                                     value="{{ $allowances->value }}">
                                                                     {{ $allowances->label() }}
                                                                 </option>
@@ -1448,7 +1446,7 @@
                                                                 الحالة --
                                                             </option>
                                                             @foreach (MotivationType::cases() as $motivation)
-                                                                <option @if (old('motivation_type', $employee->motivation_type) == $motivation->value) selected @endif
+                                                                <option @if (old('motivation_type', $employee->motivation_type->value) == $motivation->value) selected @endif
                                                                     value="{{ $motivation->value }}">
                                                                     {{ $motivation->label() }}
                                                                 </option>
@@ -1492,7 +1490,7 @@
                                                                 الحالة --
                                                             </option>
                                                             @foreach (YesOrNoEnum::cases() as $vacation)
-                                                                <option @if (old('has_vacation_balance', $employee->has_vacation_balance) == $vacation->value) selected @endif
+                                                                <option @if (old('has_vacation_balance', $employee->has_vacation_balance->value) == $vacation->value) selected @endif
                                                                     value="{{ $vacation->value }}">
                                                                     {{ $vacation->label() }}
                                                                 </option>
