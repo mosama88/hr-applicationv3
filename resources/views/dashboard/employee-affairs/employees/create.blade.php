@@ -1,4 +1,12 @@
 @php
+    use App\Models\Currency;
+    use App\Models\City;
+    use App\Models\Country;
+    use App\Models\Language;
+    use App\Models\Governorate;
+    use App\Models\JobCategory;
+    use App\Models\Nationality;
+    use App\Models\Qualification;
     use App\Models\Department;
     use Carbon\Carbon;
     use App\Enums\AdminGenderEnum;
@@ -188,7 +196,12 @@
                                                         <select name="qualification_id"
                                                             class="select2 form-select qualification_select2 @error('qualification_id') is-invalid @enderror"
                                                             data-allow-clear="true">
-                                                            <option value=""></option>
+                                                            @if (old('qualification_id'))
+                                                                <option value="{{ old('qualification_id') }}" selected>
+                                                                    {{ optional(Qualification::find(old('qualification_id')))->name }}
+
+                                                                </option>
+                                                            @endif
                                                         </select>
                                                         @error('qualification_id')
                                                             <span class="invalid-feedback text-right" role="alert">
@@ -412,7 +425,11 @@
                                                         <select name="nationality_id"
                                                             class="select2 form-select nationality_select2 @error('nationality_id') is-invalid @enderror"
                                                             data-allow-clear="true">
-                                                            <option value=""></option>
+                                                            @if (old('nationality_id'))
+                                                                <option value="{{ old('nationality_id') }}" selected>
+                                                                    {{ Nationality::find(old('nationality_id'))?->name }}
+                                                                </option>
+                                                            @endif
                                                         </select>
                                                         @error('nationality_id')
                                                             <span class="invalid-feedback text-right" role="alert">
@@ -428,7 +445,11 @@
                                                         <select name="language_id"
                                                             class="select2 form-select language_select2 @error('language_id') is-invalid @enderror"
                                                             data-allow-clear="true">
-                                                            <option value=""></option>
+                                                            @if (old('language_id'))
+                                                                <option value="{{ old('language_id') }}" selected>
+                                                                    {{ Language::find(old('language_id'))?->name }}
+                                                                </option>
+                                                            @endif
                                                         </select>
                                                         @error('language_id')
                                                             <span class="invalid-feedback text-right" role="alert">
@@ -488,7 +509,11 @@
                                                         <select name="country_id" id="country_id"
                                                             class="select2 form-select country_select2 @error('country_id') is-invalid @enderror"
                                                             data-allow-clear="true">
-                                                            <option value=""></option>
+                                                            @if (old('country_id'))
+                                                                <option value="{{ old('country_id') }}" selected>
+                                                                    {{ Country::find(old('country_id'))?->name }}
+                                                                </option>
+                                                            @endif
                                                         </select>
                                                         @error('country_id')
                                                             <span class="invalid-feedback text-right" role="alert">
@@ -504,7 +529,11 @@
                                                         <select name="governorate_id" id="governorate_id"
                                                             class="select2 form-select governorate_select2 @error('governorate_id') is-invalid @enderror"
                                                             data-allow-clear="true">
-                                                            <option value=""></option>
+                                                            @if (old('governorate_id'))
+                                                                <option value="{{ old('governorate_id') }}" selected>
+                                                                    {{ Governorate::find(old('governorate_id'))?->name }}
+                                                                </option>
+                                                            @endif
                                                         </select>
                                                         @error('governorate_id')
                                                             <span class="invalid-feedback text-right" role="alert">
@@ -520,7 +549,11 @@
                                                         <select name="city_id" id="city_id"
                                                             class="select2 form-select city_select2 @error('city_id') is-invalid @enderror"
                                                             data-allow-clear="true">
-                                                            <option value=""></option>
+                                                            @if (old('city_id'))
+                                                                <option value="{{ old('city_id') }}" selected>
+                                                                    {{ City::find(old('city_id'))?->name }}
+                                                                </option>
+                                                            @endif
                                                         </select>
                                                         @error('city_id')
                                                             <span class="invalid-feedback text-right" role="alert">
@@ -779,11 +812,11 @@
                                                     </div>
 
                                                     <!-- الحقول المخفية بشكل افتراضي -->
-                                                    <div class="row mb-3" id="exemption_temporary_fields"
-                                                        style="display: none;">
+                                                    <div class="row mb-3">
                                                         <!-- تاريخ الاعفاء المؤقت الخدمة العسكرية -->
                                                         <div class="col-md-4 mb-3">
-                                                            <label class="form-label" for="military_exemption_date">تاريخ
+                                                            <label class="form-label"
+                                                                for="military_postponement_date">تاريخ
                                                                 الاعفاء المؤقت الخدمة العسكرية</label>
                                                             <div class="input-group">
                                                                 <span class="input-group-text bg-primary"
@@ -791,13 +824,13 @@
                                                                     <i class="far fa-calendar-alt text-white"></i>
                                                                 </span>
                                                                 <input type="text"
-                                                                    class="form-control date-input date-picker @error('military_exemption_date') is-invalid @enderror"
-                                                                    name="military_exemption_date"
-                                                                    id="military_exemption_date_picker"
+                                                                    class="form-control date-input date-picker @error('military_postponement_date') is-invalid @enderror"
+                                                                    name="military_postponement_date"
+                                                                    id="military_postponement_date_picker"
                                                                     placeholder="يوم / شهر / سنة"
-                                                                    value="{{ old('military_exemption_date') }}">
+                                                                    value="{{ old('military_postponement_date') }}">
                                                             </div>
-                                                            @error('military_exemption_date')
+                                                            @error('military_postponement_date')
                                                                 <div class="invalid-feedback text-right d-block">
                                                                     {{ $message }}
                                                                 </div>
@@ -825,12 +858,10 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="row mb-3" id="final_exemption_fields"
-                                                        style="display: none;">
+                                                    <div class="row mb-3">
                                                         <!-- تاريخ الاعفاء النهائى الخدمة العسكرية -->
                                                         <div class="col-md-4 mb-3">
-                                                            <label class="form-label"
-                                                                for="military_exemption_reason">تاريخ
+                                                            <label class="form-label" for="military_exemption_date">تاريخ
                                                                 الاعفاء النهائى الخدمة العسكرية</label>
                                                             <div class="input-group">
                                                                 <span class="input-group-text bg-primary"
@@ -838,13 +869,13 @@
                                                                     <i class="far fa-calendar-alt text-white"></i>
                                                                 </span>
                                                                 <input type="text"
-                                                                    class="form-control date-input date-picker @error('military_exemption_reason') is-invalid @enderror"
-                                                                    name="military_exemption_reason"
-                                                                    id="military_exemption_reason"
+                                                                    class="form-control date-input date-picker @error('military_exemption_date') is-invalid @enderror"
+                                                                    name="military_exemption_date"
+                                                                    id="military_exemption_date"
                                                                     placeholder="يوم / شهر / سنة"
-                                                                    value="{{ old('military_exemption_reason') }}">
+                                                                    value="{{ old('military_exemption_date') }}">
                                                             </div>
-                                                            @error('military_exemption_reason')
+                                                            @error('military_exemption_date')
                                                                 <div class="invalid-feedback text-right d-block">
                                                                     {{ $message }}
                                                                 </div>
@@ -869,8 +900,7 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="mb-3 row" id="complete_service_fields"
-                                                        style="display: none;">
+                                                    <div class="mb-3 row">
                                                         <!-- تاريخ بداية الخدمة العسكرية -->
                                                         <div class="col-md-4 mb-3">
                                                             <label class="form-label" for="military_service_start_date">
@@ -1040,7 +1070,11 @@
                                                         <select name="job_category_id" id="job_category_id-input"
                                                             class="select2 form-select job_category_select2 @error('job_category_id') is-invalid @enderror"
                                                             data-allow-clear="true">
-                                                            <option value=""></option>
+                                                            @if (old('job_category_id'))
+                                                                <option value="{{ old('job_category_id') }}" selected>
+                                                                    {{ JobCategory::find(old('job_category_id'))?->name }}
+                                                                </option>
+                                                            @endif
                                                         </select>
                                                         @error('job_category_id')
                                                             <span class="invalid-feedback text-right" role="alert">
@@ -1192,7 +1226,11 @@
                                                         <select name="currency_id" id="currency_id-input"
                                                             class="select2 form-select js-example-basic-single currency_select2 @error('currency_id') is-invalid @enderror"
                                                             data-allow-clear="true">
-                                                            <option selected value=""></option>
+                                                            @if (old('currency_id'))
+                                                                <option value="{{ old('currency_id') }}" selected>
+                                                                    {{ Currency::find(old('currency_id'))?->name }}
+                                                                </option>
+                                                            @endif
                                                         </select>
                                                         @error('currency_id')
                                                             <span class="invalid-feedback text-right" role="alert">

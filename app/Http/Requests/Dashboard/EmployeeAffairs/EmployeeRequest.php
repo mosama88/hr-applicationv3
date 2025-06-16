@@ -75,6 +75,7 @@ class EmployeeRequest extends FormRequest
     //         'military_exemption_date' => 'nullable',
     //         'military_exemption_reason' => 'nullable',
     //         'military_postponement_reason' => 'nullable',
+    //         'military_postponement_date' => 'nullable',
     //         'date_resignation' => 'nullable',
     //         'resignation_reason' => 'nullable',
     //         'driving_license' => 'nullable',
@@ -159,7 +160,7 @@ class EmployeeRequest extends FormRequest
     // }
 
 
-   public function rules(): array
+    public function rules(): array
     {
         $employeeId = $this->route('employee') ? $this->route('employee')->id : null;
 
@@ -205,6 +206,7 @@ class EmployeeRequest extends FormRequest
             'military_exemption_date' => 'nullable',
             'military_exemption_reason' => 'nullable',
             'military_postponement_reason' => 'nullable',
+            'military_postponement_date' => 'nullable',
             'date_resignation' => 'nullable',
             'resignation_reason' => 'nullable',
             'driving_license' => 'nullable',
@@ -218,7 +220,7 @@ class EmployeeRequest extends FormRequest
                 'nullable',
                 Rule::in(array_column(FunctionalStatus::cases(), 'value')),
             ],
-            'department_id' => ['nullable','exists:departments,id'],
+            'department_id' => ['nullable', 'exists:departments,id'],
             'job_category_id' => 'nullable|exists:job_categories,id',
             'has_attendance' => [
                 'nullable',

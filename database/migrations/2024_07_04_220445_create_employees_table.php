@@ -55,9 +55,10 @@ return new class extends Migration
             $table->date('military_service_start_date')->nullable(); //تاريخ بداية الخدمة العسكرية
             $table->date('military_service_end_date')->nullable(); //تاريخ نهاية الخدمة العسكرية
             $table->string('military_wepon', 200)->nullable(); //نوع سلاح الخدمة العسكرية
-            $table->date('military_exemption_date')->nullable(); //تاريخ الاعفاء من الخدمه العسكرية
+            $table->date('military_exemption_date')->nullable(); //تاريخ الاعفاء النهائى من الخدمه العسكرية
             $table->string('military_exemption_reason', 500)->nullable(); //سبب الاعفاء من الخدمه العسكرية
             $table->string('military_postponement_reason', 500)->nullable(); //سبب التأجيل من الخدمه العسكرية
+            $table->date('military_postponement_date', 500)->nullable(); //تاريخ الاعفاء المؤقت من الخدمه العسكرية
             $table->date('date_resignation')->nullable(); //تاريخ ترك العمل
             $table->string('resignation_reason')->nullable(); //سبب ترك العمل
             $table->tinyInteger('driving_license')->default(1)->nullable(); //هل يمتلك رخصه قياده

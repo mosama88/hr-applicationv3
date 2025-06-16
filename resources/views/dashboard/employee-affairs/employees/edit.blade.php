@@ -1,4 +1,13 @@
 @php
+    use App\Models\Currency;
+    use App\Models\City;
+    use App\Models\Country;
+    use App\Models\Language;
+    use App\Models\Governorate;
+    use App\Models\JobCategory;
+    use App\Models\Nationality;
+    use App\Models\Qualification;
+    use App\Models\Department;
     use Carbon\Carbon;
     use App\Enums\AdminGenderEnum;
     use App\Enums\ShiftTypesEnum;
@@ -100,7 +109,7 @@
                                     <form action="{{ route('dashboard.employees.update', $employee->slug) }}" method="POST"
                                         id="updateForm" enctype="multipart/form-data">
                                         @csrf
-                                        @method('PUT') 
+                                        @method('PUT')
                                         @csrf
                                         <div class="tab-content" id="employee-tabs-content">
                                             <!-- تبويب البيانات الشخصية -->
@@ -112,7 +121,8 @@
                                                             الموظف</label>
                                                         <input type="text"
                                                             class="form-control @error('fp_code') is-invalid @enderror"
-                                                            name="fp_code" value="{{ old('fp_code') }}" id="fp_code-input"
+                                                            name="fp_code" value="{{ old('fp_code', $employee->fp_code) }}"
+                                                            id="fp_code-input"
                                                             oninput="this.value=this.value.replace(/[^0-9.]/g,'');"
                                                             placeholder="مثال:1000" />
                                                         @error('fp_code')
@@ -125,8 +135,8 @@
                                                     <div class="col-md-6 ">
                                                         <label class="form-label" for="name-input">اسم
                                                             الموظف بالكامل <span class="text-danger">*</span></label>
-                                                        <input type="text" name="name" value="{{ old('name') }}"
-                                                            id="name-input"
+                                                        <input type="text" name="name"
+                                                            value="{{ old('name', $employee->name) }}" id="name-input"
                                                             class="form-control @error('name') is-invalid @enderror"
                                                             placeholder="مثال:John" />
                                                         @error('name')
@@ -150,7 +160,7 @@
                                                             </option>
                                                             @foreach (AdminGenderEnum::cases() as $gender)
                                                                 <option value="{{ $gender->value }}"
-                                                                    @if (old('gender') == $gender->value) selected @endif>
+                                                                    @if (old('gender', $employee->value) == $gender->value) selected @endif>
                                                                     {{ $gender->label() }}
                                                                 </option>
                                                             @endforeach
@@ -167,7 +177,7 @@
                                                         <label class="form-label" for="qualification_year-input">
                                                             سنة التخرج </label>
                                                         <input type="text" id="qualification_year-input"
-                                                            value="{{ old('qualification_year') }}"
+                                                            value="{{ old('qualification_year', $employee->qualification_year) }}"
                                                             class="form-control @error('qualification_year') is-invalid @enderror"
                                                             name="qualification_year"
                                                             oninput="this.value=this.value.replace(/[^0-9.]/g,'');"
@@ -186,7 +196,13 @@
                                                         <select name="qualification_id"
                                                             class="select2 form-select qualification_select2 @error('qualification_id') is-invalid @enderror"
                                                             data-allow-clear="true">
-                                                            <option value=""></option>
+                                                            @if (old('qualification_id'))
+                                                                <option
+                                                                    value="{{ old('qualification_id', $employee->qualification_id) }}"
+                                                                    selected>
+                                                                    {{ Qualification::find(old('qualification_id')?->name) }}
+                                                                </option>
+                                                            @endif
                                                         </select>
                                                         @error('qualification_id')
                                                             <span class="invalid-feedback text-right" role="alert">
@@ -209,7 +225,7 @@
                                                             </option>
                                                             @foreach (GraduationEstimateEnum::cases() as $estimate)
                                                                 <option value="{{ $estimate->value }}"
-                                                                    @if (old('graduation_estimate') == $estimate->value) selected @endif>
+                                                                    @if (old('graduation_estimate', $employee->value) == $estimate->value) selected @endif>
                                                                     {{ $estimate->label() }}
                                                                 </option>
                                                             @endforeach
@@ -226,7 +242,7 @@
                                                         <label for="major-input" class="form-label">
                                                             تخصص التخرج</label>
                                                         <input type="text" id="major-input"
-                                                            value="{{ old('major') }}"
+                                                            value="{{ old('major', $employee->major) }}"
                                                             class="form-control @error('major') is-invalid @enderror"
                                                             name="major" placeholder="مثال:علوم الحاسوب" />
                                                         @error('major')
@@ -247,7 +263,7 @@
                                                                 الفرع --
                                                             </option>
                                                             @foreach ($other['branches'] as $branch)
-                                                                <option @if (old('branch_id') == $branch->id) selected @endif
+                                                                <option @if (old('branch_id', $employee->branch_id) == $branch->id) selected @endif
                                                                     value="{{ $branch->id }}">
                                                                     {{ $branch->name }}</option>
                                                             @endforeach
@@ -272,7 +288,7 @@
                                                                 class="form-control date-input date-picker @error('birth_date') is-invalid @enderror"
                                                                 name="birth_date" id="birth_date_picker"
                                                                 placeholder="يوم / شهر / سنة"
-                                                                value="{{ old('birth_date') }}">
+                                                                value="{{ old('birth_date', $employee->birth_date) }}">
                                                         </div>
                                                         @error('birth_date')
                                                             <div class="invalid-feedback text-right d-block">
@@ -286,7 +302,7 @@
                                                         <label class="form-label" for="national_id-input">
                                                             رقم بطاقة الهوية </label>
                                                         <input type="text" id="national_id-input"
-                                                            value="{{ old('national_id') }}"
+                                                            value="{{ old('national_id', $employee->national_id) }}"
                                                             class="form-control @error('national_id') is-invalid @enderror"
                                                             name="national_id"
                                                             oninput="this.value=this.value.replace(/[^0-9.]/g,'');"
@@ -304,7 +320,7 @@
                                                         <label class="form-label" for="national_id_place-input">
                                                             مركز اصدار بطاقة الهوية </label>
                                                         <input type="text" id="national_id_place-input"
-                                                            value="{{ old('national_id_place') }}"
+                                                            value="{{ old('national_id_place', $employee->national_id_place) }}"
                                                             class="form-control @error('national_id_place') is-invalid @enderror"
                                                             name="national_id_place" placeholder="مثال:قسم الهرم" />
                                                         @error('national_id_place')
@@ -328,7 +344,7 @@
                                                                 class="form-control date-input date-picker @error('end_national_id') is-invalid @enderror"
                                                                 name="end_national_id" id="end_national_id_picker"
                                                                 placeholder="يوم / شهر / سنة"
-                                                                value="{{ old('end_national_id') }}">
+                                                                value="{{ old('end_national_id', $employee->end_national_id) }}">
                                                         </div>
                                                         @error('end_national_id')
                                                             <div class="invalid-feedback text-right d-block">
@@ -351,7 +367,7 @@
                                                             <option selected value="">-- أختر الحالة الأجتماعية --
                                                             </option>
                                                             @foreach (SocialStatus::cases() as $socialStatus)
-                                                                <option @if (old('social_status') == $socialStatus->value) selected @endif
+                                                                <option @if (old('social_status', $employee->value) == $socialStatus->value) selected @endif
                                                                     value="{{ $socialStatus->value }}">
                                                                     {{ $socialStatus->label() }}
                                                                 </option>
@@ -370,7 +386,7 @@
                                                         <label class="form-label" for="children_number">عدد
                                                             الأطفال</label>
                                                         <input type="text" id="children_number"
-                                                            value="{{ old('children_number') }}"
+                                                            value="{{ old('children_number', $employee->children_number) }}"
                                                             class="form-control @error('children_number') is-invalid @enderror"
                                                             name="children_number"
                                                             oninput="this.value=this.value.replace(/[^0-9.]/g,'');"
@@ -392,7 +408,7 @@
                                                             <option selected value="">-- أختر نوع فصيلة الدم --
                                                             </option>
                                                             @foreach ($other['blood_types'] as $blood)
-                                                                <option @if (old('blood_type_id') == $blood->id) selected @endif
+                                                                <option @if (old('blood_type_id', $employee->blood_type_id) == $blood->id) selected @endif
                                                                     value="{{ $blood->id }}">
                                                                     {{ $blood->name }}</option>
                                                             @endforeach
@@ -410,7 +426,13 @@
                                                         <select name="nationality_id"
                                                             class="select2 form-select nationality_select2 @error('nationality_id') is-invalid @enderror"
                                                             data-allow-clear="true">
-                                                            <option value=""></option>
+                                                            @if (old('nationality_id'))
+                                                                <option
+                                                                    value="{{ old('nationality_id', $employee->nationality_id) }}"
+                                                                    selected>
+                                                                    {{ Nationality::find(old('nationality_id'))?->name }}
+                                                                </option>
+                                                            @endif
                                                         </select>
                                                         @error('nationality_id')
                                                             <span class="invalid-feedback text-right" role="alert">
@@ -426,7 +448,13 @@
                                                         <select name="language_id"
                                                             class="select2 form-select language_select2 @error('language_id') is-invalid @enderror"
                                                             data-allow-clear="true">
-                                                            <option value=""></option>
+                                                            @if (old('language_id'))
+                                                                <option
+                                                                    value="{{ old('language_id', $employee->language_id) }}"
+                                                                    selected>
+                                                                    {{ Language::find(old('language_id'))?->name }}
+                                                                </option>
+                                                            @endif
                                                         </select>
                                                         @error('language_id')
                                                             <span class="invalid-feedback text-right" role="alert">
@@ -446,7 +474,7 @@
                                                                 الديانة --
                                                             </option>
                                                             @foreach (ReligionEnum::cases() as $religion)
-                                                                <option @if (old('religion') == $religion->value) selected @endif
+                                                                <option @if (old('religion', $employee->value) == $religion->value) selected @endif
                                                                     value="{{ $religion->value }}">
                                                                     {{ $religion->label() }}
                                                                 </option>
@@ -465,7 +493,7 @@
                                                             الالكتروني</label>
                                                         <div class="input-group input-group-merge">
                                                             <input type="text" id="formtabs-email" name="email"
-                                                                value="{{ old('email') }}"
+                                                                value="{{ old('email', $employee->email) }}"
                                                                 class="form-control @error('email') is-invalid @enderror"
                                                                 placeholder="john.doe" aria-label="john.doe"
                                                                 aria-describedby="formtabs-email2" />
@@ -486,7 +514,13 @@
                                                         <select name="country_id" id="country_id"
                                                             class="select2 form-select country_select2 @error('country_id') is-invalid @enderror"
                                                             data-allow-clear="true">
-                                                            <option value=""></option>
+                                                            @if (old('country_id'))
+                                                                <option
+                                                                    value="{{ old('country_id', $employee->country_id) }}"
+                                                                    selected>
+                                                                    {{ Country::find(old('country_id'))?->name }}
+                                                                </option>
+                                                            @endif
                                                         </select>
                                                         @error('country_id')
                                                             <span class="invalid-feedback text-right" role="alert">
@@ -502,7 +536,13 @@
                                                         <select name="governorate_id" id="governorate_id"
                                                             class="select2 form-select governorate_select2 @error('governorate_id') is-invalid @enderror"
                                                             data-allow-clear="true">
-                                                            <option value=""></option>
+                                                            @if (old('governorate_id'))
+                                                                <option
+                                                                    value="{{ old('governorate_id', $employee->governorate_id) }}"
+                                                                    selected>
+                                                                    {{ Governorate::find(old('governorate_id'))?->name }}
+                                                                </option>
+                                                            @endif
                                                         </select>
                                                         @error('governorate_id')
                                                             <span class="invalid-feedback text-right" role="alert">
@@ -518,7 +558,12 @@
                                                         <select name="city_id" id="city_id"
                                                             class="select2 form-select city_select2 @error('city_id') is-invalid @enderror"
                                                             data-allow-clear="true">
-                                                            <option value=""></option>
+                                                            @if (old('city_id'))
+                                                                <option value="{{ old('city_id', $employee->city_id) }}"
+                                                                    selected>
+                                                                    {{ City::find(old('city_id'))?->name }}
+                                                                </option>
+                                                            @endif
                                                         </select>
                                                         @error('city_id')
                                                             <span class="invalid-feedback text-right" role="alert">
@@ -532,7 +577,7 @@
                                                         <label class="form-label" for="address-input">
                                                             عنوان الاقامة </label>
                                                         <input type="text" id="address-input"
-                                                            value="{{ old('address') }}"
+                                                            value="{{ old('address', $employee->address) }}"
                                                             class="form-control @error('address') is-invalid @enderror"
                                                             name="address" placeholder="مثال: شارع..." />
                                                         @error('address')
@@ -546,7 +591,8 @@
                                                     <div class="col-md-4 ">
                                                         <label class="form-label" for="mobile-input">
                                                             هاتف المحمول</label>
-                                                        <input type="text" value="{{ old('mobile') }}"
+                                                        <input type="text"
+                                                            value="{{ old('mobile', $employee->mobile) }}"
                                                             class="form-control @error('mobile') is-invalid @enderror"
                                                             name="mobile" id="mobile-input"
                                                             oninput="this.value=this.value.replace(/[^0-9.]/g,'');"
@@ -562,7 +608,8 @@
                                                     <div class="col-md-4 ">
                                                         <label class="form-label" for="home_telephone-input">
                                                             هاتف المنزل</label>
-                                                        <input type="text" value="{{ old('home_telephone') }}"
+                                                        <input type="text"
+                                                            value="{{ old('home_telephone', $employee->home_telephone) }}"
                                                             class="form-control @error('home_telephone') is-invalid @enderror"
                                                             name="home_telephone" id="home_telephone-input"
                                                             oninput="this.value=this.value.replace(/[^0-9.]/g,'');"
@@ -587,7 +634,7 @@
                                                                 الحالة --
                                                             </option>
                                                             @foreach (YesOrNoEnum::cases() as $license)
-                                                                <option @if (old('driving_license') == $license->value) selected @endif
+                                                                <option @if (old('driving_license', $employee->value) == $license->value) selected @endif
                                                                     value="{{ $license->value }}">
                                                                     {{ $license->label() }}
                                                                 </option>
@@ -606,7 +653,7 @@
                                                         <label class="form-label" for="driving_License_id">رقم
                                                             رخصة القيادة</label>
                                                         <input type="text" id="driving_License_id"
-                                                            value="{{ old('driving_License_id') }}"
+                                                            value="{{ old('driving_License_id', $employee->driving_License_id) }}"
                                                             class="form-control @error('driving_License_id') is-invalid @enderror"
                                                             name="driving_License_id"
                                                             oninput="this.value=this.value.replace(/[^0-9.]/g,'');"
@@ -631,7 +678,7 @@
                                                                 النوع --
                                                             </option>
                                                             @foreach (DrivingLicenseType::cases() as $licenseType)
-                                                                <option @if (old('driving_license_type') == $licenseType->value) selected @endif
+                                                                <option @if (old('driving_license_type', $employee->value) == $licenseType->value) selected @endif
                                                                     value="{{ $licenseType->value }}">
                                                                     {{ $licenseType->label() }}
                                                                 </option>
@@ -657,7 +704,7 @@
                                                                 الحالة --
                                                             </option>
                                                             @foreach (YesOrNoEnum::cases() as $relatives)
-                                                                <option @if (old('has_relatives') == $relatives->value) selected @endif
+                                                                <option @if (old('has_relatives', $employee->value) == $relatives->value) selected @endif
                                                                     value="{{ $relatives->value }}">
                                                                     {{ $relatives->label() }}
                                                                 </option>
@@ -676,7 +723,7 @@
                                                         <label class="form-label" for="relatives_details">تفاصيل
                                                             الاقارب</label>
                                                         <input type="text" id="relatives_details"
-                                                            value="{{ old('relatives_details') }}"
+                                                            value="{{ old('relatives_details', $employee->relatives_details) }}"
                                                             class="form-control @error('relatives_details') is-invalid @enderror"
                                                             name="relatives_details"
                                                             placeholder="أدخل أسماء الأقارب وطبيعة عملهم" />
@@ -699,7 +746,7 @@
                                                                 الحالة --
                                                             </option>
                                                             @foreach (YesOrNoEnum::cases() as $disabilities)
-                                                                <option @if (old('has_disabilities') == $disabilities->value) selected @endif
+                                                                <option @if (old('has_disabilities', $employee->value) == $disabilities->value) selected @endif
                                                                     value="{{ $disabilities->value }}">
                                                                     {{ $disabilities->label() }}
                                                                 </option>
@@ -718,7 +765,7 @@
                                                         <label class="form-label" for="disabilities_details">تفاصيل
                                                             الاعاقة / عمليات سابقة</label>
                                                         <input type="text" id="disabilities_details"
-                                                            value="{{ old('disabilities_details') }}"
+                                                            value="{{ old('disabilities_details', $employee->disabilities_details) }}"
                                                             class="form-control @error('disabilities_details') is-invalid @enderror"
                                                             name="disabilities_details"
                                                             placeholder="أدخل تفاصيل الإعاقة أو العمليات السابقة" />
@@ -734,7 +781,7 @@
                                                         <label class="form-label" for="notes-input">
                                                             ملاحظات علي الموظف </label>
                                                         <input type="text" id="notes-input"
-                                                            value="{{ old('notes') }}"
+                                                            value="{{ old('notes', $employee->notes) }}"
                                                             class="form-control @error('notes') is-invalid @enderror"
                                                             name="notes" placeholder="John" />
                                                         @error('notes')
@@ -763,7 +810,7 @@
                                                                 الحالة --
                                                             </option>
                                                             @foreach (Military::cases() as $military)
-                                                                <option @if (old('military') == $military->value) selected @endif
+                                                                <option @if (old('military', $employee->value) == $military->value) selected @endif
                                                                     value="{{ $military->value }}">
                                                                     {{ $military->label() }}
                                                                 </option>
@@ -793,7 +840,7 @@
                                                                     name="military_exemption_date"
                                                                     id="military_exemption_date_picker"
                                                                     placeholder="يوم / شهر / سنة"
-                                                                    value="{{ old('military_exemption_date') }}">
+                                                                    value="{{ old('military_exemption_date', $employee->military_exemption_date) }}">
                                                             </div>
                                                             @error('military_exemption_date')
                                                                 <div class="invalid-feedback text-right d-block">
@@ -811,7 +858,7 @@
                                                                 ومدة تأجيل
                                                                 الخدمة العسكرية</label>
                                                             <input type="text" id="military_postponement_reason"
-                                                                value="{{ old('military_postponement_reason') }}"
+                                                                value="{{ old('military_postponement_reason', $employee->military_postponement_reason) }}"
                                                                 class="form-control @error('military_postponement_reason') is-invalid @enderror"
                                                                 name="military_postponement_reason"
                                                                 placeholder="أذكر السبب والمدة" />
@@ -840,7 +887,7 @@
                                                                     name="military_exemption_reason"
                                                                     id="military_exemption_reason"
                                                                     placeholder="يوم / شهر / سنة"
-                                                                    value="{{ old('military_exemption_reason') }}">
+                                                                    value="{{ old('military_exemption_reason', $employee->military_exemption_reason) }}">
                                                             </div>
                                                             @error('military_exemption_reason')
                                                                 <div class="invalid-feedback text-right d-block">
@@ -855,7 +902,7 @@
                                                             <label class="form-label" for="military_exemption_reason">سبب
                                                                 اعفاء الخدمة العسكرية</label>
                                                             <input type="text" id="military_exemption_reason"
-                                                                value="{{ old('military_exemption_reason') }}"
+                                                                value="{{ old('military_exemption_reason', $employee->military_exemption_reason) }}"
                                                                 class="form-control @error('military_exemption_reason') is-invalid @enderror"
                                                                 name="military_exemption_reason"
                                                                 placeholder="أذكر السبب" />
@@ -883,7 +930,7 @@
                                                                     name="military_service_start_date"
                                                                     id="military_service_start_date"
                                                                     placeholder="يوم / شهر / سنة"
-                                                                    value="{{ old('military_service_start_date') }}">
+                                                                    value="{{ old('military_service_start_date', $employee->military_service_start_date) }}">
                                                             </div>
                                                             @error('military_service_start_date')
                                                                 <div class="invalid-feedback text-right d-block">
@@ -907,7 +954,7 @@
                                                                     name="military_service_end_date"
                                                                     id="military_service_end_date"
                                                                     placeholder="يوم / شهر / سنة"
-                                                                    value="{{ old('military_service_end_date') }}">
+                                                                    value="{{ old('military_service_end_date', $employee->military_service_end_date) }}">
                                                             </div>
                                                             @error('military_service_end_date')
                                                                 <div class="invalid-feedback text-right d-block">
@@ -922,7 +969,7 @@
                                                             <label class="form-label" for="military_weapon">سلاح الخدمة
                                                                 العسكرية</label>
                                                             <input type="text" id="military_weapon"
-                                                                value="{{ old('military_weapon') }}"
+                                                                value="{{ old('military_weapon', $employee->military_weapon) }}"
                                                                 class="form-control @error('military_weapon') is-invalid @enderror"
                                                                 name="military_weapon" placeholder="مثال: سلاح المشاة" />
                                                             @error('military_weapon')
@@ -952,7 +999,7 @@
                                                                 class="form-control date-input date-picker @error('hiring_date') is-invalid @enderror"
                                                                 name="hiring_date" id="hiring_date-input"
                                                                 placeholder="يوم / شهر / سنة"
-                                                                value="{{ old('hiring_date') }}">
+                                                                value="{{ old('hiring_date', $employee->hiring_date) }}">
                                                         </div>
                                                         @error('hiring_date')
                                                             <div class="invalid-feedback text-right d-block">
@@ -973,7 +1020,7 @@
                                                             aria-label="Default select example">
                                                             <option selected value="">-- أختر الحالة -- </option>
                                                             @foreach (FunctionalStatus::cases() as $functional)
-                                                                <option @if (old('functional_status') == $functional->value) selected @endif
+                                                                <option @if (old('functional_status', $employee->functional_status) == $functional->value) selected @endif
                                                                     value="{{ $functional->value }}">
                                                                     {{ $functional->label() }}
                                                                 </option>
@@ -996,7 +1043,7 @@
                                                             <option selected value="">-- أختر الدرجه -- </option>
                                                             </option>
                                                             @foreach ($other['job_grades'] as $jobGrade)
-                                                                <option @if (old('job_grade_id') == $jobGrade->id) selected @endif
+                                                                <option @if (old('job_grade_id', $employee->job_grade_id) == $jobGrade->id) selected @endif
                                                                     value="{{ $jobGrade->id }}">
                                                                     {{ $jobGrade->name }}
                                                                 </option>
@@ -1016,8 +1063,15 @@
                                                             لها الموظف</label>
                                                         <select name="department_id"
                                                             class="select2 form-select department_select2 @error('department_id') is-invalid @enderror"
-                                                            data-allow-clear="true">
-                                                            <option value=""></option>
+                                                            data-allow-clear="true"
+                                                            data-ajax-url="{{ route('dashboard.departments.searchDepartment') }}">
+                                                            @if (old('department_id'))
+                                                                <option
+                                                                    value="{{ old('department_id', $employee->department_id) }}"
+                                                                    selected>
+                                                                    {{ Department::find(old('department_id', $employee->department_id))?->name }}
+                                                                </option>
+                                                            @endif
                                                         </select>
                                                         @error('department_id')
                                                             <span class="invalid-feedback text-right" role="alert">
@@ -1033,7 +1087,13 @@
                                                         <select name="job_category_id" id="job_category_id-input"
                                                             class="select2 form-select job_category_select2 @error('job_category_id') is-invalid @enderror"
                                                             data-allow-clear="true">
-                                                            <option value=""></option>
+                                                            @if (old('job_category_id'))
+                                                                <option
+                                                                    value="{{ old('job_category_id', $employee->job_category_id) }}"
+                                                                    selected>
+                                                                    {{ JobCategory::find(old('job_category_id'))?->name }}
+                                                                </option>
+                                                            @endif
                                                         </select>
                                                         @error('job_category_id')
                                                             <span class="invalid-feedback text-right" role="alert">
@@ -1055,7 +1115,7 @@
                                                                 الحالة --
                                                             </option>
                                                             @foreach (YesOrNoEnum::cases() as $attendance)
-                                                                <option @if (old('has_attendance') == $attendance->value) selected @endif
+                                                                <option @if (old('has_attendance', $employee->has_attendance) == $attendance->value) selected @endif
                                                                     value="{{ $attendance->value }}">
                                                                     {{ $attendance->label() }}
                                                                 </option>
@@ -1081,7 +1141,7 @@
                                                                 الحالة --
                                                             </option>
                                                             @foreach (YesOrNoEnum::cases() as $fixedShift)
-                                                                <option @if (old('has_fixed_shift') == $fixedShift->value) selected @endif
+                                                                <option @if (old('has_fixed_shift', $employee->has_fixed_shift) == $fixedShift->value) selected @endif
                                                                     value="{{ $fixedShift->value }}">
                                                                     {{ $fixedShift->label() }}
                                                                 </option>
@@ -1107,7 +1167,7 @@
                                                                 النوع --
                                                             </option>
                                                             @foreach ($other['shifts_types'] as $shift)
-                                                                <option @if (old('shifts_type_id') == $shift->id) selected @endif
+                                                                <option @if (old('shifts_type_id', $employee->shifts_type_id) == $shift->id) selected @endif
                                                                     value="{{ $shift->id }}">
                                                                     {{ $shift->type->label() }} من
                                                                     ({{ Carbon::createFromFormat('H:i:s', $shift->from_time)->format('H:i') }})
@@ -1131,7 +1191,7 @@
                                                         <label class="form-label" for="daily_work_hour-input">
                                                             عدد ساعات العمل اليومي</label>
                                                         <input type="text" id="daily_work_hour-input"
-                                                            value="{{ old('daily_work_hour') }}"
+                                                            value="{{ old('daily_work_hour', $employee->daily_work_hour) }}"
                                                             class="form-control @error('daily_work_hour') is-invalid @enderror"
                                                             name="daily_work_hour"
                                                             oninput="this.value=this.value.replace(/[^0-9.]/g,'');"
@@ -1149,7 +1209,7 @@
                                                             راتب الموظف الشهري
                                                         </label>
                                                         <input type="text" id="monthly_salary"
-                                                            value="{{ old('salary') }}"
+                                                            value="{{ old('salary', $employee->salary) }}"
                                                             class="form-control @error('salary') is-invalid @enderror"
                                                             name="salary"
                                                             oninput="this.value=this.value.replace(/[^0-9.]/g,'');"
@@ -1167,7 +1227,7 @@
                                                             راتب الموظف اليومى
                                                         </label>
                                                         <input type="text" id="daily_salary"
-                                                            value="{{ old('day_price') }}"
+                                                            value="{{ old('day_price', $employee->day_price) }}"
                                                             class="form-control @error('day_price') is-invalid @enderror"
                                                             name="day_price" placeholder="مثال:100" />
                                                         @error('day_price')
@@ -1185,7 +1245,13 @@
                                                         <select name="currency_id" id="currency_id-input"
                                                             class="select2 form-select js-example-basic-single currency_select2 @error('currency_id') is-invalid @enderror"
                                                             data-allow-clear="true">
-                                                            <option selected value=""></option>
+                                                            @if (old('currency_id'))
+                                                                <option
+                                                                    value="{{ old('currency_id', $employee->currency_id) }}"
+                                                                    selected>
+                                                                    {{ Currency::find(old('currency_id'))?->name }}
+                                                                </option>
+                                                            @endif
                                                         </select>
                                                         @error('currency_id')
                                                             <span class="invalid-feedback text-right" role="alert">
@@ -1206,7 +1272,7 @@
                                                                 الحالة --
                                                             </option>
                                                             @foreach (YesOrNoEnum::cases() as $social)
-                                                                <option @if (old('has_social_insurance') == $social->value) selected @endif
+                                                                <option @if (old('has_social_insurance', $employee->has_social_insurance) == $social->value) selected @endif
                                                                     value="{{ $social->value }}">
                                                                     {{ $social->label() }}
                                                                 </option>
@@ -1227,7 +1293,7 @@
                                                             قيمة التأمين الاجتماعي المستقطع شهرياً
                                                         </label>
                                                         <input type="text" id="social_insurance_cut_monthely-input"
-                                                            value="{{ old('social_insurance_cut_monthely') }}"
+                                                            value="{{ old('social_insurance_cut_monthely', $employee->social_insurance_cut_monthely) }}"
                                                             class="form-control @error('social_insurance_cut_monthely') is-invalid @enderror"
                                                             name="social_insurance_cut_monthely"
                                                             oninput="this.value=this.value.replace(/[^0-9.]/g,'');"
@@ -1245,7 +1311,7 @@
                                                         <label class="form-label" for="social_insurance_number-input">
                                                             رقم التامين الاجتماعي للموظف </label>
                                                         <input type="text" id="social_insurance_number-input"
-                                                            value="{{ old('social_insurance_number') }}"
+                                                            value="{{ old('social_insurance_number', $employee->social_insurance_number) }}"
                                                             class="form-control @error('social_insurance_number') is-invalid @enderror"
                                                             name="social_insurance_number"
                                                             oninput="this.value=this.value.replace(/[^0-9.]/g,'');"
@@ -1268,7 +1334,7 @@
                                                                 الحالة --
                                                             </option>
                                                             @foreach (YesOrNoEnum::cases() as $medical)
-                                                                <option @if (old('has_medical_insurance') == $medical->value) selected @endif
+                                                                <option @if (old('has_medical_insurance', $employee->has_medical_insurance) == $medical->value) selected @endif
                                                                     value="{{ $medical->value }}">
                                                                     {{ $medical->label() }}
                                                                 </option>
@@ -1288,7 +1354,7 @@
                                                             قيمة التأمين الطبي المستقطع شهرياً
                                                         </label>
                                                         <input type="text" id="has_social_insurance"
-                                                            value="{{ old('medical_insurance_cut_monthely') }}"
+                                                            value="{{ old('medical_insurance_cut_monthely', $employee->medical_insurance_cut_monthely) }}"
                                                             class="form-control @error('medical_insurance_cut_monthely') is-invalid @enderror"
                                                             name="medical_insurance_cut_monthely"
                                                             oninput="this.value=this.value.replace(/[^0-9.]/g,'');"
@@ -1306,7 +1372,7 @@
                                                         <label class="form-label" for="medical_insurance_number">
                                                             رقم التامين الطبي للموظف </label>
                                                         <input type="text" id="medical_insurance_number"
-                                                            value="{{ old('medical_insurance_number') }}"
+                                                            value="{{ old('medical_insurance_number', $employee->medical_insurance_number) }}"
                                                             class="form-control @error('medical_insurance_number') is-invalid @enderror"
                                                             name="medical_insurance_number"
                                                             oninput="this.value=this.value.replace(/[^0-9.]/g,'');"
@@ -1331,7 +1397,7 @@
                                                                 الحالة --
                                                             </option>
                                                             @foreach (TypeSalaryReceipt::cases() as $salary)
-                                                                <option @if (old('type_salary_receipt') == $salary->value) selected @endif
+                                                                <option @if (old('type_salary_receipt', $employee->type_salary_receipt) == $salary->value) selected @endif
                                                                     value="{{ $salary->value }}">
                                                                     {{ $salary->label() }}
                                                                 </option>
@@ -1356,7 +1422,7 @@
                                                                 الحالة --
                                                             </option>
                                                             @foreach (YesOrNoEnum::cases() as $allowances)
-                                                                <option @if (old('has_fixed_allowances') == $allowances->value) selected @endif
+                                                                <option @if (old('has_fixed_allowances', $employee->has_fixed_allowances) == $allowances->value) selected @endif
                                                                     value="{{ $allowances->value }}">
                                                                     {{ $allowances->label() }}
                                                                 </option>
@@ -1382,7 +1448,7 @@
                                                                 الحالة --
                                                             </option>
                                                             @foreach (MotivationType::cases() as $motivation)
-                                                                <option @if (old('motivation_type') == $motivation->value) selected @endif
+                                                                <option @if (old('motivation_type', $employee->motivation_type) == $motivation->value) selected @endif
                                                                     value="{{ $motivation->value }}">
                                                                     {{ $motivation->label() }}
                                                                 </option>
@@ -1401,7 +1467,7 @@
                                                         <label class="form-label" for="motivation_value">
                                                             قيمة الحافز الشهري الثابت </label>
                                                         <input type="text" id=""
-                                                            value="{{ old('motivation_value') }}"
+                                                            value="{{ old('motivation_value', $employee->motivation_value) }}"
                                                             class="form-control @error('motivation_value') is-invalid @enderror"
                                                             name="motivation_value" id="motivation_value"
                                                             oninput="this.value=this.value.replace(/[^0-9.]/g,'');"
@@ -1426,7 +1492,7 @@
                                                                 الحالة --
                                                             </option>
                                                             @foreach (YesOrNoEnum::cases() as $vacation)
-                                                                <option @if (old('has_vacation_balance') == $vacation->value) selected @endif
+                                                                <option @if (old('has_vacation_balance', $employee->has_vacation_balance) == $vacation->value) selected @endif
                                                                     value="{{ $vacation->value }}">
                                                                     {{ $vacation->label() }}
                                                                 </option>
@@ -1454,7 +1520,7 @@
                                                         <label class="form-label" for="urgent_person_details">
                                                             شخص يمكن الرجوع اليه للضرورة </label>
                                                         <input type="text" id="urgent_person_details"
-                                                            value="{{ old('urgent_person_details') }}"
+                                                            value="{{ old('urgent_person_details', $employee->urgent_person_details) }}"
                                                             class="form-control @error('urgent_person_details') is-invalid @enderror"
                                                             name="urgent_person_details" placeholder="John" />
                                                         @error('urgent_person_details')
@@ -1469,7 +1535,7 @@
                                                         <label class="form-label" for="has_social_insurance">
                                                             رقم الباسبور ان وجد</label>
                                                         <input type="text" id=""
-                                                            value="{{ old('pasport_identity') }}"
+                                                            value="{{ old('pasport_identity', $employee->pasport_identity) }}"
                                                             class="form-control @error('pasport_identity') is-invalid @enderror"
                                                             name="pasport_identity"
                                                             oninput="this.value=this.value.replace(/[^0-9.]/g,'');"
@@ -1494,7 +1560,7 @@
                                                                 class="form-control date-input date-picker @error('pasport_exp_date') is-invalid @enderror"
                                                                 name="pasport_exp_date" id="pasport_exp_date-input"
                                                                 placeholder="يوم / شهر / سنة"
-                                                                value="{{ old('pasport_exp_date') }}">
+                                                                value="{{ old('pasport_exp_date', $employee->pasport_exp_date) }}">
                                                         </div>
                                                         @error('pasport_exp_date')
                                                             <div class="invalid-feedback text-right d-block">
@@ -1519,16 +1585,8 @@
                                             </div>
                                         </div>
                                 </div>
-                                <x-create-button-component></x-create-button-component>
-
+                                <x-edit-button-component></x-edit-button-component>
                                 </form>
-
-
-
-
-
-
-
                             </div>
                         </div>
                     </div>
