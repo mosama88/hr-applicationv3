@@ -46,8 +46,6 @@ class EmployeeController extends Controller
         $other['branches'] = Branch::select('id', 'name')->get();
         $other['blood_types'] = BloodType::select('id', 'name')->get();
         $other['job_grades'] = JobGrade::select('id', 'name')->get();
-        $other['departments'] = Department::select('id', 'name')->get();
-        $other['job_categories'] = JobCategory::select('id', 'name')->get();
         $other['shifts_types'] = ShiftsType::all();
         return view('dashboard.employee-affairs.employees.create', compact('other'));
     }
