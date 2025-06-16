@@ -17855,3 +17855,7 @@ html.maximized-card {
 /*# sourceMappingURL=adminlte.rtl.css.map */
 
 /* Load Droid Arabic Kufi Font */
+body {
+  font-family: DroidKufi-Regular;
+  ;
+}
