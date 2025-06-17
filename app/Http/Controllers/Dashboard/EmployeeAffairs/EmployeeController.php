@@ -122,6 +122,23 @@ class EmployeeController extends Controller
             'active' =>  $request->active,
             'updated_by' => Auth::user()->id,
         ]);
+        if ($request->hasFile('photo')) {
+            // Remove old photo if exists
+            $employee->clearMediaCollection('photo');
+
+            // Upload new photo
+            $employee->addMediaFromRequest('photo')
+                ->toMediaCollection('photo');
+        }
+
+        if ($request->hasFile('cv')) {
+            // Remove old cv if exists
+            $employee->clearMediaCollection('cv');
+
+            // Upload new cv
+            $employee->addMediaFromRequest('cv')
+                ->toMediaCollection('cv');
+        }
 
         // إنشاء الموظف أولاً
         $employee->update($dataUpdate);
