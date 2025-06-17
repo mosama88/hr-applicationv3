@@ -289,7 +289,7 @@
                                                                 class="form-control date-input date-picker @error('birth_date') is-invalid @enderror"
                                                                 name="birth_date" id="birth_date-input"
                                                                 placeholder="يوم / شهر / سنة"
-                                                                value="{{ old('birth_date',$employee->birth_date) }}">
+                                                                value="{{ old('birth_date', $employee->birth_date) }}">
                                                             <button type="button"
                                                                 class="btn btn-outline-secondary clear-date-btn"
                                                                 data-target="#birth_date-input">
@@ -350,7 +350,7 @@
                                                                 class="form-control date-input date-picker @error('end_national_id') is-invalid @enderror"
                                                                 name="end_national_id" id="end_national_id-input"
                                                                 placeholder="يوم / شهر / سنة"
-                                                                value="{{ old('end_national_id',$employee->end_national_id) }}">
+                                                                value="{{ old('end_national_id', $employee->end_national_id) }}">
                                                             <button type="button"
                                                                 class="btn btn-outline-secondary clear-date-btn"
                                                                 data-target="#end_national_id-input">
@@ -857,7 +857,7 @@
                                                                     name="military_postponement_date"
                                                                     id="military_postponement_date-input"
                                                                     placeholder="يوم / شهر / سنة"
-                                                                    value="{{ old('military_postponement_date',$employee->military_postponement_date) }}">
+                                                                    value="{{ old('military_postponement_date', $employee->military_postponement_date) }}">
                                                                 <button type="button"
                                                                     class="btn btn-outline-secondary clear-date-btn"
                                                                     data-target="#military_postponement_date-input">
@@ -908,7 +908,7 @@
                                                                     name="military_exemption_date"
                                                                     id="military_exemption_date-input"
                                                                     placeholder="يوم / شهر / سنة"
-                                                                    value="{{ old('military_exemption_date',$employee->military_exemption_date) }}">
+                                                                    value="{{ old('military_exemption_date', $employee->military_exemption_date) }}">
                                                                 <button type="button"
                                                                     class="btn btn-outline-secondary clear-date-btn"
                                                                     data-target="#military_exemption_date-input">
@@ -954,7 +954,7 @@
                                                                     name="military_service_start_date"
                                                                     id="military_service_start_date-input"
                                                                     placeholder="يوم / شهر / سنة"
-                                                                    value="{{ old('military_service_start_date',$employee->military_service_start_date) }}">
+                                                                    value="{{ old('military_service_start_date', $employee->military_service_start_date) }}">
                                                                 <button type="button"
                                                                     class="btn btn-outline-secondary clear-date-btn"
                                                                     data-target="#military_service_start_date-input">
@@ -984,7 +984,7 @@
                                                                     name="military_service_end_date"
                                                                     id="military_service_end_date-input"
                                                                     placeholder="يوم / شهر / سنة"
-                                                                    value="{{ old('military_service_end_date',$employee->military_service_end_date) }}">
+                                                                    value="{{ old('military_service_end_date', $employee->military_service_end_date) }}">
                                                                 <button type="button"
                                                                     class="btn btn-outline-secondary clear-date-btn"
                                                                     data-target="#military_service_end_date-input">
@@ -1002,13 +1002,13 @@
 
                                                         <!-- سلاح الخدمة العسكرية -->
                                                         <div class="col-md-4 mb-3 related_miltary_completed">
-                                                            <label class="form-label" for="military_weapon">سلاح الخدمة
+                                                            <label class="form-label" for="military_wepon">سلاح الخدمة
                                                                 العسكرية</label>
-                                                            <input type="text" id="military_weapon"
-                                                                value="{{ old('military_weapon') }}"
-                                                                class="form-control @error('military_weapon') is-invalid @enderror"
-                                                                name="military_weapon" placeholder="مثال: سلاح المشاة" />
-                                                            @error('military_weapon')
+                                                            <input type="text" id="military_wepon"
+                                                                value="{{ old('military_wepon', $employee->military_wepon) }}"
+                                                                class="form-control @error('military_wepon') is-invalid @enderror"
+                                                                name="military_wepon" placeholder="مثال: سلاح المشاة" />
+                                                            @error('military_wepon')
                                                                 <span class="invalid-feedback text-right" role="alert">
                                                                     <strong>{{ $message }}</strong>
                                                                 </span>
@@ -1036,7 +1036,7 @@
                                                                 class="form-control date-input date-picker @error('hiring_date') is-invalid @enderror"
                                                                 name="hiring_date" id="hiring_date-input"
                                                                 placeholder="يوم / شهر / سنة"
-                                                                value="{{ old('hiring_date',$employee->hiring_date) }}">
+                                                                value="{{ old('hiring_date', $employee->hiring_date) }}">
                                                             <button type="button"
                                                                 class="btn btn-outline-secondary clear-date-btn"
                                                                 data-target="#hiring_date-input">
@@ -1602,7 +1602,7 @@
                                                                 class="form-control date-input date-picker @error('pasport_exp_date') is-invalid @enderror"
                                                                 name="pasport_exp_date" id="pasport_exp_date-input"
                                                                 placeholder="يوم / شهر / سنة"
-                                                                value="{{ old('pasport_exp_date',$employee->pasport_exp_date) }}">
+                                                                value="{{ old('pasport_exp_date', $employee->pasport_exp_date) }}">
                                                             <button type="button"
                                                                 class="btn btn-outline-secondary clear-date-btn"
                                                                 data-target="#pasport_exp_date-input">
@@ -1932,7 +1932,7 @@
             });
         });
     </script>
-        <script>
+    <script>
         $(document).ready(function() {
             $('.clear-date-btn').on('click', function() {
                 let targetInput = $(this).data('target');
