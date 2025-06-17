@@ -930,7 +930,7 @@ class EmployeeFactory extends Factory
             'pasport_exp_date' => fake()->dateTimeBetween('now', '+5 years')->format('Y-m-d'),
             'has_fixed_allowances' => fake()->randomElement(YesOrNoEnum::cases()),
             'created_by' => Admin::all()->random()->id,
-            'com_code' => 1,
+            'com_code' => 6000,
         ];
     }
 }
