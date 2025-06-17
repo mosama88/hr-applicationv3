@@ -817,16 +817,19 @@ class EmployeeFactory extends Factory
             GraduationEstimateEnum::VeryGood->value,
             GraduationEstimateEnum::Excellent->value,
         ];
+
         $religion = [
             ReligionEnum::Muslim->value,
             ReligionEnum::Christian->value,
         ];
+
         $military = [
             Military::ExemptionTemporary->value,
             Military::FinalExemption->value,
             Military::Complete->value,
             Military::None->value,
         ];
+
         $drivingLicense = [
             DrivingLicenseType::Other->value,
             DrivingLicenseType::Special->value,
@@ -838,53 +841,48 @@ class EmployeeFactory extends Factory
             DrivingLicenseType::Motorcycle->value,
         ];
 
-        $yesOrNo = [
-            YesOrNoEnum::Yes->value,
-            YesOrNoEnum::No->value,
-
-        ];
         $functionalStatus = [
             FunctionalStatus::Employee->value,
             FunctionalStatus::Unemployed->value,
-
         ];
+
         $motivation = [
             MotivationType::Changeable->value,
             MotivationType::None->value,
             MotivationType::Fixed->value,
-
         ];
+
         $cashOrVisa = [
             TypeSalaryReceipt::Visa->value,
             TypeSalaryReceipt::Cash->value,
-
         ];
+
         $socialStatus = [
             SocialStatus::Single->value,
             SocialStatus::Married->value,
             SocialStatus::Divorced->value,
             SocialStatus::Widowed->value,
-
         ];
-        // 'name' => fake()->randomElement(array_merge($male, $female)),
-        // 'gender' => $gender = fake()->randomElement(['Male', 'Female']),
-        // 'birth_date' => fake()->date('Y-m-d', '-25 years'),
+
+        $gender = fake()->randomElement($genders);
+
+        $salary = fake()->randomFloat(2, 5000, 200000);
+        $motivation_type = fake()->randomElement($motivation);
+        $social_insurance = fake()->randomElement(YesOrNoEnum::cases());
+        $medical_insurance = fake()->randomElement(YesOrNoEnum::cases());
 
         return [
             'fp_code' => fake()->unique()->numberBetween(0, 9000),
             'employee_code' => fake()->unique()->numberBetween(1000, 9999),
-            'gender' => $gender = fake()->randomElement($genders),
-            'name' => $gender === $genders[0]  // إذا كان الجنس ذكر
-                ? implode(' ', array_slice($maleNames, 0, 3))  // أسماء ذكور فقط
-                : fake()->randomElement($femaleNames) . ' ' . implode(' ', array_slice($maleNames, 0, 2)),  // اسم بنت + اسمين ذكور
+            'gender' => $gender,
+            'name' => $gender === AdminGenderEnum::Male->value
+                ? implode(' ', array_slice($maleNames, 0, 3))
+                : fake()->randomElement($femaleNames) . ' ' . implode(' ', array_slice($maleNames, 0, 2)),
             'branch_id' => Branch::inRandomOrder()->first()->id,
             'qualification_id' => Qualification::all()->random()->id,
             'qualification_year' => fake()->year('-10 years'),
-            'major' => fake()->randomElement(['علوم الحاسوب', 'الرياضيات', 'الفيزياء', 'الهندسة', 'إدارة الأعمال', 'علم الأحياء', 'الطب', 'الصيدلة', 'التربية', 'الفنون الجميلة', 'الإعلام', 'القانون', 'الآثار', 'اللغات', 'الإحصاء', 'علم النفس', 'علم الاجتماع', 'الفلسفة', 'التسويق', 'المحاسبة', 'التمريض', 'الزراعة', 'العمارة', 'التاريخ', 'التكنولوجيا الحيوية', 'الجيولوجيا', 'البيئة', 'الكيمياء', 'الاقتصاد', 'السياسة', 'الأنثروبولوجيا', 'الإدارة العامة']),
+            'major' => fake()->randomElement(['علوم الحاسوب', 'الرياضيات', 'الفيزياء', 'الهندسة', 'إدارة الأعمال', 'علم الأحياء', 'الطب', 'الصيدلة', 'التربية', 'الفنون الجميلة', 'الإعلام', 'القانون', 'الآثار', 'اللغات', 'الإحصاء', 'علم النفس', 'علم الاجتماع', 'الفلسفة', 'التسويق', 'المحاسبة', 'التمريض', 'الزراعة', 'العمارة', 'التاريخ', 'التكنولوجيا الحيوية', 'الجيولوجيا', 'البيئة', 'الكيمياء', 'الاقتصاد', 'السياسة', 'الأنثروبولوجيا', 'الإدارة العامة']), // ضع قائمة التخصصات كما كانت
             'graduation_estimate' => fake()->randomElement($estimates),
-
-            // تأكد من أن عمود birth_date موجود في جدول الموظفين
-
             'birth_date' => fake()->dateTimeBetween('-25 years', 'now')->format('Y-m-d'),
             'national_id' => fake()->numerify('##############'),
             'end_national_id' => fake()->dateTimeBetween('now', '+5 years')->format('Y-m-d'),
@@ -892,8 +890,6 @@ class EmployeeFactory extends Factory
             'blood_type_id' => BloodType::all()->random()->id,
             'religion' => fake()->randomElement($religion),
             'language_id' => Language::all()->random()->id,
-
-            // تأكد من عدم وجود مسافة في اسم الحقل
             'email' => fake()->unique()->safeEmail(),
             'country_id' => Country::all()->random()->id,
             'governorate_id' => Governorate::all()->random()->id,
@@ -901,38 +897,38 @@ class EmployeeFactory extends Factory
             'home_telephone' => fake()->regexify('/^(022|023)[0-9]{7}$/'),
             'mobile' => fake()->regexify('/^(012|015|010|011)[0-9]{8}$/'),
             'military' => fake()->randomElement($military),
-            'driving_license' => fake()->randomElement($yesOrNo),
+            'driving_license' => fake()->randomElement(YesOrNoEnum::cases()),
             'driving_license_type' => fake()->randomElement($drivingLicense),
             'driving_License_id' => fake()->numerify('##############'),
-            'has_relatives' => fake()->randomElement($yesOrNo),
-            'hiring_date' => fake()->dateTimeBetween('-5 years', 'now')->format('Y-m-d'), // تعديل هنا
+            'has_relatives' => fake()->randomElement(YesOrNoEnum::cases()),
+            'hiring_date' => fake()->dateTimeBetween('-5 years', 'now')->format('Y-m-d'),
             'functional_status' => fake()->randomElement($functionalStatus),
             'department_id' => Department::all()->random()->id,
             'job_category_id' => JobCategory::all()->random()->id,
-            'has_attendance' => fake()->randomElement($yesOrNo),
-            'has_fixed_shift' => fake()->randomElement($yesOrNo),
+            'has_attendance' => fake()->randomElement(YesOrNoEnum::cases()),
+            'has_fixed_shift' => fake()->randomElement(YesOrNoEnum::cases()),
             'shifts_type_id' => ShiftsType::all()->random()->id,
             'daily_work_hour' => rand(7, 12),
             'job_grade_id' => JobGrade::all()->random()->id,
-            'salary' => $salary = fake()->randomFloat(2, 5000, 200000),
+            'salary' => $salary,
             'day_price' => $salary / 30,
-            'motivation_type' => $motivation_type = fake()->randomElement($motivation),
-            'motivation_value' => $motivation_type === 'Fixed' ? fake()->randomFloat(2, 1000, 2000) : null,
-            'has_social_insurance' => $social_insurance = fake()->randomElement($yesOrNo),
-            'social_insurance_cut_monthely' => $social_insurance === 'Yes' ? fake()->randomFloat(2, 500, 1000) : null,
-            'social_insurance_number' => $social_insurance === 'Yes' ? fake()->numerify('##############') : null,
-            'has_medical_insurance' => $medical_insurance = fake()->randomElement($yesOrNo),
-            'medical_insurance_cut_monthely' => $medical_insurance === 'Yes' ? fake()->randomFloat(2, 500, 1000) : null,
-            'medical_insurance_number' => $medical_insurance === 'Yes' ? fake()->numerify('##############') : null,
-            'Type_salary_receipt' => fake()->randomElement($cashOrVisa), // تصحيح هنا
+            'motivation_type' => $motivation_type,
+            'motivation_value' => $motivation_type === MotivationType::Fixed->value ? fake()->randomFloat(2, 1000, 2000) : null,
+            'has_social_insurance' => $social_insurance,
+            'social_insurance_cut_monthely' => $social_insurance === YesOrNoEnum::Yes ? fake()->randomFloat(2, 500, 1000) : null,
+            'social_insurance_number' => $social_insurance === YesOrNoEnum::Yes ? fake()->numerify('##############') : null,
+            'has_medical_insurance' => $medical_insurance,
+            'medical_insurance_cut_monthely' => $medical_insurance === YesOrNoEnum::Yes ? fake()->randomFloat(2, 500, 1000) : null,
+            'medical_insurance_number' => $medical_insurance === YesOrNoEnum::Yes ? fake()->numerify('##############') : null,
+            'Type_salary_receipt' => fake()->randomElement($cashOrVisa),
             'address' => fake()->address(),
             'social_status' => fake()->randomElement($socialStatus),
             'bank_number_account' => fake()->bankAccountNumber(),
-            'has_vacation_balance' => fake()->randomElement($yesOrNo),
+            'has_vacation_balance' => fake()->randomElement(YesOrNoEnum::cases()),
             'nationality_id' => Nationality::all()->random()->id,
             'pasport_identity' => fake()->numerify('##############'),
             'pasport_exp_date' => fake()->dateTimeBetween('now', '+5 years')->format('Y-m-d'),
-            'has_fixed_allowances' => fake()->numberBetween([0, 1]),
+            'has_fixed_allowances' => fake()->randomElement(YesOrNoEnum::cases()),
             'created_by' => Admin::all()->random()->id,
             'com_code' => 1,
         ];
