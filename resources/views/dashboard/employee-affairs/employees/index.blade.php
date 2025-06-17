@@ -7,6 +7,71 @@
 @section('active-employees', 'active')
 @section('title', 'الموظفين')
 @push('css')
+    <style>
+        /* تنسيق عام لعارض السيرة الذاتية */
+        .cv-container {
+            position: relative;
+            min-height: 40px;
+            text-align: center;
+        }
+
+        /* تنسيق معاينة PDF */
+        .pdf-preview {
+            display: inline-block;
+            position: relative;
+        }
+
+        .pdf-icon {
+            font-size: 30px;
+            color: #e74c3c;
+            transition: all 0.3s ease;
+        }
+
+        /* تنسيق أدوات التلميح */
+        .pdf-tooltip,
+        .img-tooltip {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            white-space: nowrap;
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 100;
+        }
+
+        /* إظهار الأدوات عند Hover */
+        .pdf-icon-wrapper:hover .pdf-tooltip,
+        .img-preview:hover .img-tooltip {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* تنسيق الصورة */
+        .img-preview {
+            position: relative;
+            display: inline-block;
+        }
+
+        .img-thumbnail {
+            max-width: 70px;
+            max-height: 70px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .no-cv {
+            color: #999;
+            font-style: italic;
+            font-size: 12px;
+        }
+    </style>
 @endpush
 @section('content')
 
@@ -60,8 +125,7 @@
                                         <th>الوظيفه</th>
                                         <th>الموبايل</th>
                                         <th>الحالة</th>
-                                        <th>أضافة بواسطة</th>
-                                        <th>تعديل بواسطة</th>
+                                        <th>السيرة الذاتية</th>
                                         <th>الإجراءات</th>
                                     </tr>
                                 </thead>
@@ -100,14 +164,36 @@
                                                     <span class="badge bg-danger">غير مفعل</span>
                                                 @endif
                                             </td>
-                                            <td>{{ $info->createdBy->name }}</td>
-                                            <td>
-                                                @if ($info->updated_by > 0)
-                                                    {{ $info->updatedBy->name }}
-                                                @else
-                                                    لا يوجد تحديث
-                                                @endif
-
+                                            <td style="max-width: 30px; max-height: 70px;">
+                                                <div class="cv-container">
+                                                    @if ($info->getFirstMediaUrl('cv'))
+                                                        @if (Str::endsWith($info->getFirstMediaUrl('cv'), ['.pdf', '.PDF']))
+                                                            <!-- عرض أيقونة PDF مع اسم ملف يظهر عند Hover -->
+                                                            <div class="pdf-preview">
+                                                                <a href="{{ $info->getFirstMediaUrl('cv') }}"
+                                                                    target="_blank" class="pdf-link">
+                                                                    <div class="pdf-icon-wrapper">
+                                                                        <i class="fas fa-file-pdf pdf-icon"></i>
+                                                                        <span
+                                                                            class="pdf-tooltip">{{ basename($info->getFirstMediaUrl('cv')) }}</span>
+                                                                    </div>
+                                                                </a>
+                                                            </div>
+                                                        @else
+                                                            <!-- عرض الصورة مع اسم ملف يظهر عند Hover -->
+                                                            <div class="img-preview">
+                                                                <img class="img-thumbnail"
+                                                                    src="{{ $info->getFirstMediaUrl('cv') }}"
+                                                                    style="max-width: 70px; max-height: 70px;"
+                                                                    alt="{{ $info->name }}">
+                                                                <span
+                                                                    class="img-tooltip">{{ basename($info->getFirstMediaUrl('cv')) }}</span>
+                                                            </div>
+                                                        @endif
+                                                    @else
+                                                        <span class="no-cv">لا يوجد سيرة ذاتية</span>
+                                                    @endif
+                                                </div>
                                             </td>
 
                                             <td>

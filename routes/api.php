@@ -24,8 +24,6 @@ Route::get('country/searchCountry', [CountryController::class, 'searchCountry'])
 Route::get('currency/searchCurrency', [CurrencyController::class, 'searchCurrency'])->name('dashboard.currencies.searchCurrency');
 Route::get('nationality/searchNationality', [NationalityController::class, 'searchNationality'])->name('dashboard.nationalities.searchNationality');
 Route::get('language/searchlanguage', [LanguageController::class, 'searchlanguage'])->name('dashboard.languages.searchlanguage');
-Route::get('governorate/searchGovernorate', [GovernorateController::class, 'searchGovernorate'])->name('dashboard.governorates.searchGovernorate');
-Route::get('cities/searchCity', [CityController::class, 'searchCity'])->name('dashboard.cities.searchCity');
 Route::get('qualifications/searchQualification', [QualificationController::class, 'searchQualification'])->name('dashboard.qualifications.searchQualification');
 Route::get('departments/searchDepartment', [DepartmentController::class, 'searchDepartment'])->name('dashboard.departments.searchDepartment');
 Route::get('job_categories/searchJob_category', [JobCategoryController::class, 'searchJob_category'])->name('dashboard.job_categories.searchJob_category');

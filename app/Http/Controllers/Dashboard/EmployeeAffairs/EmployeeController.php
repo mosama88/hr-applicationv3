@@ -36,6 +36,8 @@ class EmployeeController extends Controller
     public function create()
     {
         $other['branches'] = Branch::select('id', 'name')->get();
+        $other['governorates'] = Governorate::select('id', 'name')->get();
+        $other['cities'] = City::select('id', 'name')->get();
         $other['blood_types'] = BloodType::select('id', 'name')->get();
         $other['job_grades'] = JobGrade::select('id', 'name')->get();
         $other['shifts_types'] = ShiftsType::all();
@@ -86,6 +88,8 @@ class EmployeeController extends Controller
     public function show(Employee $employee)
     {
         $other['branches'] = Branch::select('id', 'name')->get();
+        $other['governorates'] = Governorate::select('id', 'name')->get();
+        $other['cities'] = City::select('id', 'name')->get();
         $other['blood_types'] = BloodType::select('id', 'name')->get();
         $other['job_grades'] = JobGrade::select('id', 'name')->get();
         $other['shifts_types'] = ShiftsType::all();
@@ -98,6 +102,8 @@ class EmployeeController extends Controller
     public function edit(Employee $employee)
     {
         $other['branches'] = Branch::select('id', 'name')->get();
+        $other['governorates'] = Governorate::select('id', 'name')->get();
+        $other['cities'] = City::select('id', 'name')->get();
         $other['blood_types'] = BloodType::select('id', 'name')->get();
         $other['job_grades'] = JobGrade::select('id', 'name')->get();
         $other['shifts_types'] = ShiftsType::all();

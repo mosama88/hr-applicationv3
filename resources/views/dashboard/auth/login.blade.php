@@ -25,7 +25,7 @@
             <div class="input-group-text"><span class="bi bi-lock-fill"></span></div>
 
             <div class="form-floating flex-grow-1">
-                <input id="loginEmail" type="text" name="password"
+                <input id="loginEmail" type="password" name="password"
                     class="form-control @error('password') is-invalid @enderror" placeholder="**************" />
                 <label for="loginEmail">كلمة المرور</label>
             </div>

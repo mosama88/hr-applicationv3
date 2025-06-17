@@ -29,177 +29,46 @@ class EmployeeRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    // public function rules(): array
-    // {
-    //     $employeeId = $this->route('employee') ? $this->route('employee')->id : null;
-
-    //     return [
-    //         'fp_code' => 'required|unique:employees,fp_code,' . $employeeId,
-    //         'name' => 'required|min:7|unique:employees,name,' . $employeeId,
-    //         'gender' => [
-    //             'required',
-    //             Rule::in(array_column(AdminGenderEnum::cases(), 'value')),
-    //         ],
-    //         'branch_id' => 'required|exists:branches,id',
-    //         'job_grade_id' => 'nullable|exists:job_grades,id',
-    //         'qualification_id' => 'required|exists:qualifications,id', // المؤهل الدراسي
-    //         'qualification_year' => 'nullable|digits:4|integer|min:1950|max:' . date('Y'),
-    //         'major' => 'nullable', // تخصص التخرج
-    //         'graduation_estimate' => [
-    //             'required',
-    //             Rule::in(array_column(GraduationEstimateEnum::cases(), 'value')),
-    //         ],
-    //         'birth_date' => 'required|date', // تاريخ الميلاد
-    //         'national_id' => 'required|min:14|unique:employees,national_id,' . $employeeId, //رقم الهوية
-    //         'end_national_id' => 'required|date', //
-    //         'national_id_place' => 'required', //
-    //         'blood_type_id' => 'nullable|exists:blood_types,id', // فصيلة الدم
-    //         'religion' => [
-    //             'required',
-    //             Rule::in(array_column(ReligionEnum::cases(), 'value')),
-    //         ],
-
-    //         'language_id' => 'required|exists:languages,id', // اللغة الاساسية
-    //         'email' => 'required|unique:employees,email,' . $employeeId,
-
-    //         'country_id' => 'required|exists:countries,id', // الدول
-    //         'governorate_id' => 'required|exists:governorates,id', // المحافظات
-    //         'city_id' => 'required|exists:cities,id', // المدينة/المركز
-    //         'home_telephone' => 'required', //  هاتف المنزل
-    //         'mobile' => 'required', // هاتف المحمول
-    //         'address' => 'required|string|min:5|max:300',
-    //         'military' => 'required',
-    //         'military_service_start_date' => 'nullable',
-    //         'military_service_end_date' => 'nullable',
-    //         'military_wepon' => 'nullable',
-    //         'military_exemption_date' => 'nullable',
-    //         'military_exemption_reason' => 'nullable',
-    //         'military_postponement_reason' => 'nullable',
-    //         'military_postponement_date' => 'nullable',
-    //         'date_resignation' => 'nullable',
-    //         'resignation_reason' => 'nullable',
-    //         'driving_license' => 'nullable',
-    //         'driving_license_type' => 'nullable',
-    //         'driving_License_id' => 'nullable',
-    //         'has_relatives' => 'nullable',
-    //         'relatives_details' => 'nullable',
-    //         'notes' => 'nullable',
-    //         'hiring_date' => 'required|date',
-    //         'functional_status' => [
-    //             'required',
-    //             Rule::in(array_column(FunctionalStatus::cases(), 'value')),
-    //         ],
-    //         'department_id' => ['nullable','exists:departments,id'],
-    //         'job_category_id' => 'nullable|exists:job_categories,id',
-    //         'has_attendance' => [
-    //             'required',
-    //             Rule::in(array_column(YesOrNoEnum::cases(), 'value')),
-    //         ],
-    //         'has_fixed_shift' => [
-    //             'required',
-    //             Rule::in(array_column(YesOrNoEnum::cases(), 'value')),
-    //         ],
-    //         'shifts_type_id' => 'required|exists:shifts_types,id',
-    //         'daily_work_hour' => 'required',
-    //         'salary' => 'required',
-    //         'day_price' => 'required',
-    //         'currency_id' => 'nullable|exists:currencies,id',
-    //         'bank_number_account' => 'nullable',
-    //         'motivation_type' => [
-    //             'required',
-    //             Rule::in(array_column(MotivationType::cases(), 'value')),
-    //         ],
-    //         'motivation_value' => 'nullable',
-    //         'has_social_insurance' => [
-    //             'required',
-    //             Rule::in(array_column(YesOrNoEnum::cases(), 'value')),
-    //         ],
-    //         'social_insurance_cut_monthely' => 'nullable',
-    //         'social_insurance_number' => 'nullable',
-    //         'has_medical_insurance' => [
-    //             'required',
-    //             Rule::in(array_column(YesOrNoEnum::cases(), 'value')),
-    //         ],
-    //         'medical_insurance_cut_monthely' => 'nullable',
-    //         'medical_insurance_number' => 'nullable',
-    //         'type_salary_receipt' => [
-    //             'required',
-    //             Rule::in(array_column(TypeSalaryReceipt::cases(), 'value')),
-    //         ],
-    //         'has_vacation_balance' => [
-    //             'required',
-    //             Rule::in(array_column(YesOrNoEnum::cases(), 'value')),
-    //         ],
-    //         'urgent_person_details' => 'nullable',
-    //         'children_number' => 'nullable',
-    //         'social_status' => [
-    //             'required',
-    //             Rule::in(array_column(SocialStatus::cases(), 'value')),
-    //         ],
-    //         'has_disabilities' => [
-    //             'required',
-    //             Rule::in(array_column(YesOrNoEnum::cases(), 'value')),
-    //         ],
-    //         'disabilities_details' => 'nullable',
-    //         'nationality_id' => 'required|exists:nationalities,id',
-    //         'pasport_identity' => 'nullable',
-    //         'pasport_exp_date' => 'nullable|date',
-    //         'has_fixed_allowances' => [
-    //             'required',
-    //             Rule::in(array_column(YesOrNoEnum::cases(), 'value')),
-    //         ],
-    //         'is_done_Vacation_formula' => 'nullable',
-    //         'is_Sensitive_manager_data' => 'nullable',
-    //         'active' => [
-    //             'nullable',
-    //             Rule::in(array_column(StatusActiveEnum::cases(), 'value')),
-    //         ],
-    //        'photo' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-
-    //     ];
-    // }
-
-
     public function rules(): array
     {
         $employeeId = $this->route('employee') ? $this->route('employee')->id : null;
 
         return [
-            'fp_code' => 'nullable|unique:employees,fp_code,' . $employeeId,
-            'name' => 'nullable|min:7|unique:employees,name,' . $employeeId,
+            'fp_code' => 'required|unique:employees,fp_code,' . $employeeId,
+            'name' => 'required|min:7|unique:employees,name,' . $employeeId,
             'gender' => [
-                'nullable',
+                'required',
                 Rule::in(array_column(AdminGenderEnum::cases(), 'value')),
             ],
-            'branch_id' => 'nullable|exists:branches,id',
+            'branch_id' => 'required|exists:branches,id',
             'job_grade_id' => 'nullable|exists:job_grades,id',
-            'qualification_id' => 'nullable|exists:qualifications,id', // المؤهل الدراسي
+            'qualification_id' => 'required|exists:qualifications,id', // المؤهل الدراسي
             'qualification_year' => 'nullable|digits:4|integer|min:1950|max:' . date('Y'),
             'major' => 'nullable', // تخصص التخرج
             'graduation_estimate' => [
-                'nullable',
+                'required',
                 Rule::in(array_column(GraduationEstimateEnum::cases(), 'value')),
             ],
-            'birth_date' => 'nullable|date', // تاريخ الميلاد
-            'national_id' => 'nullable|min:7|unique:employees,national_id,' . $employeeId,
-            'end_national_id' => 'nullable|date', //
-            'national_id_place' => 'nullable', //
+            'birth_date' => 'required|date', // تاريخ الميلاد
+            'national_id' => 'required|min:14|unique:employees,national_id,' . $employeeId, //رقم الهوية
+            'end_national_id' => 'required|date', //
+            'national_id_place' => 'required', //
             'blood_type_id' => 'nullable|exists:blood_types,id', // فصيلة الدم
             'religion' => [
-                'nullable',
+                'required',
                 Rule::in(array_column(ReligionEnum::cases(), 'value')),
             ],
 
-            'language_id' => 'nullable|exists:languages,id', // اللغة الاساسية
-            'email' => 'nullable|unique:employees,email,' . $employeeId,
+            'language_id' => 'required|exists:languages,id', // اللغة الاساسية
+            'email' => 'required|unique:employees,email,' . $employeeId,
 
-            'country_id' => 'nullable|exists:countries,id', // الدول
-            'governorate_id' => 'nullable|exists:governorates,id', // المحافظات
-            'city_id' => 'nullable|exists:cities,id', // المدينة/المركز
-            'home_telephone' => 'nullable', //  هاتف المنزل
-            'mobile' => 'nullable', // هاتف المحمول
-            'address' => 'nullable|string|min:5|max:300',
-            'military' => 'nullable',
+            'country_id' => 'required|exists:countries,id', // الدول
+            'governorate_id' => 'required|exists:governorates,id', // المحافظات
+            'city_id' => 'required|exists:cities,id', // المدينة/المركز
+            'home_telephone' => 'required', //  هاتف المنزل
+            'mobile' => 'required', // هاتف المحمول
+            'address' => 'required|string|min:5|max:300',
+            'military' => 'required',
             'military_service_start_date' => 'nullable',
             'military_service_end_date' => 'nullable',
             'military_wepon' => 'nullable',
@@ -215,68 +84,68 @@ class EmployeeRequest extends FormRequest
             'has_relatives' => 'nullable',
             'relatives_details' => 'nullable',
             'notes' => 'nullable',
-            'hiring_date' => 'nullable|date',
+            'hiring_date' => 'required|date',
             'functional_status' => [
-                'nullable',
+                'required',
                 Rule::in(array_column(FunctionalStatus::cases(), 'value')),
             ],
-            'department_id' => ['nullable', 'exists:departments,id'],
+            'department_id' => ['nullable','exists:departments,id'],
             'job_category_id' => 'nullable|exists:job_categories,id',
             'has_attendance' => [
-                'nullable',
+                'required',
                 Rule::in(array_column(YesOrNoEnum::cases(), 'value')),
             ],
             'has_fixed_shift' => [
-                'nullable',
+                'required',
                 Rule::in(array_column(YesOrNoEnum::cases(), 'value')),
             ],
-            'shifts_type_id' => 'nullable|exists:shifts_types,id',
-            'daily_work_hour' => 'nullable',
-            'salary' => 'nullable',
-            'day_price' => 'nullable',
+            'shifts_type_id' => 'required|exists:shifts_types,id',
+            'daily_work_hour' => 'required',
+            'salary' => 'required',
+            'day_price' => 'required',
             'currency_id' => 'nullable|exists:currencies,id',
             'bank_number_account' => 'nullable',
             'motivation_type' => [
-                'nullable',
+                'required',
                 Rule::in(array_column(MotivationType::cases(), 'value')),
             ],
             'motivation_value' => 'nullable',
             'has_social_insurance' => [
-                'nullable',
+                'required',
                 Rule::in(array_column(YesOrNoEnum::cases(), 'value')),
             ],
             'social_insurance_cut_monthely' => 'nullable',
             'social_insurance_number' => 'nullable',
             'has_medical_insurance' => [
-                'nullable',
+                'required',
                 Rule::in(array_column(YesOrNoEnum::cases(), 'value')),
             ],
             'medical_insurance_cut_monthely' => 'nullable',
             'medical_insurance_number' => 'nullable',
             'type_salary_receipt' => [
-                'nullable',
+                'required',
                 Rule::in(array_column(TypeSalaryReceipt::cases(), 'value')),
             ],
             'has_vacation_balance' => [
-                'nullable',
+                'required',
                 Rule::in(array_column(YesOrNoEnum::cases(), 'value')),
             ],
             'urgent_person_details' => 'nullable',
             'children_number' => 'nullable',
             'social_status' => [
-                'nullable',
+                'required',
                 Rule::in(array_column(SocialStatus::cases(), 'value')),
             ],
             'has_disabilities' => [
-                'nullable',
+                'required',
                 Rule::in(array_column(YesOrNoEnum::cases(), 'value')),
             ],
             'disabilities_details' => 'nullable',
-            'nationality_id' => 'nullable|exists:nationalities,id',
+            'nationality_id' => 'required|exists:nationalities,id',
             'pasport_identity' => 'nullable',
             'pasport_exp_date' => 'nullable|date',
             'has_fixed_allowances' => [
-                'nullable',
+                'required',
                 Rule::in(array_column(YesOrNoEnum::cases(), 'value')),
             ],
             'is_done_Vacation_formula' => 'nullable',
@@ -285,8 +154,139 @@ class EmployeeRequest extends FormRequest
                 'nullable',
                 Rule::in(array_column(StatusActiveEnum::cases(), 'value')),
             ],
+           'photo' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+
         ];
     }
+
+
+    // public function rules(): array
+    // {
+    //     $employeeId = $this->route('employee') ? $this->route('employee')->id : null;
+
+    //     return [
+    //         'fp_code' => 'nullable|unique:employees,fp_code,' . $employeeId,
+    //         'name' => 'nullable|min:7|unique:employees,name,' . $employeeId,
+    //         'gender' => [
+    //             'nullable',
+    //             Rule::in(array_column(AdminGenderEnum::cases(), 'value')),
+    //         ],
+    //         'branch_id' => 'nullable|exists:branches,id',
+    //         'job_grade_id' => 'nullable|exists:job_grades,id',
+    //         'qualification_id' => 'nullable|exists:qualifications,id', // المؤهل الدراسي
+    //         'qualification_year' => 'nullable|digits:4|integer|min:1950|max:' . date('Y'),
+    //         'major' => 'nullable', // تخصص التخرج
+    //         'graduation_estimate' => [
+    //             'nullable',
+    //             Rule::in(array_column(GraduationEstimateEnum::cases(), 'value')),
+    //         ],
+    //         'birth_date' => 'nullable|date', // تاريخ الميلاد
+    //         'national_id' => 'nullable|min:7|unique:employees,national_id,' . $employeeId,
+    //         'end_national_id' => 'nullable|date', //
+    //         'national_id_place' => 'nullable', //
+    //         'blood_type_id' => 'nullable|exists:blood_types,id', // فصيلة الدم
+    //         'religion' => [
+    //             'nullable',
+    //             Rule::in(array_column(ReligionEnum::cases(), 'value')),
+    //         ],
+
+    //         'language_id' => 'nullable|exists:languages,id', // اللغة الاساسية
+    //         'email' => 'nullable|unique:employees,email,' . $employeeId,
+
+    //         'country_id' => 'nullable|exists:countries,id', // الدول
+    //         'governorate_id' => 'nullable|exists:governorates,id', // المحافظات
+    //         'city_id' => 'nullable|exists:cities,id', // المدينة/المركز
+    //         'home_telephone' => 'nullable', //  هاتف المنزل
+    //         'mobile' => 'nullable', // هاتف المحمول
+    //         'address' => 'nullable|string|min:5|max:300',
+    //         'military' => 'nullable',
+    //         'military_service_start_date' => 'nullable',
+    //         'military_service_end_date' => 'nullable',
+    //         'military_wepon' => 'nullable',
+    //         'military_exemption_date' => 'nullable',
+    //         'military_exemption_reason' => 'nullable',
+    //         'military_postponement_reason' => 'nullable',
+    //         'military_postponement_date' => 'nullable',
+    //         'date_resignation' => 'nullable',
+    //         'resignation_reason' => 'nullable',
+    //         'driving_license' => 'nullable',
+    //         'driving_license_type' => 'nullable',
+    //         'driving_License_id' => 'nullable',
+    //         'has_relatives' => 'nullable',
+    //         'relatives_details' => 'nullable',
+    //         'notes' => 'nullable',
+    //         'hiring_date' => 'nullable|date',
+    //         'functional_status' => [
+    //             'nullable',
+    //             Rule::in(array_column(FunctionalStatus::cases(), 'value')),
+    //         ],
+    //         'department_id' => ['nullable', 'exists:departments,id'],
+    //         'job_category_id' => 'nullable|exists:job_categories,id',
+    //         'has_attendance' => [
+    //             'nullable',
+    //             Rule::in(array_column(YesOrNoEnum::cases(), 'value')),
+    //         ],
+    //         'has_fixed_shift' => [
+    //             'nullable',
+    //             Rule::in(array_column(YesOrNoEnum::cases(), 'value')),
+    //         ],
+    //         'shifts_type_id' => 'nullable|exists:shifts_types,id',
+    //         'daily_work_hour' => 'nullable',
+    //         'salary' => 'nullable',
+    //         'day_price' => 'nullable',
+    //         'currency_id' => 'nullable|exists:currencies,id',
+    //         'bank_number_account' => 'nullable',
+    //         'motivation_type' => [
+    //             'nullable',
+    //             Rule::in(array_column(MotivationType::cases(), 'value')),
+    //         ],
+    //         'motivation_value' => 'nullable',
+    //         'has_social_insurance' => [
+    //             'nullable',
+    //             Rule::in(array_column(YesOrNoEnum::cases(), 'value')),
+    //         ],
+    //         'social_insurance_cut_monthely' => 'nullable',
+    //         'social_insurance_number' => 'nullable',
+    //         'has_medical_insurance' => [
+    //             'nullable',
+    //             Rule::in(array_column(YesOrNoEnum::cases(), 'value')),
+    //         ],
+    //         'medical_insurance_cut_monthely' => 'nullable',
+    //         'medical_insurance_number' => 'nullable',
+    //         'type_salary_receipt' => [
+    //             'nullable',
+    //             Rule::in(array_column(TypeSalaryReceipt::cases(), 'value')),
+    //         ],
+    //         'has_vacation_balance' => [
+    //             'nullable',
+    //             Rule::in(array_column(YesOrNoEnum::cases(), 'value')),
+    //         ],
+    //         'urgent_person_details' => 'nullable',
+    //         'children_number' => 'nullable',
+    //         'social_status' => [
+    //             'nullable',
+    //             Rule::in(array_column(SocialStatus::cases(), 'value')),
+    //         ],
+    //         'has_disabilities' => [
+    //             'nullable',
+    //             Rule::in(array_column(YesOrNoEnum::cases(), 'value')),
+    //         ],
+    //         'disabilities_details' => 'nullable',
+    //         'nationality_id' => 'nullable|exists:nationalities,id',
+    //         'pasport_identity' => 'nullable',
+    //         'pasport_exp_date' => 'nullable|date',
+    //         'has_fixed_allowances' => [
+    //             'nullable',
+    //             Rule::in(array_column(YesOrNoEnum::cases(), 'value')),
+    //         ],
+    //         'is_done_Vacation_formula' => 'nullable',
+    //         'is_Sensitive_manager_data' => 'nullable',
+    //         'active' => [
+    //             'nullable',
+    //             Rule::in(array_column(StatusActiveEnum::cases(), 'value')),
+    //         ],
+    //     ];
+    // }
 
 
 

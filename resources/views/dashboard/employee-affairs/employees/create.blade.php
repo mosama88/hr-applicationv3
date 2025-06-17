@@ -285,9 +285,14 @@
                                                             </span>
                                                             <input type="text"
                                                                 class="form-control date-input date-picker @error('birth_date') is-invalid @enderror"
-                                                                name="birth_date" id="birth_date_picker"
+                                                                name="birth_date" id="birth_date-input"
                                                                 placeholder="يوم / شهر / سنة"
                                                                 value="{{ old('birth_date') }}">
+                                                            <button type="button"
+                                                                class="btn btn-outline-secondary clear-date-btn"
+                                                                data-target="#birth_date-input">
+                                                                <i class="fas fa-times"></i>
+                                                            </button>
                                                         </div>
                                                         @error('birth_date')
                                                             <div class="invalid-feedback text-right d-block">
@@ -295,6 +300,8 @@
                                                             </div>
                                                         @enderror
                                                     </div>
+
+
 
                                                     <!--  رقم بطاقة الهوية -->
                                                     <div class="col-md-3 ">
@@ -341,9 +348,14 @@
                                                             </span>
                                                             <input type="text"
                                                                 class="form-control date-input date-picker @error('end_national_id') is-invalid @enderror"
-                                                                name="end_national_id" id="end_national_id_picker"
+                                                                name="end_national_id" id="end_national_id-input"
                                                                 placeholder="يوم / شهر / سنة"
                                                                 value="{{ old('end_national_id') }}">
+                                                            <button type="button"
+                                                                class="btn btn-outline-secondary clear-date-btn"
+                                                                data-target="#end_national_id-input">
+                                                                <i class="fas fa-times"></i>
+                                                            </button>
                                                         </div>
                                                         @error('end_national_id')
                                                             <div class="invalid-feedback text-right d-block">
@@ -351,8 +363,6 @@
                                                             </div>
                                                         @enderror
                                                     </div>
-
-
 
 
                                                     <!-- الحالة الأجتماعية -->
@@ -529,11 +539,14 @@
                                                         <select name="governorate_id" id="governorate_id"
                                                             class="select2 form-select governorate_select2 @error('governorate_id') is-invalid @enderror"
                                                             data-allow-clear="true">
-                                                            @if (old('governorate_id'))
-                                                                <option value="{{ old('governorate_id') }}" selected>
-                                                                    {{ Governorate::find(old('governorate_id'))?->name }}
-                                                                </option>
-                                                            @endif
+                                                            <option value="">-- أختر المحافظة --</option>
+                                                            @forelse ($other['governorates'] as $governorate)
+                                                                <option @if (old('governorate_id') == $governorate->id) selected @endif
+                                                                    value="{{ $governorate->id }}">
+                                                                    {{ $governorate->name }}</option>
+                                                            @empty
+                                                                لا توجد بيانات
+                                                            @endforelse
                                                         </select>
                                                         @error('governorate_id')
                                                             <span class="invalid-feedback text-right" role="alert">
@@ -549,11 +562,14 @@
                                                         <select name="city_id" id="city_id"
                                                             class="select2 form-select city_select2 @error('city_id') is-invalid @enderror"
                                                             data-allow-clear="true">
-                                                            @if (old('city_id'))
-                                                                <option value="{{ old('city_id') }}" selected>
-                                                                    {{ City::find(old('city_id'))?->name }}
-                                                                </option>
-                                                            @endif
+                                                            <option value="">-- أختر المدينة --</option>
+                                                            @forelse ($other['cities'] as $city)
+                                                                <option @if (old('city_id') == $city->id) selected @endif
+                                                                    value="{{ $city->id }}">
+                                                                    {{ $city->name }}</option>
+                                                            @empty
+                                                                لا توجد بيانات
+                                                            @endforelse
                                                         </select>
                                                         @error('city_id')
                                                             <span class="invalid-feedback text-right" role="alert">
@@ -786,6 +802,8 @@
                                             <!-- تبويب الخدمة العسكرية -->
                                             <div class="tab-pane fade" id="military" role="tabpanel">
                                                 <div class="row g-3">
+
+
                                                     <!-- حالة الخدمة العسكرية -->
                                                     <div class="col-md-6 mb-3">
                                                         <label for="military_status" class="form-label">حالة الخدمة
@@ -814,7 +832,7 @@
                                                     <!-- الحقول المخفية بشكل افتراضي -->
                                                     <div class="row mb-3">
                                                         <!-- تاريخ الاعفاء المؤقت الخدمة العسكرية -->
-                                                        <div class="col-md-4 mb-3">
+                                                        <div class="col-md-4 mb-3 related_miltary_postponement">
                                                             <label class="form-label"
                                                                 for="military_postponement_date">تاريخ
                                                                 الاعفاء المؤقت الخدمة العسكرية</label>
@@ -826,21 +844,25 @@
                                                                 <input type="text"
                                                                     class="form-control date-input date-picker @error('military_postponement_date') is-invalid @enderror"
                                                                     name="military_postponement_date"
-                                                                    id="military_postponement_date_picker"
+                                                                    id="military_postponement_date-input"
                                                                     placeholder="يوم / شهر / سنة"
                                                                     value="{{ old('military_postponement_date') }}">
+                                                                <button type="button"
+                                                                    class="btn btn-outline-secondary clear-date-btn"
+                                                                    data-target="#military_postponement_date-input">
+                                                                    <i class="fas fa-times"></i>
+                                                                </button>
                                                             </div>
                                                             @error('military_postponement_date')
                                                                 <div class="invalid-feedback text-right d-block">
                                                                     {{ $message }}
                                                                 </div>
                                                             @enderror
-
                                                         </div>
 
 
                                                         <!-- سبب ومدة تأجيل الخدمة العسكرية -->
-                                                        <div class="col-md-8 mb-3">
+                                                        <div class="col-md-8 mb-3 related_miltary_postponement">
                                                             <label class="form-label"
                                                                 for="military_postponement_reason">سبب
                                                                 ومدة تأجيل
@@ -860,7 +882,7 @@
 
                                                     <div class="row mb-3">
                                                         <!-- تاريخ الاعفاء النهائى الخدمة العسكرية -->
-                                                        <div class="col-md-4 mb-3">
+                                                        <div class="col-md-4 mb-3 related_miltary_exemption">
                                                             <label class="form-label" for="military_exemption_date">تاريخ
                                                                 الاعفاء النهائى الخدمة العسكرية</label>
                                                             <div class="input-group">
@@ -871,9 +893,14 @@
                                                                 <input type="text"
                                                                     class="form-control date-input date-picker @error('military_exemption_date') is-invalid @enderror"
                                                                     name="military_exemption_date"
-                                                                    id="military_exemption_date"
+                                                                    id="military_exemption_date-input"
                                                                     placeholder="يوم / شهر / سنة"
                                                                     value="{{ old('military_exemption_date') }}">
+                                                                <button type="button"
+                                                                    class="btn btn-outline-secondary clear-date-btn"
+                                                                    data-target="#military_exemption_date-input">
+                                                                    <i class="fas fa-times"></i>
+                                                                </button>
                                                             </div>
                                                             @error('military_exemption_date')
                                                                 <div class="invalid-feedback text-right d-block">
@@ -884,7 +911,7 @@
 
 
                                                         <!-- سبب اعفاء الخدمة العسكرية -->
-                                                        <div class="col-md-8 mb-3">
+                                                        <div class="col-md-8 mb-3 related_miltary_exemption">
                                                             <label class="form-label" for="military_exemption_reason">سبب
                                                                 اعفاء الخدمة العسكرية</label>
                                                             <input type="text" id="military_exemption_reason"
@@ -902,7 +929,7 @@
 
                                                     <div class="mb-3 row">
                                                         <!-- تاريخ بداية الخدمة العسكرية -->
-                                                        <div class="col-md-4 mb-3">
+                                                        <div class="col-md-4 mb-3 related_miltary_completed">
                                                             <label class="form-label" for="military_service_start_date">
                                                                 تاريخ بداية الخدمة العسكرية</label>
                                                             <div class="input-group">
@@ -913,9 +940,14 @@
                                                                 <input type="text"
                                                                     class="form-control date-input date-picker @error('military_service_start_date') is-invalid @enderror"
                                                                     name="military_service_start_date"
-                                                                    id="military_service_start_date"
+                                                                    id="military_service_start_date-input"
                                                                     placeholder="يوم / شهر / سنة"
                                                                     value="{{ old('military_service_start_date') }}">
+                                                                <button type="button"
+                                                                    class="btn btn-outline-secondary clear-date-btn"
+                                                                    data-target="#military_service_start_date-input">
+                                                                    <i class="fas fa-times"></i>
+                                                                </button>
                                                             </div>
                                                             @error('military_service_start_date')
                                                                 <div class="invalid-feedback text-right d-block">
@@ -924,8 +956,9 @@
                                                             @enderror
                                                         </div>
 
+
                                                         <!-- تاريخ نهاية الخدمة العسكرية -->
-                                                        <div class="col-md-4 mb-3">
+                                                        <div class="col-md-4 mb-3 related_miltary_completed">
                                                             <label class="form-label"
                                                                 for="military_service_end_date">تاريخ نهاية الخدمة
                                                                 العسكرية</label>
@@ -937,9 +970,14 @@
                                                                 <input type="text"
                                                                     class="form-control date-input date-picker @error('military_service_end_date') is-invalid @enderror"
                                                                     name="military_service_end_date"
-                                                                    id="military_service_end_date"
+                                                                    id="military_service_end_date-input"
                                                                     placeholder="يوم / شهر / سنة"
                                                                     value="{{ old('military_service_end_date') }}">
+                                                                <button type="button"
+                                                                    class="btn btn-outline-secondary clear-date-btn"
+                                                                    data-target="#military_service_end_date-input">
+                                                                    <i class="fas fa-times"></i>
+                                                                </button>
                                                             </div>
                                                             @error('military_service_end_date')
                                                                 <div class="invalid-feedback text-right d-block">
@@ -949,8 +987,9 @@
                                                         </div>
 
 
+
                                                         <!-- سلاح الخدمة العسكرية -->
-                                                        <div class="col-md-4 mb-3">
+                                                        <div class="col-md-4 mb-3 related_miltary_completed">
                                                             <label class="form-label" for="military_weapon">سلاح الخدمة
                                                                 العسكرية</label>
                                                             <input type="text" id="military_weapon"
@@ -973,8 +1012,7 @@
                                                     <!-- تاريخ التعيين -->
                                                     <div class="col-md-4">
                                                         <label class="form-label" for="hiring_date-input">تاريخ
-                                                            التعيين
-                                                        </label>
+                                                            التعيين</label>
                                                         <div class="input-group">
                                                             <span class="input-group-text bg-primary"
                                                                 style="background-color: #2C6391 !important; border-color: #2C6391;">
@@ -985,6 +1023,11 @@
                                                                 name="hiring_date" id="hiring_date-input"
                                                                 placeholder="يوم / شهر / سنة"
                                                                 value="{{ old('hiring_date') }}">
+                                                            <button type="button"
+                                                                class="btn btn-outline-secondary clear-date-btn"
+                                                                data-target="#hiring_date-input">
+                                                                <i class="fas fa-times"></i>
+                                                            </button>
                                                         </div>
                                                         @error('hiring_date')
                                                             <div class="invalid-feedback text-right d-block">
@@ -992,7 +1035,6 @@
                                                             </div>
                                                         @enderror
                                                     </div>
-
 
                                                     <!-- الحالة الوظيفية -->
                                                     <div class="col-md-4 ">
@@ -1540,6 +1582,11 @@
                                                                 name="pasport_exp_date" id="pasport_exp_date-input"
                                                                 placeholder="يوم / شهر / سنة"
                                                                 value="{{ old('pasport_exp_date') }}">
+                                                            <button type="button"
+                                                                class="btn btn-outline-secondary clear-date-btn"
+                                                                data-target="#pasport_exp_date-input">
+                                                                <i class="fas fa-times"></i>
+                                                            </button>
                                                         </div>
                                                         @error('pasport_exp_date')
                                                             <div class="invalid-feedback text-right d-block">
@@ -1615,6 +1662,7 @@
     </script>
     <script>
         $(document).ready(function() {
+            $('.select2').select2();
             $('#country_id').change(function() {
                 var countryId = $(this).val();
                 if (countryId) {
@@ -1744,51 +1792,6 @@
                 }
             });
 
-            // governorate_select2
-            $('.governorate_select2').select2({
-                placeholder: '-- أختر المحافظة --',
-                ajax: {
-                    url: "{{ route('dashboard.governorates.searchGovernorate') }}",
-                    dataType: 'json',
-                    delay: 250, // Delay for better UX
-                    data: function(params) {
-                        return {
-                            q: params.term // Search query
-                        };
-                    },
-                    processResults: function(data) {
-                        return {
-                            results: data.data.map(governorates => ({
-                                id: governorates.id,
-                                text: `${governorates.name}`
-                            }))
-                        };
-                    }
-                }
-            });
-
-            // city_select2
-            $('.city_select2').select2({
-                placeholder: '-- أختر المدينه --',
-                ajax: {
-                    url: "{{ route('dashboard.cities.searchCity') }}",
-                    dataType: 'json',
-                    delay: 250, // Delay for better UX
-                    data: function(params) {
-                        return {
-                            q: params.term // Search query
-                        };
-                    },
-                    processResults: function(data) {
-                        return {
-                            results: data.data.map(cities => ({
-                                id: cities.id,
-                                text: `${cities.name}`
-                            }))
-                        };
-                    }
-                }
-            });
 
 
             // language_select2
@@ -1882,6 +1885,14 @@
                         };
                     }
                 }
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('.clear-date-btn').on('click', function() {
+                let targetInput = $(this).data('target');
+                $(targetInput).val('');
             });
         });
     </script>

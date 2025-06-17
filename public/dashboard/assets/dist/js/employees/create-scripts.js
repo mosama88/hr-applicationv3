@@ -88,37 +88,7 @@ $(document).ready(function () {
     }
 });
 
-$(document).ready(function () {
-    // عند تغيير حالة الخدمة العسكرية
-    $('#military_status').change(function () {
-        const status = $(this).val();
 
-        // إخفاء جميع الحقول أولاً
-        $('#exemption_temporary_fields').hide();
-        $('#final_exemption_fields').hide();
-        $('#complete_service_fields').hide();
-
-        // مسح القيم عند الإخفاء
-        $('#exemption_temporary_fields input').val('');
-        $('#final_exemption_fields input').val('');
-        $('#complete_service_fields input').val('');
-
-        // إظهار الحقول المناسبة حسب الحالة المختارة
-        if (status === '1') { // إعفاء مؤقت
-            $('#exemption_temporary_fields').show();
-        } else if (status === '2') { // إعفاء نهائي
-            $('#final_exemption_fields').show();
-        } else if (status === '3') { // أدى الخدمة
-            $('#complete_service_fields').show();
-        }
-        // حالة "ليس لديه" (4) أو فارغ لا تظهر أي حقول
-    });
-
-    // تنفيذ التغيير عند التحميل إذا كانت هناك قيمة مسبقة
-    if ($('#military_status').val()) {
-        $('#military_status').trigger('change');
-    }
-});
 
 $(document).ready(function () {
     // عند تغيير حقل "هل شفت ثابت"
@@ -211,3 +181,27 @@ $(document).ready(function () {
 
 
 
+$(document).ready(function () {
+    // دالة لإدارة عرض الحقول
+    function manageMilitaryFields() {
+        var selectedOption = $('select[name="military"]').val();
+
+        // إخفاء جميع الحقول أولاً
+        $('.related_miltary_postponement, .related_miltary_exemption, .related_miltary_completed').hide();
+
+        // إظهار الحقل المناسب بناءً على القيمة المحددة
+        if (selectedOption === '3') {
+            $('.related_miltary_completed').show();
+        } else if (selectedOption === '1') {
+            $('.related_miltary_postponement').show();
+        } else if (selectedOption === '2') {
+            $('.related_miltary_exemption').show();
+        }
+    }
+
+    // تنفيذ الدالة عند التحميل الأولي
+    manageMilitaryFields();
+
+    // إضافة حدث تغيير لحقل الخدمة العسكرية
+    $('select[name="military"]').change(manageMilitaryFields);
+});
