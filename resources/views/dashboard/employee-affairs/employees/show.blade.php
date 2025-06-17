@@ -35,6 +35,71 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/material_blue.css">
     <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/dist/css/flatpicker.css">
     <style>
+        /* تنسيق عام لعارض السيرة الذاتية */
+        .cv-container {
+            position: relative;
+            min-height: 40px;
+            text-align: center;
+        }
+
+        /* تنسيق معاينة PDF */
+        .pdf-preview {
+            display: inline-block;
+            position: relative;
+        }
+
+        .pdf-icon {
+            font-size: 30px;
+            color: #e74c3c;
+            transition: all 0.3s ease;
+        }
+
+        /* تنسيق أدوات التلميح */
+        .pdf-tooltip,
+        .img-tooltip {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            white-space: nowrap;
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 100;
+        }
+
+        /* إظهار الأدوات عند Hover */
+        .pdf-icon-wrapper:hover .pdf-tooltip,
+        .img-preview:hover .img-tooltip {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* تنسيق الصورة */
+        .img-preview {
+            position: relative;
+            display: inline-block;
+        }
+
+        .img-thumbnail {
+            max-width: 70px;
+            max-height: 70px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .no-cv {
+            color: #999;
+            font-style: italic;
+            font-size: 12px;
+        }
+    </style>
+    <style>
         /* تحسين مظهر التبويبات */
         .nav-tabs .nav-link {
             font-weight: 600;
@@ -73,6 +138,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
+
                     <div class="card card-dark card-outline mb-4">
                         <!--begin::Header-->
                         <!-- تبويبات النموذج -->
@@ -98,12 +164,13 @@
                                 <li class="nav-item">
                                     <a class="nav-link" id="additional-tab" data-toggle="pill" href="#additional"
                                         role="tab">
-                                        <i class="fas fa-info-circle mr-1"></i> بيانات إضافية
+                                        <i class="fas fa-employee-circle mr-1"></i> بيانات إضافية
                                     </a>
                                 </li>
                             </ul>
                             <div class="col-md-12">
                                 <div class="card-body">
+
 
 
 
@@ -113,6 +180,30 @@
                                         @method('PUT')
                                         @csrf
                                         <div class="tab-content" id="employee-tabs-content">
+                                            <div class="col-md-6 mb-3">
+                                                @if ($employee->getFirstMediaUrl('photo', 'preview'))
+                                                    <img class="img-thumbnail"
+                                                        src="{{ $employee->getFirstMediaUrl('photo', 'preview') }}"
+                                                        style="max-width: 200px;max-height: 200px;"
+                                                        alt="{{ $employee->name }}">
+                                                @elseif($employee->gender === AdminGenderEnum::Male)
+                                                    <img class="img-thumbnail"
+                                                        src="{{ asset('dashboard') }}/assets/img/employees-default.png"
+                                                        style="max-width: 200px;max-height: 200px;"
+                                                        alt="{{ $employee->name }}">
+                                                @elseif($employee->gender === AdminGenderEnum::Female)
+                                                    <img class="img-thumbnail"
+                                                        src="{{ asset('dashboard') }}/assets/img/employees-female-default.png"
+                                                        style="max-width: 200px;max-height: 200px;"
+                                                        alt="{{ $employee->name }}">
+                                                @else
+                                                    <img class="img-thumbnail"
+                                                        src="{{ asset('dashboard') }}/assets/img/Employee.png"
+                                                        style="max-width: 200px;max-height: 200px;"
+                                                        alt="{{ $employee->name }}">
+                                                @endif
+                                            </div>
+
                                             <!-- تبويب البيانات الشخصية -->
                                             <div class="tab-pane fade show active" id="personal" role="tabpanel">
                                                 <div class="row g-3">
@@ -123,8 +214,8 @@
                                                         <input disabled type="text" class="form-control bg-white"
                                                             name="fp_code" value="{{ old('fp_code', $employee->fp_code) }}"
                                                             id="fp_code-input" />
-
                                                     </div>
+
                                                     <!-- الأسم -->
                                                     <div class="col-md-6 ">
                                                         <label class="form-label" for="name-input">اسم
@@ -1183,18 +1274,10 @@
                                                                     {{ StatusActiveEnum::INACTIVE->label() }}</option>
 
                                                         </div>
+
                                                     </div>
 
-                                                    <div class="col-md-6">
-                                                        <x-image-preview name='photo' title="أرفق صورة الموظف" />
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <label for="formFile" class="form-label">أرفاق
-                                                            السيرة
-                                                            الذاتية</label>
-                                                        <input disabled class="form-control" name="cv"
-                                                            type="file" id="formFile">
-                                                    </div>
+
                                                 </div>
 
                                             </div>
