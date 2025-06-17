@@ -140,11 +140,11 @@
                                                         style="max-width: 70px;max-height: 70px;" alt="{{ $info->name }}">
                                                 @elseif($info->gender === AdminGenderEnum::Male)
                                                     <img class="img-thumbnail"
-                                                        src="{{ asset('dashboard') }}/assets/img/employees-default.png"
+                                                        src="{{ asset('dashboard') }}/assets/dist/assets/img/employees-male-default.png"
                                                         style="max-width: 70px;max-height: 70px;" alt="{{ $info->name }}">
                                                 @elseif($info->gender === AdminGenderEnum::Female)
                                                     <img class="img-thumbnail"
-                                                        src="{{ asset('dashboard') }}/assets/img/employees-female-default.png"
+                                                        src="{{ asset('dashboard') }}/assets/dist/assets/img/employees-female-default.png"
                                                         style="max-width: 70px;max-height: 70px;" alt="{{ $info->name }}">
                                                 @else
                                                     <img class="img-thumbnail"
