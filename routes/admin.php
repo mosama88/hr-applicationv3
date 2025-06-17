@@ -69,6 +69,7 @@ Route::middleware(['auth:admin'])->group(function () {
   Route::prefix('/employees')->group(function() {
     Route::get('/get-governorates/{country}', [EmployeeController::class, 'getGovernorates'])->name('get-governorates');
     Route::get('/get-cities/{governorate}', [EmployeeController::class, 'getCities'])->name(name: 'get-cities');
+    Route::post('/file-name', [EmployeeController::class, 'uploadFiles'])->name(name: 'employees.upload-files');
 });
     //################################### الأنتهاء من شئون الموظفين ##################################
 

@@ -9,6 +9,7 @@ use App\Models\JobGrade;
 use App\Models\BloodType;
 use App\Models\ShiftsType;
 use App\Models\Governorate;
+use App\Models\EmployeeFile;
 use Illuminate\Http\Request;
 use App\Enums\StatusActiveEnum;
 use Illuminate\Support\Facades\DB;
@@ -94,13 +95,15 @@ class EmployeeController extends Controller
      */
     public function show(Employee $employee)
     {
+        $com_code =  Auth::user()->com_code;
+        $employeeFiles = EmployeeFile::orderByDesc('id')->where('com_code', $com_code)->get();
         $other['branches'] = Branch::select('id', 'name')->get();
         $other['governorates'] = Governorate::select('id', 'name')->get();
         $other['cities'] = City::select('id', 'name')->get();
         $other['blood_types'] = BloodType::select('id', 'name')->get();
         $other['job_grades'] = JobGrade::select('id', 'name')->get();
         $other['shifts_types'] = ShiftsType::all();
-        return view('dashboard.employee-affairs.employees.show', compact('employee', 'other'));
+        return view('dashboard.employee-affairs.employees.show', compact('employee', 'other', 'employeeFiles'));
     }
 
     /**
@@ -201,5 +204,37 @@ class EmployeeController extends Controller
     {
         $cities = City::where('governorate_id', $governorateId)->pluck('name', 'id');
         return response()->json($cities);
+    }
+
+    public function uploadFiles(Request $request)
+    {
+        $com_code =  Auth::user()->com_code;
+        try {
+            DB::beginTransaction();
+            $fileName = new EmployeeFile();
+            $fileName->employee_id =  $request->employee_id;
+            $fileName->file_name = $request->file_name;
+            $fileName->com_code = $com_code;
+            $fileName->created_by = Auth::user()->id;
+
+
+
+            // إنشاء الموظف أولاً
+            $fileName->save();
+
+            // ثم رفع الصورة إذا وجدت
+            if ($request->hasFile('upload_file')) {
+                $fileName->addMediaFromRequest('upload_file')
+                    ->toMediaCollection('upload_file');
+            }
+
+
+
+            DB::commit();
+            return redirect()->back()->with('success', 'تم أضافة الملف للموظف بنجاح');
+        } catch (\Exception $ex) {
+            DB::rollBack();
+            return redirect()->back()->withErrors(['error' => 'عفوآ حدث خطأ ما ' . $ex->getMessage()])->withInput();
+        }
     }
 }

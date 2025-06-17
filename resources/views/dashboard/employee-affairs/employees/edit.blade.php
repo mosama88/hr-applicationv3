@@ -62,9 +62,9 @@
     <!-- Content Header (Page header) -->
 
     @include('dashboard.layouts.breadcrumbs', [
-        'titlePage' => 'تعديل بيانات الموظف جديد',
+        'titlePage' => 'تعديل بيانات ' . $employee->name,
         'previousPage' => 'الموظفين',
-        'currentPage' => 'تعديل بيانات الموظف جديد',
+        'currentPage' => 'تعديل بيانات الموظف',
         'url' => 'employees.index',
     ])
 
