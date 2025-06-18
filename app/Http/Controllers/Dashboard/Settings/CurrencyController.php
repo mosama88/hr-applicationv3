@@ -5,12 +5,18 @@ namespace App\Http\Controllers\Dashboard\Settings;
 use App\Models\Currency;
 use Illuminate\Http\Request;
 use App\Enums\StatusActiveEnum;
+use App\Services\CurrencyService;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Dashboard\Settings\CurrencyRequest;
 
 class CurrencyController extends Controller
 {
+
+    public function __construct(protected CurrencyService $service) {}
+
+
+
     /**
      * Display a listing of the resource.
      */
@@ -19,8 +25,9 @@ class CurrencyController extends Controller
         /**
          * Display a listing of the resource.
          */
-        $com_code = Auth::user()->com_code;
-        $data = Currency::with(['createdBy:id,name', 'updatedBy:id,name'])->where('com_code', $com_code)->orderByDesc('id')->paginate(10);
+
+        $data = $this->service->index();
+
         return view('dashboard.settings.currencies.index', compact('data'));
     }
 
