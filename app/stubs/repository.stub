@@ -1,0 +1,38 @@
+<?php
+
+namespace App\Repositories;
+
+use App\Models\{{ model }};
+use App\Repositories\Interfaces\{{ model }}RepositoryInterface;
+
+class {{ model }}Repository implements {{ model }}RepositoryInterface
+{
+    public function all(): \Illuminate\Database\Eloquent\Collection
+    {
+        return {{ model }}::all();
+    }
+
+    public function create(array $data): ?{{ model }}
+    {
+        return {{ model }}::create($data);
+    }
+
+    public function update(array $data, int $id): int
+    {
+        $model = {{ model }}::findOrFail($id);
+
+        return $model->update($data);
+    }
+
+    public function delete(int $id): bool
+    {
+        $model = {{ model }}::findOrFail($id);
+
+        return $model->delete();
+    }
+
+    public function find(int $id): ?{{ model }}
+    {
+        return {{ model }}::find($id);
+    }
+}
