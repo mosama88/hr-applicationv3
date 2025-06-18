@@ -1,3 +1,4 @@
+    {{-- <aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark"> --}}
   <aside class="app-sidebar shadow text-light" style="background-color: #432a81;color:#DFECFA" data-bs-theme="dark">
       <!--begin::Sidebar Brand-->
       <div class="sidebar-brand">

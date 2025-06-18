@@ -1,4 +1,6 @@
+{{-- <nav class="app-header navbar navbar-expand bg-light-subtle" data-bs-theme="dark"> --}}
   <nav class="app-header navbar navbar-expand " style="background-color: #573b9f;color:#DFECFA" data-bs-theme="dark">
+
       <!--begin::Container-->
       <div class="container-fluid">
           <!--begin::Start Navbar Links-->

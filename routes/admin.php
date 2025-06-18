@@ -24,53 +24,55 @@ use App\Http\Controllers\Dashboard\EmployeeAffairs\AdditionalTypeController;
 
 
 Route::middleware(['auth:admin'])->group(function () {
-    Route::get('/', [AdminController::class, 'index'])->name('index')->middleware('redirect.employee');
-    //################################### الأعدات #########################################
-    Route::resource('admin_panel_settings', AdminPanelSettingController::class);
-    //################################### السنوات المالية ##################################
-    Route::resource('financeCalendars', FinanceCalendarController::class);
-    //################################### الفروع ##################################
-    Route::resource('branches', BranchController::class);
-    //################################### الشفتات ##################################
-    Route::resource('shiftTypes', ShiftTypesController::class);
-    //################################### الدول ##################################
-    Route::resource('countries', CountryController::class);
-    //################################### اللغات ##################################
-    Route::resource('languages', LanguageController::class);
-    //################################### العملات ##################################
-    Route::resource('currencies', CurrencyController::class);
-    //################################### الادارات ##################################
-    Route::resource('departments', DepartmentController::class);
-    //################################### الوظائف ##################################
-    Route::resource('job_categories', JobCategoryController::class);
-    //################################### المؤهلات ##################################
-    Route::resource('qualifications', QualificationController::class);
-    //################################### فصيلة الدم ##################################
-    Route::resource('bloodTypes', BloodTypeController::class);
-    //################################### الجنسيات ##################################
-    Route::resource('nationalities', NationalityController::class);
-    //################################### المحافظات ##################################
-    Route::resource('governorates', GovernorateController::class);
-    //################################### المحافظات ##################################
-    Route::resource('cities', CityController::class);
-    //################################### الدرجات الوظيفية ##################################
-    Route::resource('job_grades', JobGradeController::class);
-    //################################### الانتهاء من الأعدادت #########################################
+  Route::get('/', [AdminController::class, 'index'])->name('index')->middleware('redirect.employee');
+  //################################### الأعدات #########################################
+  Route::resource('admin_panel_settings', AdminPanelSettingController::class);
+  //################################### السنوات المالية ##################################
+  Route::resource('financeCalendars', FinanceCalendarController::class);
+  //################################### الفروع ##################################
+  Route::resource('branches', BranchController::class);
+  //################################### الشفتات ##################################
+  Route::resource('shiftTypes', ShiftTypesController::class);
+  //################################### الدول ##################################
+  Route::resource('countries', CountryController::class);
+  //################################### اللغات ##################################
+  Route::resource('languages', LanguageController::class);
+  //################################### العملات ##################################
+  Route::resource('currencies', CurrencyController::class);
+  //################################### الادارات ##################################
+  Route::resource('departments', DepartmentController::class);
+  //################################### الوظائف ##################################
+  Route::resource('job_categories', JobCategoryController::class);
+  //################################### المؤهلات ##################################
+  Route::resource('qualifications', QualificationController::class);
+  //################################### فصيلة الدم ##################################
+  Route::resource('bloodTypes', BloodTypeController::class);
+  //################################### الجنسيات ##################################
+  Route::resource('nationalities', NationalityController::class);
+  //################################### المحافظات ##################################
+  Route::resource('governorates', GovernorateController::class);
+  //################################### المحافظات ##################################
+  Route::resource('cities', CityController::class);
+  //################################### الدرجات الوظيفية ##################################
+  Route::resource('job_grades', JobGradeController::class);
+  //################################### الانتهاء من الأعدادت #########################################
 
-    //################################### شئون الموظفين ##################################
-    //################################### أنواع الاضافى ##################################
-    Route::resource('additional_types', AdditionalTypeController::class);
-    //################################### أنواع البدلات ##################################
-    Route::resource('allowances', AllowanceController::class);
-    //################################### أنواع الخصومات ##################################
-    Route::resource('discount_types', DiscountTypeController::class);
-    //################################### الموظفين ##################################
-    Route::resource('/employees', EmployeeController::class); // إذا كنت تريد استخدام resource
-  Route::prefix('/employees')->group(function() {
+  //################################### شئون الموظفين ##################################
+  //################################### أنواع الاضافى ##################################
+  Route::resource('additional_types', AdditionalTypeController::class);
+  //################################### أنواع البدلات ##################################
+  Route::resource('allowances', AllowanceController::class);
+  //################################### أنواع الخصومات ##################################
+  Route::resource('discount_types', DiscountTypeController::class);
+  //################################### الموظفين ##################################
+  Route::resource('/employees', EmployeeController::class); // إذا كنت تريد استخدام resource
+  Route::prefix('/employees')->group(function () {
     Route::get('/get-governorates/{country}', [EmployeeController::class, 'getGovernorates'])->name('get-governorates');
     Route::get('/get-cities/{governorate}', [EmployeeController::class, 'getCities'])->name(name: 'get-cities');
     Route::post('/file-name', [EmployeeController::class, 'uploadFiles'])->name(name: 'employees.upload-files');
-});
-    //################################### الأنتهاء من شئون الموظفين ##################################
+  });
+  Route::delete('/employees/upload-files/{id}', [EmployeeController::class, 'destroyUploadFiles'])->name('employees.upload-files.destroy');
+
+  //################################### الأنتهاء من شئون الموظفين ##################################
 
 });

@@ -237,4 +237,28 @@ class EmployeeController extends Controller
             return redirect()->back()->withErrors(['error' => 'عفوآ حدث خطأ ما ' . $ex->getMessage()])->withInput();
         }
     }
+
+
+
+
+    public function destroyUploadFiles($id)
+{
+    try {
+        $file = EmployeeFile::findOrFail($id);
+        $file->clearMediaCollection('upload_file');
+        $file->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'تم حذف الملف بنجاح',
+        ]);
+    } catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'message' => 'حدث خطأ أثناء الحذف: ' . $e->getMessage(),
+        ], 500);
+    }
+}
+
+    
 }

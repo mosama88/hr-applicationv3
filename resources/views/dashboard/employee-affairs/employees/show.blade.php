@@ -1630,12 +1630,13 @@
                                         <!-- تبويب أرفاق مستندات -->
                                         <div class="tab-pane fade" id="upload" role="tabpanel">
                                             <div class="d-flex justify-content-center align-items-center">
-                                                <div class="card shadow-lg p-4" style="width: 100%; max-width: 600px;">
+                                                <div class="card shadow-lg p-4 mb-5"
+                                                    style="width: 100%; max-width: 600px;">
                                                     <div class="card-body">
                                                         <h5 class="card-title text-center mb-4">إرفاق ملف</h5>
 
                                                         <form action="{{ route('dashboard.employees.upload-files') }}"
-                                                            method="POST" enctype="multipart/form-data">
+                                                            method="POST" enctype="multipart/form-data" id="storeForm">
                                                             @csrf
 
                                                             <div class="mb-3">
@@ -1678,15 +1679,46 @@
                                                                 <th scope="row">{{ $loop->iteration }}</th>
                                                                 <td>{{ $employeeFile->file_name }}</td>
                                                                 <td>
-                                                                    @if ($employeeFile->getFirstMediaUrl('upload_file', 'preview'))
-                                                    <img class="img-thumbnail"
-                                                        src="{{ $employeeFile->getFirstMediaUrl('upload_file', 'preview') }}"
-                                                        style="max-width: 70px;max-height: 70px;" alt="{{ $employeeFile->file_name }}">
-                                                            @endif
+                                                                    @php
+                                                                        $media = $employeeFile->getFirstMedia(
+                                                                            'upload_file',
+                                                                        );
+                                                                    @endphp
+
+                                                                    @if ($media)
+                                                                        @if (Str::endsWith($media->file_name, ['.pdf']))
+                                                                            <a href="{{ $media->getUrl() }}"
+                                                                                target="_blank"
+                                                                                style="font-size: 24px; color: red;">
+                                                                                <i class="fa-regular fa-file-pdf fa-xl"
+                                                                                    style="color: #f41515;"></i>
+                                                                            </a>
+                                                                        @elseif (Str::startsWith($media->mime_type, 'image'))
+                                                                            <img src="{{ $media->getUrl('preview') ?? $media->getUrl() }}"
+                                                                                class="img-thumbnail"
+                                                                                style="max-width: 70px; max-height: 70px;"
+                                                                                alt="{{ $employeeFile->file_name }}">
+                                                                        @endif
+                                                                    @endif
                                                                 </td>
                                                                 <td>
+                                                                    @if ($media)
+                                                                        <a href="{{ $media->getUrl() }}" download
+                                                                            class="btn btn-sm btn-primary">
+                                                                            تحميل
+                                                                            <i
+                                                                                class="fa-solid fa-cloud-arrow-down mx-1"></i>
 
-
+                                                                        </a>
+                                                                    @endif
+                                                                </td>
+                                                                <td title="حذف الملف">
+                                                                    <a href="#"
+                                                                        class="btn btn-sm btn-danger delete-btn"
+                                                                        data-id="{{ $employeeFile->id }}"
+                                                                        data-url="{{ route('dashboard.employees.upload-files.destroy', $employeeFile->id) }}">
+                                                                        <i class="fas fa-trash-alt"></i> حذف
+                                                                    </a>
                                                                 </td>
                                                             </tr>
                                                         @empty
@@ -1720,8 +1752,61 @@
     <script src="{{ asset('dashboard') }}/assets/dist/js/employees/create-scripts.js"></script>
     <script src="{{ asset('dashboard') }}/assets/dist/js/select2.min.js"></script>
 
-    <!-- مكتبة Flatpickr JS -->
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <!-- ملف اللغة العربية -->
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ar.js"></script>
+
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                document.querySelectorAll('.delete-btn').forEach(function(btn) {
+                    btn.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        const url = this.getAttribute('data-url');
+                        const id = this.getAttribute('data-id');
+
+                        Swal.fire({
+                            title: 'هل أنت متأكد؟',
+                            text: 'لن تتمكن من التراجع عن هذا!',
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#d33',
+                            cancelButtonColor: '#3085d6',
+                            confirmButtonText: 'نعم، احذفه!',
+                            cancelButtonText: 'إلغاء'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                fetch(url, {
+                                        method: 'POST',
+                                        headers: {
+                                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                            'X-Requested-With': 'XMLHttpRequest',
+                                        },
+                                        body: new URLSearchParams({
+                                            _method: 'DELETE'
+                                        })
+                                    })
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        if (data.success) {
+                                            Swal.fire({
+                                                title: 'تم الحذف!',
+                                                text: data.message,
+                                                icon: 'success',
+                                                timer: 1500,
+                                                showConfirmButton: false
+                                            }).then(() => {
+                                                location.reload();
+                                            });
+                                        } else {
+                                            Swal.fire('خطأ!', data.message ||
+                                                'حدث خطأ غير متوقع', 'error');
+                                        }
+                                    })
+                                    .catch(() => {
+                                        Swal.fire('خطأ!', 'تعذر الاتصال بالخادم', 'error');
+                                    });
+                            }
+                        });
+                    });
+                });
+            });
+        </script>
 @endpush
