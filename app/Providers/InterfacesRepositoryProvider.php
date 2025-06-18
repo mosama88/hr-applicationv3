@@ -7,12 +7,14 @@ use Illuminate\Support\ServiceProvider;
 use App\Repositories\CurrencyRepository;
 use App\Repositories\DepartmentRepository;
 use App\Repositories\ShiftTypesRepository;
+use App\Repositories\JobCategoryRepository;
 use App\Repositories\FinanceCalendarRepository;
 use App\Repositories\Interfaces\BranchInterface;
 use App\Repositories\AdminPanelSettingRepository;
 use App\Repositories\Interfaces\CurrencyInterface;
 use App\Repositories\Interfaces\DepartmentInterface;
 use App\Repositories\Interfaces\ShiftTypesInterface;
+use App\Repositories\Interfaces\JobCategoryInterface;
 use App\Repositories\Interfaces\FinanceCalendarInterface;
 use App\Repositories\Interfaces\AdminPanelSettingInterface;
 
@@ -37,5 +39,6 @@ class InterfacesRepositoryProvider extends ServiceProvider
         app()->bind(ShiftTypesInterface::class, ShiftTypesRepository::class);
         app()->bind(CurrencyInterface::class, CurrencyRepository::class);
         app()->bind(DepartmentInterface::class, DepartmentRepository::class);
+        app()->bind(JobCategoryInterface::class, JobCategoryRepository::class);
     }
 }

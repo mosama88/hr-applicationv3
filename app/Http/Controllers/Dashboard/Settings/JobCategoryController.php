@@ -6,12 +6,15 @@ use App\Models\JobCategory;
 use Illuminate\Http\Request;
 use App\Enums\StatusActiveEnum;
 use App\Http\Controllers\Controller;
+use App\Services\JobCategoryService;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Dashboard\Settings\JobsCategoryRequest;
 
 class JobCategoryController extends Controller
 {
-     /**
+
+    public function __construct(protected JobCategoryService $service) {}
+    /**
      * Display a listing of the resource.
      */
     public function index()
@@ -19,8 +22,7 @@ class JobCategoryController extends Controller
         /**
          * Display a listing of the resource.
          */
-        $com_code = Auth::user()->com_code;
-        $data = JobCategory::with(['createdBy:id,name', 'updatedBy:id,name'])->where('com_code', $com_code)->orderByDesc('id')->paginate(10);
+        $data = $this->service->index();
         return view('dashboard.settings.job_categories.index', compact('data'));
     }
 
@@ -37,16 +39,8 @@ class JobCategoryController extends Controller
      */
     public function store(JobsCategoryRequest $request)
     {
-        $com_code =  Auth::user()->com_code;
-        $active = StatusActiveEnum::ACTIVE;
-        $dataValidate = $request->validated();
-        $dataInsert = array_merge($dataValidate, [
-            'created_by' => Auth::user()->id,
-            'com_code' => $com_code,
-            'active' =>  $active,
-        ]);
+        $this->service->store($request);
 
-        JobCategory::create($dataInsert);
         return redirect()->route('dashboard.job_categories.index')->with('success', 'تم أضافة الوظيفه بنجاح');
     }
 
@@ -71,15 +65,8 @@ class JobCategoryController extends Controller
      */
     public function update(JobsCategoryRequest $request, JobCategory $jobCategory)
     {
-        $com_code =  Auth::user()->com_code;
-        $dataValidate = $request->validated();
-        $dataUpdate = array_merge($dataValidate, [
-            'updated_by' => Auth::user()->id,
-            'com_code' => $com_code,
-            'active' =>  $request->active,
-        ]);
+        $this->service->update($request, $jobCategory);
 
-        $jobCategory->update($dataUpdate);
         return redirect()->route('dashboard.job_categories.index')->with('success', 'تم تعديل الوظيفه بنجاح');
     }
 
@@ -88,7 +75,7 @@ class JobCategoryController extends Controller
      */
     public function destroy(JobCategory $jobCategory)
     {
-        $jobCategory->delete();
+        $this->service->destroy($jobCategory);
         return response()->json([
             'success' => true,
             'message' => 'تم حذف الوظيفه بنجاح'
@@ -98,7 +85,7 @@ class JobCategoryController extends Controller
 
     function searchJob_category(Request $request)
     {
-        $jobCategories = JobCategory::where('name', 'LIKE', "%{$request->q}%")->limit(5)->get();
+        $jobCategories = $this->service->searchJob_category($request);
         return response()->json([
             'data' => $jobCategories
         ]);
