@@ -7,11 +7,17 @@ use App\Models\Qualification;
 use App\Enums\StatusActiveEnum;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Services\QualificationService;
 use App\Http\Requests\Dashboard\Settings\QualificationRequest;
 
 class QualificationController extends Controller
 {
-     /**
+
+    public function __construct(protected QualificationService $service) {}
+
+
+
+    /**
      * Display a listing of the resource.
      */
     public function index()
@@ -19,8 +25,7 @@ class QualificationController extends Controller
         /**
          * Display a listing of the resource.
          */
-        $com_code = Auth::user()->com_code;
-        $data = Qualification::with(['createdBy:id,name', 'updatedBy:id,name'])->where('com_code', $com_code)->orderByDesc('id')->paginate(10);
+        $data = $this->service->index();
         return view('dashboard.settings.qualifications.index', compact('data'));
     }
 
@@ -37,16 +42,8 @@ class QualificationController extends Controller
      */
     public function store(QualificationRequest $request)
     {
-        $com_code =  Auth::user()->com_code;
-        $active = StatusActiveEnum::ACTIVE;
-        $dataValidate = $request->validated();
-        $dataInsert = array_merge($dataValidate, [
-            'created_by' => Auth::user()->id,
-            'com_code' => $com_code,
-            'active' =>  $active,
-        ]);
+        $this->service->store($request);
 
-        Qualification::create($dataInsert);
         return redirect()->route('dashboard.qualifications.index')->with('success', 'تم أضافة المؤهل بنجاح');
     }
 
@@ -71,15 +68,8 @@ class QualificationController extends Controller
      */
     public function update(QualificationRequest $request, Qualification $qualification)
     {
-        $com_code =  Auth::user()->com_code;
-        $dataValidate = $request->validated();
-        $dataUpdate = array_merge($dataValidate, [
-            'updated_by' => Auth::user()->id,
-            'com_code' => $com_code,
-            'active' =>  $request->active,
-        ]);
+        $this->service->update($request, $qualification);
 
-        $qualification->update($dataUpdate);
         return redirect()->route('dashboard.qualifications.index')->with('success', 'تم تعديل المؤهل بنجاح');
     }
 
@@ -88,7 +78,7 @@ class QualificationController extends Controller
      */
     public function destroy(Qualification $qualification)
     {
-        $qualification->delete();
+        $this->service->destroy($qualification);
         return response()->json([
             'success' => true,
             'message' => 'تم حذف المؤهل بنجاح'
@@ -98,7 +88,7 @@ class QualificationController extends Controller
 
     function searchQualification(Request $request)
     {
-        $qualifications = Qualification::where('name', 'LIKE', "%{$request->q}%")->limit(5)->get();
+        $qualifications =  $this->service->searchQualification($request);
         return response()->json([
             'data' => $qualifications
         ]);
