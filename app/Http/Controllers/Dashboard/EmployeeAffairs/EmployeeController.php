@@ -97,7 +97,7 @@ class EmployeeController extends Controller
     public function show(Employee $employee)
     {
         $com_code =  Auth::user()->com_code;
-        $employeeFiles = EmployeeFile::orderByDesc('id')->where('com_code', $com_code)->get();
+        $employeeFiles = EmployeeFile::orderByDesc('id')->where('employee_id', $employee->id)->where('com_code', $com_code)->get();
         $other['branches'] = Branch::select('id', 'name')->get();
         $other['governorates'] = Governorate::select('id', 'name')->get();
         $other['cities'] = City::select('id', 'name')->get();

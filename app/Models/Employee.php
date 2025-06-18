@@ -133,6 +133,23 @@ class Employee extends Model implements HasMedia
     }
 
 
+    public function employeeFile()
+    {
+        return $this->hasMany(EmployeeFile::class);
+    }
+
+
+    protected static function booted()
+    {
+        static::deleting(function ($employee) {
+            foreach ($employee->employeeFile as $file) {
+                $file->clearMediaCollection('upload_file');
+                $file->delete();
+            }
+        });
+    }
+
+
 
     public function createdBy()
     {
