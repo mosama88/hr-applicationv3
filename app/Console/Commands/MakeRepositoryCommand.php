@@ -29,6 +29,7 @@ class MakeRepositoryCommand extends Command
     {
         $name = $this->argument('name');
         $model = Str::studly($name);
+        $variable = lcfirst(class_basename($model));
 
         $filesystem = new Filesystem();
 
@@ -42,12 +43,22 @@ class MakeRepositoryCommand extends Command
         $interfaceStub = $filesystem->get(app_path('stubs/repository.interface.stub'));
         $repositoryStub = $filesystem->get(app_path('stubs/repository.stub'));
 
-        $interfaceContent = str_replace('{{ model }}', $model, $interfaceStub);
-        $repositoryContent = str_replace('{{ model }}', $model, $repositoryStub);
+        $interfaceContent = str_replace(
+            ['{{ model }}', '{{ $variable }}'],
+            [$model, '$' . $variable],
+            $interfaceStub
+        );
+
+        $repositoryContent = str_replace(
+            ['{{ model }}', '{{ $variable }}'],
+            [$model, '$' . $variable],
+            $repositoryStub
+        );
 
         $filesystem->put($interfacePath, $interfaceContent);
         $filesystem->put($repositoryPath, $repositoryContent);
 
+        // Service generation
         $servicePath = app_path("Services/{$model}Service.php");
 
         if (!$filesystem->exists(app_path('Services'))) {
@@ -55,8 +66,13 @@ class MakeRepositoryCommand extends Command
         }
 
         $serviceStub = $filesystem->get(app_path('stubs/service.stub'));
-        $serviceContent = str_replace('{{ model }}', $model, $serviceStub);
+        $serviceContent = str_replace(
+            ['{{ model }}', '{{ $variable }}'],
+            [$model, '$' . $variable],
+            $serviceStub
+        );
         $filesystem->put($servicePath, $serviceContent);
+
         $this->info("Repository and interface created for model: {$model}");
         $this->info("Repository Path: {$repositoryPath}");
         $this->info("Interface Path: {$interfacePath}");

@@ -1,38 +1,56 @@
 <?php
 
 namespace App\Repositories;
+use Illuminate\Support\Facades\Auth;
+use App\Enums\StatusActiveEnum;
 
 use App\Models\{{ model }};
 use App\Repositories\Interfaces\{{ model }}RepositoryInterface;
 
 class {{ model }}Repository implements {{ model }}RepositoryInterface
 {
-    public function all(): \Illuminate\Database\Eloquent\Collection
+    public function getData()
     {
-        return {{ model }}::all();
+        $com_code = Auth::user()->com_code;
+        $data = {{ model }}::with(['createdBy:id,name', 'updatedBy:id,name'])->where('com_code', $com_code)->orderByDesc('id')->paginate(10);
+        return $data;
     }
 
-    public function create(array $data): ?{{ model }}
+      public function storeData($request): {{ model }}
     {
-        return {{ model }}::create($data);
+        $com_code =  Auth::user()->com_code;
+        $active = StatusActiveEnum::ACTIVE;
+        $dataValidate = $request->validated();
+        $dataInsert = array_merge($dataValidate, [
+            'created_by' => Auth::user()->id,
+            'com_code' => $com_code,
+            'active' =>  $active,
+        ]);
+
+        return {{ model }}::create($dataInsert);
     }
 
-    public function update(array $data, int $id): int
+    public function updateData($request, {{ model }} {{ $variable }}): {{ model }}
     {
-        $model = {{ model }}::findOrFail($id);
 
-        return $model->update($data);
+        $com_code =  Auth::user()->com_code;
+        $dataValidate = $request->validated();
+        $dataUpdate = array_merge($dataValidate, [
+            'updated_by' => Auth::user()->id,
+            'com_code' => $com_code,
+            'active' =>  $request->active,
+        ]);
+
+       {{ $variable }}->update($dataUpdate);
+        return  {{ $variable }};
     }
 
-    public function delete(int $id): bool
-    {
-        $model = {{ model }}::findOrFail($id);
 
-        return $model->delete();
+   public function deleteData({{ model }} {{ $variable }})
+    {
+        {{ $variable }}->delete();
+        return  {{ $variable }};
     }
 
-    public function find(int $id): ?{{ model }}
-    {
-        return {{ model }}::find($id);
-    }
+
 }

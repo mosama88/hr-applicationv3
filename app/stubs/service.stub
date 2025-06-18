@@ -12,28 +12,23 @@ class {{ model }}Service
 
     }
 
-    public function all()
+    public function index()
     {
-        return $this->repository->all();
+        return $this->repository->getData();
     }
 
-    public function create(array $data)
+      public function store($request)
     {
-        return $this->repository->create($data);
+        return $this->repository->storeData($request);
     }
 
-    public function update(array $data, int $id)
+   public function update($request, {{ model }} {{ $variable }})
     {
-        return $this->repository->update($data, $id);
+        return $this->repository->updateData($request, {{ $variable }});
     }
 
-    public function delete(int $id)
+    public function destroy({{ $variable }})
     {
-        return $this->repository->delete($id);
-    }
-
-    public function find(int $id)
-    {
-        return $this->repository->find($id);
+        return $this->repository->deleteData({{ $variable }});
     }
 }

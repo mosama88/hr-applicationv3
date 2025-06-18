@@ -5,13 +5,12 @@ use App\Models\{{ model }};
 
 interface {{ model }}RepositoryInterface
 {
-    public function all(): \Illuminate\Database\Eloquent\Collection;
+    public function getData();
 
-    public function create(array $data): ?{{ model }};
+    public function storeData($request): ?{{ model }};
 
-    public function update(array $data, int $id): int;
+    public function updateData($request, {{ model }} {{ $variable }});
 
-    public function delete(int $id): bool;
+    public function deleteData({{ model }});
 
-    public function find(int $id): ?{{ model }};
 }
