@@ -23,12 +23,14 @@ class CurrencyRepository implements CurrencyInterface
     public function storeData($request): ?Currency
     {
         $com_code =  Auth::user()->com_code;
+        $active = StatusActiveEnum::ACTIVE;
         $dataValidate = $request->validated();
         $dataInsert = array_merge($dataValidate, [
             'created_by' => Auth::user()->id,
             'com_code' => $com_code,
-            'active' => StatusActiveEnum::ACTIVE,
+            'active' =>  $active,
         ]);
+
         return Currency::create($dataInsert);
     }
 
@@ -43,12 +45,15 @@ class CurrencyRepository implements CurrencyInterface
 
     public function updateData($request, Currency $currency): ?Currency
     {
+
         $com_code =  Auth::user()->com_code;
         $dataValidate = $request->validated();
         $dataUpdate = array_merge($dataValidate, [
             'updated_by' => Auth::user()->id,
             'com_code' => $com_code,
+            'active' =>  $request->active,
         ]);
+
         $currency->update($dataUpdate);
         return  $currency;
     }
@@ -58,5 +63,10 @@ class CurrencyRepository implements CurrencyInterface
     {
         $currency->delete();
         return  $currency;
+    }
+    public function searchCurrancyForEmployee($request)
+    {
+        $currencies = Currency::where('name', 'LIKE', "%{$request->q}%")->orWhere('currency_symbol', 'LIKE', "%{$request->q}%")->limit(5)->get();
+        return $currencies;
     }
 }

@@ -35,4 +35,10 @@ class CurrencyService
     {
         return $this->repository->deleteData($currency);
     }
+
+
+    public function searchCurrency($request)
+    {
+        return $this->repository->searchCurrancyForEmployee($request);
+    }
 }

@@ -44,16 +44,8 @@ class CurrencyController extends Controller
      */
     public function store(CurrencyRequest $request)
     {
-        $com_code =  Auth::user()->com_code;
-        $active = StatusActiveEnum::ACTIVE;
-        $dataValidate = $request->validated();
-        $dataInsert = array_merge($dataValidate, [
-            'created_by' => Auth::user()->id,
-            'com_code' => $com_code,
-            'active' =>  $active,
-        ]);
+        $this->service->store($request);
 
-        Currency::create($dataInsert);
         return redirect()->route('dashboard.currencies.index')->with('success', 'تم أضافة العملة بنجاح');
     }
 
@@ -78,15 +70,8 @@ class CurrencyController extends Controller
      */
     public function update(CurrencyRequest $request, Currency $currency)
     {
-        $com_code =  Auth::user()->com_code;
-        $dataValidate = $request->validated();
-        $dataUpdate = array_merge($dataValidate, [
-            'updated_by' => Auth::user()->id,
-            'com_code' => $com_code,
-            'active' =>  $request->active,
-        ]);
+        $this->service->update($request, $currency);
 
-        $currency->update($dataUpdate);
         return redirect()->route('dashboard.currencies.index')->with('success', 'تم تعديل العملة بنجاح');
     }
 
@@ -95,7 +80,8 @@ class CurrencyController extends Controller
      */
     public function destroy(Currency $currency)
     {
-        $currency->delete();
+        $this->service->destroy($currency);
+
         return response()->json([
             'success' => true,
             'message' => 'تم حذف العملة بنجاح'
@@ -104,7 +90,7 @@ class CurrencyController extends Controller
 
     function searchCurrency(Request $request)
     {
-        $currencies = Currency::where('name', 'LIKE', "%{$request->q}%")->orWhere('currency_symbol', 'LIKE', "%{$request->q}%")->limit(5)->get();
+        $currencies =  $this->service->searchCurrency($request);
         return response()->json([
             'data' => $currencies
         ]);

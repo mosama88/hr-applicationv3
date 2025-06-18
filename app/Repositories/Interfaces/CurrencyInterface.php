@@ -8,6 +8,7 @@ interface CurrencyInterface
 {
     public function getData();
     public function storeData($request): ?Currency;
-    public function updateData($request, Currency $branch);
-    public function deleteData(Currency $branch);
+    public function updateData($request, Currency $currency);
+    public function deleteData(Currency $currency);
+    public function searchCurrancyForEmployee($request);
 }
