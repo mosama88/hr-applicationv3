@@ -3,7 +3,8 @@
 namespace App\Http\Requests\Dashboard\EmployeeAffairs;
 
 use Illuminate\Foundation\Http\FormRequest;
-
+use App\Enums\StatusActiveEnum;
+use Illuminate\Validation\Rule;
 class AllowanceRequest extends FormRequest
 {
     /**
@@ -25,7 +26,10 @@ class AllowanceRequest extends FormRequest
 
         return [
             'name' => 'required|unique:allowances,name,' . $allowanceId,
-            'active' => 'nullable',
+            'active' => [
+                'nullable',
+                Rule::in(array_column(StatusActiveEnum::cases(), 'value')),
+            ],
         ];
     }
 

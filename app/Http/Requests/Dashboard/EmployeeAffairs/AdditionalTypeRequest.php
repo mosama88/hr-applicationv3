@@ -3,7 +3,8 @@
 namespace App\Http\Requests\Dashboard\EmployeeAffairs;
 
 use Illuminate\Foundation\Http\FormRequest;
-
+use App\Enums\StatusActiveEnum;
+use Illuminate\Validation\Rule;
 class AdditionalTypeRequest extends FormRequest
 {
     /**
@@ -25,7 +26,10 @@ class AdditionalTypeRequest extends FormRequest
 
         return [
             'name' => 'required|unique:additional_types,name,' . $additional_typeId,
-            'active' => 'nullable',
+            'active' => [
+                'nullable',
+                Rule::in(array_column(StatusActiveEnum::cases(), 'value')),
+            ],
         ];
     }
 
