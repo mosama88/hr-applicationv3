@@ -11,6 +11,6 @@ interface {{ model }}RepositoryInterface
 
     public function updateData($request, {{ model }} {{ $variable }});
 
-    public function deleteData({{ model }});
+    public function deleteData({{ model }} {{ $variable }});
 
 }
