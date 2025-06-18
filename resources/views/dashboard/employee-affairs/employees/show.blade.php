@@ -1635,28 +1635,38 @@
                                                     <div class="card-body">
                                                         <h5 class="card-title text-center mb-4">إرفاق ملف</h5>
 
-                                                        <form action="{{ route('dashboard.employees.upload-files') }}"
-                                                            method="POST" enctype="multipart/form-data" id="storeForm">
+
+                                                        <form id="uploadFileForm" enctype="multipart/form-data">
                                                             @csrf
+                                                            <input type="hidden" name="employee_id"
+                                                                value="{{ $employee->id }}">
 
                                                             <div class="mb-3">
-                                                                <input readonly type="hidden" id="file_name"
-                                                                    value="{{ $employee->id }}" class="form-control"
-                                                                    name="employee_id" />
-                                                                <label class="form-label" for="file_name">أسم
+                                                                <label for="file_name" class="form-label">اسم
                                                                     الملف</label>
-                                                                <input type="text" id="file_name"
-                                                                    value="{{ old('file_name') }}" class="form-control"
-                                                                    name="file_name" />
+                                                                <input type="text" class="form-control"
+                                                                    name="file_name">
                                                             </div>
 
-                                                            <div class="mb-3 col-12">
-                                                                <x-image-preview name="upload_file" title="أرفق الملف" />
+                                                            <div class="mb-3">
+                                                                <label for="upload_file" class="form-label">ارفاق
+                                                                    الملف</label>
+                                                                <input type="file" class="form-control"
+                                                                    name="upload_file" id="upload_file">
                                                             </div>
 
-                                                            <x-create-button-component></x-create-button-component>
+                                                            <div id="responseMessage"></div>
 
+                                                            <button type="submit" id="submitBtn"
+                                                                class="btn btn-primary">
+                                                                <span id="submitText">رفع الملف</span>
+                                                                <span id="spinner"
+                                                                    class="d-none spinner-border spinner-border-sm"
+                                                                    role="status" aria-hidden="true"></span>
+                                                            </button>
                                                         </form>
+
+                                                        <div id="responseMessage" class="mt-3"></div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1693,13 +1703,20 @@
                                                                                 <i class="fa-regular fa-file-pdf fa-xl"
                                                                                     style="color: #f41515;"></i>
                                                                             </a>
-                                                                        @elseif (Str::startsWith($media->mime_type, 'image'))
-                                                                            <img src="{{ $media->getUrl('preview') ?? $media->getUrl() }}"
-                                                                                class="img-thumbnail"
-                                                                                style="max-width: 70px; max-height: 70px;"
-                                                                                alt="{{ $employeeFile->file_name }}">
+
+                                                                            @elseif (Str::endsWith($media->file_name, ['.doc','docx']))
+                                                                                <a href="{{ $media->getUrl() }}"
+                                                                                    target="_blank"
+                                                                                    style="font-size: 24px; color: rgb(38, 0, 255);">
+                                                                                <i class="fa-solid fa-file-word"></i>
+                                                                                </a>
+                                                                            @elseif (Str::startsWith($media->mime_type, 'image'))
+                                                                                <img src="{{ $media->getUrl('preview') ?? $media->getUrl() }}"
+                                                                                    class="img-thumbnail"
+                                                                                    style="max-width: 70px; max-height: 70px;"
+                                                                                    alt="{{ $employeeFile->file_name }}">
+                                                                            @endif
                                                                         @endif
-                                                                    @endif
                                                                 </td>
                                                                 <td>
                                                                     @if ($media)
@@ -1752,61 +1769,135 @@
     <script src="{{ asset('dashboard') }}/assets/dist/js/employees/create-scripts.js"></script>
     <script src="{{ asset('dashboard') }}/assets/dist/js/select2.min.js"></script>
 
+    <script>
+        $(document).ready(function() {
+            $('#uploadFileForm').on('submit', function(e) {
+                e.preventDefault();
+
+                // إظهار حالة التحميل
+                $('#submitBtn').prop('disabled', true);
+                $('#submitText').addClass('d-none');
+                $('#spinner').removeClass('d-none');
+
+                // إعداد بيانات النموذج
+                let formData = new FormData(this);
+
+                $.ajax({
+                    url: "{{ route('dashboard.employees.upload-files') }}",
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        // إعادة تعيين النموذج
+                        $('#uploadFileForm')[0].reset();
+
+                        // عرض رسالة نجاح
+                        $('#responseMessage').html(`
+                        <div class="alert alert-success">
+                            ${response.message}
+                        </div>
+                    `);
+
+                        // تحديث قائمة الملفات
+                        if (response.files_html) {
+                            $('#filesList').html(response.files_html);
+                        }
+
+                        // ✅ إعادة تحميل الصفحة بعد ثانية واحدة
+                        setTimeout(() => {
+                            location.reload();
+                        }, 1000);
+                    },
+                    error: function(xhr) {
+                        let errors = xhr.responseJSON?.errors || {};
+                        let errorMessage = xhr.responseJSON?.message ||
+                            'حدث خطأ أثناء رفع الملف';
+
+                        let errorHtml = '<div class="alert alert-danger"><ul>';
+                        for (let field in errors) {
+                            errorHtml += `<li>${errors[field][0]}</li>`;
+                        }
+                        errorHtml += `</ul>${errorMessage}</div>`;
+
+                        $('#responseMessage').html(errorHtml);
+                    },
+                    complete: function() {
+                        // إخفاء حالة التحميل
+                        $('#submitBtn').prop('disabled', false);
+                        $('#submitText').removeClass('d-none');
+                        $('#spinner').addClass('d-none');
+                    }
+                });
+            });
+
+            // معاينة الصورة قبل الرفع
+            $('#upload_file').change(function() {
+                if (this.files && this.files[0]) {
+                    let reader = new FileReader();
+                    reader.onload = function(e) {
+                        $('#imagePreview').attr('src', e.target.result).removeClass('d-none');
+                    };
+                    reader.readAsDataURL(this.files[0]);
+                }
+            });
+        });
+    </script>
 
 
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                document.querySelectorAll('.delete-btn').forEach(function(btn) {
-                    btn.addEventListener('click', function(e) {
-                        e.preventDefault();
-                        const url = this.getAttribute('data-url');
-                        const id = this.getAttribute('data-id');
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.delete-btn').forEach(function(btn) {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const url = this.getAttribute('data-url');
+                    const id = this.getAttribute('data-id');
 
-                        Swal.fire({
-                            title: 'هل أنت متأكد؟',
-                            text: 'لن تتمكن من التراجع عن هذا!',
-                            icon: 'warning',
-                            showCancelButton: true,
-                            confirmButtonColor: '#d33',
-                            cancelButtonColor: '#3085d6',
-                            confirmButtonText: 'نعم، احذفه!',
-                            cancelButtonText: 'إلغاء'
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                fetch(url, {
-                                        method: 'POST',
-                                        headers: {
-                                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                                            'X-Requested-With': 'XMLHttpRequest',
-                                        },
-                                        body: new URLSearchParams({
-                                            _method: 'DELETE'
-                                        })
+                    Swal.fire({
+                        title: 'هل أنت متأكد؟',
+                        text: 'لن تتمكن من التراجع عن هذا!',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#d33',
+                        cancelButtonColor: '#3085d6',
+                        confirmButtonText: 'نعم، احذفه!',
+                        cancelButtonText: 'إلغاء'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            fetch(url, {
+                                    method: 'POST',
+                                    headers: {
+                                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                        'X-Requested-With': 'XMLHttpRequest',
+                                    },
+                                    body: new URLSearchParams({
+                                        _method: 'DELETE'
                                     })
-                                    .then(response => response.json())
-                                    .then(data => {
-                                        if (data.success) {
-                                            Swal.fire({
-                                                title: 'تم الحذف!',
-                                                text: data.message,
-                                                icon: 'success',
-                                                timer: 1500,
-                                                showConfirmButton: false
-                                            }).then(() => {
-                                                location.reload();
-                                            });
-                                        } else {
-                                            Swal.fire('خطأ!', data.message ||
-                                                'حدث خطأ غير متوقع', 'error');
-                                        }
-                                    })
-                                    .catch(() => {
-                                        Swal.fire('خطأ!', 'تعذر الاتصال بالخادم', 'error');
-                                    });
-                            }
-                        });
+                                })
+                                .then(response => response.json())
+                                .then(data => {
+                                    if (data.success) {
+                                        Swal.fire({
+                                            title: 'تم الحذف!',
+                                            text: data.message,
+                                            icon: 'success',
+                                            timer: 1500,
+                                            showConfirmButton: false
+                                        }).then(() => {
+                                            location.reload();
+                                        });
+                                    } else {
+                                        Swal.fire('خطأ!', data.message ||
+                                            'حدث خطأ غير متوقع', 'error');
+                                    }
+                                })
+                                .catch(() => {
+                                    Swal.fire('خطأ!', 'تعذر الاتصال بالخادم', 'error');
+                                });
+                        }
                     });
                 });
             });
-        </script>
+        });
+    </script>
 @endpush

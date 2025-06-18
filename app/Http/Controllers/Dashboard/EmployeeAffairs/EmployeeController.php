@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Dashboard\EmployeeAffairs\EmployeeRequest;
+use App\Http\Requests\Dashboard\EmployeeAffairs\EmoloyeeFilesRequest;
 
 class EmployeeController extends Controller
 {
@@ -206,35 +207,44 @@ class EmployeeController extends Controller
         return response()->json($cities);
     }
 
-    public function uploadFiles(Request $request)
+    public function uploadFiles(EmoloyeeFilesRequest $request)
     {
         $com_code =  Auth::user()->com_code;
+
+        DB::beginTransaction();
+
         try {
-            DB::beginTransaction();
-            $fileName = new EmployeeFile();
-            $fileName->employee_id =  $request->employee_id;
-            $fileName->file_name = $request->file_name;
-            $fileName->com_code = $com_code;
-            $fileName->created_by = Auth::user()->id;
+            $employeeFile = EmployeeFile::create([
+                'employee_id' => $request->employee_id,
+                'file_name' => $request->file_name,
+                'com_code' => $com_code,
+                'created_by' => Auth::user()->id
+            ]);
 
-
-
-            // إنشاء الموظف أولاً
-            $fileName->save();
-
-            // ثم رفع الصورة إذا وجدت
             if ($request->hasFile('upload_file')) {
-                $fileName->addMediaFromRequest('upload_file')
-                    ->toMediaCollection('upload_file');
+                $employeeFile->addMediaFromRequest('upload_file')->toMediaCollection('upload_file');
             }
 
-
-
             DB::commit();
-            return redirect()->back()->with('success', 'تم أضافة الملف للموظف بنجاح');
+
+            // استجابة JSON للطلب AJAX
+            return response()->json([
+                'success' => true,
+                'message' => 'تم إضافة الملف للموظف بنجاح',
+                'file' => [
+                    'id' => $employeeFile->id,
+                    'name' => $employeeFile->file_name,
+                    'url' => $employeeFile->getFirstMediaUrl('upload_file'),
+                    'created_at' => $employeeFile->created_at->diffForHumans()
+                ]
+            ]);
         } catch (\Exception $ex) {
             DB::rollBack();
-            return redirect()->back()->withErrors(['error' => 'عفوآ حدث خطأ ما ' . $ex->getMessage()])->withInput();
+            return response()->json([
+                'success' => false,
+                'message' => 'حدث خطأ أثناء رفع الملف',
+                'error' => config('app.debug') ? $ex->getMessage() : null
+            ], 500);
         }
     }
 
@@ -242,23 +252,21 @@ class EmployeeController extends Controller
 
 
     public function destroyUploadFiles($id)
-{
-    try {
-        $file = EmployeeFile::findOrFail($id);
-        $file->clearMediaCollection('upload_file');
-        $file->delete();
+    {
+        try {
+            $file = EmployeeFile::findOrFail($id);
+            $file->clearMediaCollection('upload_file');
+            $file->delete();
 
-        return response()->json([
-            'success' => true,
-            'message' => 'تم حذف الملف بنجاح',
-        ]);
-    } catch (\Exception $e) {
-        return response()->json([
-            'success' => false,
-            'message' => 'حدث خطأ أثناء الحذف: ' . $e->getMessage(),
-        ], 500);
+            return response()->json([
+                'success' => true,
+                'message' => 'تم حذف الملف بنجاح',
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'حدث خطأ أثناء الحذف: ' . $e->getMessage(),
+            ], 500);
+        }
     }
-}
-
-    
 }

@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('employee_files', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Employee::class)->nullable()->constrained()->nullOnDelete(); //الموظف
-            $table->string('file_name', 225)->nullable();
+            $table->string('file_name', 225)->unique()->nullable();
             $table->integer('com_code');
             $table->foreignId('created_by')->references('id')->on('admins')->onUpdate('cascade');
             $table->foreignId('updated_by')->nullable()->references('id')->on('admins')->onUpdate('cascade');
