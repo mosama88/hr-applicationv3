@@ -73,6 +73,7 @@ class DatabaseSeeder extends Seeder
             EmployeeSeeder::class,
             AdditionalTypeSeeder::class,
             AllowanceSeeder::class,
+            DiscountTypeSeeder::class,
         ]);
     }
 }
