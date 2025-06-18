@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\BloodType;
 use App\Repositories\Interfaces\BloodTypeRepositoryInterface;
 
 class BloodTypeService

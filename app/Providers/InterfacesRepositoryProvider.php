@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Repositories\BranchRepository;
 use Illuminate\Support\ServiceProvider;
 use App\Repositories\CurrencyRepository;
+use App\Repositories\BloodTypeRepository;
 use App\Repositories\DepartmentRepository;
 use App\Repositories\ShiftTypesRepository;
 use App\Repositories\JobCategoryRepository;
@@ -19,6 +20,7 @@ use App\Repositories\Interfaces\JobCategoryInterface;
 use App\Repositories\Interfaces\QualificationInterface;
 use App\Repositories\Interfaces\FinanceCalendarInterface;
 use App\Repositories\Interfaces\AdminPanelSettingInterface;
+use App\Repositories\Interfaces\BloodTypeRepositoryInterface;
 
 class InterfacesRepositoryProvider extends ServiceProvider
 {
@@ -43,5 +45,6 @@ class InterfacesRepositoryProvider extends ServiceProvider
         app()->bind(DepartmentInterface::class, DepartmentRepository::class);
         app()->bind(JobCategoryInterface::class, JobCategoryRepository::class);
         app()->bind(QualificationInterface::class, QualificationRepository::class);
+        app()->bind(BloodTypeRepositoryInterface::class, BloodTypeRepository::class);
     }
 }

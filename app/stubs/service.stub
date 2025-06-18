@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Services;
+use App\Models\{{ model }};
 
 use App\Repositories\Interfaces\{{ model }}RepositoryInterface;
 
