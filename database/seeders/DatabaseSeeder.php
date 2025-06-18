@@ -71,6 +71,8 @@ class DatabaseSeeder extends Seeder
             JobCategorySeeder::class,
             JobGradesSeeder::class,
             EmployeeSeeder::class,
+            AdditionalTypeSeeder::class,
+            AllowanceSeeder::class,
         ]);
     }
 }
