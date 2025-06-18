@@ -3,7 +3,8 @@
 namespace App\Http\Requests\Dashboard\Settings;
 
 use Illuminate\Foundation\Http\FormRequest;
-
+use App\Enums\StatusActiveEnum;
+use Illuminate\Validation\Rule;
 class CurrencyRequest extends FormRequest
 {
     /**
@@ -26,7 +27,10 @@ class CurrencyRequest extends FormRequest
         return [
             'name' => 'required|unique:currencies,name,' . $currencyId,
             'currency_symbol' => 'required|unique:currencies,currency_symbol,' . $currencyId,
-            'active' => 'nullable',
+            'active' => [
+                'nullable',
+                Rule::in(array_column(StatusActiveEnum::cases(), 'value')),
+            ],
         ];
     }
 

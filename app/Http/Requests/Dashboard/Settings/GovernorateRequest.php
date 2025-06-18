@@ -3,7 +3,8 @@
 namespace App\Http\Requests\Dashboard\Settings;
 
 use Illuminate\Foundation\Http\FormRequest;
-
+use App\Enums\StatusActiveEnum;
+use Illuminate\Validation\Rule;
 class GovernorateRequest extends FormRequest
 {
     /**
@@ -26,7 +27,10 @@ class GovernorateRequest extends FormRequest
         return [
             'name' => 'required|unique:governorates,name,' . $governorateId,
             'country_id' => 'required|exists:countries,id',
-            'active' => 'nullable',
+            'active' => [
+                'nullable',
+                Rule::in(array_column(StatusActiveEnum::cases(), 'value')),
+            ],
         ];
     }
 

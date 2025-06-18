@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests\Dashboard\Settings;
 
+use App\Enums\StatusActiveEnum;
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class DepartmentRequest extends FormRequest
@@ -28,7 +30,10 @@ class DepartmentRequest extends FormRequest
             'name' => 'required|unique:departments,name,' . $departmentId,
             'phones' => 'required',
             'notes' => 'required',
-            'active' => 'nullable|in:2,1',
+             'active' => [
+                'nullable',
+                Rule::in(array_column(StatusActiveEnum::cases(), 'value')),
+            ],
         ];
     }
 

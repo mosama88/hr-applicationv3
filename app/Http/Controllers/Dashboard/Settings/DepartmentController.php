@@ -5,19 +5,22 @@ namespace App\Http\Controllers\Dashboard\Settings;
 use App\Models\Department;
 use Illuminate\Http\Request;
 use App\Enums\StatusActiveEnum;
+use App\Services\DepartmentService;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Dashboard\Settings\DepartmentRequest;
 
 class DepartmentController extends Controller
 {
+
+    public function __construct(protected DepartmentService $service) {}
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $com_code = Auth::user()->com_code;
-        $data = Department::with(['createdBy:id,name', 'updatedBy:id,name'])->where('com_code', $com_code)->orderByDesc('id')->paginate(10);
+        $data = $this->service->index();
         return view('dashboard.settings.departments.index', compact('data'));
     }
 
@@ -34,16 +37,7 @@ class DepartmentController extends Controller
      */
     public function store(DepartmentRequest $request)
     {
-        $com_code =  Auth::user()->com_code;
-        $active = StatusActiveEnum::ACTIVE;
-        $dataValidate = $request->validated();
-        $dataInsert = array_merge($dataValidate, [
-            'created_by' => Auth::user()->id,
-            'com_code' => $com_code,
-            'active' =>  $active,
-        ]);
-
-        Department::create($dataInsert);
+        $this->service->store($request);
         return redirect()->route('dashboard.departments.index')->with('success', 'تم أضافة الاداره بنجاح');
     }
 
@@ -68,15 +62,8 @@ class DepartmentController extends Controller
      */
     public function update(DepartmentRequest $request, Department $department)
     {
-        $com_code =  Auth::user()->com_code;
-        $dataValidate = $request->validated();
-        $dataUpdate = array_merge($dataValidate, [
-            'updated_by' => Auth::user()->id,
-            'com_code' => $com_code,
-            'active' =>  $request->active,
-        ]);
+        $this->service->update($request, $department);
 
-        $department->update($dataUpdate);
         return redirect()->route('dashboard.departments.index')->with('success', 'تم تعديل الاداره بنجاح');
     }
 
@@ -85,7 +72,8 @@ class DepartmentController extends Controller
      */
     public function destroy(Department $department)
     {
-        $department->delete();
+        $this->service->destroy($department);
+
         return response()->json([
             'success' => true,
             'message' => 'تم حذف الاداره بنجاح'
@@ -95,7 +83,7 @@ class DepartmentController extends Controller
 
     function searchDepartment(Request $request)
     {
-        $departments = Department::where('name', 'LIKE', "%{$request->q}%")->limit(5)->get();
+        $departments =  $this->service->searchDepartment($request);
         return response()->json([
             'data' => $departments
         ]);

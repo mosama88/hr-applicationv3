@@ -3,7 +3,8 @@
 namespace App\Http\Requests\Dashboard\Settings;
 
 use Illuminate\Foundation\Http\FormRequest;
-
+use App\Enums\StatusActiveEnum;
+use Illuminate\Validation\Rule;
 class ShiftsTypeRequest extends FormRequest
 {
     /**
@@ -26,7 +27,10 @@ class ShiftsTypeRequest extends FormRequest
             'from_time' => 'required',
             'to_time' => 'required',
             'total_hours' => 'nullable',
-            'active' => 'nullable|in:2,1',
+            'active' => [
+                'nullable',
+                Rule::in(array_column(StatusActiveEnum::cases(), 'value')),
+            ],
         ];
     }
 

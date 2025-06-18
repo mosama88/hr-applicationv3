@@ -3,7 +3,8 @@
 namespace App\Http\Requests\Dashboard\Settings;
 
 use Illuminate\Foundation\Http\FormRequest;
-
+use App\Enums\StatusActiveEnum;
+use Illuminate\Validation\Rule;
 class CountryRequest extends FormRequest
 {
     /**
@@ -26,7 +27,10 @@ class CountryRequest extends FormRequest
         return [
             'name' => 'required|unique:countries,name,' . $countryId,
             'country_code' => 'required|unique:countries,country_code,' . $countryId,
-            'active' => 'nullable',
+            'active' => [
+                'nullable',
+                Rule::in(array_column(StatusActiveEnum::cases(), 'value')),
+            ],
         ];
     }
 

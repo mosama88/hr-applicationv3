@@ -3,7 +3,8 @@
 namespace App\Http\Requests\Dashboard\Settings;
 
 use Illuminate\Foundation\Http\FormRequest;
-
+use App\Enums\StatusActiveEnum;
+use Illuminate\Validation\Rule;
 class QualificationRequest extends FormRequest
 {
     /**
@@ -25,7 +26,10 @@ class QualificationRequest extends FormRequest
 
         return [
             'name' => 'required|unique:qualifications,name,' . $qualificationId,
-            'active' => 'nullable',
+            'active' => [
+                'nullable',
+                Rule::in(array_column(StatusActiveEnum::cases(), 'value')),
+            ],
         ];
     }
 

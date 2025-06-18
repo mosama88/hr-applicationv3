@@ -4,7 +4,8 @@ namespace App\Http\Requests\Dashboard\Settings;
 
 use App\Models\Branch;
 use Illuminate\Foundation\Http\FormRequest;
-
+use App\Enums\StatusActiveEnum;
+use Illuminate\Validation\Rule;
 class BranchRequest extends FormRequest
 {
     /**
@@ -28,8 +29,10 @@ class BranchRequest extends FormRequest
             'email' => 'required|email',
             'phones' => 'required',
             'address' => 'required',
-            'active' => 'nullable|in:2,1',
-
+            'active' => [
+                'nullable',
+                Rule::in(array_column(StatusActiveEnum::cases(), 'value')),
+            ],
         ];
     }
 

@@ -3,7 +3,8 @@
 namespace App\Http\Requests\Dashboard\Settings;
 
 use Illuminate\Foundation\Http\FormRequest;
-
+use App\Enums\StatusActiveEnum;
+use Illuminate\Validation\Rule;
 class HolidayRequest extends FormRequest
 {
     /**
@@ -26,7 +27,10 @@ class HolidayRequest extends FormRequest
             'from_date' => 'required',
             'to_date' => 'required',
             'days_counter' => 'required|numeric',
-            'active' => 'nullable',
+            'active' => [
+                'nullable',
+                Rule::in(array_column(StatusActiveEnum::cases(), 'value')),
+            ],
         ];
     }
 

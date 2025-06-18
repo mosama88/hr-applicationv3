@@ -3,7 +3,8 @@
 namespace App\Http\Requests\Dashboard\Settings;
 
 use Illuminate\Foundation\Http\FormRequest;
-
+use App\Enums\StatusActiveEnum;
+use Illuminate\Validation\Rule;
 class JobGradeRequest extends FormRequest
 {
     /**
@@ -29,7 +30,10 @@ class JobGradeRequest extends FormRequest
             'min_salary' => 'required',
             'max_salary' => 'required|gt:min_salary',
             'notes' => 'nullable',
-            'active' => 'nullable',
+            'active' => [
+                'nullable',
+                Rule::in(array_column(StatusActiveEnum::cases(), 'value')),
+            ],
         ];
     }
 
