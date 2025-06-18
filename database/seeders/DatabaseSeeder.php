@@ -70,6 +70,7 @@ class DatabaseSeeder extends Seeder
             BloodTypeSeeder::class,
             JobCategorySeeder::class,
             JobGradesSeeder::class,
+            EmployeeSeeder::class,
         ]);
     }
 }

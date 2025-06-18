@@ -9,38 +9,24 @@
 <!--end::Head-->
 <!--begin::Body-->
 
-<body class="login-page bg-body-secondary">
+<body class="login-page bg-body-secondary"
+    style="background: url('{{ asset('dashboard') }}/assets/dist/assets/img/hospitalrahma.png') no-repeat center center fixed; background-size: cover;">
     <div class="login-box">
-        <div class="card card-outline card-primary">
+        <div class="card card-outline text-secondary card-primary" style="background-color: rgba(255, 255, 255, 0.7);">
             <div class="card-header">
                 <div class="text-center">
                     <h2 class="mb-0" style="text-decoration: none;"><b>مستشفى </b>الرحمه</h2>
                     <h4 class="mb-0" style="text-decoration: none;"><b>إدارة </b>الموارد البشرية</h4>
                 </div>
-
-
             </div>
             <div class="card-body login-card-body">
                 <p class="login-box-msg">قم بتسجيل الدخول لبدء جلستك</p>
                 @yield('content')
 
-                <div class="social-auth-links text-center mb-3 d-grid gap-2">
-                    <p>- أو -</p>
-                    <span class="btn btn-info text-white">
-                        <i class="bi bi-facebook me-2"></i> الاتصال بالدعم الفنى
-                    </span>
-
-                </div>
-                <!-- /.social-auth-links -->
             </div>
-            <!-- /.login-card-body -->
         </div>
     </div>
-    <!-- /.login-box -->
     @include('dashboard.auth.layouts.js')
-
-    <!--end::OverlayScrollbars Configure-->
-    <!--end::Script-->
 </body>
 <!--end::Body-->
 

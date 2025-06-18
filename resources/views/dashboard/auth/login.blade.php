@@ -6,10 +6,8 @@
 
     <form action="{{ route('login.store') }}" method="POST" id="loginForm">
         @csrf
-
         <div class="input-group mb-1">
             <span class="input-group-text"><i class="bi bi-envelope"></i></span>
-
             <div class="form-floating flex-grow-1">
                 <input id="loginEmail" type="text" name="username"
                     class="form-control  @error('username') is-invalid @enderror" placeholder="أسم المستخدم" />
@@ -20,10 +18,8 @@
             <div class="text-danger small mt-1">{{ $message }}</div>
         @enderror
 
-
         <div class="input-group mb-1">
             <div class="input-group-text"><span class="bi bi-lock-fill"></span></div>
-
             <div class="form-floating flex-grow-1">
                 <input id="loginEmail" type="password" name="password"
                     class="form-control @error('password') is-invalid @enderror" placeholder="**************" />
@@ -34,7 +30,6 @@
             <div class="text-danger small mt-1">{{ $message }}</div>
         @enderror
 
-        <!--begin::Row-->
         <div class="row">
             <div class="col-12 d-inline-flex align-items-center" dir="rtl">
                 <div class="form-check">
@@ -42,15 +37,14 @@
                     <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
                 </div>
             </div>
-            <!-- /.col -->
-            <div class="col-6 mx-auto mt-2">
+            <div class="col-8 mx-auto mt-2">
                 <div class="d-grid gap-2">
-                    <button type="submit" id="submitButton" class="btn btn-primary">تسجيل الدخول</button>
+                    <button type="submit" id="submitButton" style="background-color: #855BEF;color:#DFECFA"
+                        class="btn">تسجيل
+                        الدخول</button>
                 </div>
             </div>
-            <!-- /.col -->
         </div>
-        <!--end::Row-->
     </form>
 
 
