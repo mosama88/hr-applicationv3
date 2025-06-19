@@ -7,10 +7,14 @@ use App\Models\AdditionalType;
 use App\Enums\StatusActiveEnum;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Services\AdditionalTypeService;
 use App\Http\Requests\Dashboard\EmployeeAffairs\AdditionalTypeRequest;
 
 class AdditionalTypeController extends Controller
 {
+
+    public function __construct(protected AdditionalTypeService $service) {}
+
     /**
      * Display a listing of the resource.
      */
@@ -19,8 +23,8 @@ class AdditionalTypeController extends Controller
         /**
          * Display a listing of the resource.
          */
-        $com_code = Auth::user()->com_code;
-        $data = AdditionalType::with(['createdBy:id,name', 'updatedBy:id,name'])->where('com_code', $com_code)->orderByDesc('id')->paginate(10);
+        $data = $this->service->index();
+
         return view('dashboard.employee-affairs.additional_types.index', compact('data'));
     }
 
@@ -37,16 +41,8 @@ class AdditionalTypeController extends Controller
      */
     public function store(AdditionalTypeRequest $request)
     {
-        $com_code =  Auth::user()->com_code;
-        $active = StatusActiveEnum::ACTIVE;
-        $dataValidate = $request->validated();
-        $dataInsert = array_merge($dataValidate, [
-            'created_by' => Auth::user()->id,
-            'com_code' => $com_code,
-            'active' =>  $active,
-        ]);
+        $this->service->store($request);
 
-        AdditionalType::create($dataInsert);
         return redirect()->route('dashboard.additional_types.index')->with('success', 'تم أضافة الاضافى بنجاح');
     }
 
@@ -71,15 +67,8 @@ class AdditionalTypeController extends Controller
      */
     public function update(AdditionalTypeRequest $request, AdditionalType $additionalType)
     {
-        $com_code =  Auth::user()->com_code;
-        $dataValidate = $request->validated();
-        $dataUpdate = array_merge($dataValidate, [
-            'updated_by' => Auth::user()->id,
-            'com_code' => $com_code,
-            'active' =>  $request->active,
-        ]);
+        $this->service->update($request, $additionalType);
 
-        $additionalType->update($dataUpdate);
         return redirect()->route('dashboard.additional_types.index')->with('success', 'تم تعديل الاضافى بنجاح');
     }
 
@@ -88,7 +77,7 @@ class AdditionalTypeController extends Controller
      */
     public function destroy(AdditionalType $additionalType)
     {
-        $additionalType->delete();
+        $this->service->destroy($additionalType);
         return response()->json([
             'success' => true,
             'message' => 'تم حذف الاضافى بنجاح'

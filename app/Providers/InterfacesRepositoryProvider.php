@@ -16,6 +16,7 @@ use App\Repositories\GovernorateRepository;
 use App\Repositories\JobCategoryRepository;
 use App\Repositories\NationalityRepository;
 use App\Repositories\QualificationRepository;
+use App\Repositories\AdditionalTypeRepository;
 use App\Repositories\FinanceCalendarRepository;
 use App\Repositories\Interfaces\BranchInterface;
 use App\Repositories\AdminPanelSettingRepository;
@@ -33,6 +34,7 @@ use App\Repositories\Interfaces\LanguageRepositoryInterface;
 use App\Repositories\Interfaces\BloodTypeRepositoryInterface;
 use App\Repositories\Interfaces\GovernorateRepositoryInterface;
 use App\Repositories\Interfaces\NationalityRepositoryInterface;
+use App\Repositories\Interfaces\AdditionalTypeRepositoryInterface;
 
 class InterfacesRepositoryProvider extends ServiceProvider
 {
@@ -64,5 +66,6 @@ class InterfacesRepositoryProvider extends ServiceProvider
         app()->bind(GovernorateRepositoryInterface::class, GovernorateRepository::class);
         app()->bind(CityRepositoryInterface::class, CityRepository::class);
         app()->bind(JobGradeRepositoryInterface::class, JobGradeRepository::class);
+        app()->bind(AdditionalTypeRepositoryInterface::class, AdditionalTypeRepository::class);
     }
 }
