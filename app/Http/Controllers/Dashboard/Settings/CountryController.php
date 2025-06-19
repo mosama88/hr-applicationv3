@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Dashboard\Settings;
 use App\Models\Country;
 use Illuminate\Http\Request;
 use App\Enums\StatusActiveEnum;
-use App\Services\CountryService;
+use App\Services\Settings\CountryService;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Dashboard\Settings\CountryRequest;

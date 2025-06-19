@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Dashboard\Settings;
 use App\Models\City;
 use App\Models\Governorate;
 use Illuminate\Http\Request;
-use App\Services\CityService;
+use App\Services\Settings\CityService;
 use App\Enums\StatusActiveEnum;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;

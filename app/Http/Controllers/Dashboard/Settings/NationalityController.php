@@ -6,7 +6,7 @@ use App\Models\Nationality;
 use Illuminate\Http\Request;
 use App\Enums\StatusActiveEnum;
 use App\Http\Controllers\Controller;
-use App\Services\NationalityService;
+use App\Services\Settings\NationalityService;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Dashboard\Settings\NationalityRequest;
 

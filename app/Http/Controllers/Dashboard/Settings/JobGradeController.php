@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Dashboard\Settings;
 use App\Models\JobGrade;
 use Illuminate\Http\Request;
 use App\Enums\StatusActiveEnum;
-use App\Services\JobGradeService;
+use App\Services\Settings\JobGradeService;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Dashboard\Settings\JobGradeRequest;

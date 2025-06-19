@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Dashboard\Settings;
 use App\Models\Branch;
 use App\Enums\StatusActiveEnum;
 use Illuminate\Http\Request;
-use App\Services\BranchService;
+use App\Services\Settings\BranchService;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Dashboard\Settings\BranchRequest;

@@ -6,7 +6,7 @@ use App\Models\JobCategory;
 use Illuminate\Http\Request;
 use App\Enums\StatusActiveEnum;
 use App\Http\Controllers\Controller;
-use App\Services\JobCategoryService;
+use App\Services\Settings\JobCategoryService;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Dashboard\Settings\JobsCategoryRequest;
 

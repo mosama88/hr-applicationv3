@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Dashboard\Settings;
 use App\Models\BloodType;
 use Illuminate\Http\Request;
 use App\Enums\StatusActiveEnum;
-use App\Services\BloodTypeService;
+use App\Services\Settings\BloodTypeService;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Dashboard\Settings\BloodTypeRequest;

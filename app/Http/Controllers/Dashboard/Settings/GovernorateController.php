@@ -7,7 +7,7 @@ use App\Models\Governorate;
 use Illuminate\Http\Request;
 use App\Enums\StatusActiveEnum;
 use App\Http\Controllers\Controller;
-use App\Services\GovernorateService;
+use App\Services\Settings\GovernorateService;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Dashboard\Settings\GovernorateRequest;
 

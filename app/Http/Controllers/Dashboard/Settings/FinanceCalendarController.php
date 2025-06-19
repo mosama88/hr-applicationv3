@@ -9,7 +9,7 @@ use App\Models\FinanceCalendar;
 use App\Models\FinanceClnPeriod;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Services\FinanceCalendarService;
+use App\Services\Settings\FinanceCalendarService;
 use App\Http\Requests\Dashboard\Settings\FinanceCalendarRequest;
 
 class FinanceCalendarController extends Controller

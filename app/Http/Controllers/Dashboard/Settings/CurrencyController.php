@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Dashboard\Settings;
 use App\Models\Currency;
 use Illuminate\Http\Request;
 use App\Enums\StatusActiveEnum;
-use App\Services\CurrencyService;
+use App\Services\Settings\CurrencyService;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Dashboard\Settings\CurrencyRequest;

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Dashboard\Settings;
 use App\Models\Department;
 use Illuminate\Http\Request;
 use App\Enums\StatusActiveEnum;
-use App\Services\DepartmentService;
+use App\Services\Settings\DepartmentService;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Dashboard\Settings\DepartmentRequest;

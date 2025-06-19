@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Dashboard\Settings;
 use Illuminate\Http\Request;
 use App\Models\AdminPanelSetting;
 use App\Http\Controllers\Controller;
-use App\Services\AdminPanelSettingService;
+use App\Services\Settings\AdminPanelSettingService;
 use App\Http\Requests\Dashboard\Settings\AdminPanelSettingRequest;
 
 class AdminPanelSettingController extends Controller

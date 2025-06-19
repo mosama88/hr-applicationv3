@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Dashboard\EmployeeAffairs;
 use App\Models\Allowance;
 use Illuminate\Http\Request;
 use App\Enums\StatusActiveEnum;
-use App\Services\AllowanceService;
+use App\Services\EmployeeAffairs\AllowanceService;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Dashboard\EmployeeAffairs\AllowanceRequest;

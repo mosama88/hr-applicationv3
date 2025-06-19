@@ -7,7 +7,7 @@ use App\Models\AdditionalType;
 use App\Enums\StatusActiveEnum;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Services\AdditionalTypeService;
+use App\Services\EmployeeAffairs\AdditionalTypeService;
 use App\Http\Requests\Dashboard\EmployeeAffairs\AdditionalTypeRequest;
 
 class AdditionalTypeController extends Controller

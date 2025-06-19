@@ -7,7 +7,7 @@ use App\Models\Qualification;
 use App\Enums\StatusActiveEnum;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Services\QualificationService;
+use App\Services\Settings\QualificationService;
 use App\Http\Requests\Dashboard\Settings\QualificationRequest;
 
 class QualificationController extends Controller

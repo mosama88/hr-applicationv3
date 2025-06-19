@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Enums\StatusActiveEnum;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Services\DiscountTypeService;
+use App\Services\EmployeeAffairs\DiscountTypeService;
 use App\Http\Requests\Dashboard\EmployeeAffairs\DiscountTypeRequest;
 
 class DiscountTypeController extends Controller

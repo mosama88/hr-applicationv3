@@ -12,7 +12,7 @@ use App\Models\Governorate;
 use App\Models\EmployeeFile;
 use Illuminate\Http\Request;
 use App\Enums\StatusActiveEnum;
-use App\Services\EmployeeService;
+use App\Services\EmployeeAffairs\EmployeeService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;

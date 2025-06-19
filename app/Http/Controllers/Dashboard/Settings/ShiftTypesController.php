@@ -6,7 +6,7 @@ use App\Models\ShiftsType;
 use Illuminate\Http\Request;
 use App\Enums\ShiftTypesEnum;
 use App\Enums\StatusActiveEnum;
-use App\Services\ShiftTypesService;
+use App\Services\Settings\ShiftTypesService;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Dashboard\Settings\ShiftsTypeRequest;
