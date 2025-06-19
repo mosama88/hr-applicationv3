@@ -9,6 +9,7 @@ use Illuminate\Support\ServiceProvider;
 use App\Repositories\CurrencyRepository;
 use App\Repositories\JobGradeRepository;
 use App\Repositories\LanguageRepository;
+use App\Repositories\AllowanceRepository;
 use App\Repositories\BloodTypeRepository;
 use App\Repositories\DepartmentRepository;
 use App\Repositories\ShiftTypesRepository;
@@ -31,6 +32,7 @@ use App\Repositories\Interfaces\AdminPanelSettingInterface;
 use App\Repositories\Interfaces\CountryRepositoryInterface;
 use App\Repositories\Interfaces\JobGradeRepositoryInterface;
 use App\Repositories\Interfaces\LanguageRepositoryInterface;
+use App\Repositories\Interfaces\AllowanceRepositoryInterface;
 use App\Repositories\Interfaces\BloodTypeRepositoryInterface;
 use App\Repositories\Interfaces\GovernorateRepositoryInterface;
 use App\Repositories\Interfaces\NationalityRepositoryInterface;
@@ -67,5 +69,6 @@ class InterfacesRepositoryProvider extends ServiceProvider
         app()->bind(CityRepositoryInterface::class, CityRepository::class);
         app()->bind(JobGradeRepositoryInterface::class, JobGradeRepository::class);
         app()->bind(AdditionalTypeRepositoryInterface::class, AdditionalTypeRepository::class);
+        app()->bind(AllowanceRepositoryInterface::class, AllowanceRepository::class);
     }
 }
