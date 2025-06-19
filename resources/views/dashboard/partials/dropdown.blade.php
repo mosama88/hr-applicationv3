@@ -5,12 +5,16 @@
                                   </button>
                                   <ul class="dropdown-menu">
                                       <li>
-                                          <a class="dropdown-item"
-                                              href="{{ route('dashboard.' . $name . '.edit', $name_id) }}">تعديل</a>
+                                          <a class="dropdown-item text-info"
+                                              href="{{ route('dashboard.' . $name . '.edit', $name_id) }}">
+                                              <i class="fa-solid fa-pen-to-square mx-1"></i> تعديل
+                                          </a>
                                       </li>
                                       <li>
-                                          <a class="dropdown-item"
-                                              href="{{ route('dashboard.' . $name . '.show', $name_id) }}">عرض</a>
+                                          <a class="dropdown-item text-primary"
+                                              href="{{ route('dashboard.' . $name . '.show', $name_id) }}"> <i
+                                                  class="fa-solid fa-eye mx-1"></i> عرض
+                                          </a>
                                       </li>
                                       <form id="delete-form-{{ $name_id }}"
                                           action="{{ route('dashboard.' . $name . '.destroy', $name_id) }}"
@@ -22,12 +26,23 @@
                                           <a class="dropdown-item text-danger delete-btn" title="حذف" id="delete_one"
                                               data-id="{{ $name_id }}" data-bs-toggle="tooltip"
                                               data-placement="top" title="" data-original-title="Delete"
-                                              href="#">حذف</a>
+                                              href="#">
+                                              <i class="fa-solid fa-trash-can mx-1"></i> حذف
+                                          </a>
                                       </li>
                                       <li>
                                           <hr class="dropdown-divider">
                                       </li>
-                                      <li><a class="dropdown-item" href="#">Separated link</a></li>
+                                      <li>
+                                          <a class="dropdown-item text-success" href="#">
+                                              <i class="fa-solid fa-lock-open mx-1"></i>فتح السنه
+                                          </a>
+                                      </li>
+                                      <li>
+                                          <a class="dropdown-item text-dark" href="#">
+                                              <i class="fa-solid fa-lock mx-1"></i>غلق السنه
+                                          </a>
+                                      </li>
                                   </ul>
                               </div>
 
