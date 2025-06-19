@@ -9,6 +9,7 @@ use App\Repositories\BloodTypeRepository;
 use App\Repositories\DepartmentRepository;
 use App\Repositories\ShiftTypesRepository;
 use App\Repositories\JobCategoryRepository;
+use App\Repositories\NationalityRepository;
 use App\Repositories\QualificationRepository;
 use App\Repositories\FinanceCalendarRepository;
 use App\Repositories\Interfaces\BranchInterface;
@@ -21,6 +22,7 @@ use App\Repositories\Interfaces\QualificationInterface;
 use App\Repositories\Interfaces\FinanceCalendarInterface;
 use App\Repositories\Interfaces\AdminPanelSettingInterface;
 use App\Repositories\Interfaces\BloodTypeRepositoryInterface;
+use App\Repositories\Interfaces\NationalityRepositoryInterface;
 
 class InterfacesRepositoryProvider extends ServiceProvider
 {
@@ -46,5 +48,6 @@ class InterfacesRepositoryProvider extends ServiceProvider
         app()->bind(JobCategoryInterface::class, JobCategoryRepository::class);
         app()->bind(QualificationInterface::class, QualificationRepository::class);
         app()->bind(BloodTypeRepositoryInterface::class, BloodTypeRepository::class);
+        app()->bind(NationalityRepositoryInterface::class, NationalityRepository::class);
     }
 }
