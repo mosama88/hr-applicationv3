@@ -5,19 +5,25 @@ namespace App\Http\Controllers\Dashboard\Settings;
 use App\Models\Country;
 use Illuminate\Http\Request;
 use App\Enums\StatusActiveEnum;
+use App\Services\CountryService;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Dashboard\Settings\CountryRequest;
 
 class CountryController extends Controller
 {
+
+    public function __construct(protected CountryService $service) {}
+
+
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $com_code = Auth::user()->com_code;
-        $data = Country::with(['createdBy:id,name', 'updatedBy:id,name'])->where('com_code', $com_code)->orderByDesc('id')->paginate(10);
+        $data = $this->service->index();
+
         return view('dashboard.settings.countries.index', compact('data'));
     }
 
@@ -34,16 +40,8 @@ class CountryController extends Controller
      */
     public function store(CountryRequest $request)
     {
-        $com_code =  Auth::user()->com_code;
-        $active = StatusActiveEnum::ACTIVE;
-        $dataValidate = $request->validated();
-        $dataInsert = array_merge($dataValidate, [
-            'created_by' => Auth::user()->id,
-            'com_code' => $com_code,
-            'active' =>  $active,
-        ]);
+        $this->service->store($request);
 
-        Country::create($dataInsert);
         return redirect()->route('dashboard.countries.index')->with('success', 'تم أضافة البلد بنجاح');
     }
 
@@ -68,15 +66,8 @@ class CountryController extends Controller
      */
     public function update(CountryRequest $request, Country $country)
     {
-        $com_code =  Auth::user()->com_code;
-        $dataValidate = $request->validated();
-        $dataUpdate = array_merge($dataValidate, [
-            'updated_by' => Auth::user()->id,
-            'com_code' => $com_code,
-            'active' =>  $request->active,
-        ]);
+        $this->service->update($request, $country);
 
-        $country->update($dataUpdate);
         return redirect()->route('dashboard.countries.index')->with('success', 'تم تعديل البلد بنجاح');
     }
 
@@ -85,7 +76,7 @@ class CountryController extends Controller
      */
     public function destroy(Country $country)
     {
-        $country->delete();
+        $this->service->destroy($country);
         return response()->json([
             'success' => true,
             'message' => 'تم حذف البلد بنجاح'
@@ -95,7 +86,8 @@ class CountryController extends Controller
 
     function searchCountry(Request $request)
     {
-        $countries = Country::where('name', 'LIKE', "%{$request->q}%")->orWhere('country_code', 'LIKE', "%{$request->q}%")->limit(5)->get();
+        $countries = $this->service->searchCountry($request);
+
         return response()->json([
             'data' => $countries
         ]);
