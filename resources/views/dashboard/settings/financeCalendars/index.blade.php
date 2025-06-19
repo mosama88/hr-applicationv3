@@ -57,7 +57,7 @@
                             </div>
                         </div>
                         <!-- /.card-header -->
-                        <div class="card-body table-responsive">
+                        <div class="card-body">
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
@@ -88,10 +88,8 @@
                                                     <span class="badge bg-danger">مؤرشف</span>
                                                 @endif
                                             </td>
-
-
                                             <td>
-                                                @include('dashboard.partials.actions', [
+                                                @include('dashboard.partials.dropdown', [
                                                     'name' => 'financeCalendars',
                                                     'name_id' => $info->slug,
                                                 ])

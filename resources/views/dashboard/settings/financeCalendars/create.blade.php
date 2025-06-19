@@ -26,7 +26,7 @@
                 <div class="col-12">
                     <div class="card card-primary card-outline mb-4">
                         <!--begin::Header-->
-          
+
                         <!--end::Header-->
                         <!--begin::Form-->
                         <form action="{{ route('dashboard.financeCalendars.store') }}" method="POST" id="storeForm">
@@ -62,6 +62,9 @@
 
 
                                 <div class="row">
+
+
+
                                     <div class="form-group mb-3 col-6">
                                         <label for="start_date" class="form-label">تاريخ البدء</label>
                                         <div class="input-group">
@@ -70,9 +73,13 @@
                                                 <i class="far fa-calendar-alt text-white"></i>
                                             </span>
                                             <input type="text"
-                                                class="form-control date-picker @error('start_date') is-invalid @enderror"
-                                                name="start_date" id="start_date_picker" placeholder="اختر تاريخ البدء"
+                                                class="form-control date-input date-picker @error('start_date') is-invalid @enderror"
+                                                name="start_date" id="start_date-input" placeholder="يوم / شهر / سنة"
                                                 value="{{ old('start_date') }}">
+                                            <button type="button" class="btn btn-outline-secondary clear-date-btn"
+                                                data-target="#start_date-input">
+                                                <i class="fas fa-times"></i>
+                                            </button>
                                         </div>
                                         @error('start_date')
                                             <div class="invalid-feedback text-right d-block">
@@ -89,9 +96,13 @@
                                                 <i class="far fa-calendar-alt text-white"></i>
                                             </span>
                                             <input type="text"
-                                                class="form-control date-picker @error('end_date') is-invalid @enderror"
-                                                name="end_date" id="end_date_picker" placeholder="اختر تاريخ الانتهاء"
+                                                class="form-control date-input date-picker @error('end_date') is-invalid @enderror"
+                                                name="end_date" id="end_date-input" placeholder="يوم / شهر / سنة"
                                                 value="{{ old('end_date') }}">
+                                            <button type="button" class="btn btn-outline-secondary clear-date-btn"
+                                                data-target="#end_date-input">
+                                                <i class="fas fa-times"></i>
+                                            </button>
                                         </div>
                                         @error('end_date')
                                             <div class="invalid-feedback text-right d-block">
@@ -99,6 +110,7 @@
                                             </div>
                                         @enderror
                                     </div>
+
                                 </div>
 
                             </div>
@@ -135,14 +147,18 @@
                 nextArrow: '<i class="fa fa-angle-right"></i>',
                 prevArrow: '<i class="fa fa-angle-left"></i>'
             });
-            const startDate = flatpickr("#start_date", {
+            const startDate = flatpickr(".date-input", {
                 onChange: function(selectedDates) {
                     endDate.set("minDate", selectedDates[0]);
                 }
             });
 
-            const endDate = flatpickr("#end_date", {
-                minDate: "today"
+            const endDate = flatpickr(".end_national_id-input", {});
+        });
+        $(document).ready(function() {
+            $('.clear-date-btn').on('click', function() {
+                let targetInput = $(this).data('target');
+                $(targetInput).val('');
             });
         });
     </script>
