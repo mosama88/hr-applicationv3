@@ -7,6 +7,7 @@ use App\Repositories\BranchRepository;
 use App\Repositories\CountryRepository;
 use Illuminate\Support\ServiceProvider;
 use App\Repositories\CurrencyRepository;
+use App\Repositories\EmployeeRepository;
 use App\Repositories\JobGradeRepository;
 use App\Repositories\LanguageRepository;
 use App\Repositories\AllowanceRepository;
@@ -31,6 +32,7 @@ use App\Repositories\Interfaces\CityRepositoryInterface;
 use App\Repositories\Interfaces\FinanceCalendarInterface;
 use App\Repositories\Interfaces\AdminPanelSettingInterface;
 use App\Repositories\Interfaces\CountryRepositoryInterface;
+use App\Repositories\Interfaces\EmployeeRepositoryInterface;
 use App\Repositories\Interfaces\JobGradeRepositoryInterface;
 use App\Repositories\Interfaces\LanguageRepositoryInterface;
 use App\Repositories\Interfaces\AllowanceRepositoryInterface;
@@ -73,5 +75,6 @@ class InterfacesRepositoryProvider extends ServiceProvider
         app()->bind(AdditionalTypeRepositoryInterface::class, AdditionalTypeRepository::class);
         app()->bind(AllowanceRepositoryInterface::class, AllowanceRepository::class);
         app()->bind(DiscountTypeRepositoryInterface::class, DiscountTypeRepository::class);
+        app()->bind(EmployeeRepositoryInterface::class, EmployeeRepository::class);
     }
 }

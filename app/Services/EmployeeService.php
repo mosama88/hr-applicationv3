@@ -1,0 +1,35 @@
+<?php
+
+namespace App\Services;
+use App\Models\Employee;
+
+use App\Repositories\Interfaces\EmployeeRepositoryInterface;
+
+class EmployeeService
+{
+
+    public function __construct(protected EmployeeRepositoryInterface $repository)
+    {
+
+    }
+
+    public function index()
+    {
+        return $this->repository->getData();
+    }
+
+      public function store($request)
+    {
+        return $this->repository->storeData($request);
+    }
+
+   public function update($request, Employee $employee)
+    {
+        return $this->repository->updateData($request, $employee);
+    }
+
+    public function destroy($employee)
+    {
+        return $this->repository->deleteData($employee);
+    }
+}

@@ -12,7 +12,9 @@ use App\Models\Governorate;
 use App\Models\EmployeeFile;
 use Illuminate\Http\Request;
 use App\Enums\StatusActiveEnum;
+use App\Services\EmployeeService;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Dashboard\EmployeeAffairs\EmployeeRequest;
@@ -20,6 +22,8 @@ use App\Http\Requests\Dashboard\EmployeeAffairs\EmoloyeeFilesRequest;
 
 class EmployeeController extends Controller
 {
+    public function __construct(protected EmployeeService $service) {}
+
     /**
      * Display a listing of the resource.
      */
@@ -28,8 +32,8 @@ class EmployeeController extends Controller
         /**
          * Display a listing of the resource.
          */
-        $com_code = Auth::user()->com_code;
-        $data = Employee::with(['createdBy:id,name', 'updatedBy:id,name'])->where('com_code', $com_code)->orderByDesc('id')->paginate(10);
+        $data = $this->service->index();
+
         return view('dashboard.employee-affairs.employees.index', compact('data'));
     }
 
@@ -53,41 +57,13 @@ class EmployeeController extends Controller
     public function store(EmployeeRequest $request)
     {
         try {
-            DB::beginTransaction();
-            $com_code =  Auth::user()->com_code;
-            $active = StatusActiveEnum::ACTIVE;
 
-            $lastEmployeeCode = Employee::orderByDesc('employee_code')->value('employee_code');
-            $newEmployeeCode = $lastEmployeeCode ? $lastEmployeeCode + 1 : 1;
-            $validateData = $request->validated();
-
-
-
-            $dataInsert = array_merge($validateData, [
-                'employee_code' => $newEmployeeCode,
-                'com_code' => $com_code,
-                'active' =>  $active,
-                'created_by' => Auth::user()->id,
-            ]);
-
-            // إنشاء الموظف أولاً
-            $employee = Employee::create($dataInsert);
-
-            // ثم رفع الصورة إذا وجدت
-            if ($request->hasFile('photo')) {
-                $employee->addMediaFromRequest('photo')
-                    ->toMediaCollection('photo');
-            }
-
-            if ($request->hasFile('cv')) {
-                $employee->addMediaFromRequest('cv')
-                    ->toMediaCollection('cv');
-            }
-            DB::commit();
+            $this->service->store($request);
             return redirect()->route('dashboard.employees.index')->with('success', 'تم أضافة الموظف بنجاح');
-        } catch (\Exception $ex) {
-            DB::rollBack();
-            return redirect()->back()->withErrors(['error' => 'عفوآ حدث خطأ ما ' . $ex->getMessage()])->withInput();
+        } catch (\Exception $e) {
+            // تسجيل الخطأ في اللوج إن حبيت
+            Log::error('خطأ أثناء حفظ الموظف: ' . $e->getMessage());
+            return back()->with('error', 'حدث خطأ أثناء حفظ البيانات، يرجى المحاولة لاحقًا.');
         }
     }
 
@@ -127,40 +103,12 @@ class EmployeeController extends Controller
     public function update(EmployeeRequest $request, Employee $employee)
     {
         try {
-            DB::beginTransaction();
-
-            $com_code =  Auth::user()->com_code;
-            $validateData = $request->validated();
-            $dataUpdate = array_merge($validateData, [
-                'com_code' => $com_code,
-                'active' =>  $request->active,
-                'updated_by' => Auth::user()->id,
-            ]);
-            if ($request->hasFile('photo')) {
-                // Remove old photo if exists
-                $employee->clearMediaCollection('photo');
-
-                // Upload new photo
-                $employee->addMediaFromRequest('photo')
-                    ->toMediaCollection('photo');
-            }
-
-            if ($request->hasFile('cv')) {
-                // Remove old cv if exists
-                $employee->clearMediaCollection('cv');
-
-                // Upload new cv
-                $employee->addMediaFromRequest('cv')
-                    ->toMediaCollection('cv');
-            }
-
-            // إنشاء الموظف أولاً
-            $employee->update($dataUpdate);
-            DB::commit();
+            $this->service->update($request, $employee);
             return redirect()->route('dashboard.employees.index')->with('success', 'تم تعديل الموظف بنجاح');
-        } catch (\Exception $ex) {
-            DB::rollBack();
-            return redirect()->back()->withErrors(['error' => 'عفوآ حدث خطأ ما ' . $ex->getMessage()])->withInput();
+        } catch (\Exception $e) {
+            // تسجيل الخطأ في اللوج إن حبيت
+            Log::error('خطأ أثناء حفظ الموظف: ' . $e->getMessage());
+            return back()->with('error', 'حدث خطأ أثناء حفظ البيانات، يرجى المحاولة لاحقًا.');
         }
     }
 
@@ -170,17 +118,7 @@ class EmployeeController extends Controller
     public function destroy(Employee $employee)
     {
         try {
-            // حذف الملفات المرفوعة أولاً
-            if ($employee->getFirstMedia('photo')) {
-                $employee->clearMediaCollection('photo');
-            }
-
-            if ($employee->getFirstMedia('cv')) {
-                $employee->clearMediaCollection('cv');
-            }
-
-            // ثم حذف سجل الموظف من قاعدة البيانات
-            $employee->delete();
+            $this->service->destroy($employee);
 
             return response()->json([
                 'success' => true,

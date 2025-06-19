@@ -99,7 +99,7 @@ class EmployeeRequest extends FormRequest
                 'required',
                 Rule::in(array_column(YesOrNoEnum::cases(), 'value')),
             ],
-            'shifts_type_id' => 'required|exists:shifts_types,id',
+            'shifts_type_id' => 'nullable|exists:shifts_types,id',
             'daily_work_hour' => 'required',
             'salary' => 'required',
             'day_price' => 'required',
@@ -385,7 +385,6 @@ class EmployeeRequest extends FormRequest
             'has_fixed_shift.required' => 'حقل دوام ثابت مطلوب.',
             'has_fixed_shift.in' => 'قيمة الدوام الثابت غير صحيحة.',
 
-            'shifts_type_id.required' => 'نوع الورديات مطلوب.',
             'shifts_type_id.exists' => 'نوع الورديات المحدد غير موجود.',
 
             'daily_work_hour.required' => 'عدد ساعات العمل اليومية مطلوب.',
