@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Repositories\CityRepository;
 use App\Repositories\BranchRepository;
 use App\Repositories\CountryRepository;
 use Illuminate\Support\ServiceProvider;
@@ -22,6 +23,7 @@ use App\Repositories\Interfaces\DepartmentInterface;
 use App\Repositories\Interfaces\ShiftTypesInterface;
 use App\Repositories\Interfaces\JobCategoryInterface;
 use App\Repositories\Interfaces\QualificationInterface;
+use App\Repositories\Interfaces\CityRepositoryInterface;
 use App\Repositories\Interfaces\FinanceCalendarInterface;
 use App\Repositories\Interfaces\AdminPanelSettingInterface;
 use App\Repositories\Interfaces\CountryRepositoryInterface;
@@ -58,5 +60,6 @@ class InterfacesRepositoryProvider extends ServiceProvider
         app()->bind(LanguageRepositoryInterface::class, LanguageRepository::class);
         app()->bind(CountryRepositoryInterface::class, CountryRepository::class);
         app()->bind(GovernorateRepositoryInterface::class, GovernorateRepository::class);
+        app()->bind(CityRepositoryInterface::class, CityRepository::class);
     }
 }

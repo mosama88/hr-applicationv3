@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard\Settings;
 use App\Models\City;
 use App\Models\Governorate;
 use Illuminate\Http\Request;
+use App\Services\CityService;
 use App\Enums\StatusActiveEnum;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -12,6 +13,10 @@ use App\Http\Requests\Dashboard\Settings\CityRequest;
 
 class CityController extends Controller
 {
+
+    public function __construct(protected CityService $service) {}
+
+
     /**
      * Display a listing of the resource.
      */
@@ -20,8 +25,8 @@ class CityController extends Controller
         /**
          * Display a listing of the resource.
          */
-        $com_code = Auth::user()->com_code;
-        $data = City::with(['createdBy:id,name', 'updatedBy:id,name'])->where('com_code', $com_code)->orderByDesc('id')->paginate(10);
+        $data = $this->service->index();
+
         return view('dashboard.settings.cities.index', compact('data'));
     }
 
@@ -39,16 +44,8 @@ class CityController extends Controller
      */
     public function store(CityRequest $request)
     {
-        $com_code =  Auth::user()->com_code;
-        $active = StatusActiveEnum::ACTIVE;
-        $dataValidate = $request->validated();
-        $dataInsert = array_merge($dataValidate, [
-            'created_by' => Auth::user()->id,
-            'com_code' => $com_code,
-            'active' =>  $active,
-        ]);
+        $this->service->store($request);
 
-        City::create($dataInsert);
         return redirect()->route('dashboard.cities.index')->with('success', 'تم أضافة المدينة بنجاح');
     }
 
@@ -77,15 +74,8 @@ class CityController extends Controller
      */
     public function update(CityRequest $request, City $city)
     {
-        $com_code =  Auth::user()->com_code;
-        $dataValidate = $request->validated();
-        $dataUpdate = array_merge($dataValidate, [
-            'updated_by' => Auth::user()->id,
-            'com_code' => $com_code,
-            'active' =>  $request->active,
-        ]);
+        $this->service->update($request, $city);
 
-        $city->update($dataUpdate);
         return redirect()->route('dashboard.cities.index')->with('success', 'تم تعديل المدينة بنجاح');
     }
 
@@ -94,12 +84,10 @@ class CityController extends Controller
      */
     public function destroy(City $city)
     {
-        $city->delete();
+        $this->service->destroy($city);
         return response()->json([
             'success' => true,
             'message' => 'تم حذف المدينة بنجاح'
         ]);
     }
-
-
 }
