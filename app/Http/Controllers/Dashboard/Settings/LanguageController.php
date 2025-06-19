@@ -5,12 +5,16 @@ namespace App\Http\Controllers\Dashboard\Settings;
 use App\Models\Language;
 use Illuminate\Http\Request;
 use App\Enums\StatusActiveEnum;
+use App\Services\LanguageService;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Dashboard\Settings\LanguageRequest;
 
 class LanguageController extends Controller
 {
+
+    public function __construct(protected LanguageService $service) {}
+
     /**
      * Display a listing of the resource.
      */
@@ -19,8 +23,8 @@ class LanguageController extends Controller
         /**
          * Display a listing of the resource.
          */
-        $com_code = Auth::user()->com_code;
-        $data = Language::with(['createdBy:id,name', 'updatedBy:id,name'])->where('com_code', $com_code)->orderByDesc('id')->paginate(10);
+        $data = $this->service->index();
+
         return view('dashboard.settings.languages.index', compact('data'));
     }
 
@@ -37,16 +41,8 @@ class LanguageController extends Controller
      */
     public function store(LanguageRequest $request)
     {
-        $com_code =  Auth::user()->com_code;
-        $active = StatusActiveEnum::ACTIVE;
-        $dataValidate = $request->validated();
-        $dataInsert = array_merge($dataValidate, [
-            'created_by' => Auth::user()->id,
-            'com_code' => $com_code,
-            'active' =>  $active,
-        ]);
+        $this->service->store($request);
 
-        Language::create($dataInsert);
         return redirect()->route('dashboard.languages.index')->with('success', 'تم أضافة اللغه بنجاح');
     }
 
@@ -71,15 +67,8 @@ class LanguageController extends Controller
      */
     public function update(LanguageRequest $request, Language $language)
     {
-        $com_code =  Auth::user()->com_code;
-        $dataValidate = $request->validated();
-        $dataUpdate = array_merge($dataValidate, [
-            'updated_by' => Auth::user()->id,
-            'com_code' => $com_code,
-            'active' =>  $request->active,
-        ]);
+        $this->service->update($request, $language);
 
-        $language->update($dataUpdate);
         return redirect()->route('dashboard.languages.index')->with('success', 'تم تعديل اللغه بنجاح');
     }
 
@@ -88,7 +77,7 @@ class LanguageController extends Controller
      */
     public function destroy(Language $language)
     {
-        $language->delete();
+        $this->service->destroy($language);
         return response()->json([
             'success' => true,
             'message' => 'تم حذف اللغه بنجاح'
@@ -98,9 +87,9 @@ class LanguageController extends Controller
 
     function searchlanguage(Request $request)
     {
-        $languagess = Language::where('name', 'LIKE', "%{$request->q}%")->limit(5)->get();
+        $languages = $this->service->searchlanguage($request);
         return response()->json([
-            'data' => $languagess
+            'data' => $languages
         ]);
     }
 }
