@@ -10,6 +10,7 @@ use App\Repositories\LanguageRepository;
 use App\Repositories\BloodTypeRepository;
 use App\Repositories\DepartmentRepository;
 use App\Repositories\ShiftTypesRepository;
+use App\Repositories\GovernorateRepository;
 use App\Repositories\JobCategoryRepository;
 use App\Repositories\NationalityRepository;
 use App\Repositories\QualificationRepository;
@@ -26,6 +27,7 @@ use App\Repositories\Interfaces\AdminPanelSettingInterface;
 use App\Repositories\Interfaces\CountryRepositoryInterface;
 use App\Repositories\Interfaces\LanguageRepositoryInterface;
 use App\Repositories\Interfaces\BloodTypeRepositoryInterface;
+use App\Repositories\Interfaces\GovernorateRepositoryInterface;
 use App\Repositories\Interfaces\NationalityRepositoryInterface;
 
 class InterfacesRepositoryProvider extends ServiceProvider
@@ -55,5 +57,6 @@ class InterfacesRepositoryProvider extends ServiceProvider
         app()->bind(NationalityRepositoryInterface::class, NationalityRepository::class);
         app()->bind(LanguageRepositoryInterface::class, LanguageRepository::class);
         app()->bind(CountryRepositoryInterface::class, CountryRepository::class);
+        app()->bind(GovernorateRepositoryInterface::class, GovernorateRepository::class);
     }
 }

@@ -7,11 +7,16 @@ use App\Models\Governorate;
 use Illuminate\Http\Request;
 use App\Enums\StatusActiveEnum;
 use App\Http\Controllers\Controller;
+use App\Services\GovernorateService;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Dashboard\Settings\GovernorateRequest;
 
 class GovernorateController extends Controller
 {
+
+    public function __construct(protected GovernorateService $service) {}
+
+
     /**
      * Display a listing of the resource.
      */
@@ -20,8 +25,8 @@ class GovernorateController extends Controller
         /**
          * Display a listing of the resource.
          */
-        $com_code = Auth::user()->com_code;
-        $data = Governorate::with(['createdBy:id,name', 'updatedBy:id,name'])->where('com_code', $com_code)->orderByDesc('id')->paginate(10);
+        $data = $this->service->index();
+
         return view('dashboard.settings.governorates.index', compact('data'));
     }
 
@@ -39,16 +44,7 @@ class GovernorateController extends Controller
      */
     public function store(GovernorateRequest $request)
     {
-        $com_code =  Auth::user()->com_code;
-        $active = StatusActiveEnum::ACTIVE;
-        $dataValidate = $request->validated();
-        $dataInsert = array_merge($dataValidate, [
-            'created_by' => Auth::user()->id,
-            'com_code' => $com_code,
-            'active' =>  $active,
-        ]);
-
-        Governorate::create($dataInsert);
+        $this->service->store($request);
         return redirect()->route('dashboard.governorates.index')->with('success', 'تم أضافة الجنسية بنجاح');
     }
 
@@ -77,15 +73,8 @@ class GovernorateController extends Controller
      */
     public function update(GovernorateRequest $request, Governorate $governorate)
     {
-        $com_code =  Auth::user()->com_code;
-        $dataValidate = $request->validated();
-        $dataUpdate = array_merge($dataValidate, [
-            'updated_by' => Auth::user()->id,
-            'com_code' => $com_code,
-            'active' =>  $request->active,
-        ]);
+        $this->service->update($request, $governorate);
 
-        $governorate->update($dataUpdate);
         return redirect()->route('dashboard.governorates.index')->with('success', 'تم تعديل الجنسية بنجاح');
     }
 
@@ -94,13 +83,10 @@ class GovernorateController extends Controller
      */
     public function destroy(Governorate $governorate)
     {
-        $governorate->delete();
+        $this->service->destroy($governorate);
         return response()->json([
             'success' => true,
             'message' => 'تم حذف الجنسية بنجاح'
         ]);
     }
-
-
- 
 }
