@@ -1,7 +1,9 @@
 <?php
+
 namespace App\Repositories\Interfaces;
 
 use App\Models\Employee;
+use App\Models\EmployeeFile;
 
 interface EmployeeRepositoryInterface
 {
@@ -13,4 +15,7 @@ interface EmployeeRepositoryInterface
 
     public function deleteData(Employee $employee);
 
+    public function uploadFilesData($request): EmployeeFile;
+    
+    public function destroyUploadFilesData($id): EmployeeFile;
 }

@@ -147,24 +147,8 @@ class EmployeeController extends Controller
 
     public function uploadFiles(EmoloyeeFilesRequest $request)
     {
-        $com_code =  Auth::user()->com_code;
-
-        DB::beginTransaction();
-
         try {
-            $employeeFile = EmployeeFile::create([
-                'employee_id' => $request->employee_id,
-                'file_name' => $request->file_name,
-                'com_code' => $com_code,
-                'created_by' => Auth::user()->id
-            ]);
-
-            if ($request->hasFile('upload_file')) {
-                $employeeFile->addMediaFromRequest('upload_file')->toMediaCollection('upload_file');
-            }
-
-            DB::commit();
-
+            $employeeFile = $this->service->uploadFiles($request);
             // استجابة JSON للطلب AJAX
             return response()->json([
                 'success' => true,
@@ -188,13 +172,10 @@ class EmployeeController extends Controller
 
 
 
-
     public function destroyUploadFiles($id)
     {
         try {
-            $file = EmployeeFile::findOrFail($id);
-            $file->clearMediaCollection('upload_file');
-            $file->delete();
+            $this->service->destroyUploadFiles($id);
 
             return response()->json([
                 'success' => true,

@@ -3,8 +3,9 @@
 namespace App\Repositories;
 
 use App\Models\Employee;
-use App\Enums\StatusActiveEnum;
+use App\Models\EmployeeFile;
 
+use App\Enums\StatusActiveEnum;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Repositories\Interfaces\EmployeeRepositoryInterface;
@@ -117,6 +118,45 @@ class EmployeeRepository implements EmployeeRepositoryInterface
             // ثم حذف سجل الموظف من قاعدة البيانات
             $employee->delete();
             return  $employee;
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw $e;
+        }
+    }
+
+
+    public function uploadFilesData($request): EmployeeFile
+    {
+        try {
+            DB::beginTransaction();
+            $com_code =  Auth::user()->com_code;
+            $employeeFile = EmployeeFile::create([
+                'employee_id' => $request->employee_id,
+                'file_name' => $request->file_name,
+                'com_code' => $com_code,
+                'created_by' => Auth::user()->id
+            ]);
+
+            if ($request->hasFile('upload_file')) {
+                $employeeFile->addMediaFromRequest('upload_file')->toMediaCollection('upload_file');
+            }
+            DB::commit();
+            return $employeeFile;
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw $e;
+        }
+    }
+
+    public function destroyUploadFilesData($id): EmployeeFile
+    {
+        try {
+            DB::beginTransaction();
+            $file = EmployeeFile::findOrFail($id);
+            $file->clearMediaCollection('upload_file');
+            $file->delete();
+            DB::commit();
+            return $file;
         } catch (\Exception $e) {
             DB::rollBack();
             throw $e;
