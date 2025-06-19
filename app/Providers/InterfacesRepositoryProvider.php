@@ -16,6 +16,7 @@ use App\Repositories\ShiftTypesRepository;
 use App\Repositories\GovernorateRepository;
 use App\Repositories\JobCategoryRepository;
 use App\Repositories\NationalityRepository;
+use App\Repositories\DiscountTypeRepository;
 use App\Repositories\QualificationRepository;
 use App\Repositories\AdditionalTypeRepository;
 use App\Repositories\FinanceCalendarRepository;
@@ -36,6 +37,7 @@ use App\Repositories\Interfaces\AllowanceRepositoryInterface;
 use App\Repositories\Interfaces\BloodTypeRepositoryInterface;
 use App\Repositories\Interfaces\GovernorateRepositoryInterface;
 use App\Repositories\Interfaces\NationalityRepositoryInterface;
+use App\Repositories\Interfaces\DiscountTypeRepositoryInterface;
 use App\Repositories\Interfaces\AdditionalTypeRepositoryInterface;
 
 class InterfacesRepositoryProvider extends ServiceProvider
@@ -70,5 +72,6 @@ class InterfacesRepositoryProvider extends ServiceProvider
         app()->bind(JobGradeRepositoryInterface::class, JobGradeRepository::class);
         app()->bind(AdditionalTypeRepositoryInterface::class, AdditionalTypeRepository::class);
         app()->bind(AllowanceRepositoryInterface::class, AllowanceRepository::class);
+        app()->bind(DiscountTypeRepositoryInterface::class, DiscountTypeRepository::class);
     }
 }
