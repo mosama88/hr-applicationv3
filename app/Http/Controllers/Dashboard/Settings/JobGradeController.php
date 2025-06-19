@@ -5,12 +5,16 @@ namespace App\Http\Controllers\Dashboard\Settings;
 use App\Models\JobGrade;
 use Illuminate\Http\Request;
 use App\Enums\StatusActiveEnum;
+use App\Services\JobGradeService;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Dashboard\Settings\JobGradeRequest;
 
 class JobGradeController extends Controller
 {
+
+    public function __construct(protected JobGradeService $service) {}
+
     /**
      * Display a listing of the resource.
      */
@@ -19,8 +23,8 @@ class JobGradeController extends Controller
         /**
          * Display a listing of the resource.
          */
-        $com_code = Auth::user()->com_code;
-        $data = JobGrade::with(['createdBy:id,name', 'updatedBy:id,name'])->where('com_code', $com_code)->orderByDesc('id')->paginate(10);
+        $data = $this->service->index();
+
         return view('dashboard.settings.job_grades.index', compact('data'));
     }
 
@@ -37,21 +41,9 @@ class JobGradeController extends Controller
      */
     public function store(JobGradeRequest $request)
     {
+        $this->service->store($request);
 
-        $com_code =  Auth::user()->com_code;
-        $last_code = JobGrade::orderByDesc('job_grades_code')->where('com_code', $com_code)->value('job_grades_code');
-        $new_code = $last_code ? $last_code + 1 : 1;
-        $active = StatusActiveEnum::ACTIVE;
-        $dataValidate = $request->validated();
-        $dataInsert = array_merge($dataValidate, [
-            'created_by' => Auth::user()->id,
-            'com_code' => $com_code,
-            'active' =>  $active,
-            'job_grades_code' =>  $new_code,
-        ]);
-
-        JobGrade::create($dataInsert);
-        return redirect()->route('dashboard.job_grades.index')->with('success', 'تم أضافة اللغه بنجاح');
+        return redirect()->route('dashboard.job_grades.index')->with('success', 'تم أضافة الدرجه بنجاح');
     }
 
     /**
@@ -75,16 +67,9 @@ class JobGradeController extends Controller
      */
     public function update(JobGradeRequest $request, JobGrade $jobGrade)
     {
-        $com_code =  Auth::user()->com_code;
-        $dataValidate = $request->validated();
-        $dataUpdate = array_merge($dataValidate, [
-            'updated_by' => Auth::user()->id,
-            'com_code' => $com_code,
-            'active' =>  $request->active,
-        ]);
+        $this->service->update($request, $jobGrade);
 
-        $jobGrade->update($dataUpdate);
-        return redirect()->route('dashboard.job_grades.index')->with('success', 'تم تعديل اللغه بنجاح');
+        return redirect()->route('dashboard.job_grades.index')->with('success', 'تم تعديل الدرجه بنجاح');
     }
 
     /**
@@ -92,10 +77,10 @@ class JobGradeController extends Controller
      */
     public function destroy(JobGrade $jobGrade)
     {
-        $jobGrade->delete();
+        $this->service->destroy($jobGrade);
         return response()->json([
             'success' => true,
-            'message' => 'تم حذف اللغه بنجاح'
+            'message' => 'تم حذف الدرجه بنجاح'
         ]);
     }
 }

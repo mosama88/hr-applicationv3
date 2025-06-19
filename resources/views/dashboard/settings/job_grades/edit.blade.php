@@ -105,23 +105,29 @@
                                                     value="{{ StatusActiveEnum::INACTIVE }}">
                                                     {{ StatusActiveEnum::INACTIVE->label() }}</option>
                                             </select>
+                                            @error('active')
+                                                <span class="invalid-feedback text-right" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
                                         </div>
-
                                     </div>
 
-
                                 </div>
+
+
                             </div>
-                            <!-- /.card-body -->
-
-                            <x-edit-button-component></x-edit-button-component>
-
-                        </form>
-                        <!--end::Form-->
                     </div>
+                    <!-- /.card-body -->
+
+                    <x-edit-button-component></x-edit-button-component>
+
+                    </form>
+                    <!--end::Form-->
                 </div>
-                <!-- /.row (main row) -->
-            </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.row (main row) -->
+        </div><!-- /.container-fluid -->
     </section>
 
 
