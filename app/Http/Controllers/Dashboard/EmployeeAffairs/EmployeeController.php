@@ -188,4 +188,17 @@ class EmployeeController extends Controller
             ], 500);
         }
     }
+
+    public function filterEmploee()
+    {
+        $data = $this->service->filterEmploee();
+        $other['branches'] = Branch::select('id', 'name')->get();
+        $other['employees'] = Employee::select('id', 'name', 'employee_code')->get();
+        $other['governorates'] = Governorate::select('id', 'name')->get();
+        $other['cities'] = City::select('id', 'name')->get();
+        $other['blood_types'] = BloodType::select('id', 'name')->get();
+        $other['job_grades'] = JobGrade::select('id', 'name')->get();
+        $other['shifts_types'] = ShiftsType::all();
+        return view('dashboard.employee-affairs.employees.filter-employee', compact('data', 'other'));
+    }
 }

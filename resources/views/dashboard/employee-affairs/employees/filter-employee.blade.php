@@ -5,8 +5,10 @@
 
 @extends('dashboard.layouts.master')
 @section('active-employees', 'active')
-@section('title', 'الموظفين')
+@section('title', 'شاشة بحث الموظفين')
 @push('css')
+    <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/dist/css/select2.min.css" />
+    <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/dist/css/select2-style.css" />
     <style>
         /* تنسيق عام لعارض السيرة الذاتية */
         .cv-container {
@@ -80,10 +82,10 @@
 
 
     @include('dashboard.layouts.breadcrumbs', [
-        'titlePage' => 'جدول الموظفين',
-        'previousPage' => 'لوحة التحكم',
-        'currentPage' => 'جدول الموظفين',
-        'url' => 'index',
+        'titlePage' => 'فلتر شاشة الموظفين',
+        'previousPage' => 'جدول الموظفين',
+        'currentPage' => 'فلتر شاشة الموظفين',
+        'url' => 'employees.index',
     ])
 
 
@@ -98,11 +100,6 @@
                             <h3 class="card-title">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <!-- الزر على اليسار -->
-
-
-                                    <!-- النص على اليمين -->
-                                    <x-add-new-button route="employees.create" />
-
                                 </div>
                             </h3>
 
@@ -111,10 +108,62 @@
 
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6 mx-2 mb-4 mt-3">
+                        <div class="col-12">
+                            <div class="row mx-1 my-3">
+                                {{-- inputs --}}
+                                <div class="col-md-2">
+                                    <label class="form-label" for="fp_code-input">كود البصمة</label>
+                                    <input type="text" class="form-control" name="fp_code_search"
+                                        value="{{ old('fp_code') }}" id="fp_code-input"
+                                        oninput="this.value=this.value.replace(/[^0-9.]/g,'');" placeholder="مثال:1000" />
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="form-label" for="employee_code-input">كود
+                                        الموظف</label>
+                                    <input type="text" class="form-control" name="employee_code_search"
+                                        value="{{ old('employee_code') }}" id="employee_code-input"
+                                        oninput="this.value=this.value.replace(/[^0-9.]/g,'');" placeholder="مثال:1000" />
+                                </div>
 
-                                <a href="{{route('dashboard.employees.filter')}}" class="btn btn-primary btn-md"> شاشة البحث </a>
+
+                                <!-- الموظفين -->
+                                <div class="col-md-4">
+                                    <label class="form-label" for="formtabs-country">الموظف</label>
+                                    <select class="select2 form-select" name="employee_search" data-allow-clear="true">
+                                        <option selected value="">-- أختر
+                                            الموظف --
+                                        </option>
+                                        @foreach ($other['employees'] as $employee)
+                                            <option @if (old('employee_search') == $employee->id) selected @endif
+                                                value="{{ $employee->id }}">
+                                                {{ $employee->name }} &larr; {{ $employee->employee_code }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+
+                                <!-- الفرع -->
+                                <div class="col-md-6">
+                                    <label class="form-label" for="formtabs-country">الفرع
+                                        التابع له الموظف</label>
+                                    <select class="select2 form-select"
+                                        name="branch_id_search" data-allow-clear="true">
+                                        <option selected value="">-- أختر
+                                            الفرع --
+                                        </option>
+                                        @foreach ($other['branches'] as $branch)
+                                            <option @if (old('branch_id') == $branch->id) selected @endif
+                                                value="{{ $branch->id }}">
+                                                {{ $branch->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-3 mx-auto mb-3 text-center">
+                                <button type="submit" class="btn btn-md btn-secondary">فلتر <i
+                                        class="fa-solid fa-filter mx-1"></i></button>
+
                             </div>
                         </div>
                         <div class="table-responsive text-nowrap">
@@ -141,19 +190,23 @@
                                                 @if ($info->getFirstMediaUrl('photo', 'preview'))
                                                     <img class="img-thumbnail"
                                                         src="{{ $info->getFirstMediaUrl('photo', 'preview') }}"
-                                                        style="max-width: 70px;max-height: 70px;" alt="{{ $info->name }}">
+                                                        style="max-width: 70px;max-height: 70px;"
+                                                        alt="{{ $info->name }}">
                                                 @elseif($info->gender === AdminGenderEnum::Male)
                                                     <img class="img-thumbnail"
                                                         src="{{ asset('dashboard') }}/assets/dist/assets/img/employees-male-default.png"
-                                                        style="max-width: 70px;max-height: 70px;" alt="{{ $info->name }}">
+                                                        style="max-width: 70px;max-height: 70px;"
+                                                        alt="{{ $info->name }}">
                                                 @elseif($info->gender === AdminGenderEnum::Female)
                                                     <img class="img-thumbnail"
                                                         src="{{ asset('dashboard') }}/assets/dist/assets/img/employees-female-default.png"
-                                                        style="max-width: 70px;max-height: 70px;" alt="{{ $info->name }}">
+                                                        style="max-width: 70px;max-height: 70px;"
+                                                        alt="{{ $info->name }}">
                                                 @else
                                                     <img class="img-thumbnail"
                                                         src="{{ asset('dashboard') }}/assets/img/Employee.png"
-                                                        style="max-width: 70px;max-height: 70px;" alt="{{ $info->name }}">
+                                                        style="max-width: 70px;max-height: 70px;"
+                                                        alt="{{ $info->name }}">
                                                 @endif
                                             </td>
                                             <td>{{ $info->employee_code }}</td>
@@ -214,7 +267,6 @@
                             </table>
                             <div class="row">
                                 <div class="col-12 my-2">
-                                    {{ $data->links() }}
                                 </div>
                             </div>
                         </div>
@@ -228,4 +280,10 @@
 
 @endsection
 @push('js')
+    <script src="{{ asset('dashboard') }}/assets/dist/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.select2').select2();
+        });
+    </script>
 @endpush

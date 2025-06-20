@@ -36,10 +36,13 @@ class EmployeeService
         return $this->repository->uploadFilesData($request);
     }
 
-      public function destroyUploadFiles($id)
+    public function destroyUploadFiles($id)
     {
         return $this->repository->destroyUploadFilesData($id);
     }
 
-    
+    public function filterEmploee()
+    {
+        return $this->repository->getFilterEmploeeData();
+    }
 }

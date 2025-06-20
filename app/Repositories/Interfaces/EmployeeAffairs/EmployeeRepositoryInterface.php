@@ -16,6 +16,8 @@ interface EmployeeRepositoryInterface
     public function deleteData(Employee $employee);
 
     public function uploadFilesData($request): EmployeeFile;
-    
+
     public function destroyUploadFilesData($id): EmployeeFile;
+
+    public function getFilterEmploeeData();
 }
