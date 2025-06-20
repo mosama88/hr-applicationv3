@@ -22,9 +22,7 @@ class CountryController extends Controller
      */
     public function index()
     {
-        $data = $this->service->index();
-
-        return view('dashboard.settings.countries.index', compact('data'));
+        return view('dashboard.settings.countries.index');
     }
 
     /**

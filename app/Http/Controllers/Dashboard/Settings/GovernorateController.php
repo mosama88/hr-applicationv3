@@ -25,9 +25,7 @@ class GovernorateController extends Controller
         /**
          * Display a listing of the resource.
          */
-        $data = $this->service->index();
-
-        return view('dashboard.settings.governorates.index', compact('data'));
+        return view('dashboard.settings.governorates.index');
     }
 
     /**
