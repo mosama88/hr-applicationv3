@@ -22,9 +22,8 @@ class AllowanceController extends Controller
         /**
          * Display a listing of the resource.
          */
-        $data = $this->service->index();
 
-        return view('dashboard.employee-affairs.allowances.index', compact('data'));
+        return view('dashboard.employee-affairs.allowances.index');
     }
 
     /**

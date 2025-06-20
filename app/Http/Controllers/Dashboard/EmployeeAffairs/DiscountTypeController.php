@@ -22,9 +22,7 @@ class DiscountTypeController extends Controller
         /**
          * Display a listing of the resource.
          */
-        $data = $this->service->index();
-
-        return view('dashboard.employee-affairs.discount_types.index', compact('data'));
+        return view('dashboard.employee-affairs.discount_types.index');
     }
 
     /**
