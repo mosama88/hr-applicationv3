@@ -9,6 +9,7 @@ use App\Models\FinanceCalendar;
 use App\Models\FinanceClnPeriod;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Enums\FinanceCalendarsIsOpen;
 use App\Services\Settings\FinanceCalendarService;
 use App\Http\Requests\Dashboard\Settings\FinanceCalendarRequest;
 
@@ -87,5 +88,30 @@ class FinanceCalendarController extends Controller
             'success' => true,
             'message' => 'تم حذف السنه المالية بنجاح'
         ]);
+    }
+
+    public function openYear(FinanceCalendar $financeCalendar)
+    {
+        $com_code = Auth::user()->com_code;
+        if ($financeCalendar->com_code != $com_code) {
+            return redirect()->route('dashboard.financeCalendars.index')
+                ->withErrors(['error' => 'عفوآ لقد حدث خطأ ما!']);
+        }
+        $financeCalendar->is_open = FinanceCalendarsIsOpen::Open;
+        $financeCalendar->save();
+        return redirect()->route('dashboard.financeCalendars.index')->with('success', 'تم فتح السنة المالية بنجاح');
+    }
+
+
+    public function closeYear(FinanceCalendar $financeCalendar)
+    {
+        $com_code = Auth::user()->com_code;
+        if ($financeCalendar->com_code != $com_code) {
+            return redirect()->route('dashboard.financeCalendars.index')
+                ->withErrors(['error' => 'عفوآ لقد حدث خطأ ما!']);
+        }
+        $financeCalendar->is_open = FinanceCalendarsIsOpen::Archived;
+        $financeCalendar->save();
+        return redirect()->route('dashboard.financeCalendars.index')->with('success', 'تم غلق السنة المالية بنجاح');
     }
 }

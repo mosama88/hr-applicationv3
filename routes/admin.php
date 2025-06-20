@@ -29,6 +29,10 @@ Route::middleware(['auth:admin'])->group(function () {
   Route::resource('admin_panel_settings', AdminPanelSettingController::class);
   //################################### السنوات المالية ##################################
   Route::resource('financeCalendars', FinanceCalendarController::class);
+  Route::controller(FinanceCalendarController::class)->prefix('/financeCalendars')->name('financeCalendars.')->group(function () {
+    Route::patch('/open-year/{financeCalendar}', 'openYear')->name('open-year');
+    Route::patch('/close-year/{financeCalendar}', 'closeYear')->name('close-year');
+  });
   //################################### الفروع ##################################
   Route::resource('branches', BranchController::class);
   //################################### الشفتات ##################################

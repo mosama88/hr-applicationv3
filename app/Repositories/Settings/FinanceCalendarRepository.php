@@ -49,7 +49,6 @@ class FinanceCalendarRepository implements FinanceCalendarInterface
         $validatedData = $request->validated();
 
         $dataToInsert = array_merge($validatedData, [
-            'is_open' => FinanceCalendarsIsOpen::Pending,
             'com_code' => $com_code,
             'updated_by' => Auth::user()->id,
         ]);

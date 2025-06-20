@@ -81,7 +81,7 @@
                                             <td>{{ $info->end_date }}</td>
                                             <td>
                                                 @if ($info->is_open == FinanceCalendarsIsOpen::Open)
-                                                    <span class="badge bg-success">مفعل</span>
+                                                    <span class="badge bg-success">السنه مفتوحة</span>
                                                 @elseif ($info->is_open == FinanceCalendarsIsOpen::Pending)
                                                     <span class="badge bg-warning">معلق</span>
                                                 @else

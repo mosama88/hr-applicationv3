@@ -23,7 +23,7 @@ return new class extends Migration
             $table->integer('number_of_days'); //('عدد الايام فى الشهر')
             $table->date('start_date_fp'); //('بداية تاريخ البصمة')
             $table->date('end_date_fp'); //('نهاية تاريخ البصمة')
-            $table->tinyInteger('is_open')->default(0); //('صفر = معلق | واحد = مفتوح | اثنين = مؤرشف')
+            $table->tinyInteger('is_open')->nullable()->default(1); // واحد= معلق | اثنين = مفتوح | ثلاثه = مؤرشف' 
             $table->foreignId('created_by')->references('id')->on('admins')->onUpdate('cascade');
             $table->foreignId('updated_by')->nullable()->references('id')->on('admins')->onUpdate('cascade');
             $table->integer('com_code');

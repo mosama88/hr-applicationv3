@@ -16,7 +16,7 @@ class FinanceCalendarSeeder extends Seeder
             'finance_yr_desc' => 'السنه المالية لسنه 2025',
             'start_date' => '2025-01-01',
             'end_date' => '2025-12-31',
-            'is_open' => 0,
+            'is_open' => 1,
             'com_code' => 6000,
             'created_by' => 1,
             'updated_by' => null,

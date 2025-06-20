@@ -4,9 +4,9 @@ namespace App\Enums;
 
 enum FinanceClnPeriodsIsOpen: int
 {
-    case Pending = 0;
-    case Open = 1;
-    case Archived = 2;
+    case Pending = 1;
+    case Open = 2;
+    case Archived = 3;
 
     public function label(): string
     {

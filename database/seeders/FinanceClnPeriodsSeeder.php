@@ -27,7 +27,7 @@ class FinanceClnPeriodsSeeder extends Seeder
         $commonFields = [
             'finance_calendar_id' => 1,
             'finance_yr' => '2025',
-            'is_open' => 0,
+            'is_open' => 1,
             'created_by' => 1,
             'updated_by' => null,
             'com_code' => 6000,
