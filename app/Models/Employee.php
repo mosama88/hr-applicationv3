@@ -6,6 +6,7 @@ use App\Enums\YesOrNoEnum;
 use Spatie\Image\Enums\Fit;
 use Spatie\Sluggable\HasSlug;
 use App\Enums\AdminGenderEnum;
+use EloquentFilter\Filterable;
 use App\Enums\StatusActiveEnum;
 use App\Enums\Employee\Military;
 use Spatie\MediaLibrary\HasMedia;
@@ -25,7 +26,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class Employee extends Model implements HasMedia
 {
-    use HasFactory, HasSlug, InteractsWithMedia;
+    use HasFactory, Filterable, HasSlug, InteractsWithMedia;
 
     protected $table = 'employees';
 

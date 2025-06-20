@@ -164,12 +164,11 @@ class EmployeeRepository implements EmployeeRepositoryInterface
     }
 
 
-       public function getFilterEmploeeData()
+    public function getFilterEmploeeData()
     {
         $com_code = Auth::user()->com_code;
-        $data = Employee::where('com_code', $com_code)->orderByDesc('id')
-        ->take(0)->get();
+        $data = Employee::filter(request()->all())->where('com_code', $com_code)->orderByDesc('id')
+            ->take(0)->get();
         return $data;
     }
-
 }
