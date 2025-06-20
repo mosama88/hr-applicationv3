@@ -19,8 +19,7 @@ class BranchController extends Controller
      */
     public function index()
     {
-        $data = $this->service->index();
-        return view('dashboard.settings.branches.index', compact('data'));
+        return view('dashboard.settings.branches.index');
     }
 
     /**

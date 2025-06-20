@@ -20,8 +20,7 @@ class DepartmentController extends Controller
      */
     public function index()
     {
-        $data = $this->service->index();
-        return view('dashboard.settings.departments.index', compact('data'));
+        return view('dashboard.settings.departments.index');
     }
 
     /**

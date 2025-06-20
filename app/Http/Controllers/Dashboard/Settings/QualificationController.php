@@ -25,8 +25,7 @@ class QualificationController extends Controller
         /**
          * Display a listing of the resource.
          */
-        $data = $this->service->index();
-        return view('dashboard.settings.qualifications.index', compact('data'));
+        return view('dashboard.settings.qualifications.index');
     }
 
     /**

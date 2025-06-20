@@ -47,6 +47,17 @@
                         </div>
 
                         <div class="table-responsive text-nowrap">
+                            <div class="row">
+                                <div class="col-md-6 mx-2 mb-4 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-text" id="basic-addon1">
+                                            <i class="fa-solid fa-magnifying-glass"></i>
+                                        </span>
+                                        <input type="text" class="form-control" placeholder="إبحث بالاسم"
+                                            aria-label="Username" aria-describedby="basic-addon1">
+                                    </div>
+                                </div>
+                            </div>
 
                             <table class="table table-striped">
                                 <thead>

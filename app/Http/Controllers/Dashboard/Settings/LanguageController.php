@@ -23,9 +23,8 @@ class LanguageController extends Controller
         /**
          * Display a listing of the resource.
          */
-        $data = $this->service->index();
 
-        return view('dashboard.settings.languages.index', compact('data'));
+        return view('dashboard.settings.languages.index');
     }
 
     /**

@@ -32,17 +32,25 @@
                                 <div class="d-flex justify-content-between align-items-center">
                                     <!-- الزر على اليسار -->
 
-
                                     <!-- النص على اليمين -->
                                     <x-add-new-button route="governorates.create" />
-
-
                                 </div>
                             </h3>
 
                             <div class="card-tools">
                                 <h4 class="mb-0">جدول المحافظات</h4>
 
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mx-2 mb-4 mt-3">
+                                <div class="input-group">
+                                    <span class="input-group-text" id="basic-addon1">
+                                        <i class="fa-solid fa-magnifying-glass"></i>
+                                    </span>
+                                    <input type="text" class="form-control" placeholder="إبحث بالاسم"
+                                        aria-label="Username" aria-describedby="basic-addon1">
+                                </div>
                             </div>
                         </div>
 

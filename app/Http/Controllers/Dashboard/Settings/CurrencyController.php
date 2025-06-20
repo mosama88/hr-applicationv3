@@ -22,13 +22,7 @@ class CurrencyController extends Controller
      */
     public function index()
     {
-        /**
-         * Display a listing of the resource.
-         */
-
-        $data = $this->service->index();
-
-        return view('dashboard.settings.currencies.index', compact('data'));
+        return view('dashboard.settings.currencies.index');
     }
 
     /**

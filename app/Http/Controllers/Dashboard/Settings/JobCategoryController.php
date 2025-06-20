@@ -22,8 +22,7 @@ class JobCategoryController extends Controller
         /**
          * Display a listing of the resource.
          */
-        $data = $this->service->index();
-        return view('dashboard.settings.job_categories.index', compact('data'));
+        return view('dashboard.settings.job_categories.index');
     }
 
     /**
