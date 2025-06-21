@@ -4,13 +4,33 @@
 
 <head>
     @include('dashboard.auth.layouts.css')
+    <style>
+        .login-box {
+            max-width: 400px;
+            margin: 5% auto;
+            background-color: rgba(255, 255, 255, 0.9);
+            /* خلفية شبه شفافة */
+            padding: 20px;
+            border-radius: 10px;
+        }
 
+        @media (max-width: 768px) {
+            .login-box {
+                margin: 20px auto;
+                width: 90%;
+            }
+        }
+    </style>
 </head>
 <!--end::Head-->
 <!--begin::Body-->
 
 <body class="login-page bg-body-secondary"
-    style="background: url('{{ asset('dashboard') }}/assets/dist/assets/img/hospitalrahma.png') no-repeat center center fixed; background-size: cover;">
+    style="background: url('{{ asset('dashboard/assets/dist/assets/img/hospitalrahma.png') }}') no-repeat center center fixed;
+           background-size: cover;
+           background-position: center;
+           background-repeat: no-repeat;
+           background-attachment: fixed;">
     <div class="login-box">
         <div class="card card-outline text-secondary card-primary" style="background-color: rgba(255, 255, 255, 0.7);">
             <div class="card-header">
