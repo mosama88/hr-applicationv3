@@ -102,19 +102,14 @@
 
                                     <!-- النص على اليمين -->
                                     <x-add-new-button route="employees.create" />
-
+                                    <a href="{{ route('dashboard.employees.filter') }}"
+                                        class="btn btn-primary btn-md mx-2"><i
+                                            class="fa-solid fa-magnifying-glass mx-1"></i> شاشة البحث </a>
                                 </div>
                             </h3>
 
                             <div class="card-tools">
                                 <h4 class="mb-0">جدول الموظفين</h4>
-
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 mx-2 mb-4 mt-3">
-
-                                <a href="{{route('dashboard.employees.filter')}}" class="btn btn-primary btn-md"> شاشة البحث </a>
                             </div>
                         </div>
                         <div class="table-responsive text-nowrap">
