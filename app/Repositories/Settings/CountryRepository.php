@@ -56,7 +56,7 @@ class CountryRepository implements CountryRepositoryInterface
 
     public function searchCountryForEmployee($request)
     {
-        $countries = Country::where('name', 'LIKE', "%{$request->q}%")->orWhere('country_code', 'LIKE', "%{$request->q}%")->limit(5)->get();
+        $countries = Country::where('active', StatusActiveEnum::ACTIVE)->where('name', 'LIKE', "%{$request->q}%")->orWhere('country_code', 'LIKE', "%{$request->q}%")->limit(5)->get();
         return  $countries;
     }
 }

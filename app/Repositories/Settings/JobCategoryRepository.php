@@ -67,7 +67,7 @@ class JobCategoryRepository implements JobCategoryInterface
 
     public function searchJobCategoryForEmployee($request)
     {
-        $jobCategories = JobCategory::where('name', 'LIKE', "%{$request->q}%")->limit(5)->get();
+        $jobCategories = JobCategory::where('active', StatusActiveEnum::ACTIVE)->where('name', 'LIKE', "%{$request->q}%")->limit(5)->get();
         return $jobCategories;
     }
 }

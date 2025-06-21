@@ -42,12 +42,12 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        $other['branches'] = Branch::select('id', 'name')->get();
-        $other['governorates'] = Governorate::select('id', 'name')->get();
-        $other['cities'] = City::select('id', 'name')->get();
-        $other['blood_types'] = BloodType::select('id', 'name')->get();
-        $other['job_grades'] = JobGrade::select('id', 'name')->get();
-        $other['shifts_types'] = ShiftsType::all();
+        $other['branches'] = Branch::where('active', StatusActiveEnum::ACTIVE)->select('id', 'name')->get();
+        $other['governorates'] = Governorate::where('active', StatusActiveEnum::ACTIVE)->select('id', 'name')->get();
+        $other['cities'] = City::where('active', StatusActiveEnum::ACTIVE)->select('id', 'name')->get();
+        $other['blood_types'] = BloodType::where('active', StatusActiveEnum::ACTIVE)->select('id', 'name')->get();
+        $other['job_grades'] = JobGrade::where('active', StatusActiveEnum::ACTIVE)->select('id', 'name')->get();
+        $other['shifts_types'] = ShiftsType::where('active', StatusActiveEnum::ACTIVE)->get();
         return view('dashboard.employee-affairs.employees.create', compact('other'));
     }
 
@@ -74,12 +74,12 @@ class EmployeeController extends Controller
     {
         $com_code =  Auth::user()->com_code;
         $employeeFiles = EmployeeFile::orderByDesc('id')->where('employee_id', $employee->id)->where('com_code', $com_code)->get();
-        $other['branches'] = Branch::select('id', 'name')->get();
-        $other['governorates'] = Governorate::select('id', 'name')->get();
-        $other['cities'] = City::select('id', 'name')->get();
-        $other['blood_types'] = BloodType::select('id', 'name')->get();
-        $other['job_grades'] = JobGrade::select('id', 'name')->get();
-        $other['shifts_types'] = ShiftsType::all();
+        $other['branches'] = Branch::where('active', StatusActiveEnum::ACTIVE)->select('id', 'name')->get();
+        $other['governorates'] = Governorate::where('active', StatusActiveEnum::ACTIVE)->select('id', 'name')->get();
+        $other['cities'] = City::where('active', StatusActiveEnum::ACTIVE)->select('id', 'name')->get();
+        $other['blood_types'] = BloodType::where('active', StatusActiveEnum::ACTIVE)->select('id', 'name')->get();
+        $other['job_grades'] = JobGrade::where('active', StatusActiveEnum::ACTIVE)->select('id', 'name')->get();
+        $other['shifts_types'] = ShiftsType::where('active', StatusActiveEnum::ACTIVE)->get();
         return view('dashboard.employee-affairs.employees.show', compact('employee', 'other', 'employeeFiles'));
     }
 
@@ -88,12 +88,12 @@ class EmployeeController extends Controller
      */
     public function edit(Employee $employee)
     {
-        $other['branches'] = Branch::select('id', 'name')->get();
-        $other['governorates'] = Governorate::select('id', 'name')->get();
-        $other['cities'] = City::select('id', 'name')->get();
-        $other['blood_types'] = BloodType::select('id', 'name')->get();
-        $other['job_grades'] = JobGrade::select('id', 'name')->get();
-        $other['shifts_types'] = ShiftsType::all();
+        $other['branches'] = Branch::where('active', StatusActiveEnum::ACTIVE)->select('id', 'name')->get();
+        $other['governorates'] = Governorate::where('active', StatusActiveEnum::ACTIVE)->select('id', 'name')->get();
+        $other['cities'] = City::where('active', StatusActiveEnum::ACTIVE)->select('id', 'name')->get();
+        $other['blood_types'] = BloodType::where('active', StatusActiveEnum::ACTIVE)->select('id', 'name')->get();
+        $other['job_grades'] = JobGrade::where('active', StatusActiveEnum::ACTIVE)->select('id', 'name')->get();
+        $other['shifts_types'] = ShiftsType::where('active', StatusActiveEnum::ACTIVE)->get();
         return view('dashboard.employee-affairs.employees.edit', compact('employee', 'other'));
     }
 
@@ -192,13 +192,12 @@ class EmployeeController extends Controller
     public function filterEmploee()
     {
         $data = $this->service->filterEmploee();
-        $other['branches'] = Branch::select('id', 'name')->get();
-        $other['employees'] = Employee::select('id', 'name', 'employee_code')->get();
-        $other['governorates'] = Governorate::select('id', 'name')->get();
-        $other['cities'] = City::select('id', 'name')->get();
-        $other['blood_types'] = BloodType::select('id', 'name')->get();
-        $other['job_grades'] = JobGrade::select('id', 'name')->get();
-        $other['shifts_types'] = ShiftsType::all();
+        $other['branches'] = Branch::where('active', StatusActiveEnum::ACTIVE)->select('id', 'name')->get();
+        $other['governorates'] = Governorate::where('active', StatusActiveEnum::ACTIVE)->select('id', 'name')->get();
+        $other['cities'] = City::where('active', StatusActiveEnum::ACTIVE)->select('id', 'name')->get();
+        $other['blood_types'] = BloodType::where('active', StatusActiveEnum::ACTIVE)->select('id', 'name')->get();
+        $other['job_grades'] = JobGrade::where('active', StatusActiveEnum::ACTIVE)->select('id', 'name')->get();
+        $other['shifts_types'] = ShiftsType::where('active', StatusActiveEnum::ACTIVE)->get();
         return view('dashboard.employee-affairs.employees.filter-employee', compact('data', 'other'));
     }
 }

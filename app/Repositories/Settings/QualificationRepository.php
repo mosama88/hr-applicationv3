@@ -67,7 +67,7 @@ class QualificationRepository implements QualificationInterface
     
     public function searchQualification($request)
     {
-        $qualifications = Qualification::where('name', 'LIKE', "%{$request->q}%")->limit(5)->get();
+        $qualifications = Qualification::where('active', StatusActiveEnum::ACTIVE)->where('name', 'LIKE', "%{$request->q}%")->limit(5)->get();
         return $qualifications;
     }
 }

@@ -55,7 +55,7 @@ class CityRepository implements CityRepositoryInterface
 
     public function searchCityForEmployee($request)
     {
-        $countries = City::where('name', 'LIKE', "%{$request->q}%")->limit(5)->get();
+        $countries = City::where('active', StatusActiveEnum::ACTIVE)->where('name', 'LIKE', "%{$request->q}%")->limit(5)->get();
         return  $countries;
     }
 }

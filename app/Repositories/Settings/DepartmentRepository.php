@@ -68,7 +68,7 @@ class DepartmentRepository implements DepartmentInterface
     }
     public function searchDepartmentForEmployee($request)
     {
-        $departments = Department::where('name', 'LIKE', "%{$request->q}%")->limit(5)->get();
+        $departments = Department::where('active', StatusActiveEnum::ACTIVE)->where('name', 'LIKE', "%{$request->q}%")->limit(5)->get();
         return $departments;
     }
 }

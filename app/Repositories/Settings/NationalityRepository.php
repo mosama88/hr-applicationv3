@@ -56,7 +56,7 @@ class NationalityRepository implements NationalityRepositoryInterface
 
     function searchNationalityForEmployee($request)
     {
-        $nationalities = Nationality::where('name', 'LIKE', "%{$request->q}%")->limit(5)->get();
+        $nationalities = Nationality::where('active', StatusActiveEnum::ACTIVE)->where('name', 'LIKE', "%{$request->q}%")->limit(5)->get();
         return  $nationalities;
     }
 }

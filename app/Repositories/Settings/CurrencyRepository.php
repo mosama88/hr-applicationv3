@@ -66,7 +66,7 @@ class CurrencyRepository implements CurrencyInterface
     }
     public function searchCurrancyForEmployee($request)
     {
-        $currencies = Currency::where('name', 'LIKE', "%{$request->q}%")->orWhere('currency_symbol', 'LIKE', "%{$request->q}%")->limit(5)->get();
+        $currencies = Currency::where('active', StatusActiveEnum::ACTIVE)->where('name', 'LIKE', "%{$request->q}%")->orWhere('currency_symbol', 'LIKE', "%{$request->q}%")->limit(5)->get();
         return $currencies;
     }
 }

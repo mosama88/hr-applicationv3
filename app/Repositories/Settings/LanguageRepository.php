@@ -55,7 +55,7 @@ class LanguageRepository implements LanguageRepositoryInterface
 
     function searchlanguageForEmployee($request)
     {
-        $languages = Language::where('name', 'LIKE', "%{$request->q}%")->limit(5)->get();
+        $languages = Language::where('active', StatusActiveEnum::ACTIVE)->where('name', 'LIKE', "%{$request->q}%")->limit(5)->get();
         return $languages;
     }
 }
