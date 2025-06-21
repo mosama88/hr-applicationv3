@@ -41,9 +41,9 @@
     </style>
 @endpush
 @push('js')
-<!-- Toastr -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <!-- Toastr -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script>
         $(document).ready(function() {
             // تهيئة Toastr
@@ -55,7 +55,7 @@
                 "positionClass": "toast-top-right", // الموضع
                 "preventDuplicates": false,
                 "onclick": null,
-                "showDuration": "300", // مدة الظهور
+                "showDuration": "1000", // مدة الظهور
                 "hideDuration": "1000", // مدة الاختفاء
                 "timeOut": "5000", // الوقت قبل الاختفاء التلقائي
                 "extendedTimeOut": "1000", // وقت إضافي عند التمرير
@@ -70,7 +70,7 @@
             //     @endif
 
             @if ($errors->has('error'))
-                toastr.error('{{ $errors->first('خطأ') }}');
+                toastr.error('{{ $errors->first('error') }}', 'خطأ!');
             @endif
 
 
