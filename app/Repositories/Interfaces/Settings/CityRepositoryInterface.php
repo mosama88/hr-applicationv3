@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Repositories\Interfaces\Settings;
 
 use App\Models\City;
@@ -13,4 +14,5 @@ interface CityRepositoryInterface
 
     public function deleteData(City $city);
 
+    public function searchCityForEmployee(City $city);
 }

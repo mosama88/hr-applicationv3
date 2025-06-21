@@ -6,6 +6,7 @@ use App\Models\City;
 use App\Models\Admin;
 use App\Models\Branch;
 use App\Models\Country;
+use App\Models\Currency;
 use App\Models\JobGrade;
 use App\Models\Language;
 use App\Models\BloodType;
@@ -890,6 +891,7 @@ class EmployeeFactory extends Factory
             'blood_type_id' => BloodType::all()->random()->id,
             'religion' => fake()->randomElement($religion),
             'language_id' => Language::all()->random()->id,
+            'currency_id' => Currency::all()->random()->id,
             'email' => fake()->unique()->safeEmail(),
             'country_id' => Country::all()->random()->id,
             'governorate_id' => Governorate::all()->random()->id,

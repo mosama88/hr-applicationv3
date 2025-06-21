@@ -246,6 +246,29 @@
                 }
             });
 
+            $('.city_select2').select2({
+                placeholder: '-- أختر المدينه --',
+                ajax: {
+                    url: "{{ route('dashboard.cities.searchCity') }}",
+                    dataType: 'json',
+                    delay: 250, // Delay for better UX
+                    data: function(params) {
+                        return {
+                            q: params.term // Search query
+                        };
+                    },
+                    processResults: function(data) {
+                        return {
+                            results: data.data.map(cities => ({
+                                id: cities.id,
+                                text: `${cities.name} ➜ (${cities.country_code})`
+                            }))
+                        };
+                    }
+                }
+            });
+
+
             // currency_select2
             $('.currency_select2').select2({
                 placeholder: '-- أختر العملة --',

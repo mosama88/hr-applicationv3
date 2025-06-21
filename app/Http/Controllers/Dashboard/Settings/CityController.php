@@ -88,4 +88,13 @@ class CityController extends Controller
             'message' => 'تم حذف المدينة بنجاح'
         ]);
     }
+
+    function searchCity(Request $request)
+    {
+        $cities = $this->service->searchCity($request);
+
+        return response()->json([
+            'data' => $cities
+        ]);
+    }
 }

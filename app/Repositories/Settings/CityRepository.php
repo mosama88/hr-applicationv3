@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Repositories\Settings;
+
 use Illuminate\Support\Facades\Auth;
 use App\Enums\StatusActiveEnum;
 
@@ -16,7 +17,7 @@ class CityRepository implements CityRepositoryInterface
         return $data;
     }
 
-      public function storeData($request): City
+    public function storeData($request): City
     {
         $com_code =  Auth::user()->com_code;
         $active = StatusActiveEnum::ACTIVE;
@@ -41,16 +42,20 @@ class CityRepository implements CityRepositoryInterface
             'active' =>  $request->active,
         ]);
 
-       $city->update($dataUpdate);
+        $city->update($dataUpdate);
         return  $city;
     }
 
 
-   public function deleteData(City $city)
+    public function deleteData(City $city)
     {
         $city->delete();
         return  $city;
     }
 
-
+    public function searchCityForEmployee($request)
+    {
+        $countries = City::where('name', 'LIKE', "%{$request->q}%")->limit(5)->get();
+        return  $countries;
+    }
 }

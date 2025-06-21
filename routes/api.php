@@ -27,3 +27,4 @@ Route::get('language/searchlanguage', [LanguageController::class, 'searchlanguag
 Route::get('qualifications/searchQualification', [QualificationController::class, 'searchQualification'])->name('dashboard.qualifications.searchQualification');
 Route::get('departments/searchDepartment', [DepartmentController::class, 'searchDepartment'])->name('dashboard.departments.searchDepartment');
 Route::get('job_categories/searchJob_category', [JobCategoryController::class, 'searchJob_category'])->name('dashboard.job_categories.searchJob_category');
+Route::get('cities/searchCity', [CityController::class, 'searchCity'])->name('dashboard.cities.searchCity');
