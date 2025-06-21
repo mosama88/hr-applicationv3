@@ -95,8 +95,7 @@
                                                 <input type="time"
                                                     class="form-control time-picker @error('from_time') is-invalid @enderror"
                                                     onchange="calculateHours()" name="from_time" id="from_time"
-                                                    value="{{ old('from_time') }}" step="300" min="08:00"
-                                                    max="20:00">
+                                                    value="{{ old('from_time') }}" step="300">
                                             </div>
                                             @error('from_time')
                                                 <div class="invalid-feedback text-right d-block">
@@ -115,8 +114,7 @@
                                                 <input type="time"
                                                     class="form-control time-picker @error('to_time') is-invalid @enderror"
                                                     onchange="calculateHours()" name="to_time" id="to_time"
-                                                    value="{{ old('to_time') }}" step="300" min="08:00"
-                                                    max="20:00">
+                                                    value="{{ old('to_time') }}" step="300">
                                             </div>
                                             @error('to_time')
                                                 <div class="invalid-feedback text-right d-block">
