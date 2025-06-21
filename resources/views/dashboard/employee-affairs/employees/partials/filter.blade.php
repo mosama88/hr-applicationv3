@@ -143,6 +143,68 @@
                                     </select>
                                 </div>
 
+
+                                <!-- الديانة -->
+                                <div class="col-md-2 mb-3">
+                                    <label for="exampleFormControlSelect1" class="form-label">الديانة</label>
+                                    <select class="form-select" name="religion" aria-label="Default select example">
+                                        <option selected value="">-- أخترالديانة --</option>
+                                        @foreach (ReligionEnum::cases() as $religion)
+                                            <option @if (request('religion') == $religion->value) selected @endif
+                                                value="{{ $religion->value }}">
+                                                {{ $religion->label() }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+
+                                <!-- هاتف المحمول-->
+                                <div class="col-md-2 mb-3">
+                                    <label class="form-label" for="mobile-input">
+                                        هاتف المحمول</label>
+                                    <input type="text" value="{{ request('mobile') }}"
+                                        class="form-control @error('mobile') is-invalid @enderror" name="mobile"
+                                        id="mobile-input" oninput="this.value=this.value.replace(/[^0-9.]/g,'');"
+                                        placeholder="658 799 8941" />
+                                    @error('mobile')
+                                        <span class="invalid-feedback text-right" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+
+
+
+                                <!-- الادارة -->
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label" for="department_id-input">الادارة </label>
+                                    <select name="department_id" class="select2 form-select department_select2"
+                                        data-allow-clear="true"
+                                        data-ajax-url="{{ route('dashboard.departments.searchDepartment') }}">
+                                        @if (request('department_id'))
+                                            <option value="{{ request('department_id') }}" selected>
+                                                {{ Department::find(request('department_id'))?->name }}
+                                            </option>
+                                        @endif
+                                    </select>
+                                </div>
+
+
+                                <!--  وظيفة الموظف -->
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label" for="job_category_id-input">وظيفة
+                                        الموظف</label>
+                                    <select name="job_category_id" id="job_category_id-input"
+                                        class="select2 form-select job_category_select2" data-allow-clear="true">
+                                        @if (request('job_category_id'))
+                                            <option value="{{ request('job_category_id') }}" selected>
+                                                {{ JobCategory::find(request('job_category_id'))?->name }}
+                                            </option>
+                                        @endif
+                                    </select>
+                                </div>
+
                                 <!-- الدولة التابع لها الموظف   -->
                                 <div class="col-md-4 mb-3">
                                     <label class="form-label" for="formtabs-country">الدولة</label>
@@ -188,40 +250,8 @@
                                     </select>
                                 </div>
 
-
-
-                                <!-- الديانة -->
-                                <div class="col-md-2 mb-3">
-                                    <label for="exampleFormControlSelect1" class="form-label">الديانة</label>
-                                    <select class="form-select" name="religion" aria-label="Default select example">
-                                        <option selected value="">-- أخترالديانة --</option>
-                                        @foreach (ReligionEnum::cases() as $religion)
-                                            <option @if (request('religion') == $religion->value) selected @endif
-                                                value="{{ $religion->value }}">
-                                                {{ $religion->label() }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-
-
-                                <!-- هاتف المحمول-->
-                                <div class="col-md-2 mb-3">
-                                    <label class="form-label" for="mobile-input">
-                                        هاتف المحمول</label>
-                                    <input type="text" value="{{ request('mobile') }}"
-                                        class="form-control @error('mobile') is-invalid @enderror" name="mobile"
-                                        id="mobile-input" oninput="this.value=this.value.replace(/[^0-9.]/g,'');"
-                                        placeholder="658 799 8941" />
-                                    @error('mobile')
-                                        <span class="invalid-feedback text-right" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-
                                 <!-- حالة الخدمة العسكرية -->
-                                <div class="col-md-2 mb-3">
+                                <div class="col-md-3 mb-3">
                                     <label for="military_status" class="form-label">حالة الخدمة العسكرية</label>
                                     <select class="form-select" id="military_status" name="military"
                                         aria-label="Default select example">
@@ -237,7 +267,7 @@
                                 </div>
 
                                 <!-- الحالة الوظيفية -->
-                                <div class="col-md-2 mb-3">
+                                <div class="col-md-3 mb-3">
                                     <label for="functional_status-input" class="form-label"> الحالة الوظيفية </label>
                                     <select class="form-select" name="functional_status" id="functional_status-input"
                                         aria-label="Default select example">
@@ -253,7 +283,7 @@
 
 
                                 <!-- الدرجه الوظيفية -->
-                                <div class="col-md-2 mb-3">
+                                <div class="col-md-3 mb-3">
                                     <label class="form-label" for="job_grade_id-input">الدرجه الوظيفية</label>
                                     <select name="job_grade_id" id="job_grade_id-input" class="select2 form-select"
                                         data-allow-clear="true">
@@ -268,39 +298,27 @@
                                     </select>
                                 </div>
 
-                                <!-- الادارة -->
-                                <div class="col-md-4 mb-3">
-                                    <label class="form-label" for="department_id-input">الادارة </label>
-                                    <select name="department_id" class="select2 form-select department_select2"
-                                        data-allow-clear="true"
-                                        data-ajax-url="{{ route('dashboard.departments.searchDepartment') }}">
-                                        @if (request('department_id'))
-                                            <option value="{{ request('department_id') }}" selected>
-                                                {{ Department::find(request('department_id'))?->name }}
+
+
+                                <!--  نوع صرف راتب الموظف -->
+                                <div class="col-md-3 mb-3">
+                                    <label class="form-label" for="type_salary_receipt">نوع صرف الراتب </label>
+                                    <select class="form-select" name="type_salary_receipt" id="type_salary_receipt"
+                                        aria-label="Default select example">
+                                        <option selected value="">-- أختر
+                                            الحالة --
+                                        </option>
+                                        @foreach (TypeSalaryReceipt::cases() as $salary)
+                                            <option @if (request('type_salary_receipt') == $salary->value) selected @endif
+                                                value="{{ $salary->value }}">
+                                                {{ $salary->label() }}
                                             </option>
-                                        @endif
+                                        @endforeach
                                     </select>
                                 </div>
-
-
-                                <!--  وظيفة الموظف -->
-                                <div class="col-md-4">
-                                    <label class="form-label" for="job_category_id-input">وظيفة
-                                        الموظف</label>
-                                    <select name="job_category_id" id="job_category_id-input"
-                                        class="select2 form-select job_category_select2" data-allow-clear="true">
-                                        @if (request('job_category_id'))
-                                            <option value="{{ request('job_category_id') }}" selected>
-                                                {{ JobCategory::find(request('job_category_id'))?->name }}
-                                            </option>
-                                        @endif
-                                    </select>
-                                </div>
-
-
 
                                 <!-- أنواع الشفتات (مخفي بشكل افتراضي) -->
-                                <div class="col-md-6">
+                                <div class="col-md-6 mb-3">
                                     <label for="shifts_type_id" class="form-label">أنواع
                                         الشفتات</label>
                                     <select class="form-select" id="shifts_type_id" name="shifts_type_id"
@@ -323,7 +341,7 @@
                                 </div>
 
                                 <!-- عملة قبض الموظف -->
-                                <div class="col-md-4">
+                                <div class="col-md-3 mb-3">
                                     <label class="form-label" for="currency_id-input">عملة قبض الموظف </label>
                                     <select name="currency_id" id="currency_id-input"
                                         class="select2 form-select js-example-basic-single currency_select2"
@@ -336,60 +354,20 @@
                                     </select>
                                 </div>
 
-
-
-                                <!--  نوع صرف راتب الموظف -->
-                                <div class="col-md-3 ">
-                                    <label class="form-label" for="type_salary_receipt">نوع صرف الراتب </label>
-                                    <select class="form-select" name="type_salary_receipt" id="type_salary_receipt"
+                                <div class="col-md-3 mb-3">
+                                    <label for="exampleFormControlSelect1" class="form-label">حالة حساب
+                                        الموظف</label>
+                                    <select name="active" class="form-select" id="exampleFormControlSelect1"
                                         aria-label="Default select example">
-                                        <option selected value="">-- أختر
-                                            الحالة --
-                                        </option>
-                                        @foreach (TypeSalaryReceipt::cases() as $salary)
-                                            <option @if (request('type_salary_receipt') == $salary->value) selected @endif
-                                                value="{{ $salary->value }}">
-                                                {{ $salary->label() }}
+                                        <option selected value="">-- أختر الحالة--</option>
+                                        @foreach (StatusActiveEnum::cases() as $active)
+                                            <option @if (request('active') == $active->value) selected @endif
+                                                value="{{ $active->value }}">
+                                                {{ $active->label() }}
                                             </option>
                                         @endforeach
                                     </select>
                                 </div>
-
-
-                                <div class="row col-12 mt-3">
-                                    <div class="col-md-4 mb-3">
-                                        <label for="exampleFormControlSelect1" class="form-label">حالة حساب
-                                            الموظف</label>
-                                        <select name="active" class="form-select" id="exampleFormControlSelect1"
-                                            aria-label="Default select example">
-                                            <option selected value="">-- أختر الحالة--</option>
-                                            @foreach (StatusActiveEnum::cases() as $active)
-                                                <option @if (request('active') == $active->value) selected @endif
-                                                    value="{{ $active->value }}">
-                                                    {{ $active->label() }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <!-- الموظفين -->
-                                {{-- <div class="col-md-4">
-                                    <label class="form-label" for="formtabs-country">الموظف</label>
-                                    <select class="select2 form-select" name="employee_search" data-allow-clear="true">
-                                        <option selected value="">-- أختر
-                                            الموظف --
-                                        </option>
-                                        @foreach ($other['employees'] as $employee)
-                                            <option @if (request('employee_search') == $employee->id) selected @endif
-                                                value="{{ $employee->id }}">
-                                                {{ $employee->name }} &larr; {{ $employee->employee_code }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div> --}}
-
-
                             </div>
                             <div class="col-3 mx-auto mb-3 text-center">
                                 <button type="submit" class="btn btn-md btn-primary">فلتر <i
