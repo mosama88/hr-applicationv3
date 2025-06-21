@@ -32,12 +32,12 @@ class FinanceClnPeriod extends Model
         return $this->belongsTo(FinanceCalendar::class, 'finance_calendar_id');
     }
 
-    public function createdByAdmin()
+    public function createdBy()
     {
         return $this->belongsTo(Admin::class, 'created_by');
     }
 
-    public function updatedByAdmin()
+    public function updatedBy()
     {
         return $this->belongsTo(Admin::class, 'updated_by');
     }
