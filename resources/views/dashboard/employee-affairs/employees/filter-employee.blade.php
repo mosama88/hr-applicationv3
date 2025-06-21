@@ -261,7 +261,7 @@
                         return {
                             results: data.data.map(cities => ({
                                 id: cities.id,
-                                text: `${cities.name} ➜ (${cities.country_code})`
+                                text: `${cities.name}`
                             }))
                         };
                     }
