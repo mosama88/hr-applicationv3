@@ -91,82 +91,7 @@
 
     <section class="content">
         <div class="container-fluid">
-            <form action="{{ route('dashboard.employees.filter') }}" method="GET">
-                <div class="row">
-                    <div class="col-12">
-
-                        <div class="card">
-                            <div class="card-header">
-                                <h3 class="card-title">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <!-- الزر على اليسار -->
-                                    </div>
-                                </h3>
-
-                                <div class="card-tools">
-                                    <h4 class="mb-0">جدول الموظفين</h4>
-
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="row mx-1 my-3">
-                                    {{-- inputs --}}
-                                    <div class="col-md-2">
-                                        <label class="form-label" for="fp_code-input">كود البصمة</label>
-                                        <input type="text" class="form-control" name="fp_code_search"
-                                            value="{{ old('fp_code') }}" id="fp_code-input"
-                                            oninput="this.value=this.value.replace(/[^0-9.]/g,'');"
-                                            placeholder="مثال:1000" />
-                                    </div>
-                                    <div class="col-md-2">
-                                        <label class="form-label" for="employee_code-input">كود
-                                            الموظف</label>
-                                        <input type="text" class="form-control" name="employee_code_search"
-                                            value="{{ old('employee_code') }}" id="employee_code-input"
-                                            oninput="this.value=this.value.replace(/[^0-9.]/g,'');"
-                                            placeholder="مثال:1000" />
-                                    </div>
-
-
-                                    <!-- الموظفين -->
-                                    <div class="col-md-4">
-                                        <label class="form-label" for="formtabs-country">الموظف</label>
-                                        <select class="select2 form-select" name="employee_search" data-allow-clear="true">
-                                            <option selected value="">-- أختر
-                                                الموظف --
-                                            </option>
-                                            @foreach ($other['employees'] as $employee)
-                                                <option @if (request('employee_search') == $employee->id) selected @endif
-                                                    value="{{ $employee->id }}">
-                                                    {{ $employee->name }} &larr; {{ $employee->employee_code }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-
-
-                                    <!-- الفرع -->
-                                    <div class="col-md-6">
-                                        <label class="form-label" for="formtabs-country">الفرع
-                                            التابع له الموظف</label>
-                                        <select class="select2 form-select" name="branch_id_search" data-allow-clear="true">
-                                            <option selected value="">-- أختر
-                                                الفرع --
-                                            </option>
-                                            @foreach ($other['branches'] as $branch)
-                                                <option @if (old('branch_id') == $branch->id) selected @endif
-                                                    value="{{ $branch->id }}">
-                                                    {{ $branch->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-3 mx-auto mb-3 text-center">
-                                    <button type="submit" class="btn btn-md btn-secondary">فلتر <i
-                                            class="fa-solid fa-filter mx-1"></i></button>
-
-                                </div>
-            </form>
+            @include('dashboard.employee-affairs.employees.partials.filter')
 
         </div>
         <div class="table-responsive text-nowrap">
@@ -262,6 +187,8 @@
             </table>
             <div class="row">
                 <div class="col-12 my-2">
+                    {{ $data->appends(request()->query())->links() }}
+
                 </div>
             </div>
         </div>
@@ -277,9 +204,188 @@
 @endsection
 @push('js')
     <script src="{{ asset('dashboard') }}/assets/dist/js/select2.min.js"></script>
+    <!-- مكتبة Flatpickr JS -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <!-- ملف اللغة العربية -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ar.js"></script>
     <script>
         $(document).ready(function() {
             $('.select2').select2();
+        });
+    </script>
+
+
+    <script>
+        function resetFilters() {
+            window.location.href = window.location.pathname;
+        }
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            // country_select2
+            $('.country_select2').select2({
+                placeholder: '-- أختر الدولة --',
+                ajax: {
+                    url: "{{ route('dashboard.countries.searchCountry') }}",
+                    dataType: 'json',
+                    delay: 250, // Delay for better UX
+                    data: function(params) {
+                        return {
+                            q: params.term // Search query
+                        };
+                    },
+                    processResults: function(data) {
+                        return {
+                            results: data.data.map(countries => ({
+                                id: countries.id,
+                                text: `${countries.name} ➜ (${countries.country_code})`
+                            }))
+                        };
+                    }
+                }
+            });
+
+            // currency_select2
+            $('.currency_select2').select2({
+                placeholder: '-- أختر العملة --',
+                ajax: {
+                    url: "{{ route('dashboard.currencies.searchCurrency') }}",
+                    dataType: 'json',
+                    delay: 250, // Delay for better UX
+                    data: function(params) {
+                        return {
+                            q: params.term // Search query
+                        };
+                    },
+                    processResults: function(data) {
+                        return {
+                            results: data.data.map(currencies => ({
+                                id: currencies.id,
+                                text: `${currencies.name} ➜ (${currencies.currency_symbol})`
+                            }))
+                        };
+                    }
+                }
+            });
+
+            // nationality_select2
+            $('.nationality_select2').select2({
+                placeholder: '-- أختر الجنسية --',
+                ajax: {
+                    url: "{{ route('dashboard.nationalities.searchNationality') }}",
+                    dataType: 'json',
+                    delay: 250, // Delay for better UX
+                    data: function(params) {
+                        return {
+                            q: params.term // Search query
+                        };
+                    },
+                    processResults: function(data) {
+                        return {
+                            results: data.data.map(nationalities => ({
+                                id: nationalities.id,
+                                text: `${nationalities.name}`
+                            }))
+                        };
+                    }
+                }
+            });
+
+
+
+            // language_select2
+            $('.language_select2').select2({
+                placeholder: '-- أختر اللغه --',
+                ajax: {
+                    url: "{{ route('dashboard.languages.searchlanguage') }}",
+                    dataType: 'json',
+                    delay: 250, // Delay for better UX
+                    data: function(params) {
+                        return {
+                            q: params.term // Search query
+                        };
+                    },
+                    processResults: function(data) {
+                        return {
+                            results: data.data.map(languages => ({
+                                id: languages.id,
+                                text: `${languages.name}`
+                            }))
+                        };
+                    }
+                }
+            });
+
+
+            // qualification_select2
+            $('.qualification_select2').select2({
+                placeholder: '-- أختر المؤهل --',
+                ajax: {
+                    url: "{{ route('dashboard.qualifications.searchQualification') }}",
+                    dataType: 'json',
+                    delay: 250, // Delay for better UX
+                    data: function(params) {
+                        return {
+                            q: params.term // Search query
+                        };
+                    },
+                    processResults: function(data) {
+                        return {
+                            results: data.data.map(qualifications => ({
+                                id: qualifications.id,
+                                text: `${qualifications.name}`
+                            }))
+                        };
+                    }
+                }
+            });
+            // department_select2
+            $('.department_select2').select2({
+                placeholder: '-- أختر الادارة --',
+                ajax: {
+                    url: "{{ route('dashboard.departments.searchDepartment') }}",
+                    dataType: 'json',
+                    delay: 250, // Delay for better UX
+                    data: function(params) {
+                        return {
+                            q: params.term // Search query
+                        };
+                    },
+                    processResults: function(data) {
+                        return {
+                            results: data.data.map(departments => ({
+                                id: departments.id,
+                                text: `${departments.name}`
+                            }))
+                        };
+                    }
+                }
+            });
+
+
+            // job_category_select2
+            $('.job_category_select2').select2({
+                placeholder: '-- أختر الوظيفه --',
+                ajax: {
+                    url: "{{ route('dashboard.job_categories.searchJob_category') }}",
+                    dataType: 'json',
+                    delay: 250, // Delay for better UX
+                    data: function(params) {
+                        return {
+                            q: params.term // Search query
+                        };
+                    },
+                    processResults: function(data) {
+                        return {
+                            results: data.data.map(jobCategories => ({
+                                id: jobCategories.id,
+                                text: `${jobCategories.name}`
+                            }))
+                        };
+                    }
+                }
+            });
         });
     </script>
 @endpush

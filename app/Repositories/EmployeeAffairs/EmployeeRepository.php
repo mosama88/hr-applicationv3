@@ -168,7 +168,7 @@ class EmployeeRepository implements EmployeeRepositoryInterface
     {
         $com_code = Auth::user()->com_code;
         $data = Employee::filter(request()->all())->where('com_code', $com_code)->orderByDesc('id')
-            ->take(0)->get();
+            ->paginate(10);
         return $data;
     }
 }
