@@ -1,8 +1,6 @@
 @php
     use App\Enums\FinanceCalendarsIsOpen;
-
     use App\Enums\FinanceClnPeriodsIsOpen;
-
 @endphp
 @extends('dashboard.layouts.master')
 @section('active-main_salary_records', 'active')
