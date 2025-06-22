@@ -101,14 +101,13 @@ class FinanceCalendarController extends Controller
 
             return response()->json([
                 'success' => true,
-                'message' => 'تم حذف السنه المالية بنجاح'
+                'message' => 'تم حذف السنة المالية بنجاح'
             ]);
-         } catch (\Exception $e) {
+        } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'حدث خطأ أثناء محاولة الحذف',
-                'error' => $e->getMessage()
-            ], 500);
+                'message' => $e->getMessage() // This will show the Arabic error messages
+            ], 422); // Using 422 for validation errors
         }
     }
 
