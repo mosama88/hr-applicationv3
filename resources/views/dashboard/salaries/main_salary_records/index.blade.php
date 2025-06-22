@@ -4,18 +4,18 @@
 
 @endphp
 @extends('dashboard.layouts.master')
-@section('active-financeCalendars', 'active')
-@section('title', 'عرض السنه المالية')
+@section('active-main_salary_records', 'active')
+@section('title', 'السجلات الرئيسية للرواتب')
 @push('css')
 @endpush
 @section('content')
 
     <!-- Content Header (Page header) -->
     @include('dashboard.layouts.breadcrumbs', [
-        'titlePage' => 'عرض السنة المالية - ' . $financeCalendar->finance_yr,
-        'previousPage' => 'السنوات المالية',
-        'currentPage' => 'عرض السنه المالية ',
-        'url' => 'financeCalendars.index',
+        'titlePage' => 'السجلات الرئيسية للرواتب',
+        'previousPage' => 'لوحة التحكم',
+        'currentPage' => 'السجلات الرئيسية للرواتب',
+        'url' => 'index',
     ])
 
 
@@ -24,9 +24,9 @@
 
             <div class="row">
                 <div class="col-12">
-                    <div class="card card-dark">
+                    <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">عرض السنه المالية لسنه {{ $financeCalendar->finance_yr }} </h3>
+                            <h3 class="card-title">السجلات الرئيسية للرواتب </h3>
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
@@ -36,20 +36,19 @@
                             <table class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
-                                        <th>#</th>
                                         <th>الشهر</th>
                                         <th>بداية الشهر</th>
                                         <th>نهاية الشهر</th>
                                         <th>عدد الأيام</th>
                                         <th>حالة الشهر</th>
-                                        <th>أضافة بواسطة</th>
-                                        <th>عرض بواسطة</th>
+                                        <th>بداية البصمة</th>
+                                        <th>نهاية البصمة</th>
+                                        <th>الاجراءات</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse ($financeClnPeriods as $financeClnPeriod)
+                                    @forelse ($data as $financeClnPeriod)
                                         <tr data-widget="expandable-table" aria-expanded="false">
-                                            <td>{{ $loop->iteration }}</td>
                                             <td>
                                                 {{ \Carbon\Carbon::parse($financeClnPeriod->year_and_month)->translatedFormat('F') }}
                                             </td>
@@ -71,13 +70,10 @@
                                                     </span>
                                                 @endif
                                             </td>
-                                            <td>
-                                                {{ optional($financeClnPeriod->createdBy)->name }}
-                                                {{ $financeClnPeriod->created_at ? '(' . $financeClnPeriod->created_at->format('Y-m-d H:i') . ')' : '' }}
-                                            </td>
-                                            <td>
-                                                {{ $financeClnPeriod->updated_by ? $financeClnPeriod->updatedBy->name : ' لا يوجد تحديث' }}{{ ' ' }}{{ optional($financeClnPeriod->updated_at)->format('Y-m-d H:i') }}
-                                            </td>
+                                            <td>{{ $financeClnPeriod->start_date_fp }}</td>
+                                            <td>{{ $financeClnPeriod->end_date_fp }}</td>
+                                            <td></td>
+
                                         </tr>
                                     @empty
                                         لا توجد بيانات
@@ -86,7 +82,11 @@
 
                                 </tbody>
                             </table>
-
+                            <div class="row">
+                                <div class="col-12 my-2">
+                                    {{ $data->links() }}
+                                </div>
+                            </div>
                         </div>
                         <!-- /.card-body -->
 

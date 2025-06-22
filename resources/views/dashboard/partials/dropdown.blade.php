@@ -13,11 +13,14 @@
                 <i class="fa-solid fa-pen-to-square mx-1"></i> تعديل
             </a>
         </li>
-        <li>
-            <a class="dropdown-item text-primary" href="{{ route('dashboard.' . $name . '.show', $name_id) }}"> <i
-                    class="fa-solid fa-eye mx-1"></i> عرض
-            </a>
-        </li>
+        @if ($info->is_open == FinanceCalendarsIsOpen::Open)
+            <li>
+                <a class="dropdown-item text-primary" href="{{ route('dashboard.' . $name . '.show', $name_id) }}"> <i
+                        class="fa-solid fa-eye mx-1"></i> عرض الشهور
+                </a>
+            </li>
+        @endif
+
         <form id="delete-form-{{ $name_id }}" action="{{ route('dashboard.' . $name . '.destroy', $name_id) }}"
             method="POST" style="display: none;">
             @csrf
@@ -38,7 +41,7 @@
                 <form action="{{ route('dashboard.financeCalendars.close-year', $name_id) }}" method="POST">
                     @csrf
                     @method('Patch')
-                    <button type="submit" class="dropdown-item text-danger">
+                    <button type="submit" class="dropdown-item" style="color:#8F87F1">
                         <i class="fa-solid fa-lock mx-1"></i>غلق السنه
                     </button>
                 </form>

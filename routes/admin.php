@@ -18,6 +18,7 @@ use App\Http\Controllers\Dashboard\Settings\QualificationController;
 use App\Http\Controllers\Dashboard\EmployeeAffairs\EmployeeController;
 use App\Http\Controllers\Dashboard\Settings\FinanceCalendarController;
 use App\Http\Controllers\Dashboard\EmployeeAffairs\AllowanceController;
+use App\Http\Controllers\Dashboard\Salaries\MainSalaryRecordController;
 use App\Http\Controllers\Dashboard\Settings\AdminPanelSettingController;
 use App\Http\Controllers\Dashboard\EmployeeAffairs\DiscountTypeController;
 use App\Http\Controllers\Dashboard\EmployeeAffairs\AdditionalTypeController;
@@ -80,5 +81,12 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::delete('/employees/upload-files/{id}', [EmployeeController::class, 'destroyUploadFiles'])->name('employees.upload-files.destroy');
 
     //################################### الأنتهاء من شئون الموظفين ##################################
+
+    //################################### الاجور والمرتبات ##################################
+    Route::controller(MainSalaryRecordController::class)->name('main_salary_records.')->prefix('/main_salary_records')->group(function () {
+        Route::get('/', 'index')->name('index');
+    });
+
+    //################################### الأنتهاء من الاجور والمرتبات  ##################################
 
 });
