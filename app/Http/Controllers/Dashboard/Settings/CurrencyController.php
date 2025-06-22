@@ -38,9 +38,15 @@ class CurrencyController extends Controller
      */
     public function store(CurrencyRequest $request)
     {
-        $this->service->store($request);
+        try {
+            $this->service->store($request);
 
-        return redirect()->route('dashboard.currencies.index')->with('success', 'تم أضافة العملة بنجاح');
+            return redirect()->route('dashboard.currencies.index')->with('success', 'تم أضافة العملة بنجاح');
+        } catch (\Exception $e) {
+            return redirect()
+                ->route('dashboard.currencies.index')
+                ->withErrors(['error' => $e->getMessage()]);
+        }
     }
 
     /**
@@ -64,9 +70,15 @@ class CurrencyController extends Controller
      */
     public function update(CurrencyRequest $request, Currency $currency)
     {
-        $this->service->update($request, $currency);
+        try {
+            $this->service->update($request, $currency);
 
-        return redirect()->route('dashboard.currencies.index')->with('success', 'تم تعديل العملة بنجاح');
+            return redirect()->route('dashboard.currencies.index')->with('success', 'تم تعديل العملة بنجاح');
+        } catch (\Exception $e) {
+            return redirect()
+                ->route('dashboard.currencies.index')
+                ->withErrors(['error' => $e->getMessage()]);
+        }
     }
 
     /**
@@ -74,12 +86,20 @@ class CurrencyController extends Controller
      */
     public function destroy(Currency $currency)
     {
-        $this->service->destroy($currency);
+        try {
+            $this->service->destroy($currency);
 
-        return response()->json([
-            'success' => true,
-            'message' => 'تم حذف العملة بنجاح'
-        ]);
+            return response()->json([
+                'success' => true,
+                'message' => 'تم حذف العملة بنجاح'
+            ]);
+         } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'حدث خطأ أثناء محاولة الحذف',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 
     function searchCurrency(Request $request)

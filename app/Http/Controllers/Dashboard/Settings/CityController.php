@@ -42,9 +42,15 @@ class CityController extends Controller
      */
     public function store(CityRequest $request)
     {
-        $this->service->store($request);
+        try {
+            $this->service->store($request);
 
-        return redirect()->route('dashboard.cities.index')->with('success', 'تم أضافة المدينة بنجاح');
+            return redirect()->route('dashboard.cities.index')->with('success', 'تم أضافة المدينة بنجاح');
+        } catch (\Exception $e) {
+            return redirect()
+                ->route('dashboard.cities.index')
+                ->withErrors(['error' => $e->getMessage()]);
+        }
     }
 
     /**
@@ -72,9 +78,15 @@ class CityController extends Controller
      */
     public function update(CityRequest $request, City $city)
     {
-        $this->service->update($request, $city);
+        try {
+            $this->service->update($request, $city);
 
-        return redirect()->route('dashboard.cities.index')->with('success', 'تم تعديل المدينة بنجاح');
+            return redirect()->route('dashboard.cities.index')->with('success', 'تم تعديل المدينة بنجاح');
+        } catch (\Exception $e) {
+            return redirect()
+                ->route('dashboard.cities.index')
+                ->withErrors(['error' => $e->getMessage()]);
+        }
     }
 
     /**
@@ -82,11 +94,19 @@ class CityController extends Controller
      */
     public function destroy(City $city)
     {
-        $this->service->destroy($city);
-        return response()->json([
-            'success' => true,
-            'message' => 'تم حذف المدينة بنجاح'
-        ]);
+        try {
+            $this->service->destroy($city);
+            return response()->json([
+                'success' => true,
+                'message' => 'تم حذف المدينة بنجاح'
+            ]);
+         } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'حدث خطأ أثناء محاولة الحذف',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 
     function searchCity(Request $request)

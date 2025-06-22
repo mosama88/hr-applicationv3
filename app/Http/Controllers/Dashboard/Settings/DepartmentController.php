@@ -36,8 +36,14 @@ class DepartmentController extends Controller
      */
     public function store(DepartmentRequest $request)
     {
-        $this->service->store($request);
-        return redirect()->route('dashboard.departments.index')->with('success', 'تم أضافة الاداره بنجاح');
+        try {
+            $this->service->store($request);
+            return redirect()->route('dashboard.departments.index')->with('success', 'تم أضافة الاداره بنجاح');
+        } catch (\Exception $e) {
+            return redirect()
+                ->route('dashboard.departments.index')
+                ->withErrors(['error' => $e->getMessage()]);
+        }
     }
 
     /**
@@ -61,9 +67,15 @@ class DepartmentController extends Controller
      */
     public function update(DepartmentRequest $request, Department $department)
     {
-        $this->service->update($request, $department);
+        try {
+            $this->service->update($request, $department);
 
-        return redirect()->route('dashboard.departments.index')->with('success', 'تم تعديل الاداره بنجاح');
+            return redirect()->route('dashboard.departments.index')->with('success', 'تم تعديل الاداره بنجاح');
+        } catch (\Exception $e) {
+            return redirect()
+                ->route('dashboard.departments.index')
+                ->withErrors(['error' => $e->getMessage()]);
+        }
     }
 
     /**
@@ -71,12 +83,20 @@ class DepartmentController extends Controller
      */
     public function destroy(Department $department)
     {
-        $this->service->destroy($department);
+        try {
+            $this->service->destroy($department);
 
-        return response()->json([
-            'success' => true,
-            'message' => 'تم حذف الاداره بنجاح'
-        ]);
+            return response()->json([
+                'success' => true,
+                'message' => 'تم حذف الاداره بنجاح'
+            ]);
+         } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'حدث خطأ أثناء محاولة الحذف',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 
 

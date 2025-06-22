@@ -36,9 +36,14 @@ class ShiftTypesController extends Controller
      */
     public function store(ShiftsTypeRequest $request)
     {
-
-        $this->service->store($request);
-        return redirect()->route('dashboard.shiftTypes.index')->with('success', 'تم أضافة الشفت بنجاح');
+        try {
+            $this->service->store($request);
+            return redirect()->route('dashboard.shiftTypes.index')->with('success', 'تم أضافة الشفت بنجاح');
+        } catch (\Exception $e) {
+            return redirect()
+                ->route('dashboard.shiftTypes.index')
+                ->withErrors(['error' => $e->getMessage()]);
+        }
     }
 
     /**
@@ -62,9 +67,15 @@ class ShiftTypesController extends Controller
      */
     public function update(ShiftsTypeRequest $request, ShiftsType $shiftType)
     {
-        $this->service->update($request, $shiftType);
+        try {
+            $this->service->update($request, $shiftType);
 
-        return redirect()->route('dashboard.shiftTypes.index')->with('success', 'تم تعديل الشفت بنجاح');
+            return redirect()->route('dashboard.shiftTypes.index')->with('success', 'تم تعديل الشفت بنجاح');
+        } catch (\Exception $e) {
+            return redirect()
+                ->route('dashboard.shiftTypes.index')
+                ->withErrors(['error' => $e->getMessage()]);
+        }
     }
 
     /**
@@ -72,10 +83,18 @@ class ShiftTypesController extends Controller
      */
     public function destroy(ShiftsType $shiftType)
     {
-        $this->service->destroy($shiftType);
-        return response()->json([
-            'success' => true,
-            'message' => 'تم حذف الشفت بنجاح'
-        ]);
+        try {
+            $this->service->destroy($shiftType);
+            return response()->json([
+                'success' => true,
+                'message' => 'تم حذف الشفت بنجاح'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'حدث خطأ أثناء محاولة الحذف',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 }

@@ -35,8 +35,14 @@ class BranchController extends Controller
      */
     public function store(BranchRequest $request)
     {
-        $this->service->store($request);
-        return redirect()->route('dashboard.branches.index')->with('success', 'تم أضافة الفرع بنجاح');
+        try {
+            $this->service->store($request);
+            return redirect()->route('dashboard.branches.index')->with('success', 'تم أضافة الفرع بنجاح');
+        } catch (\Exception $e) {
+            return redirect()
+                ->route('dashboard.branches.index')
+                ->withErrors(['error' => $e->getMessage()]);
+        }
     }
 
     /**
@@ -60,9 +66,14 @@ class BranchController extends Controller
      */
     public function update(BranchRequest $request, Branch $branch)
     {
-
-        $this->service->update($request, $branch);
-        return redirect()->route('dashboard.branches.index')->with('success', 'تم تعديل الفرع بنجاح');
+        try {
+            $this->service->update($request, $branch);
+            return redirect()->route('dashboard.branches.index')->with('success', 'تم تعديل الفرع بنجاح');
+        } catch (\Exception $e) {
+            return redirect()
+                ->route('dashboard.branches.index')
+                ->withErrors(['error' => $e->getMessage()]);
+        }
     }
 
     /**
@@ -70,10 +81,18 @@ class BranchController extends Controller
      */
     public function destroy(Branch $branch)
     {
-        $this->service->destroy($branch);
-        return response()->json([
-            'success' => true,
-            'message' => 'تم حذف الفرع بنجاح'
-        ]);
+        try {
+            $this->service->destroy($branch);
+            return response()->json([
+                'success' => true,
+                'message' => 'تم حذف الفرع بنجاح'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'حدث خطأ أثناء محاولة الحذف',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 }

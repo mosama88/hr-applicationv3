@@ -40,9 +40,15 @@ class JobGradeController extends Controller
      */
     public function store(JobGradeRequest $request)
     {
-        $this->service->store($request);
+        try {
+            $this->service->store($request);
 
-        return redirect()->route('dashboard.job_grades.index')->with('success', 'تم أضافة الدرجه بنجاح');
+            return redirect()->route('dashboard.job_grades.index')->with('success', 'تم أضافة الدرجه بنجاح');
+        } catch (\Exception $e) {
+            return redirect()
+                ->route('dashboard.job_grades.index')
+                ->withErrors(['error' => $e->getMessage()]);
+        }
     }
 
     /**
@@ -66,9 +72,15 @@ class JobGradeController extends Controller
      */
     public function update(JobGradeRequest $request, JobGrade $jobGrade)
     {
-        $this->service->update($request, $jobGrade);
+        try {
+            $this->service->update($request, $jobGrade);
 
-        return redirect()->route('dashboard.job_grades.index')->with('success', 'تم تعديل الدرجه بنجاح');
+            return redirect()->route('dashboard.job_grades.index')->with('success', 'تم تعديل الدرجه بنجاح');
+        } catch (\Exception $e) {
+            return redirect()
+                ->route('dashboard.job_grades.index')
+                ->withErrors(['error' => $e->getMessage()]);
+        }
     }
 
     /**
@@ -76,10 +88,18 @@ class JobGradeController extends Controller
      */
     public function destroy(JobGrade $jobGrade)
     {
-        $this->service->destroy($jobGrade);
-        return response()->json([
-            'success' => true,
-            'message' => 'تم حذف الدرجه بنجاح'
-        ]);
+        try {
+            $this->service->destroy($jobGrade);
+            return response()->json([
+                'success' => true,
+                'message' => 'تم حذف الدرجه بنجاح'
+            ]);
+         } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'حدث خطأ أثناء محاولة الحذف',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 }

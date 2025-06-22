@@ -40,9 +40,15 @@ class LanguageController extends Controller
      */
     public function store(LanguageRequest $request)
     {
-        $this->service->store($request);
+        try {
+            $this->service->store($request);
 
-        return redirect()->route('dashboard.languages.index')->with('success', 'تم أضافة اللغه بنجاح');
+            return redirect()->route('dashboard.languages.index')->with('success', 'تم أضافة اللغه بنجاح');
+        } catch (\Exception $e) {
+            return redirect()
+                ->route('dashboard.languages.index')
+                ->withErrors(['error' => $e->getMessage()]);
+        }
     }
 
     /**
@@ -66,9 +72,15 @@ class LanguageController extends Controller
      */
     public function update(LanguageRequest $request, Language $language)
     {
-        $this->service->update($request, $language);
+        try {
+            $this->service->update($request, $language);
 
-        return redirect()->route('dashboard.languages.index')->with('success', 'تم تعديل اللغه بنجاح');
+            return redirect()->route('dashboard.languages.index')->with('success', 'تم تعديل اللغه بنجاح');
+        } catch (\Exception $e) {
+            return redirect()
+                ->route('dashboard.languages.index')
+                ->withErrors(['error' => $e->getMessage()]);
+        }
     }
 
     /**
@@ -76,11 +88,19 @@ class LanguageController extends Controller
      */
     public function destroy(Language $language)
     {
-        $this->service->destroy($language);
-        return response()->json([
-            'success' => true,
-            'message' => 'تم حذف اللغه بنجاح'
-        ]);
+        try {
+            $this->service->destroy($language);
+            return response()->json([
+                'success' => true,
+                'message' => 'تم حذف اللغه بنجاح'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'حدث خطأ أثناء محاولة الحذف',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 
 

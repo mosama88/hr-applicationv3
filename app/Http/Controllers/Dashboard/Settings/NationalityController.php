@@ -41,9 +41,15 @@ class NationalityController extends Controller
      */
     public function store(NationalityRequest $request)
     {
-        $this->service->store($request);
+        try {
+            $this->service->store($request);
 
-        return redirect()->route('dashboard.nationalities.index')->with('success', 'تم أضافة الجنسية بنجاح');
+            return redirect()->route('dashboard.nationalities.index')->with('success', 'تم أضافة الجنسية بنجاح');
+        } catch (\Exception $e) {
+            return redirect()
+                ->route('dashboard.nationalities.index')
+                ->withErrors(['error' => $e->getMessage()]);
+        }
     }
 
     /**
@@ -67,9 +73,15 @@ class NationalityController extends Controller
      */
     public function update(NationalityRequest $request, Nationality $nationality)
     {
-        $this->service->update($request, $nationality);
+        try {
+            $this->service->update($request, $nationality);
 
-        return redirect()->route('dashboard.nationalities.index')->with('success', 'تم تعديل الجنسية بنجاح');
+            return redirect()->route('dashboard.nationalities.index')->with('success', 'تم تعديل الجنسية بنجاح');
+        } catch (\Exception $e) {
+            return redirect()
+                ->route('dashboard.nationalities.index')
+                ->withErrors(['error' => $e->getMessage()]);
+        }
     }
 
     /**
@@ -77,11 +89,19 @@ class NationalityController extends Controller
      */
     public function destroy(Nationality $nationality)
     {
-        $this->service->destroy($nationality);
-        return response()->json([
-            'success' => true,
-            'message' => 'تم حذف الجنسية بنجاح'
-        ]);
+        try {
+            $this->service->destroy($nationality);
+            return response()->json([
+                'success' => true,
+                'message' => 'تم حذف الجنسية بنجاح'
+            ]);
+         } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'حدث خطأ أثناء محاولة الحذف',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 
 

@@ -38,9 +38,15 @@ class DiscountTypeController extends Controller
      */
     public function store(DiscountTypeRequest $request)
     {
-        $this->service->store($request);
+        try {
+            $this->service->store($request);
 
-        return redirect()->route('dashboard.discount_types.index')->with('success', 'تم أضافة أنواع الخصومات بنجاح');
+            return redirect()->route('dashboard.discount_types.index')->with('success', 'تم أضافة أنواع الخصومات بنجاح');
+        } catch (\Exception $e) {
+            return redirect()
+                ->route('dashboard.discount_types.index')
+                ->withErrors(['error' => $e->getMessage()]);
+        }
     }
 
     /**
@@ -64,9 +70,15 @@ class DiscountTypeController extends Controller
      */
     public function update(DiscountTypeRequest $request, DiscountType $discountType)
     {
-        $this->service->update($request, $discountType);
+        try {
+            $this->service->update($request, $discountType);
 
-        return redirect()->route('dashboard.discount_types.index')->with('success', 'تم تعديل أنواع الخصومات بنجاح');
+            return redirect()->route('dashboard.discount_types.index')->with('success', 'تم تعديل أنواع الخصومات بنجاح');
+        } catch (\Exception $e) {
+            return redirect()
+                ->route('dashboard.discount_types.index')
+                ->withErrors(['error' => $e->getMessage()]);
+        }
     }
 
     /**
@@ -74,10 +86,18 @@ class DiscountTypeController extends Controller
      */
     public function destroy(DiscountType $discountType)
     {
-        $this->service->destroy($discountType);
-        return response()->json([
-            'success' => true,
-            'message' => 'تم حذف أنواع الخصومات بنجاح'
-        ]);
+        try {
+            $this->service->destroy($discountType);
+            return response()->json([
+                'success' => true,
+                'message' => 'تم حذف أنواع الخصومات بنجاح'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'حدث خطأ أثناء محاولة الحذف',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 }

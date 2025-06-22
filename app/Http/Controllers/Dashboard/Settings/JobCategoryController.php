@@ -38,9 +38,15 @@ class JobCategoryController extends Controller
      */
     public function store(JobsCategoryRequest $request)
     {
-        $this->service->store($request);
+        try {
+            $this->service->store($request);
 
-        return redirect()->route('dashboard.job_categories.index')->with('success', 'تم أضافة الوظيفه بنجاح');
+            return redirect()->route('dashboard.job_categories.index')->with('success', 'تم أضافة الوظيفه بنجاح');
+        } catch (\Exception $e) {
+            return redirect()
+                ->route('dashboard.job_categories.index')
+                ->withErrors(['error' => $e->getMessage()]);
+        }
     }
 
     /**
@@ -64,9 +70,15 @@ class JobCategoryController extends Controller
      */
     public function update(JobsCategoryRequest $request, JobCategory $jobCategory)
     {
-        $this->service->update($request, $jobCategory);
+        try {
+            $this->service->update($request, $jobCategory);
 
-        return redirect()->route('dashboard.job_categories.index')->with('success', 'تم تعديل الوظيفه بنجاح');
+            return redirect()->route('dashboard.job_categories.index')->with('success', 'تم تعديل الوظيفه بنجاح');
+        } catch (\Exception $e) {
+            return redirect()
+                ->route('dashboard.job_categories.index')
+                ->withErrors(['error' => $e->getMessage()]);
+        }
     }
 
     /**
@@ -74,11 +86,19 @@ class JobCategoryController extends Controller
      */
     public function destroy(JobCategory $jobCategory)
     {
-        $this->service->destroy($jobCategory);
-        return response()->json([
-            'success' => true,
-            'message' => 'تم حذف الوظيفه بنجاح'
-        ]);
+        try {
+            $this->service->destroy($jobCategory);
+            return response()->json([
+                'success' => true,
+                'message' => 'تم حذف الوظيفه بنجاح'
+            ]);
+         } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'حدث خطأ أثناء محاولة الحذف',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 
 

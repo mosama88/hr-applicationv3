@@ -41,9 +41,14 @@ class BloodTypeController extends Controller
      */
     public function store(BloodTypeRequest $request)
     {
-        $this->service->store($request);
-
-        return redirect()->route('dashboard.bloodTypes.index')->with('success', 'تم أضافة فصيلة الدم بنجاح');
+        try {
+            $this->service->store($request);
+            return redirect()->route('dashboard.bloodTypes.index')->with('success', 'تم أضافة فصيلة الدم بنجاح');
+        } catch (\Exception $e) {
+            return redirect()
+                ->route('dashboard.bloodTypes.index')
+                ->withErrors(['error' => $e->getMessage()]);
+        }
     }
 
     /**
@@ -67,9 +72,15 @@ class BloodTypeController extends Controller
      */
     public function update(BloodTypeRequest $request, BloodType $bloodType)
     {
-        $this->service->update($request, $bloodType);
+        try {
+            $this->service->update($request, $bloodType);
 
-        return redirect()->route('dashboard.bloodTypes.index')->with('success', 'تم تعديل فصيلة الدم بنجاح');
+            return redirect()->route('dashboard.bloodTypes.index')->with('success', 'تم تعديل فصيلة الدم بنجاح');
+        } catch (\Exception $e) {
+            return redirect()
+                ->route('dashboard.bloodTypes.index')
+                ->withErrors(['error' => $e->getMessage()]);
+        }
     }
 
     /**
@@ -77,10 +88,18 @@ class BloodTypeController extends Controller
      */
     public function destroy(BloodType $bloodType)
     {
-        $this->service->destroy($bloodType);
-        return response()->json([
-            'success' => true,
-            'message' => 'تم حذف فصيلة الدم بنجاح'
-        ]);
+        try {
+            $this->service->destroy($bloodType);
+            return response()->json([
+                'success' => true,
+                'message' => 'تم حذف فصيلة الدم بنجاح'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'حدث خطأ أثناء محاولة الحذف',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 }

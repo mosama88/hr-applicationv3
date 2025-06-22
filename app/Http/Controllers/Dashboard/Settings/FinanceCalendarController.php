@@ -42,8 +42,14 @@ class FinanceCalendarController extends Controller
      */
     public function store(FinanceCalendarRequest $request)
     {
-        $this->financeCalendarService->store($request);
-        return redirect()->route('dashboard.financeCalendars.index')->with('success', 'تم أضافة السنه المالية بنجاح');
+        try {
+            $this->financeCalendarService->store($request);
+            return redirect()->route('dashboard.financeCalendars.index')->with('success', 'تم أضافة السنه المالية بنجاح');
+        } catch (\Exception $e) {
+            return redirect()
+                ->route('dashboard.financeCalendars.index')
+                ->withErrors(['error' => $e->getMessage()]);
+        }
     }
 
     /**
@@ -74,9 +80,15 @@ class FinanceCalendarController extends Controller
      */
     public function update(FinanceCalendarRequest $request, FinanceCalendar $financeCalendar)
     {
-        $this->financeCalendarService->update($request, $financeCalendar);
+        try {
+            $this->financeCalendarService->update($request, $financeCalendar);
 
-        return redirect()->route('dashboard.financeCalendars.index')->with('success', 'تم تعديل السنة المالية بنجاح');
+            return redirect()->route('dashboard.financeCalendars.index')->with('success', 'تم تعديل السنة المالية بنجاح');
+        } catch (\Exception $e) {
+            return redirect()
+                ->back()
+                ->withErrors(['error' => $e->getMessage()]);
+        }
     }
 
     /**
@@ -84,13 +96,20 @@ class FinanceCalendarController extends Controller
      */
     public function destroy(FinanceCalendar $financeCalendar)
     {
+        try {
+            $this->financeCalendarService->destroy($financeCalendar);
 
-        $this->financeCalendarService->destroy($financeCalendar);
-
-        return response()->json([
-            'success' => true,
-            'message' => 'تم حذف السنه المالية بنجاح'
-        ]);
+            return response()->json([
+                'success' => true,
+                'message' => 'تم حذف السنه المالية بنجاح'
+            ]);
+         } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'حدث خطأ أثناء محاولة الحذف',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 
     public function openYear(FinanceCalendar $financeCalendar)

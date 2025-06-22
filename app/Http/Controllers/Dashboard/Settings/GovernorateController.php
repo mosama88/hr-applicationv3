@@ -42,8 +42,14 @@ class GovernorateController extends Controller
      */
     public function store(GovernorateRequest $request)
     {
-        $this->service->store($request);
-        return redirect()->route('dashboard.governorates.index')->with('success', 'تم أضافة الجنسية بنجاح');
+        try {
+            $this->service->store($request);
+            return redirect()->route('dashboard.governorates.index')->with('success', 'تم أضافة الجنسية بنجاح');
+        } catch (\Exception $e) {
+            return redirect()
+                ->route('dashboard.governorates.index')
+                ->withErrors(['error' => $e->getMessage()]);
+        }
     }
 
     /**
@@ -51,9 +57,15 @@ class GovernorateController extends Controller
      */
     public function show(Governorate $governorate)
     {
-        $countries = Country::get();
+        try {
+            $countries = Country::get();
 
-        return view('dashboard.settings.governorates.show', compact('governorate', 'countries'));
+            return view('dashboard.settings.governorates.show', compact('governorate', 'countries'));
+        } catch (\Exception $e) {
+            return redirect()
+                ->route('dashboard.governorates.index')
+                ->withErrors(['error' => $e->getMessage()]);
+        }
     }
 
     /**
@@ -71,9 +83,15 @@ class GovernorateController extends Controller
      */
     public function update(GovernorateRequest $request, Governorate $governorate)
     {
-        $this->service->update($request, $governorate);
+        try {
+            $this->service->update($request, $governorate);
 
-        return redirect()->route('dashboard.governorates.index')->with('success', 'تم تعديل الجنسية بنجاح');
+            return redirect()->route('dashboard.governorates.index')->with('success', 'تم تعديل الجنسية بنجاح');
+        } catch (\Exception $e) {
+            return redirect()
+                ->route('dashboard.governorates.index')
+                ->withErrors(['error' => $e->getMessage()]);
+        }
     }
 
     /**
@@ -81,10 +99,18 @@ class GovernorateController extends Controller
      */
     public function destroy(Governorate $governorate)
     {
-        $this->service->destroy($governorate);
-        return response()->json([
-            'success' => true,
-            'message' => 'تم حذف الجنسية بنجاح'
-        ]);
+        try {
+            $this->service->destroy($governorate);
+            return response()->json([
+                'success' => true,
+                'message' => 'تم حذف الجنسية بنجاح'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'حدث خطأ أثناء محاولة الحذف',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 }

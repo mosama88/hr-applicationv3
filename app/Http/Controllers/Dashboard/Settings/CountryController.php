@@ -38,9 +38,15 @@ class CountryController extends Controller
      */
     public function store(CountryRequest $request)
     {
-        $this->service->store($request);
+        try {
+            $this->service->store($request);
 
-        return redirect()->route('dashboard.countries.index')->with('success', 'تم أضافة البلد بنجاح');
+            return redirect()->route('dashboard.countries.index')->with('success', 'تم أضافة البلد بنجاح');
+        } catch (\Exception $e) {
+            return redirect()
+                ->route('dashboard.countries.index')
+                ->withErrors(['error' => $e->getMessage()]);
+        }
     }
 
     /**
@@ -64,9 +70,15 @@ class CountryController extends Controller
      */
     public function update(CountryRequest $request, Country $country)
     {
-        $this->service->update($request, $country);
+        try {
+            $this->service->update($request, $country);
 
-        return redirect()->route('dashboard.countries.index')->with('success', 'تم تعديل البلد بنجاح');
+            return redirect()->route('dashboard.countries.index')->with('success', 'تم تعديل البلد بنجاح');
+        } catch (\Exception $e) {
+            return redirect()
+                ->route('dashboard.countries.index')
+                ->withErrors(['error' => $e->getMessage()]);
+        }
     }
 
     /**
@@ -74,11 +86,19 @@ class CountryController extends Controller
      */
     public function destroy(Country $country)
     {
-        $this->service->destroy($country);
-        return response()->json([
-            'success' => true,
-            'message' => 'تم حذف البلد بنجاح'
-        ]);
+        try {
+            $this->service->destroy($country);
+            return response()->json([
+                'success' => true,
+                'message' => 'تم حذف البلد بنجاح'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'حدث خطأ أثناء محاولة الحذف',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 
 

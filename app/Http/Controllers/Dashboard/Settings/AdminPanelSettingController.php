@@ -62,9 +62,15 @@ class AdminPanelSettingController extends Controller
      */
     public function update(AdminPanelSettingRequest $request, AdminPanelSetting $adminPanelSetting)
     {
-        $this->adminPanelSettingService->update($request, $adminPanelSetting);
-        session()->flash('success', 'تم تعديل الشركة بنجاح');
-        return redirect()->route('dashboard.admin_panel_settings.index');
+        try {
+            $this->adminPanelSettingService->update($request, $adminPanelSetting);
+            session()->flash('success', 'تم تعديل الشركة بنجاح');
+            return redirect()->route('dashboard.admin_panel_settings.index');
+        } catch (\Exception $e) {
+            return redirect()
+                ->route('dashboard.admin_panel_settings.index')
+                ->withErrors(['error' => $e->getMessage()]);
+        }
     }
 
     /**
