@@ -71,11 +71,7 @@
 
             @if ($errors->has('error'))
                 toastr.error('{{ $errors->first('error') }}', 'خطأ!');
-            @endif
-
-
-
-            @if (session('success'))
+            @elseif (session('success'))
                 toastr.success('{{ session('success') }}', 'نجاح');
             @endif
         });

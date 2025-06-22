@@ -12,4 +12,6 @@ interface FinanceCalendarInterface
     public function showData(FinanceCalendar $financeCalendar);
     public function updateData($request, FinanceCalendar $financeCalendar);
     public function deleteData(FinanceCalendar $financeCalendar);
+    public function openYearData(FinanceCalendar $financeCalendar);
+    public function closeYearData(FinanceCalendar $financeCalendar);
 }

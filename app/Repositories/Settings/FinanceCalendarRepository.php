@@ -6,6 +6,7 @@ use App\Models\FinanceCalendar;
 use App\Models\FinanceClnPeriod;
 use Illuminate\Support\Facades\Auth;
 use App\Enums\FinanceCalendarsIsOpen;
+use App\Enums\FinanceClnPeriodsIsOpen;
 use App\Repositories\Interfaces\Settings\FinanceCalendarInterface;
 
 class FinanceCalendarRepository implements FinanceCalendarInterface
@@ -39,7 +40,7 @@ class FinanceCalendarRepository implements FinanceCalendarInterface
     public function showData(FinanceCalendar $financeCalendar)
     {
         $com_code = Auth::user()->com_code;
-       return  FinanceClnPeriod::where('finance_calendar_id', $financeCalendar->id)->where('com_code', $com_code)->get();
+        return  FinanceClnPeriod::where('finance_calendar_id', $financeCalendar->id)->where('com_code', $com_code)->get();
     }
 
 
@@ -64,6 +65,62 @@ class FinanceCalendarRepository implements FinanceCalendarInterface
         FinanceClnPeriod::where('finance_calendar_id', $financeCalendar->id)->delete();
 
         $financeCalendar->delete();
+
+        return $financeCalendar;
+    }
+
+
+
+
+    public function openYearData(FinanceCalendar $financeCalendar)
+    {
+
+        $com_code = Auth::user()->com_code;
+        //التأكد ان السنه معلقه
+        if ($financeCalendar->is_open != FinanceCalendarsIsOpen::Pending) {
+            return redirect()
+                ->back()
+                ->withErrors(['error' => 'عفوآ ! . لا يمكن فتح السنه فى هذه الحاله']);
+        }
+
+        $checkDataOpenCount = FinanceCalendar::where('com_code', $com_code)->where('is_open', FinanceCalendarsIsOpen::Open)->count();
+        //التأكد ان لا يوجد سنه مفتوحه اخرى
+        if ($checkDataOpenCount > 0) {
+            return redirect()
+                ->back()
+                ->withErrors(['error' => 'عفوآ ! . يوجد سنه مالية مازالت مفتوحة']);
+        }
+
+        if ($financeCalendar->com_code != $com_code) {
+            return redirect()->back()
+                ->withErrors(['error' => 'عفوآ لقد حدث خطأ ما!']);
+        }
+
+        $financeCalendar->is_open = FinanceCalendarsIsOpen::Open;
+        $financeCalendar->save();
+
+        return $financeCalendar;
+    }
+
+
+
+    public function closeYearData(FinanceCalendar $financeCalendar)
+    {
+
+        $com_code = Auth::user()->com_code;
+        // التأكد ان الشهور المالية تساوى 3
+        $checkDataOpenCount = FinanceClnPeriod::where('com_code', $com_code)->where('finance_calendar_id', $financeCalendar->id)
+            ->where('is_open', "!=", FinanceClnPeriodsIsOpen::Archived)->count();
+        if ($checkDataOpenCount > 0) {
+            return redirect()
+                ->back()->withErrors(['error' => 'عفوآ ! . يوجد شهور مالية مفتوحة او معلقه . لا يمكن غلق السنة المالية حتى يتم أرشفة جميع الشهور']);
+        }
+
+        if ($financeCalendar->com_code != $com_code) {
+            return redirect()->back()->withErrors(['error' => 'عفوآ لقد حدث خطأ ما!']);
+        }
+        $financeCalendar->is_open = FinanceCalendarsIsOpen::Archived;
+        $financeCalendar->save();
 
         return $financeCalendar;
     }

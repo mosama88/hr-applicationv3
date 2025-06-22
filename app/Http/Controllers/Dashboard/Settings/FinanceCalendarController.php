@@ -96,36 +96,13 @@ class FinanceCalendarController extends Controller
     public function openYear(FinanceCalendar $financeCalendar)
     {
         try {
+            $this->financeCalendarService->openYear($financeCalendar);
 
-            $com_code = Auth::user()->com_code;
-            //التأكد ان السنه معلقه
-            if ($financeCalendar->is_open != FinanceCalendarsIsOpen::Pending) {
-                return redirect()
-                    ->route('dashboard.financeCalendars.index')
-                    ->withErrors(['error' => 'عفوآ ! . لا يمكن فتح السنه فى هذه الحاله']);
-            }
-
-            $checkDataOpenCount = FinanceCalendar::where('com_code', $com_code)->where('is_open', FinanceCalendarsIsOpen::Open)->count();
-            //التأكد ان لا يوجد سنه مفتوحه اخرى
-            if ($checkDataOpenCount > 0) {
-                return redirect()
-                    ->route('dashboard.financeCalendars.index')
-                    ->withErrors(['error' => 'عفوآ ! . يوجد سنه مالية مازالت مفتوحة']);
-            }
-
-            if ($financeCalendar->com_code != $com_code) {
-                return redirect()->route('dashboard.financeCalendars.index')
-                    ->withErrors(['error' => 'عفوآ لقد حدث خطأ ما!']);
-            }
-            DB::beginTransaction();
-
-            $financeCalendar->is_open = FinanceCalendarsIsOpen::Open;
-            $financeCalendar->save();
-            DB::commit();
             return redirect()->route('dashboard.financeCalendars.index')->with('success', 'تم فتح السنة المالية بنجاح');
-        } catch (Exception $ex) {
-            DB::rollBack();
-            return redirect()->back()->withErrors(['error' => 'عفوآ ! . حدث خطأ' . $ex->getMessage()]);
+        } catch (\Exception $e) {
+            return redirect()
+                ->back()
+                ->withErrors(['error' => $e->getMessage()]);
         }
     }
 
@@ -133,28 +110,19 @@ class FinanceCalendarController extends Controller
     public function closeYear(FinanceCalendar $financeCalendar)
     {
         try {
-            $com_code = Auth::user()->com_code;
-            // التأكد ان الشهور المالية تساوى 3
-            $checkDataOpenCount = FinanceClnPeriod::where('com_code', $com_code)->where('finance_calendar_id', $financeCalendar->id)
-                ->where('is_open', "!=", FinanceClnPeriodsIsOpen::Archived)->count();
-            if ($checkDataOpenCount > 0) {
+            $result = $this->financeCalendarService->closeYear($financeCalendar);
+
+            if ($result === false) {
                 return redirect()
-                    ->route('dashboard.financeCalendars.index')
+                    ->back()
                     ->withErrors(['error' => 'عفوآ ! . يوجد شهور مالية مفتوحة او معلقه . لا يمكن غلق السنة المالية حتى يتم أرشفة جميع الشهور']);
             }
 
-            if ($financeCalendar->com_code != $com_code) {
-                return redirect()->route('dashboard.financeCalendars.index')
-                    ->withErrors(['error' => 'عفوآ لقد حدث خطأ ما!']);
-            }
-            DB::beginTransaction();
-            $financeCalendar->is_open = FinanceCalendarsIsOpen::Archived;
-            DB::commit();
-            $financeCalendar->save();
-            return redirect()->route('dashboard.financeCalendars.index')->with('success', 'تم غلق السنة المالية بنجاح');
-        } catch (Exception $ex) {
-            DB::rollBack();
-            return redirect()->back()->withErrors(['error' => 'عفوآ ! . حدث خطأ' . $ex->getMessage()]);
+            return redirect()->back()->with('success', 'تم غلق السنة المالية بنجاح');
+        } catch (\Exception $e) {
+            return redirect()
+                ->back()
+                ->withErrors(['error' => $e->getMessage()]);
         }
     }
 }

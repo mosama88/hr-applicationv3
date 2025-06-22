@@ -39,4 +39,13 @@ class FinanceCalendarService
     {
         return $this->repository->deleteData($financeCalendar);
     }
+
+    public function openYear(FinanceCalendar $financeCalendar)
+    {
+        return $this->repository->openYearData($financeCalendar);
+    }
+    public function closeYear(FinanceCalendar $financeCalendar)
+    {
+        return $this->repository->closeYearData($financeCalendar);
+    }
 }
