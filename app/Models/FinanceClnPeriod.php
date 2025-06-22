@@ -16,7 +16,6 @@ class FinanceClnPeriod extends Model
         'number_of_days',
         'year_and_month',
         'finance_yr',
-        'month_id',
         'start_date_m',
         'end_date_m',
         'is_open',
@@ -42,5 +41,11 @@ class FinanceClnPeriod extends Model
         return $this->belongsTo(Admin::class, 'updated_by');
     }
 
-    protected $casts = ['is_open' => FinanceClnPeriodsIsOpen::class];
+    protected $casts = [
+        'is_open' => FinanceClnPeriodsIsOpen::class,
+        'period_date' => 'date',
+        'start_date_m' => 'date',
+        'end_date_m' => 'date',
+        // etc.
+    ];
 }

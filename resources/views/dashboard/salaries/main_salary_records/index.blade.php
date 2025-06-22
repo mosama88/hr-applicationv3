@@ -1,4 +1,5 @@
 @php
+    use App\Enums\FinanceCalendarsIsOpen;
 
     use App\Enums\FinanceClnPeriodsIsOpen;
 
@@ -40,10 +41,9 @@
                                         <th>بداية الشهر</th>
                                         <th>نهاية الشهر</th>
                                         <th>عدد الأيام</th>
-                                        <th>حالة الشهر</th>
                                         <th>بداية البصمة</th>
                                         <th>نهاية البصمة</th>
-                                        <th>الاجراءات</th>
+                                        <th>حالة الشهر</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -55,25 +55,47 @@
                                             <td>{{ $financeClnPeriod->start_date_m }}</td>
                                             <td>{{ $financeClnPeriod->end_date_m }}</td>
                                             <td>{{ $financeClnPeriod->number_of_days }}</td>
+                                            <td>{{ $financeClnPeriod->start_date_fp }}</td>
+                                            <td>{{ $financeClnPeriod->end_date_fp }}</td>
                                             <td>
-                                                @if ($financeClnPeriod->is_open == FinanceClnPeriodsIsOpen::Pending)
-                                                    <span class="badge bg-warning">
-                                                        {{ FinanceClnPeriodsIsOpen::Pending->label() }}
-                                                    </span>
-                                                @elseif($financeClnPeriod->is_open == FinanceClnPeriodsIsOpen::Open)
-                                                    <span class="badge bg-success">
-                                                        {{ FinanceClnPeriodsIsOpen::Open->label() }}
-                                                    </span>
-                                                @else
-                                                    <span class="badge bg-danger">
+                                                @if ($financeClnPeriod->is_open == FinanceClnPeriodsIsOpen::Archived)
+                                                    {{-- حالة الأرشيف --}}
+                                                    <span class="badge bg-dark">
                                                         {{ FinanceClnPeriodsIsOpen::Archived->label() }}
+                                                    </span>
+                                                @elseif ($financeClnPeriod->FinanceCalendar->is_open == FinanceCalendarsIsOpen::Open)
+                                                    {{-- إذا كان التقويم المالي مفتوحا --}}
+                                                    @if ($financeClnPeriod->is_open == FinanceClnPeriodsIsOpen::Open)
+                                                        {{-- حالة مفتوح --}}
+                                                        <span class="badge bg-success">
+                                                            {{ FinanceClnPeriodsIsOpen::Open->label() }}
+                                                        </span>
+                                                        <a href=""
+                                                            class="btn btn-sm btn-danger">
+                                                            أغلق الشهر
+                                                        </a>
+                                                    @elseif($financeClnPeriod->countOpenMonth == 0 && $financeClnPeriod->counterPreviousWatingOpen == 0)
+                                                        {{-- حالة معلق ويمكن فتحه --}}
+                                                        <span class="badge bg-warning">
+                                                            {{ FinanceClnPeriodsIsOpen::Pending->label() }}
+                                                        </span>
+                                                        <a href=""
+                                                            class="btn btn-sm btn-info text-white">
+                                                            افتح الشهر
+                                                        </a>
+                                                    @else
+                                                        {{-- حالة معلق ولا يمكن فتحه --}}
+                                                        <span class="badge bg-secondary">
+                                                            {{ FinanceClnPeriodsIsOpen::Pending->label() }}
+                                                        </span>
+                                                    @endif
+                                                @else
+                                                    {{-- إذا كان التقويم المالي مغلقا --}}
+                                                    <span class="badge bg-secondary">
+                                                        {{ FinanceClnPeriodsIsOpen::Pending->label() }}
                                                     </span>
                                                 @endif
                                             </td>
-                                            <td>{{ $financeClnPeriod->start_date_fp }}</td>
-                                            <td>{{ $financeClnPeriod->end_date_fp }}</td>
-                                            <td></td>
-
                                         </tr>
                                     @empty
                                         لا توجد بيانات
