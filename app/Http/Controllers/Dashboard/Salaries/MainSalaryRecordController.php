@@ -38,4 +38,26 @@ class MainSalaryRecordController extends Controller
                 ->withErrors(['error' => $e->getMessage()]);
         }
     }
+
+
+
+
+    public function openMonth(Request $request, FinanceClnPeriod $financeClnPeriod)
+    {
+        try {
+            $com_code = Auth::user()->com_code;
+            $financeClnPeriod->start_date_fp = $request->start_date_fp;
+            $financeClnPeriod->end_date_fp = $request->end_date_fp;
+            $financeClnPeriod->is_open = FinanceClnPeriodsIsOpen::Open;
+            $financeClnPeriod->updated_by  = Auth::user()->id;
+            $financeClnPeriod->com_code  = $com_code;
+
+            $financeClnPeriod->update();
+            return redirect()->back()->with('success', 'تم فتح الشهر المالى بنجاح');
+        } catch (\Exception $e) {
+            return redirect()
+                ->back()
+                ->withErrors(['error' => $e->getMessage()]);
+        }
+    }
 }
