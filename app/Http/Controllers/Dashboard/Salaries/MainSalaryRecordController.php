@@ -7,6 +7,7 @@ use App\Models\FinanceCalendar;
 use App\Models\FinanceClnPeriod;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Enums\FinanceCalendarsIsOpen;
 use App\Enums\FinanceClnPeriodsIsOpen;
 use App\Http\Requests\Dashboard\Settings\FinanceClnPeriodRequest;
 
@@ -68,7 +69,28 @@ class MainSalaryRecordController extends Controller
             ]);
 
             // تأكيد وجود السجل
-            FinanceClnPeriod::findOrFail($id);
+            $dataFinanceClnPeriod = FinanceClnPeriod::where('id', $id)->where('com_code', $com_code)->findOrFail($id);
+            if (!$dataFinanceClnPeriod) {
+                return redirect()->back()->withErrors(['error' => 'غير قادر على الوصول للبيانات المطلوبة']);
+            }
+
+            $currentYear = FinanceCalendar::select('is_open')->where('com_code', $com_code)->where('finance_yr', $dataFinanceClnPeriod->finance_yr)->first();
+            if (!$currentYear) {
+                return redirect()->back()->withErrors(['error' => 'غير قادر على الوصول بيانات السنة المالية المطلوبة']);
+            }
+            if ($currentYear->is_open != FinanceCalendarsIsOpen::Open) {
+                return redirect()->back()->withErrors(['error' => 'عفوا، السنة المالية التابعة لهذا الشهر غير مفتوحة!']);
+            }
+
+
+            if ($dataFinanceClnPeriod['is_open'] == FinanceClnPeriodsIsOpen::Open && $request->input('is_open') != FinanceClnPeriodsIsOpen::Archived) {
+                // إذا كان الشهر مفتوحًا، ولكن يتم طلب تغييره إلى حالة أخرى (غير الأرشفة)، إظهار رسالة الخطأ
+                return redirect()->back()->withErrors(['error' => 'عفوا، هذا الشهر مفتوح حاليا!']);
+            }
+
+            if ($dataFinanceClnPeriod['is_open'] == FinanceClnPeriodsIsOpen::Archived) {
+                return redirect()->back()->withErrors(['error' => 'عفوا، هذا الشهر مؤرشف بالفعل!']);
+            }
 
             $dataToUpdate = [
                 'start_date_fp' => $request->start_date_fp,
@@ -139,8 +161,26 @@ class MainSalaryRecordController extends Controller
         try {
             $com_code = Auth::user()->com_code;
 
-            // تأكيد وجود السجل
-            FinanceClnPeriod::findOrFail($id);
+
+            $dataFinanceClnPeriod = FinanceClnPeriod::where('id', $id)->where('com_code', $com_code)->findOrFail($id);
+            if (!$dataFinanceClnPeriod) {
+                return redirect()->back()->withErrors(['error' => 'غير قادر على الوصول للبيانات المطلوبة']);
+            }
+
+            $currentYear = FinanceCalendar::select('is_open')->where('com_code', $com_code)->where('finance_yr', $dataFinanceClnPeriod->finance_yr)->first();
+            if (!$currentYear) {
+                return redirect()->back()->withErrors(['error' => 'غير قادر على الوصول بيانات السنة المالية المطلوبة']);
+            }
+            // التأكد من حالة الشهر (في انتظار الفتح)
+            if ($dataFinanceClnPeriod->is_open == FinanceClnPeriodsIsOpen::Pending) {
+                return redirect()->back()->withErrors(['error' => 'عفوا، هذا الشهر بأنتظار الفتح!']);
+            }
+
+            if ($dataFinanceClnPeriod->is_open == FinanceClnPeriodsIsOpen::Archived) {
+                return redirect()->back()->withErrors(['error' => 'عفوا، هذا الشهر مؤرشف بالفعل!']);
+            }
+
+
 
             $dataToUpdate = [
                 'is_open' => FinanceClnPeriodsIsOpen::Archived,
