@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers\Dashboard\Salaries;
 
+use App\Models\Employee;
 use Illuminate\Http\Request;
 use App\Models\FinanceCalendar;
 use App\Models\FinanceClnPeriod;
+use App\Models\MainSalaryEmployee;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Enums\FinanceCalendarsIsOpen;
 use App\Enums\FinanceClnPeriodsIsOpen;
+use App\Enums\Employee\FunctionalStatus;
 use App\Http\Requests\Dashboard\Settings\FinanceClnPeriodRequest;
 
 class MainSalaryRecordController extends Controller
@@ -100,9 +103,30 @@ class MainSalaryRecordController extends Controller
                 'com_code' => $com_code,
             ];
 
-            FinanceClnPeriod::where('com_code', $com_code)
+            $flag =  FinanceClnPeriod::where('com_code', $com_code)
                 ->where('id', $id)
                 ->update($dataToUpdate);
+
+            if ($flag) {
+                $getEmployee = Employee::orderBy('employee_code', 'ASC')->where('com_code', $com_code)->where('functional_status', FunctionalStatus::Employee)->get();
+                if ($getEmployee) {
+                    foreach ($getEmployee as $info) {
+                        $dataSalaryToInsert = [];
+                        $dataSalaryToInsert['finance_cln_period_id'] = $id;
+                        $dataSalaryToInsert['employee_code'] = $info->employee_code;
+                        $dataSalaryToInsert['com_code'] = $com_code;
+                        $checkExistsCounter = MainSalaryEmployee::where([
+                            'finance_cln_period_id' => $id,
+                            'employee_code' => $info->employee_code,
+                            'com_code' => $com_code
+                        ])->count();
+                        if ($checkExistsCounter == 0) {
+                            $dataSalaryToInsert['employee_name'] = $info->name;
+                            $dataSalaryToInsert['day_price'] = $info->day_price;
+                        }
+                    }
+                }
+            }
 
             return redirect()->route('dashboard.main_salary_records.index')->with('success', 'تم فتح الشهر المالى بنجاح');
         } catch (\Exception $e) {
