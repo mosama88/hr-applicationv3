@@ -44,8 +44,7 @@ class FinanceClnPeriod extends Model
     protected $casts = [
         'is_open' => FinanceClnPeriodsIsOpen::class,
         'period_date' => 'date',
-        'start_date_m' => 'date',
-        'end_date_m' => 'date',
+
         // etc.
     ];
 }

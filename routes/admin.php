@@ -85,8 +85,11 @@ Route::middleware(['auth:admin'])->group(function () {
     //################################### الاجور والمرتبات ##################################
     Route::controller(MainSalaryRecordController::class)->name('main_salary_records.')->prefix('/main_salary_records')->group(function () {
         Route::get('/', 'index')->name('index');
-        Route::put('/open/month/{id}', 'openMonth')->name('open-month');
-        Route::patch('/close/month/{financeClnPeriod}', 'closeMonth')->name('close-month');
+        Route::get('/open/month/create/{financeClnPeriod}', 'createOpen')->name('create-open');
+        Route::get('/open/month/edit/{financeClnPeriod}', 'editOpen')->name('edit-open');
+        Route::put('/edit/month/{financeClnPeriod}', 'editMonth')->name('edit-month');
+        Route::put('/open/month/{financeClnPeriod}', 'openMonth')->name('open-month');
+        Route::put('/close/month/{financeClnPeriod}', 'closeMonth')->name('close-month');
     });
 
     //################################### الأنتهاء من الاجور والمرتبات  ##################################

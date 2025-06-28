@@ -34,6 +34,7 @@
     </style>
 @endpush
 @section('content')
+    @include('dashboard.layouts.message')
 
     <!-- Content Header (Page header) -->
     @include('dashboard.layouts.breadcrumbs', [
@@ -67,7 +68,7 @@
                                         <th>عدد الأيام</th>
                                         <th>بداية البصمة</th>
                                         <th>نهاية البصمة</th>
-                                        <th>حالة الشهر</th>
+                                        <th class="col-3">حالة الشهر</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -90,30 +91,50 @@
                                                 @elseif ($financeClnPeriod->FinanceCalendar->is_open == FinanceCalendarsIsOpen::Open)
                                                     {{-- إذا كان التقويم المالي مفتوحا --}}
                                                     @if ($financeClnPeriod->is_open == FinanceClnPeriodsIsOpen::Open)
-                                                        {{-- حالة مفتوح --}}
-                                                        <span class="badge bg-success">
-                                                            {{ FinanceClnPeriodsIsOpen::Open->label() }}
-                                                        </span>
-                                                        <a href="" class="btn btn-sm btn-danger">
-                                                            أغلق الشهر
-                                                        </a>
-                                                    @elseif($financeClnPeriod->countOpenMonth == 0 && $financeClnPeriod->counterPreviousWatingOpen == 0)
-                                                        {{-- حالة معلق ويمكن فتحه --}}
-                                                        <span class="badge bg-warning">
-                                                            {{ FinanceClnPeriodsIsOpen::Pending->label() }}
-                                                        </span>
+                                                        <div class="d-flex gap-2">
+                                                            {{-- حالة مفتوح --}}
+                                                            <span class="badge bg-success">
+                                                                {{ FinanceClnPeriodsIsOpen::Open->label() }}
+                                                            </span>
+                                                            <form id="close-month-form-{{ $financeClnPeriod->id }}"
+                                                                action="{{ route('dashboard.main_salary_records.close-month', $financeClnPeriod->id) }}"
+                                                                method="POST">
+                                                                @csrf
+                                                                @method('PUT')
+                                                                <button type="button" title="أغلق الشهر المالى"
+                                                                    class="btn btn-sm btn-danger text-white"
+                                                                    onclick="confirmCloseMonth({{ $financeClnPeriod->id }})">
+                                                                    <i class="fa-solid fa-lock"></i>
+                                                                </button>
+                                                            </form>
 
-                                                        <!-- Button trigger modal -->
-                                                        <button type="button" class="btn btn-sm btn-info text-white"
-                                                            data-bs-toggle="modal"
-                                                            data-bs-target="#open-month{{ $financeClnPeriod->slug }}">
-                                                            افتح الشهر
-                                                        </button>
-                                                    @else
-                                                        {{-- حالة معلق ولا يمكن فتحه --}}
-                                                        <span class="badge bg-secondary">
-                                                            {{ FinanceClnPeriodsIsOpen::Pending->label() }}
-                                                        </span>
+                                                            <a title="تعديل"
+                                                                href="{{ route('dashboard.main_salary_records.edit-open', $financeClnPeriod->id) }}"
+                                                                class="btn btn-sm btn-info text-white">
+                                                                <i class="fa-solid fa-pen-to-square"></i>
+                                                            </a>
+                                                        </div>
+                                                    @elseif($financeClnPeriod->countOpenMonth == 0 && $financeClnPeriod->counterPreviousWatingOpen == 0)
+                                                        <div class="d-flex gap-2">
+                                                            <div class="d-flex gap-2">
+
+                                                                {{-- حالة معلق ويمكن فتحه --}}
+                                                                <span class="badge bg-warning">
+                                                                    {{ FinanceClnPeriodsIsOpen::Pending->label() }}
+                                                                </span>
+
+                                                                <!-- Button trigger modal -->
+                                                                <a title="أفتح الشهر المالى"
+                                                                    class="btn btn-sm btn-primary text-white"
+                                                                    href="{{ route('dashboard.main_salary_records.create-open', $financeClnPeriod->id) }}">
+                                                                    <i class="fa-solid fa-lock-open"></i>
+                                                                </a>
+                                                            </div>
+                                                        @else
+                                                            {{-- حالة معلق ولا يمكن فتحه --}}
+                                                            <span class="badge bg-secondary">
+                                                                {{ FinanceClnPeriodsIsOpen::Pending->label() }}
+                                                            </span>
                                                     @endif
                                                 @else
                                                     {{-- إذا كان التقويم المالي مغلقا --}}
@@ -127,7 +148,6 @@
                                         لا توجد بيانات
                                     @endforelse
 
-                                    @include('dashboard.salaries.main_salary_records.open-month')
                                 </tbody>
                             </table>
                             <div class="row">
@@ -181,5 +201,24 @@
                 $(targetInput).val('');
             });
         });
+    </script>
+
+    <script>
+        function confirmCloseMonth(id) {
+            Swal.fire({
+                title: 'هل أنت متأكد؟',
+                text: "هل تريد غلق الشهر المالى؟ لا يمكن الرجوع بعد ذلك!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'نعم، أغلقه!',
+                cancelButtonText: 'إلغاء'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('close-month-form-' + id).submit();
+                }
+            });
+        }
     </script>
 @endpush

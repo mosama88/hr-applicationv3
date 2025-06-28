@@ -24,14 +24,14 @@
 
             <div class="row">
                 <div class="col-12">
-                    <div class="card card-primary card-outline mb-4">
+                    <div class="card card-info card-outline mb-4">
                         <!--begin::Header-->
 
                         <!--end::Header-->
                         <!--begin::Form-->
 
-                        <form action="{{ route('dashboard.main_salary_records.open-month', $financeClnPeriod->id) }}"
-                            method="POST">
+                        <form action="{{ route('dashboard.main_salary_records.edit-month', $financeClnPeriod->id) }}"
+                            method="POST" id="storeForm">
                             @csrf
                             @method('PUT')
                             <div class="card-body">
@@ -100,7 +100,7 @@
                                             <input type="text"
                                                 class="form-control date-input date-picker @error('start_date_fp') is-invalid @enderror"
                                                 name="start_date_fp" id="start_date_fp-input" placeholder="يوم / شهر / سنة"
-                                                value="{{ old('start_date_fp') }}">
+                                                value="{{ old('start_date_fp', $financeClnPeriod->start_date_fp) }}">
                                             <button type="button" class="btn btn-outline-secondary clear-date-btn"
                                                 data-target="#start_date_fp-input">
                                                 <i class="fas fa-times"></i>
@@ -123,7 +123,7 @@
                                             <input type="text"
                                                 class="form-control date-input date-picker @error('end_date_fp') is-invalid @enderror"
                                                 name="end_date_fp" id="end_date_fp-input" placeholder="يوم / شهر / سنة"
-                                                value="{{ old('end_date_fp') }}">
+                                                value="{{ old('end_date_fp', $financeClnPeriod->end_date_fp) }}">
                                             <button type="button" class="btn btn-outline-secondary clear-date-btn"
                                                 data-target="#end_date_fp-input">
                                                 <i class="fas fa-times"></i>
@@ -141,7 +141,7 @@
                             </div>
                             <!-- /.card-body -->
 
-                            <x-create-button-component></x-create-button-component>
+                            <x-edit-button-component></x-edit-button-component>
 
                         </form>
                         <!--end::Form-->
