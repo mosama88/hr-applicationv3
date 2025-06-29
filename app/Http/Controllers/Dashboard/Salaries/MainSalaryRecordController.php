@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Dashboard\Salaries;
 
 use App\Models\Employee;
+use App\Enums\YesOrNoEnum;
 use Illuminate\Http\Request;
+use App\Enums\IsArchivedEnum;
 use App\Models\FinanceCalendar;
 use App\Models\FinanceClnPeriod;
 use App\Models\MainSalaryEmployee;
@@ -123,6 +125,31 @@ class MainSalaryRecordController extends Controller
                         if ($checkExistsCounter == 0) {
                             $dataSalaryToInsert['employee_name'] = $info->name;
                             $dataSalaryToInsert['day_price'] = $info->day_price;
+                            $dataSalaryToInsert['is_sensitive_manager_data'] = YesOrNoEnum::Yes;
+                            $dataSalaryToInsert['branch_id'] = $info->branch_id;
+                            $dataSalaryToInsert['functional_status'] = $info->functional_status;
+                            $dataSalaryToInsert['department_code'] = $info->department_id;
+                            $dataSalaryToInsert['job_category_id'] = $info->job_category_id;
+                            $lastSalaryData = MainSalaryEmployee::orderByDesc('id')
+                                ->select('net_salary_after_close_for_deportation')
+                                ->where('com_code', $com_code)
+                                ->where('employee_code', $info->employee_code)
+                                ->where('is_archived', IsArchivedEnum::Yes)
+                                ->first(); // ✅ رجع سجل واحد وليس مجموعة
+
+                            if ($lastSalaryData) {
+                                $dataSalaryToInsert['last_salary_remain_balance'] = $lastSalaryData->net_salary_after_close_for_deportation;
+                            } else {
+                                $dataSalaryToInsert['last_salary_remain_balance'] = 0;
+                            }
+
+                            $dataSalaryToInsert['salary'] = $info->salary;
+                            $dataSalaryToInsert['financial_year'] = $dataFinanceClnPeriod['finance_yr'];
+                            $dataSalaryToInsert['year_month'] = $dataFinanceClnPeriod['year_and_month'];
+                            $dataSalaryToInsert['type_salary_receipt'] = $info->Type_salary_receipt;
+                            $dataSalaryToInsert['created_by'] = Auth::user()->id;
+
+                            MainSalaryEmployee::create($dataSalaryToInsert);
                         }
                     }
                 }

@@ -65,7 +65,7 @@ class MainSalaryEmployee extends Model
         'last_salary_remain_balance',
         'last_main_salary_record_id',
         'is_take_action_disbursed_collect',
-        'cash_visa',
+        'type_salary_receipt',
         'is_sensitive_manager_data',
         'is_stopped',
         'com_code',
