@@ -269,7 +269,7 @@
                             : '' }}">
                         <a href="#"
                             class="nav-link {{ request()->is('main_salary_records*') ||
-                            request()->is('allowances*') ||
+                            request()->is('sanctions*') ||
                             request()->is('discount_types*') ||
                             request()->is('employees*')
                                 ? 'active'
@@ -291,8 +291,8 @@
 
 
                             <li class="nav-item">
-                                <a href="{{ route('dashboard.main_salary_records.index') }}"
-                                    class="nav-link @yield('active-main_salary_records')">
+                                <a href="{{ route('dashboard.sanctions.index') }}"
+                                    class="nav-link @yield('active-sanctions')">
                                     <i class="nav-icon bi bi-circle"></i>
                                     <p>الجزاءات</p>
                                 </a>
