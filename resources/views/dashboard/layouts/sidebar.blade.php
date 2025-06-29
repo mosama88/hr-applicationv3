@@ -288,6 +288,15 @@
                                     <p>السجلات الرئيسية للراوتب</p>
                                 </a>
                             </li>
+
+
+                            <li class="nav-item">
+                                <a href="{{ route('dashboard.main_salary_records.index') }}"
+                                    class="nav-link @yield('active-main_salary_records')">
+                                    <i class="nav-icon bi bi-circle"></i>
+                                    <p>الجزاءات</p>
+                                </a>
+                            </li>
                         </ul>
                     </li>
 

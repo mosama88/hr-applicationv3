@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignIdFor(FinanceClnPeriod::class)->nullable()->constrained()->nullOnDelete(); //كود الشهر المالى
             $table->string('financial_year', 10); //السنه المالية
             $table->string('year_month', 30)->nullable(); //الشهر المالى المرتب
-            $table->integer('employee_code'); //كود الموظف
+            $table->bigInteger('employee_code'); //كود الموظف
             $table->string('employee_name', 300); //أسم الموظف لحظة فتح الراتب
             $table->string('slug')->unique()->nullable();
             $table->decimal('salary', 10, 2); //قيمة مرتب الموظف

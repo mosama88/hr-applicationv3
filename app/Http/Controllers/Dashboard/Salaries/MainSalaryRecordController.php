@@ -211,6 +211,7 @@ class MainSalaryRecordController extends Controller
     public function closeMonth($id)
     {
         try {
+            $userId= Auth::user()->id;
             $com_code = Auth::user()->com_code;
 
 
@@ -236,7 +237,7 @@ class MainSalaryRecordController extends Controller
 
             $dataToUpdate = [
                 'is_open' => FinanceClnPeriodsIsOpen::Archived,
-                'updated_by' => Auth::user()->id,
+                'updated_by' =>$userId,
                 'com_code' => $com_code,
             ];
 
@@ -247,14 +248,15 @@ class MainSalaryRecordController extends Controller
                     foreach ($all_main_salary_employee as $info) {
                         $dataUpdate['is_archived'] = IsArchivedEnum::Yes;
                         $dataUpdate['archived_date'] = now();
-                        $dataUpdate['updated_by'] = Auth::user()->id;
+                        $dataUpdate['archived_by'] =$userId;
+                        $dataUpdate['updated_by'] =$userId;
                         if ($info->net_salary < 0) {
                             $dataUpdate['net_salary_after_close_for_deportation'] = $info->net_salary;
                         } else {
                             $dataUpdate['net_salary_after_close_for_deportation'] = 0;
                         }
                         MainSalaryEmployee::where('com_code', $com_code)->where('finance_cln_period_id', $id)
-                        ->where('is_stopped', IsStoppedSalaryEnum::Unstopped)->where('is_archived', IsArchivedEnum::No)->update($dataUpdate);
+                            ->where('is_stopped', IsStoppedSalaryEnum::Unstopped)->where('is_archived', IsArchivedEnum::No)->update($dataUpdate);
                     }
                 }
             }

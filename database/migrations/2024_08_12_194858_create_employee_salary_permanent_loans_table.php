@@ -25,11 +25,11 @@ return new class extends Migration
             $table->integer('has_disbursed_done')->nullable()->default(0)->comment('حالة الصرف');
             $table->foreignId('disbursed_by')->nullable()->references('id')->on('admins')->onUpdate('cascade');
             $table->date('disbursed_at')->nullable()->comment('متى صرف');
-            $table->integer('is_archived')->nullable()->default(0)->comment('حالة الأرشفه');
+            $table->tinyInteger('is_archived')->default(2)->nullable(); //حالة الموظف لحظة الراتب
             $table->foreignId('archived_by')->nullable()->references('id')->on('admins')->onUpdate('cascade');
-            $table->dateTime('archived_at')->nullable();
+            $table->dateTime('archived_date')->nullable()->nullable(); //تاريخ ارشفه الراتب
             $table->text('notes')->nullable();
-            $table->tinyInteger('active')->default(1);
+            $table->tinyInteger('active')->default(1)->nullable();
             $table->integer('com_code');
             $table->foreignId('created_by')->references('id')->on('admins')->onUpdate('cascade');
             $table->foreignId('updated_by')->nullable()->references('id')->on('admins')->onUpdate('cascade');

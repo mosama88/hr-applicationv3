@@ -1,8 +1,10 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
+use App\Models\FinanceClnPeriod;
+use App\Models\MainSalaryEmployee;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 return new class extends Migration
 {
@@ -13,18 +15,18 @@ return new class extends Migration
     {
         Schema::create('employee_salary_absence_days', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('main_salary_employees_id')->references('id')->on('main_salary_employees')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('finance_cln_periods_id')->references('id')->on('finance_cln_periods')->onUpdate('cascade')->comment('كود الشهر المالى');
-            $table->integer('is_auto')->nullable()->default(0)->comment('هل تلقائى من النظام أم بشكل يدوى');
+            $table->foreignIdFor(MainSalaryEmployee::class)->nullable()->constrained()->nullOnDelete(); //المرتب
+            $table->foreignIdFor(FinanceClnPeriod::class)->nullable()->constrained()->nullOnDelete(); //كود الشهر المالى
+            $table->tinyInteger('is_auto')->nullable()->default(1); //هل تلقائى من النظام أم بشكل يدوى
             $table->bigInteger('employee_code')->comment('كود الموظف');
             $table->decimal('day_price', 10, 2)->comment('أجر يوم الموظف');
             $table->decimal('value', 10, 2)->comment('كام يوم غياب');
             $table->decimal('total', 10, 2)->comment('أجمالى الغيابات');
-            $table->integer('is_archived')->nullable()->default(0)->comment('حالة الأرشفه');
+            $table->tinyInteger('is_archived')->default(2)->nullable(); //حالة الموظف لحظة الراتب
             $table->foreignId('archived_by')->nullable()->references('id')->on('admins')->onUpdate('cascade');
-            $table->dateTime('archived_at')->nullable();
+            $table->dateTime('archived_date')->nullable()->nullable(); //تاريخ ارشفه الراتب
             $table->text('notes')->nullable();
-            $table->tinyInteger('active')->default(1);
+            $table->tinyInteger('active')->default(1)->nullable();
             $table->integer('com_code');
             $table->foreignId('created_by')->references('id')->on('admins')->onUpdate('cascade');
             $table->foreignId('updated_by')->nullable()->references('id')->on('admins')->onUpdate('cascade');

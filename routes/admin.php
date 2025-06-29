@@ -16,6 +16,7 @@ use App\Http\Controllers\Dashboard\Settings\JobCategoryController;
 use App\Http\Controllers\Dashboard\Settings\NationalityController;
 use App\Http\Controllers\Dashboard\Settings\QualificationController;
 use App\Http\Controllers\Dashboard\EmployeeAffairs\EmployeeController;
+use App\Http\Controllers\Dashboard\Salaries\SalarySanctionsController;
 use App\Http\Controllers\Dashboard\Settings\FinanceCalendarController;
 use App\Http\Controllers\Dashboard\EmployeeAffairs\AllowanceController;
 use App\Http\Controllers\Dashboard\Salaries\MainSalaryRecordController;
@@ -92,6 +93,8 @@ Route::middleware(['auth:admin'])->group(function () {
         Route::put('/close/month/{financeClnPeriod}', 'closeMonth')->name('close-month');
     });
 
+    //################################### الجزاءات ##################################
+    Route::resource('sanctions', SalarySanctionsController::class);
     //################################### الأنتهاء من الاجور والمرتبات  ##################################
 
 });
