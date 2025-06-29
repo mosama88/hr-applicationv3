@@ -56,7 +56,7 @@
                 "preventDuplicates": false,
                 "onclick": null,
                 "showDuration": "1000", // مدة الظهور
-                "hideDuration": "1000", // مدة الاختفاء
+                "hideDuration": "3000", // مدة الاختفاء
                 "timeOut": "5000", // الوقت قبل الاختفاء التلقائي
                 "extendedTimeOut": "1000", // وقت إضافي عند التمرير
                 "showEasing": "swing", // تأثير الظهور

@@ -48,12 +48,12 @@ return new class extends Migration
             $table->decimal('net_salary', 10, 2)->nullable(); //صافى قيمة المرتب
             $table->decimal('net_salary_after_close_for_deportation', 10, 2)->default(0)->nullable(); //صافى قيمة المرتب بعد أخذ إجراء ويعتبر الرصيد المرحل للشهر الجديد فقط
             $table->foreignId('archive_by')->nullable()->references('id')->on('admins')->onUpdate('cascade'); //من قام بأرشفة الراتب
-            $table->tinyInteger('is_archived')->default(1)->nullable(); //حالة الموظف لحظة الراتب
+            $table->tinyInteger('is_archived')->default(2)->nullable(); //حالة الموظف لحظة الراتب
             $table->dateTime('archived_date')->nullable()->nullable(); //تاريخ ارشفه الراتب
             $table->decimal('last_salary_remain_balance', 10, 2)->nullable(); //قيمة الراتب المرحل من الشهر السابق
             $table->decimal('last_main_salary_record_id', 10, 2)->nullable(); //رقم الراتب للشهر السابق
             $table->tinyInteger('is_take_action_disbursed_collect')->nullable()->default(1); //هل تم أخذ إجرا لصرف أو تحصيل المرتب خلال الشهر
-            $table->tinyInteger('type_salary_receipt')->default(1)->nullable(); //نوع صرف الراتب كاش ام فيزا
+            $table->tinyInteger('type_salary_receipt'); //نوع صرف الراتب كاش ام فيزا
             $table->tinyInteger('is_sensitive_manager_data')->default(1)->nullable(); //هل الموظف بإدارة عليا بها بيانات حساسة
             $table->tinyInteger('is_stopped')->default(1)->nullable(); //المرتب موقوف ام سارى
             $table->integer('com_code'); //كود الشركة التابع لها الموظف

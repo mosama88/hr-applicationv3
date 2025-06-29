@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Enums\IsArchivedEnum;
 use App\Models\FinanceCalendar;
 use App\Models\FinanceClnPeriod;
+use App\Enums\IsStoppedSalaryEnum;
 use App\Models\MainSalaryEmployee;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -146,7 +147,7 @@ class MainSalaryRecordController extends Controller
                             $dataSalaryToInsert['salary'] = $info->salary;
                             $dataSalaryToInsert['financial_year'] = $dataFinanceClnPeriod['finance_yr'];
                             $dataSalaryToInsert['year_month'] = $dataFinanceClnPeriod['year_and_month'];
-                            $dataSalaryToInsert['type_salary_receipt'] = $info->Type_salary_receipt;
+                            $dataSalaryToInsert['type_salary_receipt'] = $info->type_salary_receipt;
                             $dataSalaryToInsert['created_by'] = Auth::user()->id;
 
                             MainSalaryEmployee::create($dataSalaryToInsert);
@@ -239,9 +240,24 @@ class MainSalaryRecordController extends Controller
                 'com_code' => $com_code,
             ];
 
-            FinanceClnPeriod::where('com_code', $com_code)
-                ->where('id', $id)
-                ->update($dataToUpdate);
+            $flag =  FinanceClnPeriod::where('com_code', $com_code)->where('id', $id)->update($dataToUpdate);
+            if ($flag) {
+                $all_main_salary_employee = MainSalaryEmployee::orderBy('id', 'ASC')->where('com_code', $com_code)->where('finance_cln_period_id', $id)->get();
+                if ($all_main_salary_employee) {
+                    foreach ($all_main_salary_employee as $info) {
+                        $dataUpdate['is_archived'] = IsArchivedEnum::Yes;
+                        $dataUpdate['archived_date'] = now();
+                        $dataUpdate['updated_by'] = Auth::user()->id;
+                        if ($info->net_salary < 0) {
+                            $dataUpdate['net_salary_after_close_for_deportation'] = $info->net_salary;
+                        } else {
+                            $dataUpdate['net_salary_after_close_for_deportation'] = 0;
+                        }
+                        MainSalaryEmployee::where('com_code', $com_code)->where('finance_cln_period_id', $id)
+                        ->where('is_stopped', IsStoppedSalaryEnum::Unstopped)->where('is_archived', IsArchivedEnum::No)->update($dataUpdate);
+                    }
+                }
+            }
 
             return redirect()->route('dashboard.main_salary_records.index')->with('success', 'تم غلق الشهر المالى بنجاح');
         } catch (\Exception $e) {
