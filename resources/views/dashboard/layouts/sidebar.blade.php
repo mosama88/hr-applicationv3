@@ -262,7 +262,7 @@
 
                     <li
                         class="nav-item {{ request()->is('dashboard/main_salary_records*') ||
-                        request()->is('dashboard/allowances*') ||
+                        request()->is('dashboard/sanctions*') ||
                         request()->is('dashboard/discount_types*') ||
                         request()->is('dashboard/employees*')
                             ? 'menu-open'

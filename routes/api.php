@@ -7,10 +7,10 @@ use App\Http\Controllers\Dashboard\Settings\CountryController;
 use App\Http\Controllers\Dashboard\Settings\CurrencyController;
 use App\Http\Controllers\Dashboard\Settings\LanguageController;
 use App\Http\Controllers\Dashboard\Settings\DepartmentController;
-use App\Http\Controllers\Dashboard\Settings\GovernorateController;
 use App\Http\Controllers\Dashboard\Settings\JobCategoryController;
 use App\Http\Controllers\Dashboard\Settings\NationalityController;
 use App\Http\Controllers\Dashboard\Settings\QualificationController;
+use App\Http\Controllers\Dashboard\Salaries\SalarySanctionsController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -28,3 +28,8 @@ Route::get('qualifications/searchQualification', [QualificationController::class
 Route::get('departments/searchDepartment', [DepartmentController::class, 'searchDepartment'])->name('dashboard.departments.searchDepartment');
 Route::get('job_categories/searchJob_category', [JobCategoryController::class, 'searchJob_category'])->name('dashboard.job_categories.searchJob_category');
 Route::get('cities/searchCity', [CityController::class, 'searchCity'])->name('dashboard.cities.searchCity');
+Route::get('employees/searchEmployee', [SalarySanctionsController::class, 'searchEmployee'])->name('dashboard.sanctions.search_employee');
+
+
+
+Route::get('/get-day-price/{id}', [SalarySanctionsController::class, 'getDayPrice'])->name('get.day.price');

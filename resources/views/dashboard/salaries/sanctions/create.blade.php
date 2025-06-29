@@ -1,12 +1,13 @@
+@php
+    use App\Enums\Salaries\SanctionTypeEnum;
+    use App\Http\Controllers\Dashboard\Salaries\MainSalaryRecordController;
+@endphp
 @extends('dashboard.layouts.master')
 @section('active-financeCalendars', 'active')
 @section('title', 'أنشاء جزاء للموظف')
 @push('css')
-    <!-- مكتبة Flatpickr CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <!-- ستايل إضافي للغة العربية -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/material_blue.css">
-    <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/dist/css/flatpicker.css">
+    <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/dist/css/select2.min.css" />
+    <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/dist/css/select2-style.css" />
 @endpush
 @section('content')
 
@@ -16,7 +17,7 @@
         'titlePage' => 'أنشاء جزاء للموظف ',
         'previousPage' => 'الشهور المالية',
         'currentPage' => 'أنشاء جزاء للموظف ',
-        'url' => 'main_salary_records.index',
+        'url' => 'sanctions.index',
     ])
 
     <section class="content">
@@ -30,155 +31,197 @@
                         <!--end::Header-->
                         <!--begin::Form-->
 
-                        <form action="{{ route('dashboard.sanctions.create') }}" method="POST" id="storeForm">
+                        <form action="{{ route('dashboard.sanctions.store', $financeClnPeriod->id) }}" method="POST"
+                            id="storeForm">
                             @csrf
                             <div class="card-body">
-
                                 <div class="row">
-                                    <div class="form-group mb-3 col-md-3">
-                                        <label for="exampleInputname">السنه المالية</label>
-                                        <input disabled type="text" name="finance_yr"
-                                            class="form-control bg-white @error('finance_yr') is-invalid @enderror"
-                                            value="{{ old('finance_yr') }}" id="exampleInputname">
-                                        @error('finance_yr')
-                                            <span class="invalid-feedback text-right" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-
-                                    <div class="form-group mb-3 col-md-3">
+                                    <div class="form-group mb-3 col-md-3" style="display: none">
                                         <label for="exampleInputname">الشهر المالى</label>
                                         <input disabled type="text" name="year_and_month"
                                             class="form-control bg-white @error('year_and_month') is-invalid @enderror"
-                                            value="{{ old('year_and_month') }}" id="exampleInputname">
+                                            value="{{ old('year_and_month', $financeClnPeriod->year_and_month) }}"
+                                            id="exampleInputname">
                                         @error('year_and_month')
                                             <span class="invalid-feedback text-right" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
                                     </div>
-                                    <div class="form-group mb-3 col-md-3">
-                                        <label for="exampleInputname">بداية الشهر</label>
-                                        <input disabled type="text" name="start_date_m"
-                                            class="form-control bg-white @error('start_date_m') is-invalid @enderror"
-                                            value="{{ old('start_date_m') }}" id="exampleInputname">
-                                        @error('start_date_m')
+
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label" for="main_salary_employee_id-input">
+                                            أسم الموظف</label>
+                                        <select name="main_salary_employee_id" id="main_salary_employee_id-input"
+                                            class="select2 form-select employee_select2 @error('main_salary_employee_id') is-invalid @enderror"
+                                            data-allow-clear="true">
+                                            @if (old('main_salary_employee_id'))
+                                                <option value="{{ old('main_salary_employee_id') }}" selected>
+                                                    {{ MainSalaryRecordController::find(old('main_salary_employee_id'))?->name }}
+                                                </option>
+                                            @endif
+                                        </select>
+                                        @error('main_salary_employee_id')
                                             <span class="invalid-feedback text-right" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
                                     </div>
-                                    <div class="form-group mb-3 col-md-3">
-                                        <label for="exampleInputname">نهاية الشهر</label>
-                                        <input disabled type="text" name="end_date_m"
-                                            class="form-control bg-white @error('end_date_m') is-invalid @enderror"
-                                            value="{{ old('end_date_m') }}" id="exampleInputname">
-                                        @error('end_date_m')
+
+                                    <div class="col-md-2 mb-3">
+                                        <label class="form-label" for="day_price-input">
+                                            أجر اليوم الواحد</label>
+                                        <input disabled type="text" name="day_price"
+                                            class="form-control bg-white @error('day_price') is-invalid @enderror"
+                                            value="{{ old('day_price') }}" id="day_price-input">
+                                        @error('day_price')
                                             <span class="invalid-feedback text-right" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
                                     </div>
 
-                                </div>
-
-                                <div class="row">
-                                    <div class="form-group mb-3 col-6">
-                                        <label for="start_date_fp" class="form-label">تاريخ بداية البصمة</label>
-                                        <div class="input-group">
-                                            <span class="input-group-text bg-primary"
-                                                style="background-color: #2C6391 !important; border-color: #2C6391;">
-                                                <i class="far fa-calendar-alt text-white"></i>
+                                    <!-- نوع الجزاء -->
+                                    <div class="col-md-3 mb-3">
+                                        <label for="exampleFormControlSelect1" class="form-label">
+                                            نوع الجزاء</label>
+                                        <select class="form-select @error('sanctions_type') is-invalid @enderror"
+                                            name="sanctions_type" aria-label="Default select example">
+                                            <option selected value="">-- أختر النوع--</option>
+                                            @foreach (SanctionTypeEnum::cases() as $sanction)
+                                                <option value="{{ $sanction->value }}"
+                                                    @if (old('sanctions_type') == $sanction->value) selected @endif>
+                                                    {{ $sanction->label() }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @error('sanctions_type')
+                                            <span class="invalid-feedback text-right" role="alert">
+                                                <strong>{{ $message }}</strong>
                                             </span>
-                                            <input type="text"
-                                                class="form-control date-input date-picker @error('start_date_fp') is-invalid @enderror"
-                                                name="start_date_fp" id="start_date_fp-input" placeholder="يوم / شهر / سنة"
-                                                value="{{ old('start_date_fp') }}">
-                                            <button type="button" class="btn btn-outline-secondary clear-date-btn"
-                                                data-target="#start_date_fp-input">
-                                                <i class="fas fa-times"></i>
-                                            </button>
-                                        </div>
-                                        @error('start_date_fp')
-                                            <div class="invalid-feedback text-right d-block">
-                                                {{ $message }}
-                                            </div>
                                         @enderror
                                     </div>
 
-                                    <div class="form-group mb-3 col-6">
-                                        <label for="end_date_fp" class="form-label">تاريخ نهاية البصمة</label>
-                                        <div class="input-group">
-                                            <span class="input-group-text bg-primary"
-                                                style="background-color: #2C6391 !important; border-color: #2C6391;">
-                                                <i class="far fa-calendar-alt text-white"></i>
+
+                                    <!-- نوع الجزاء -->
+                                    <div class="col-md-2 mb-3">
+                                        <label class="form-label" for="value-input">
+                                            عدد أيام الجزاء</label>
+                                        <input type="text" name="value"
+                                            class="form-control @error('value') is-invalid @enderror"
+                                            value="{{ old('value') }}" id="value-input">
+                                        @error('value')
+                                            <span class="invalid-feedback text-right" role="alert">
+                                                <strong>{{ $message }}</strong>
                                             </span>
-                                            <input type="text"
-                                                class="form-control date-input date-picker @error('end_date_fp') is-invalid @enderror"
-                                                name="end_date_fp" id="end_date_fp-input" placeholder="يوم / شهر / سنة"
-                                                value="{{ old('end_date_fp') }}">
-                                            <button type="button" class="btn btn-outline-secondary clear-date-btn"
-                                                data-target="#end_date_fp-input">
-                                                <i class="fas fa-times"></i>
-                                            </button>
-                                        </div>
-                                        @error('end_date_fp')
-                                            <div class="invalid-feedback text-right d-block">
-                                                {{ $message }}
-                                            </div>
                                         @enderror
                                     </div>
-
                                 </div>
 
+                                <!-- قيمة الجزاء -->
+                                <div class="col-md-2 mb-3">
+                                    <label class="form-label" for="total-input">
+                                        قيمة الجزاء</label>
+                                    <input disabled type="text" name="total"
+                                        class="form-control bg-white @error('total') is-invalid @enderror"
+                                        value="{{ old('total') }}" id="total-input">
+                                    @error('total')
+                                        <span class="invalid-feedback text-right" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
                             </div>
-                            <!-- /.card-body -->
 
-                            <x-create-button-component></x-create-button-component>
 
-                        </form>
-                        <!--end::Form-->
                     </div>
+                    <!-- /.card-body -->
+
+                    <x-create-button-component></x-create-button-component>
+
+                    </form>
+                    <!--end::Form-->
                 </div>
-                <!-- /.row (main row) -->
-            </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.row (main row) -->
+        </div><!-- /.container-fluid -->
     </section>
 
 
 @endsection
 @push('js')
-    <!-- مكتبة Flatpickr JS -->
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <!-- ملف اللغة العربية -->
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ar.js"></script>
-
+    <script src="{{ asset('dashboard') }}/assets/dist/js/select2.min.js"></script>
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            flatpickr(".date-picker", {
-                locale: "ar", // تفعيل اللغة العربية
-                dateFormat: "Y-m-d", // صيغة التاريخ
-                allowInput: true, // السماح بالإدخال اليدوي
-                altInput: true, // عرض بديل للتاريخ
-                altFormat: "j F Y", // صيغة العرض: 15 أكتوبر 2023
-                minDate: "today", // لا تسمح بتواريخ قبل اليوم
-                disableMobile: true, // تعطيل المحرك الافتراضي على الموبايل
-                nextArrow: '<i class="fa fa-angle-right"></i>',
-                prevArrow: '<i class="fa fa-angle-left"></i>'
-            });
-            const startDate = flatpickr(".date-input", {
-                onChange: function(selectedDates) {
-                    endDate.set("minDate", selectedDates[0]);
+        $(document).ready(function() {
+            // job_category_select2
+            $('.employee_select2').select2({
+                placeholder: '-- أختر الموظف --',
+                ajax: {
+                    url: "{{ route('dashboard.sanctions.search_employee') }}",
+                    dataType: 'json',
+                    delay: 250, // Delay for better UX
+                    data: function(params) {
+                        return {
+                            q: params.term // Search query
+                        };
+                    },
+                    processResults: function(data) {
+                        return {
+                            results: data.data.map(employees => ({
+                                id: employees.id,
+                                text: `${employees.employee_name} ➜ (${employees.employee_code})`
+                            }))
+                        };
+                    }
                 }
             });
-
-            const endDate = flatpickr(".end_national_id-input", {});
         });
+    </script>
+    <script>
         $(document).ready(function() {
-            $('.clear-date-btn').on('click', function() {
-                let targetInput = $(this).data('target');
-                $(targetInput).val('');
+            $('#main_salary_employee_id-input').on('change', function() {
+                var employeeId = $(this).val();
+                if (employeeId) {
+                    $.ajax({
+                        url: '/api/get-day-price/' + employeeId,
+                        method: 'GET',
+                        success: function(response) {
+                            if (response.status) {
+                                let dayPrice = Math.round(response.day_price); // عدد صحيح فقط
+                                $('input[name="day_price"]').val(dayPrice);
+                            } else {
+                                $('input[name="day_price"]').val('');
+                            }
+                        },
+                        error: function() {
+                            $('input[name="day_price"]').val('');
+                        }
+                    });
+                } else {
+                    $('input[name="day_price"]').val('');
+                }
             });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            // عند تغيير عدد أيام الجزاء
+            $('#value-input').on('input', function() {
+                calculateTotal();
+            });
+
+            // لو تغير أجر اليوم أيضًا من أي عملية (مثلاً تغيير الموظف)
+            $('#day_price-input').on('input', function() {
+                calculateTotal();
+            });
+
+            function calculateTotal() {
+                var days = parseInt($('#value-input').val()) || 0;
+                var dayPrice = parseInt($('#day_price-input').val()) || 0;
+                var total = days * dayPrice;
+                $('#total-input').val(total);
+            }
         });
     </script>
 @endpush

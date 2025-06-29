@@ -200,4 +200,7 @@ class EmployeeController extends Controller
         $other['shifts_types'] = ShiftsType::where('active', StatusActiveEnum::ACTIVE)->get();
         return view('dashboard.employee-affairs.employees.filter-employee', compact('data', 'other'));
     }
+
+
+
 }

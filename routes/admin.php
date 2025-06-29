@@ -94,7 +94,14 @@ Route::middleware(['auth:admin'])->group(function () {
     });
 
     //################################### الجزاءات ##################################
-    Route::resource('sanctions', SalarySanctionsController::class);
+    Route::controller(SalarySanctionsController::class)->name('sanctions.')->prefix('/sanctions')->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::get('/show/{financeClnPeriod}', 'show')->name('show');
+        Route::get('/create/{financeClnPeriod}', 'create')->name('create');
+        Route::post('/create/{financeClnPeriod}', 'store')->name('store');
+    });
+
+
     //################################### الأنتهاء من الاجور والمرتبات  ##################################
 
 });
