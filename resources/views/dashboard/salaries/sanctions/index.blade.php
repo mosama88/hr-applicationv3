@@ -97,7 +97,7 @@
                                                                 {{ FinanceClnPeriodsIsOpen::Open->label() }}
                                                             </span>
                                                             <a title="عرض"
-                                                                href="{{ route('dashboard.sanctions.show', $financeClnPeriod->id) }}"
+                                                                href="{{ route('dashboard.sanctions.show', $financeClnPeriod->slug) }}"
                                                                 class="btn btn-sm btn-info text-white">
                                                                 <i class="fa-solid fa-eye"></i>
                                                             </a>

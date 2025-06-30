@@ -78,12 +78,12 @@ class SalarySanctionsController extends Controller
             'value' => $request->value,
             'total' => $request->total,
             'notes' => $request->notes,
-            'is_archived' => IsArchivedEnum::No,
+            'is_archived' => IsArchivedEnum::Unarchived,
             'com_code' => $com_code,
             'created_by' => $userId,
         ]);
         EmployeeSalarySanction::create($dataInsert);
-        return redirect()->route('dashboard.sanctions.show', $financeClnPeriodId)->with('success', 'تم أضاف الجزاء بنجاح');
+        return redirect()->route('dashboard.sanctions.show', $financeClnPeriod->slug)->with('success', 'تم أضاف الجزاء بنجاح');
     }
 
     /**
@@ -109,15 +109,15 @@ class SalarySanctionsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(EmployeeSalarySanction $sanction)
+    public function edit(EmployeeSalarySanction $sanction, FinanceClnPeriod $financeClnPeriod)
     {
-        return view('dashboard.salaries.sanctions.edir', compact('sanction'));
+        return view('dashboard.salaries.sanctions.edit', compact('financeClnPeriod', 'sanction'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, EmployeeSalarySanction $sanction)
+    public function update(EmployeeSalarySanctionsRequest $request, EmployeeSalarySanction $sanction)
     {
         //
     }

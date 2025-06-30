@@ -3,8 +3,11 @@
 namespace App\Models;
 
 use Spatie\Image\Enums\Fit;
+use App\Enums\IsArchivedEnum;
 use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Database\Eloquent\Model;
+use App\Enums\Salaries\IsAutoSalaryEnum;
+use App\Enums\Salaries\SanctionTypeEnum;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -73,4 +76,10 @@ class EmployeeSalarySanction extends Model implements HasMedia
     {
         return $this->belongsTo(Admin::class, 'updated_by');
     }
+
+    protected $casts = [
+        'sanctions_type' => SanctionTypeEnum::class,
+        'is_archived' => IsArchivedEnum::class,
+        'is_auto' => IsAutoSalaryEnum::class,
+    ];
 }

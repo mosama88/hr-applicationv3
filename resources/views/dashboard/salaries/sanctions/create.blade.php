@@ -11,13 +11,6 @@
 @endpush
 @section('content')
 
-    @if ($errors->any())
-        @foreach ($errors->all() as $error)
-            <div class="alert alert-danger text-center">
-                {{ $error }}
-            </div>
-        @endforeach
-    @endif
     @include('dashboard.layouts.message')
     <!-- Content Header (Page header) -->
     @include('dashboard.layouts.breadcrumbs', [

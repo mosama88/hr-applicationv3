@@ -109,7 +109,7 @@
                                                             </form>
 
                                                             <a title="تعديل"
-                                                                href="{{ route('dashboard.main_salary_records.edit-open', $financeClnPeriod->id) }}"
+                                                                href="{{ route('dashboard.main_salary_records.edit-open', $financeClnPeriod->slug) }}"
                                                                 class="btn btn-sm btn-info text-white">
                                                                 <i class="fa-solid fa-pen-to-square"></i>
                                                             </a>
@@ -126,7 +126,7 @@
                                                                 <!-- Button trigger modal -->
                                                                 <a title="أفتح الشهر المالى"
                                                                     class="btn btn-sm btn-primary text-white"
-                                                                    href="{{ route('dashboard.main_salary_records.create-open', $financeClnPeriod->id) }}">
+                                                                    href="{{ route('dashboard.main_salary_records.create-open', $financeClnPeriod->slug) }}">
                                                                     <i class="fa-solid fa-lock-open"></i>
                                                                 </a>
                                                             </div>

@@ -96,9 +96,12 @@ Route::middleware(['auth:admin'])->group(function () {
     //################################### الجزاءات ##################################
     Route::controller(SalarySanctionsController::class)->name('sanctions.')->prefix('/sanctions')->group(function () {
         Route::get('/', 'index')->name('index');
-        Route::get('/show/{financeClnPeriod}', 'show')->name('show');
         Route::get('/create/{financeClnPeriod}', 'create')->name('create');
         Route::post('/store/{financeClnPeriod}', 'store')->name('store');
+        Route::get('/show/{financeClnPeriod}', 'show')->name('show');
+        Route::get('/edit/{financeClnPeriod}', 'edit')->name('edit');
+        Route::patch('/update/{financeClnPeriod}', 'update')->name('update');
+        Route::delete('/delete/{financeClnPeriod}', 'destroy')->name('destroy');
     });
 
 

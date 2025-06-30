@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use App\Enums\IsArchivedEnum;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
+use App\Enums\IsStoppedSalaryEnum;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class MainSalaryEmployee extends Model
 {
@@ -109,4 +111,9 @@ class MainSalaryEmployee extends Model
     {
         return $this->belongsTo(Admin::class, 'archive_by');
     }
+
+    protected $casts = [
+        'is_stopped' => IsStoppedSalaryEnum::class,
+        'is_archived' => IsArchivedEnum::class,
+    ];
 }

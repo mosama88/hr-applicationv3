@@ -47,7 +47,7 @@ return new class extends Migration
             $table->decimal('total_deductions', 10, 2)->nullable()->default('0'); //إجمالى المستقطع للموظف
             $table->decimal('net_salary', 10, 2)->nullable(); //صافى قيمة المرتب
             $table->decimal('net_salary_after_close_for_deportation', 10, 2)->default(0)->nullable(); //صافى قيمة المرتب بعد أخذ إجراء ويعتبر الرصيد المرحل للشهر الجديد فقط
-            $table->foreignId('archive_by')->nullable()->references('id')->on('admins')->onUpdate('cascade'); //من قام بأرشفة الراتب
+            $table->foreignId('archived_by')->nullable()->references('id')->on('admins')->onUpdate('cascade'); //من قام بأرشفة الراتب
             $table->tinyInteger('is_archived')->default(2)->nullable(); //حالة الموظف لحظة الراتب
             $table->dateTime('archived_date')->nullable()->nullable(); //تاريخ ارشفه الراتب
             $table->decimal('last_salary_remain_balance', 10, 2)->nullable(); //قيمة الراتب المرحل من الشهر السابق

@@ -103,7 +103,7 @@
 
 
                                     <!-- النص على اليمين -->
-                                    <a href="{{ route('dashboard.sanctions.create', $financeClnPeriod->id) }}"
+                                    <a href="{{ route('dashboard.sanctions.create', $financeClnPeriod->slug) }}"
                                         class="btn btn-md btn-success">
                                         <i class="fa-solid fa-square-plus mx-1"></i>أضافة جديد</a>
                                 </div>
@@ -147,12 +147,12 @@
                                                         <img class="img-thumbnail rounded-circle"
                                                             src="{{ asset('dashboard') }}/assets/dist/assets/img/employees-male-default.png"
                                                             style="width: 70px; height: 70px; object-fit: cover;"
-                                                            alt="{{ $info->mainSalaryEmployee->employee_name}}">
+                                                            alt="{{ $info->mainSalaryEmployee->employee_name }}">
                                                     @elseif($info->employee->gender === AdminGenderEnum::Female)
                                                         <img class="img-thumbnail rounded-circle"
                                                             src="{{ asset('dashboard') }}/assets/dist/assets/img/employees-female-default.png"
                                                             style="width: 70px; height: 70px; object-fit: cover;"
-                                                            alt="{{ $info->mainSalaryEmployee->employee_name}}">
+                                                            alt="{{ $info->mainSalaryEmployee->employee_name }}">
                                                     @else
                                                         <img class="img-thumbnail rounded-circle"
                                                             src="{{ asset('dashboard') }}/assets/img/Employee.png"
@@ -170,27 +170,27 @@
                                             <td>{{ $info->mainSalaryEmployee->employee_name }}</td>
                                             <td>
                                                 @if ($info->sanctions_type)
-                                                    {{ SanctionTypeEnum::from($info->sanctions_type)->label() }}
+                                                    {{ $info->sanctions_type->label() }}
                                                 @endif
                                             </td>
                                             <td>{{ $info->value * 1 }}</td>
                                             <td>{{ $info->total * 1 }}</td>
                                             <td>{{ $info->notes }}</td>
                                             <td>
-                                                @if ($info->is_archived == IsArchivedEnum::Yes)
-                                                    <span class="badge bg-success">مفعل</span>
+                                                @if ($info->is_archived == IsArchivedEnum::Archived)
+                                                    <span class="badge bg-danger">{{ $info->is_archived->label() }}</span>
                                                 @else
-                                                    <span class="badge bg-danger">مؤرشف</span>
+                                                    <span class="badge bg-success">{{ $info->is_archived->label() }}</span>
                                                 @endif
                                             </td>
-                          
-                                            
+
+
 
                                             <td>
-                                                {{-- @include('dashboard.partials.actions', [
+                                                @include('dashboard.partials.actions', [
                                                     'name' => 'sanctions',
-                                                    'name_id' => $info->id,
-                                                ]) --}}
+                                                    'name_id' => $info->financeClnPeriod->slug,
+                                                ])
                                             </td>
                                         </tr>
                                     @empty
