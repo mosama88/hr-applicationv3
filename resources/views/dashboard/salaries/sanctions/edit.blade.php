@@ -31,8 +31,9 @@
                         <!--end::Header-->
                         <!--begin::Form-->
 
-                        <form action="{{ route('dashboard.sanctions.update', $financeClnPeriod->id) }}" method="POST"
+                        <form action="{{ route('dashboard.sanctions.update', $sanction->id) }}" method="POST"
                             id="storeForm">
+
                             @csrf
                             @method('PUT')
                             <div class="card-body">
@@ -57,11 +58,11 @@
                                         <select name="main_salary_employee_id" id="main_salary_employee_id-input"
                                             class="select2 form-select employee_select2 @error('main_salary_employee_id') is-invalid @enderror"
                                             data-allow-clear="true">
-                                            @if (old('main_salary_employee_id'))
-                                                <option value="{{ old('main_salary_employee_id') }}" selected>
-                                                    {{ MainSalaryEmployee::find(old('main_salary_employee_id', $sanction->main_salary_employee_id->employee_name))?->name }}
-                                                </option>
-                                            @endif
+                                            <option
+                                                value="{{ old('main_salary_employee_id', $sanction->main_salary_employee_id ?? '') }}"
+                                                selected>
+                                                {{ MainSalaryEmployee::find(old('main_salary_employee_id', $sanction->main_salary_employee_id))->employee_name }}
+                                            </option>
                                         </select>
                                         @error('main_salary_employee_id')
                                             <span class="invalid-feedback text-right" role="alert">
@@ -76,7 +77,7 @@
                                             أجر اليوم الواحد</label>
                                         <input readonly type="text" name="day_price"
                                             class="form-control bg-white @error('day_price') is-invalid @enderror"
-                                            value="{{ old('day_price', $sanction->day_price) }}" id="day_price-input">
+                                            value="{{ old('day_price', $sanction->day_price) * 1 }}" id="day_price-input">
                                         @error('day_price')
                                             <span class="invalid-feedback text-right" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -105,13 +106,14 @@
                                         <select class="form-select @error('sanctions_type') is-invalid @enderror"
                                             name="sanctions_type" aria-label="Default select example">
                                             <option selected value="">-- أختر النوع--</option>
-                                            @foreach (SanctionTypeEnum::cases() as $sanction)
-                                                <option value="{{ $sanction->value }}"
-                                                    @if (old('sanctions_type') == $sanction->value) selected @endif>
-                                                    {{ $sanction->label() }}
+                                            @foreach (SanctionTypeEnum::cases() as $sanctionType)
+                                                <option value="{{ $sanctionType->value }}"
+                                                    @if (old('sanctions_type', $sanction->sanctions_type->value ?? '') == $sanctionType->value) selected @endif>
+                                                    {{ $sanctionType->label() }}
                                                 </option>
                                             @endforeach
                                         </select>
+
                                         @error('sanctions_type')
                                             <span class="invalid-feedback text-right" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -127,7 +129,7 @@
                                         <input type="text" name="value"
                                             class="form-control @error('value') is-invalid @enderror"
                                             oninput="this.value=this.value.replace(/[^0-9.]/g,'');"
-                                            value="{{ old('value') }}" id="value-input">
+                                            value="{{ old('value', $sanction->value) * 1 }}" id="value-input">
                                         @error('value')
                                             <span class="invalid-feedback text-right" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -142,7 +144,7 @@
                                             قيمة الجزاء</label>
                                         <input readonly type="text" name="total"
                                             class="form-control bg-white @error('total') is-invalid @enderror"
-                                            value="{{ old('total') }}" id="total-input">
+                                            value="{{ old('total', $sanction->total) * 1 }}" id="total-input">
                                         @error('total')
                                             <span class="invalid-feedback text-right" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -156,7 +158,7 @@
                                             ملاحظات</label>
                                         <input type="text" name="notes"
                                             class="form-control bg-white @error('notes') is-invalid @enderror"
-                                            value="{{ old('notes') }}" id="notes-input">
+                                            value="{{ old('notes', $sanction->notes) }}" id="notes-input">
                                         @error('notes')
                                             <span class="invalid-feedback text-right" role="alert">
                                                 <strong>{{ $message }}</strong>

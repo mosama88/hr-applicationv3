@@ -11,11 +11,13 @@ use App\Enums\Salaries\SanctionTypeEnum;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
 class EmployeeSalarySanction extends Model implements HasMedia
 
 {
-    use HasFactory, InteractsWithMedia;
+    use HasFactory, InteractsWithMedia, HasSlug;
 
 
     protected $table = 'employee_salary_sanctions';
@@ -38,6 +40,24 @@ class EmployeeSalarySanction extends Model implements HasMedia
         'created_by',
         'updated_by'
     ];
+
+    public function getTypeLabelAttribute(): string
+    {
+        return $this->sanctions_type->label();
+    }
+
+    public function getSlugOptions(): SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom('sanctions_type_label') // accessor
+            ->saveSlugsTo('slug');
+    }
+
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
 
     public function registerMediaConversions(?Media $media = null): void
     {

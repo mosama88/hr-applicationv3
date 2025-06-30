@@ -189,7 +189,7 @@
                                             <td>
                                                 @include('dashboard.partials.actions', [
                                                     'name' => 'sanctions',
-                                                    'name_id' => $info->financeClnPeriod->slug,
+                                                    'name_id' => $info->id,
                                                 ])
                                             </td>
                                         </tr>

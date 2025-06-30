@@ -99,9 +99,9 @@ Route::middleware(['auth:admin'])->group(function () {
         Route::get('/create/{financeClnPeriod}', 'create')->name('create');
         Route::post('/store/{financeClnPeriod}', 'store')->name('store');
         Route::get('/show/{financeClnPeriod}', 'show')->name('show');
-        Route::get('/edit/{financeClnPeriod}', 'edit')->name('edit');
-        Route::patch('/update/{financeClnPeriod}', 'update')->name('update');
-        Route::delete('/delete/{financeClnPeriod}', 'destroy')->name('destroy');
+        Route::get('/edit/{slug}', 'edit')->name('edit');
+        Route::patch('/update/{id}', 'update')->name('update');
+        Route::delete('/delete/{slug}', 'destroy')->name('destroy');
     });
 
 

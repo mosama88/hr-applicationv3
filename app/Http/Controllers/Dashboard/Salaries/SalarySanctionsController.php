@@ -109,9 +109,10 @@ class SalarySanctionsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(EmployeeSalarySanction $sanction, FinanceClnPeriod $financeClnPeriod)
+    public function edit($id, FinanceClnPeriod $financeClnPeriod)
     {
-        return view('dashboard.salaries.sanctions.edit', compact('financeClnPeriod', 'sanction'));
+        $sanction = EmployeeSalarySanction::findOrFail($id);
+        return view('dashboard.salaries.sanctions.edit', compact('sanction', 'financeClnPeriod'));
     }
 
     /**
