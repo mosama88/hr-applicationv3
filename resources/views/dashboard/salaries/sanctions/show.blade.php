@@ -6,7 +6,7 @@
 @endphp
 
 @extends('dashboard.layouts.master')
-@section('active-employees', 'active')
+@section('active-sanctions', 'active')
 @section('title', 'جزاءات الموظفين')
 @push('css')
     <style>
@@ -83,9 +83,9 @@
 
     @include('dashboard.layouts.breadcrumbs', [
         'titlePage' => 'جدول جزاءات الموظفين',
-        'previousPage' => 'لوحة التحكم',
+        'previousPage' => 'سجل الشهور المالية للجزاءات',
         'currentPage' => 'جدول جزاءات الموظفين',
-        'url' => 'index',
+        'url' => 'sanctions.index',
     ])
 
 

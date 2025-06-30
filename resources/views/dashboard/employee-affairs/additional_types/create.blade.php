@@ -10,7 +10,7 @@
 
     @include('dashboard.layouts.breadcrumbs', [
         'titlePage' => 'أضافة نوع أضافى جديد',
-        'previousPage' => 'أنواعه الاضافى',
+        'previousPage' => 'أنواع الاضافى',
         'currentPage' => 'أضافة نوع أضافى جديد',
         'url' => 'additional_types.index',
     ])

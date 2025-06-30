@@ -3,7 +3,7 @@
     use App\Models\MainSalaryEmployee;
 @endphp
 @extends('dashboard.layouts.master')
-@section('active-financeCalendars', 'active')
+@section('active-sanctions', 'active')
 @section('title', 'عرض بيانات جزاء الموظف')
 @push('css')
     <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/dist/css/select2.min.css" />
@@ -17,7 +17,7 @@
         'titlePage' => 'عرض بيانات جزاء الموظف ',
         'previousPage' => 'جدول الجزاءات',
         'currentPage' => 'عرض بيانات جزاء الموظف ',
-        'url' => 'index',
+        'url' => 'sanctions.index',
     ])
     <a href="{{ route('dashboard.sanctions.show', $financeClnPeriod->id) }}"></a>
     <section class="content">

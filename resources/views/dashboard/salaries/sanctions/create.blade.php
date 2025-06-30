@@ -3,8 +3,8 @@
     use App\Models\MainSalaryEmployee;
 @endphp
 @extends('dashboard.layouts.master')
-@section('active-financeCalendars', 'active')
-@section('title', 'أنشاء جزاء للموظف')
+@section('active-sanctions', 'active')
+@section('title', 'انشاء جزاء للموظف')
 @push('css')
     <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/dist/css/select2.min.css" />
     <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/dist/css/select2-style.css" />
@@ -14,9 +14,9 @@
     @include('dashboard.layouts.message')
     <!-- Content Header (Page header) -->
     @include('dashboard.layouts.breadcrumbs', [
-        'titlePage' => 'أنشاء جزاء للموظف ',
-        'previousPage' => 'الشهور المالية',
-        'currentPage' => 'أنشاء جزاء للموظف ',
+        'titlePage' => 'انشاء جزاء للموظف ',
+        'previousPage' => 'جدول الجزاءات',
+        'currentPage' => 'انشاء جزاء للموظف ',
         'url' => 'sanctions.index',
     ])
 

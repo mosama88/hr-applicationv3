@@ -9,7 +9,7 @@
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-end">
                     <li class="breadcrumb-item">
-                        <a href="{{ route('dashboard.' . $url) }}"><i class="{{ $class ?? '' }}"
+                        <a style="color: #5154a4;" href="{{ route('dashboard.' . $url) }}"><i class="{{ $class ?? '' }}"
                                 style="color: #5154a4;"></i>{{ $previousPage }}</a>
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">{{ $currentPage }}</li>
