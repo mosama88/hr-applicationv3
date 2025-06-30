@@ -1,6 +1,8 @@
 @php
+    use App\Enums\FinanceClnPeriodsIsOpen;
+    use App\Enums\Salaries\SanctionTypeEnum;
+    use App\Enums\IsArchivedEnum;
     use App\Enums\AdminGenderEnum;
-    use App\Enums\StatusActiveEnum;
 @endphp
 
 @extends('dashboard.layouts.master')
@@ -101,10 +103,9 @@
 
 
                                     <!-- النص على اليمين -->
-                                    <x-add-new-button route="employees.create" />
-                                    <a href="{{ route('dashboard.employees.filter') }}"
-                                        class="btn btn-primary btn-md mx-2"><i
-                                            class="fa-solid fa-magnifying-glass mx-1"></i> شاشة البحث </a>
+                                    <a href="{{ route('dashboard.sanctions.create', $financeClnPeriod->id) }}"
+                                        class="btn btn-md btn-success">
+                                        <i class="fa-solid fa-square-plus mx-1"></i>أضافة جديد</a>
                                 </div>
                             </h3>
 
@@ -119,13 +120,15 @@
                                         <th>#</th>
                                         <th>صورة الموظف</th>
                                         <th>كود الموظف</th>
-                                        <th>الأسم</th>
-                                        <th>الفرع</th>
-                                        <th>الوظيفه</th>
-                                        <th>الموبايل</th>
+                                        <th>أسم الموظف</th>
+                                        <th>نوع الجزاء</th>
+                                        <th>عدد الأيام</th>
+                                        <th>أجمالى</th>
+                                        <th>الملاحظات</th>
                                         <th>الحالة</th>
-                                        <th>السيرة الذاتية</th>
-                                        <th>الإجراءات</th>
+                                        @if ($financeClnPeriod['is_open'] == FinanceClnPeriodsIsOpen::Open)
+                                            <th>العمليات</th>
+                                        @endif
                                     </tr>
                                 </thead>
                                 <tbody class="table-border-bottom-0">
@@ -133,73 +136,61 @@
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>
-                                                @if ($info->getFirstMediaUrl('photo', 'preview'))
-                                                    <img class="img-thumbnail"
-                                                        src="{{ $info->getFirstMediaUrl('photo', 'preview') }}"
-                                                        style="max-width: 70px;max-height: 70px;" alt="{{ $info->name }}">
-                                                @elseif($info->gender === AdminGenderEnum::Male)
-                                                    <img class="img-thumbnail"
-                                                        src="{{ asset('dashboard') }}/assets/dist/assets/img/employees-male-default.png"
-                                                        style="max-width: 70px;max-height: 70px;" alt="{{ $info->name }}">
-                                                @elseif($info->gender === AdminGenderEnum::Female)
-                                                    <img class="img-thumbnail"
-                                                        src="{{ asset('dashboard') }}/assets/dist/assets/img/employees-female-default.png"
-                                                        style="max-width: 70px;max-height: 70px;" alt="{{ $info->name }}">
+                                                @if ($info->mainSalaryEmployee->employee)
+                                                    <!-- تحقق أولاً من وجود الموظف -->
+                                                    @if ($info->mainSalaryEmployee->employee->getFirstMediaUrl('photo', 'preview'))
+                                                        <img class="img-thumbnail rounded-circle"
+                                                            src="{{ $info->employee->getFirstMediaUrl('photo', 'preview') }}"
+                                                            style="width: 70px; height: 70px; object-fit: cover;"
+                                                            alt="{{ $info->mainSalaryEmployee->employee_name }}">
+                                                    @elseif($info->employee->gender === AdminGenderEnum::Male)
+                                                        <img class="img-thumbnail rounded-circle"
+                                                            src="{{ asset('dashboard') }}/assets/dist/assets/img/employees-male-default.png"
+                                                            style="width: 70px; height: 70px; object-fit: cover;"
+                                                            alt="{{ $info->mainSalaryEmployee->employee_name}}">
+                                                    @elseif($info->employee->gender === AdminGenderEnum::Female)
+                                                        <img class="img-thumbnail rounded-circle"
+                                                            src="{{ asset('dashboard') }}/assets/dist/assets/img/employees-female-default.png"
+                                                            style="width: 70px; height: 70px; object-fit: cover;"
+                                                            alt="{{ $info->mainSalaryEmployee->employee_name}}">
+                                                    @else
+                                                        <img class="img-thumbnail rounded-circle"
+                                                            src="{{ asset('dashboard') }}/assets/img/Employee.png"
+                                                            style="width: 70px; height: 70px; object-fit: cover;"
+                                                            alt="صورة افتراضية">
+                                                    @endif
                                                 @else
-                                                    <img class="img-thumbnail"
+                                                    <img class="img-thumbnail rounded-circle"
                                                         src="{{ asset('dashboard') }}/assets/img/Employee.png"
-                                                        style="max-width: 70px;max-height: 70px;" alt="{{ $info->name }}">
+                                                        style="width: 70px; height: 70px; object-fit: cover;"
+                                                        alt="لا يوجد موظف">
                                                 @endif
                                             </td>
                                             <td>{{ $info->employee_code }}</td>
-                                            <td>{{ $info->name }}</td>
-                                            <td>{{ $info->branch?->name }}</td>
-                                            <td>{{ $info->jobCategory?->name }}</td>
-                                            <td>{{ $info->mobile }}</td>
+                                            <td>{{ $info->mainSalaryEmployee->employee_name }}</td>
                                             <td>
-                                                @if ($info->active == StatusActiveEnum::ACTIVE)
-                                                    <span class="badge bg-success">مفعل</span>
-                                                @else
-                                                    <span class="badge bg-danger">غير مفعل</span>
+                                                @if ($info->sanctions_type)
+                                                    {{ SanctionTypeEnum::from($info->sanctions_type)->label() }}
                                                 @endif
                                             </td>
-                                            <td style="max-width: 30px; max-height: 70px;">
-                                                <div class="cv-container">
-                                                    @if ($info->getFirstMediaUrl('cv'))
-                                                        @if (Str::endsWith($info->getFirstMediaUrl('cv'), ['.pdf', '.PDF']))
-                                                            <!-- عرض أيقونة PDF مع اسم ملف يظهر عند Hover -->
-                                                            <div class="pdf-preview">
-                                                                <a href="{{ $info->getFirstMediaUrl('cv') }}"
-                                                                    target="_blank" class="pdf-link">
-                                                                    <div class="pdf-icon-wrapper">
-                                                                        <i class="fas fa-file-pdf pdf-icon"></i>
-                                                                        <span
-                                                                            class="pdf-tooltip">{{ basename($info->getFirstMediaUrl('cv')) }}</span>
-                                                                    </div>
-                                                                </a>
-                                                            </div>
-                                                        @else
-                                                            <!-- عرض الصورة مع اسم ملف يظهر عند Hover -->
-                                                            <div class="img-preview">
-                                                                <img class="img-thumbnail"
-                                                                    src="{{ $info->getFirstMediaUrl('cv') }}"
-                                                                    style="max-width: 70px; max-height: 70px;"
-                                                                    alt="{{ $info->name }}">
-                                                                <span
-                                                                    class="img-tooltip">{{ basename($info->getFirstMediaUrl('cv')) }}</span>
-                                                            </div>
-                                                        @endif
-                                                    @else
-                                                        <span class="no-cv">لا يوجد سيرة ذاتية</span>
-                                                    @endif
-                                                </div>
+                                            <td>{{ $info->value * 1 }}</td>
+                                            <td>{{ $info->total * 1 }}</td>
+                                            <td>{{ $info->notes }}</td>
+                                            <td>
+                                                @if ($info->is_archived == IsArchivedEnum::Yes)
+                                                    <span class="badge bg-success">مفعل</span>
+                                                @else
+                                                    <span class="badge bg-danger">مؤرشف</span>
+                                                @endif
                                             </td>
+                          
+                                            
 
                                             <td>
-                                                @include('dashboard.partials.actions', [
-                                                    'name' => 'employees',
-                                                    'name_id' => $info->slug,
-                                                ])
+                                                {{-- @include('dashboard.partials.actions', [
+                                                    'name' => 'sanctions',
+                                                    'name_id' => $info->id,
+                                                ]) --}}
                                             </td>
                                         </tr>
                                     @empty

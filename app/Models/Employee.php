@@ -3,13 +3,11 @@
 namespace App\Models;
 
 use App\Enums\YesOrNoEnum;
-use Spatie\Image\Enums\Fit;
 use Spatie\Sluggable\HasSlug;
 use App\Enums\AdminGenderEnum;
 use EloquentFilter\Filterable;
 use App\Enums\StatusActiveEnum;
 use App\Enums\Employee\Military;
-use Spatie\MediaLibrary\HasMedia;
 use Spatie\Sluggable\SlugOptions;
 use App\Enums\Employee\ReligionEnum;
 use App\Enums\Employee\SocialStatus;
@@ -21,6 +19,8 @@ use App\Enums\Employee\DrivingLicenseType;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use App\Enums\Employee\GraduationEstimateEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Spatie\Image\Enums\Fit;
+use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 
@@ -111,7 +111,7 @@ class Employee extends Model implements HasMedia
     ];
 
 
-    public function registerMediaConversions(Media $media = null): void
+    public function registerMediaConversions(?Media $media = null): void
     {
         $this
             ->addMediaConversion('preview')
@@ -119,6 +119,11 @@ class Employee extends Model implements HasMedia
             ->nonQueued();
     }
 
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('photo')->singleFile();
+    }
 
     public function getSlugOptions(): SlugOptions
     {
@@ -226,6 +231,7 @@ class Employee extends Model implements HasMedia
     {
         return $this->belongsTo(Currency::class, 'currency_id');
     }
+
 
 
     protected $casts = [

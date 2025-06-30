@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(FinanceCalendar::class)->nullable()->constrained()->nullOnDelete();
             $table->string('finance_yr'); //('السنة المالية')
+            $table->string('slug')->unique()->nullable();
             $table->string('year_and_month', 10); //محتاج ان اقوم بالتسجيل بالشهر و السنه و ليس باليوم
             $table->date('start_date_m');
             $table->date('end_date_m');

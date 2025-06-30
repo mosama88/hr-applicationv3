@@ -98,7 +98,7 @@ Route::middleware(['auth:admin'])->group(function () {
         Route::get('/', 'index')->name('index');
         Route::get('/show/{financeClnPeriod}', 'show')->name('show');
         Route::get('/create/{financeClnPeriod}', 'create')->name('create');
-        Route::post('/create/{financeClnPeriod}', 'store')->name('store');
+        Route::post('/store/{financeClnPeriod}', 'store')->name('store');
     });
 
 

@@ -5,10 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\Enums\FinanceClnPeriodsIsOpen;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
 class FinanceClnPeriod extends Model
 {
-    use HasFactory;
+    use HasFactory, HasSlug;
 
     protected $table = 'finance_cln_periods';
     protected $fillable = [
@@ -25,6 +27,18 @@ class FinanceClnPeriod extends Model
         'updated_by',
         'com_code',
     ];
+
+    public function getSlugOptions(): SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom('year_and_month')
+            ->saveSlugsTo('slug');
+    }
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
 
     public function FinanceCalendar()
     {
@@ -44,7 +58,5 @@ class FinanceClnPeriod extends Model
     protected $casts = [
         'is_open' => FinanceClnPeriodsIsOpen::class,
         'period_date' => 'date',
-
-        // etc.
     ];
 }

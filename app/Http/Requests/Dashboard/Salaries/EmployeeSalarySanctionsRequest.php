@@ -6,7 +6,7 @@ use Illuminate\Validation\Rule;
 use App\Enums\Salaries\SanctionTypeEnum;
 use Illuminate\Foundation\Http\FormRequest;
 
-class SalarySanctionsRequest extends FormRequest
+class EmployeeSalarySanctionsRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

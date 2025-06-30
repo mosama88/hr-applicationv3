@@ -4,14 +4,15 @@ namespace App\Http\Controllers\Dashboard\Salaries;
 
 use App\Models\Employee;
 use Illuminate\Http\Request;
+use App\Enums\IsArchivedEnum;
 use App\Enums\StatusActiveEnum;
 use App\Models\FinanceClnPeriod;
+use App\Models\MainSalaryEmployee;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Enums\FinanceClnPeriodsIsOpen;
 use App\Models\EmployeeSalarySanction;
-use App\Http\Requests\Dashboard\Salaries\SalarySanctionsRequest;
-use App\Models\MainSalaryEmployee;
+use App\Http\Requests\Dashboard\Salaries\EmployeeSalarySanctionsRequest;
 
 class SalarySanctionsController extends Controller
 {
@@ -60,9 +61,29 @@ class SalarySanctionsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(SalarySanctionsRequest $request)
+    public function store(EmployeeSalarySanctionsRequest $request, $financeClnPeriodId)
     {
-        //
+        $com_code = Auth::user()->com_code;
+        $userId = Auth::user()->id;
+        $financeClnPeriod = FinanceClnPeriod::where('com_code', $com_code)
+            ->where('id', $financeClnPeriodId)
+            ->firstOrFail();
+        $validateData = $request->validated();
+        $dataInsert = array_merge($validateData, [
+            'finance_cln_period_id' => $financeClnPeriod->id,
+            'main_salary_employee_id' => $request->main_salary_employee_id,
+            'employee_code' => $request->employee_code,
+            'day_price' => $request->day_price,
+            'sanctions_type' => $request->sanctions_type,
+            'value' => $request->value,
+            'total' => $request->total,
+            'notes' => $request->notes,
+            'is_archived' => IsArchivedEnum::No,
+            'com_code' => $com_code,
+            'created_by' => $userId,
+        ]);
+        EmployeeSalarySanction::create($dataInsert);
+        return redirect()->route('dashboard.sanctions.show', $financeClnPeriodId)->with('success', 'تم أضاف الجزاء بنجاح');
     }
 
     /**
@@ -73,7 +94,6 @@ class SalarySanctionsController extends Controller
 
         $com_code = Auth::user()->com_code;
         $finance_cln_periods_data = FinanceClnPeriod::where('com_code', $com_code)->where('id', $financeClnPeriod->id)->get();
-
         if (!$finance_cln_periods_data) {
             return redirect()->back()->withErrors(['error' => 'عفوا غير قادر للوصول على البيانات المطلوبه !'])->withInput();
         }
@@ -82,15 +102,6 @@ class SalarySanctionsController extends Controller
             ->where('com_code', $com_code)
             ->where('finance_cln_period_id', $financeClnPeriod->id)
             ->paginate(5);
-
-
-        $employees = MainSalaryEmployee::where('com_code', '=', $com_code)->where('finance_cln_period_id', $financeClnPeriod->id)->distinct()->get('employee_code');
-        // if ($employees) {
-        //     foreach ($employees as $info) {
-        //         $info->EmployeeData = get_Columns_where_row(new Employee, ['name', 'salary', 'day_price'], ['com_code' => $com_code, 'employee_code' => $info->employee_code]);
-        //     }
-        // }
-
 
         return view('dashboard.salaries.sanctions.show', compact('financeClnPeriod', 'data'));
     }
@@ -119,14 +130,15 @@ class SalarySanctionsController extends Controller
         //
     }
 
-
     public function getDayPrice($id)
     {
-        $employee = Employee::find($id);
+        $employee = MainSalaryEmployee::find($id); // تأكد من استخدام النموذج الصحيح
+
         if ($employee) {
             return response()->json([
                 'status' => true,
-                'day_price' => $employee->day_price
+                'day_price' => $employee->day_price,
+                'employee_code' => $employee->employee_code // تأكد من أن الحقل موجود في النموذج
             ]);
         }
 

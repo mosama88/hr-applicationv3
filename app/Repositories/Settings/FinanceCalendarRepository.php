@@ -63,7 +63,9 @@ class FinanceCalendarRepository implements FinanceCalendarInterface
     public function deleteData(FinanceCalendar $financeCalendar)
     {
         $com_code = Auth::user()->com_code;
-
+        if ($financeCalendar->com_code != $com_code) {
+            throw new \Exception('عفوآ لقد حدث خطأ ما!');
+        }
         // Check if any financial year is still open
         $openYearsCount = FinanceCalendar::where('com_code', $com_code)
             ->where('is_open', FinanceCalendarsIsOpen::Open)
@@ -75,17 +77,14 @@ class FinanceCalendarRepository implements FinanceCalendarInterface
 
         // Check for open periods
         $openPeriodsCount = FinanceClnPeriod::where('com_code', $com_code)
-            ->where('finance_calendar_id', $financeCalendar->id)
+            ->where('finance_calendar_id', $financeCalendar->slug)
             ->where('is_open', "!=", FinanceClnPeriodsIsOpen::Archived)
             ->count();
-
         if ($openPeriodsCount > 0) {
             throw new \Exception('عفوآ ! يوجد شهور مالية مفتوحة او معلقة. لا يمكن حذف السنة المالية حتى يتم أرشفة جميع الشهور');
         }
 
-        if ($financeCalendar->com_code != $com_code) {
-            throw new \Exception('عفوآ لقد حدث خطأ ما!');
-        }
+
 
         // Perform deletion
         FinanceClnPeriod::where('finance_calendar_id', $financeCalendar->id)->delete();

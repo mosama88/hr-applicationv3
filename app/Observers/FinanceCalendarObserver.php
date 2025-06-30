@@ -39,7 +39,7 @@ class FinanceCalendarObserver
                 $dataMonth['created_at'] = now();
                 $dataMonth['created_by'] = Auth::user()->id;
 
-                FinanceClnPeriod::insert($dataMonth);
+                FinanceClnPeriod::create($dataMonth);
             }
         }
     }

@@ -27,6 +27,13 @@ class EmployeeFilter extends ModelFilter
             $query->whereLike('fp_code', '%' . $value . '%');
         });
     }
+    
+    public function employeeCodeSearch($value)
+    {
+        return $this->where(function ($query) use ($value) {
+            $query->whereLike('employee_code', '%' . $value . '%');
+        });
+    }
 
     public function branch($value)
     {

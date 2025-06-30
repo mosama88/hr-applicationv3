@@ -2,12 +2,18 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Spatie\Image\Enums\Fit;
+use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class EmployeeSalarySanction extends Model
+class EmployeeSalarySanction extends Model implements HasMedia
+
 {
-    use HasFactory;
+    use HasFactory, InteractsWithMedia;
+
 
     protected $table = 'employee_salary_sanctions';
 
@@ -30,6 +36,13 @@ class EmployeeSalarySanction extends Model
         'updated_by'
     ];
 
+    public function registerMediaConversions(?Media $media = null): void
+    {
+        $this
+            ->addMediaConversion('preview')
+            ->fit(Fit::Contain, 300, 300)
+            ->nonQueued();
+    }
 
     public function mainSalaryEmployee()
     {
@@ -41,7 +54,6 @@ class EmployeeSalarySanction extends Model
         return $this->belongsTo(FinanceClnPeriod::class, 'finance_cln_period_id');
     }
 
-
     public function employee()
     {
         return $this->belongsTo(Employee::class, 'employee_code');
@@ -51,7 +63,7 @@ class EmployeeSalarySanction extends Model
     {
         return $this->belongsTo(Admin::class, 'archived_by');
     }
-    
+
     public function createdBy()
     {
         return $this->belongsTo(Admin::class, 'created_by');
