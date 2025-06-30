@@ -14,9 +14,9 @@
     @include('dashboard.layouts.message')
     <!-- Content Header (Page header) -->
     @include('dashboard.layouts.breadcrumbs', [
-        'titlePage' => 'تعديل جزاء الموظف ',
+        'titlePage' => 'تعديل جزاء للموظف ',
         'previousPage' => 'جدول الجزاءات',
-        'currentPage' => 'تعديل جزاء الموظف ',
+        'currentPage' => 'تعديل جزاء للموظف ',
         'url' => 'sanctions.index',
     ])
 

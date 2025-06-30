@@ -17,7 +17,8 @@
         'titlePage' => 'انشاء جزاء للموظف ',
         'previousPage' => 'جدول الجزاءات',
         'currentPage' => 'انشاء جزاء للموظف ',
-        'url' => 'sanctions.index',
+        'url' => 'sanctions.show',
+        'url2' => $financeClnPeriod->slug,
     ])
 
     <section class="content">
