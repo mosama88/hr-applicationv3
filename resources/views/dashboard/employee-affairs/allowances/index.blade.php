@@ -14,7 +14,8 @@
 
     @include('dashboard.layouts.breadcrumbs', [
         'titlePage' => 'جدول أنواع البدلات',
-        'previousPage' => 'لوحة التحكم',
+           'previousPage' => '',
+        'class' => 'fa-solid fa-house',
         'currentPage' => 'جدول أنواع البدلات',
         'url' => 'index',
     ])

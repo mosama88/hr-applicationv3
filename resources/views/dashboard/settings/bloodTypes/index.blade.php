@@ -14,7 +14,8 @@
 
     @include('dashboard.layouts.breadcrumbs', [
         'titlePage' => 'جدول فصيلة الدم',
-        'previousPage' => 'لوحة التحكم',
+        'previousPage' => '',
+        'class' => 'fa-solid fa-house',
         'currentPage' => 'جدول فصيلة الدم',
         'url' => 'index',
     ])

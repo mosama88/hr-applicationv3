@@ -14,7 +14,8 @@
 
     @include('dashboard.layouts.breadcrumbs', [
         'titlePage' => 'جدول الجنسيات',
-        'previousPage' => 'لوحة التحكم',
+           'previousPage' => '',
+        'class' => 'fa-solid fa-house',
         'currentPage' => 'جدول الجنسيات',
         'url' => 'index',
     ])

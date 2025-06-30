@@ -14,7 +14,8 @@
 
     @include('dashboard.layouts.breadcrumbs', [
         'titlePage' => 'جدول الادارات',
-        'previousPage' => 'لوحة التحكم',
+        'previousPage' => '',
+        'class' => 'fa-solid fa-house',
         'currentPage' => 'جدول الادارات',
         'url' => 'index',
     ])

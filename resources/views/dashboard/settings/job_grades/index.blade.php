@@ -14,7 +14,8 @@
 
     @include('dashboard.layouts.breadcrumbs', [
         'titlePage' => 'جدول الدرجات الوظيفية',
-        'previousPage' => 'لوحة التحكم',
+           'previousPage' => '',
+        'class' => 'fa-solid fa-house',
         'currentPage' => 'جدول الدرجات الوظيفية',
         'url' => 'index',
     ])

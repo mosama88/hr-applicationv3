@@ -14,7 +14,8 @@
 
     @include('dashboard.layouts.breadcrumbs', [
         'titlePage' => 'جدول المؤهلات',
-        'previousPage' => 'لوحة التحكم',
+           'previousPage' => '',
+        'class' => 'fa-solid fa-house',
         'currentPage' => 'جدول المؤهلات',
         'url' => 'index',
     ])

@@ -39,7 +39,8 @@
     <!-- Content Header (Page header) -->
     @include('dashboard.layouts.breadcrumbs', [
         'titlePage' => 'السجلات الرئيسية للرواتب',
-        'previousPage' => 'لوحة التحكم',
+           'previousPage' => '',
+        'class' => 'fa-solid fa-house',
         'currentPage' => 'السجلات الرئيسية للرواتب',
         'url' => 'index',
     ])

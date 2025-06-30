@@ -81,7 +81,8 @@
 
     @include('dashboard.layouts.breadcrumbs', [
         'titlePage' => 'جدول الموظفين',
-        'previousPage' => 'لوحة التحكم',
+           'previousPage' => '',
+        'class' => 'fa-solid fa-house',
         'currentPage' => 'جدول الموظفين',
         'url' => 'index',
     ])

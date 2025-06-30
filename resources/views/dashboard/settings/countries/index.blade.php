@@ -14,7 +14,8 @@
 
     @include('dashboard.layouts.breadcrumbs', [
         'titlePage' => 'جدول الدول',
-        'previousPage' => 'لوحة التحكم',
+        'previousPage' => '',
+        'class' => 'fa-solid fa-house',
         'currentPage' => 'جدول الدول',
         'url' => 'index',
     ])

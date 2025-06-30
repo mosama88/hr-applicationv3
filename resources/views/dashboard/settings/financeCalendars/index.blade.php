@@ -24,7 +24,8 @@
 
     @include('dashboard.layouts.breadcrumbs', [
         'titlePage' => 'السنوات المالية',
-        'previousPage' => 'لوحة التحكم',
+        'previousPage' => '',
+        'class' => 'fa-solid fa-house',
         'currentPage' => 'السنوات المالية',
         'url' => 'index',
     ])

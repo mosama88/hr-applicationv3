@@ -13,7 +13,8 @@
 
     @include('dashboard.layouts.breadcrumbs', [
         'titlePage' => 'إعدادات الشركة',
-        'previousPage' => 'لوحة التحكم',
+        'previousPage' => '',
+        'class' => 'fa-solid fa-house',
         'currentPage' => 'إعدادات الشركة',
         'url' => 'index',
     ])

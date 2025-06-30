@@ -1,5 +1,5 @@
 @php
-use App\Livewire\CityTable;
+    use App\Livewire\CityTable;
 @endphp
 @extends('dashboard.layouts.master')
 @section('active-cities', 'active')
@@ -14,7 +14,8 @@ use App\Livewire\CityTable;
 
     @include('dashboard.layouts.breadcrumbs', [
         'titlePage' => 'جدول المدن',
-        'previousPage' => 'لوحة التحكم',
+        'previousPage' => '',
+        'class' => 'fa-solid fa-house',
         'currentPage' => 'جدول المدن',
         'url' => 'index',
     ])
@@ -45,7 +46,7 @@ use App\Livewire\CityTable;
 
                             </div>
                         </div>
-        @livewire(CityTable::class)
+                        @livewire(CityTable::class)
                     </div>
 
                 </div>

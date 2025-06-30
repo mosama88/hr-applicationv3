@@ -5,7 +5,8 @@
 @section('content')
     @include('dashboard.layouts.breadcrumbs', [
         'titlePage' => 'لوحة التحكم',
-        'previousPage' => 'لوحة التحكم',
+        'previousPage' => '',
+        'class' => 'fa-solid fa-house',
         'currentPage' => 'لوحة التحكم',
         'url' => 'index',
     ])
