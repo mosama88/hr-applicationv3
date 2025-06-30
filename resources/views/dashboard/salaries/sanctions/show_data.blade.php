@@ -4,7 +4,7 @@
 @endphp
 @extends('dashboard.layouts.master')
 @section('active-financeCalendars', 'active')
-@section('title', 'أنشاء جزاء للموظف')
+@section('title', 'عرض بيانات جزاء الموظف')
 @push('css')
     <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/dist/css/select2.min.css" />
     <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/dist/css/select2-style.css" />
@@ -14,12 +14,12 @@
     @include('dashboard.layouts.message')
     <!-- Content Header (Page header) -->
     @include('dashboard.layouts.breadcrumbs', [
-        'titlePage' => 'أنشاء جزاء للموظف ',
-        'previousPage' => 'الشهور المالية',
-        'currentPage' => 'أنشاء جزاء للموظف ',
-        'url' => 'sanctions.index',
+        'titlePage' => 'عرض بيانات جزاء الموظف ',
+        'previousPage' => 'جدول الجزاءات',
+        'currentPage' => 'عرض بيانات جزاء الموظف ',
+        'url' => 'index',
     ])
-
+    <a href="{{ route('dashboard.sanctions.show', $financeClnPeriod->id) }}"></a>
     <section class="content">
         <div class="container-fluid">
 

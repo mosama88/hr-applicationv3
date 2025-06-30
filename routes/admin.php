@@ -99,8 +99,8 @@ Route::middleware(['auth:admin'])->group(function () {
         Route::get('/create/{financeClnPeriod}', 'create')->name('create');
         Route::post('/store/{financeClnPeriod}', 'store')->name('store');
         Route::get('/show/{financeClnPeriod}', 'show')->name('show');
-        Route::get('/edit/{slug}', 'edit')->name('edit');
-        Route::patch('/update/{id}', 'update')->name('update');
+        Route::get('/edit/{sanction}', 'edit')->name('edit');
+        Route::patch('/update/{slug}', 'update')->name('update');
         Route::delete('/delete/{slug}', 'destroy')->name('destroy');
     });
 
