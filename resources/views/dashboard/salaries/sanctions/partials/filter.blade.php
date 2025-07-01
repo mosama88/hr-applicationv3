@@ -25,6 +25,7 @@
             @csrf
             <input type="file" name="file" class="form-control mb-2" required>
             <button class="btn btn-primary">استيراد ملف</button>
+            
         </form>
         <form action="{{ route('dashboard.sanctions.show', $financeClnPeriod->slug) }}" method="GET">
             <div class="row">

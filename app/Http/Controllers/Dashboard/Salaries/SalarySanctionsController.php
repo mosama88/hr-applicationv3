@@ -241,11 +241,13 @@ class SalarySanctionsController extends Controller
     public function import(Request $request)
     {
         $request->validate([
-            'file' => 'required|mimes:xlsx,xls,csv'
+            'file' => 'required|mimes:xlsx,xls,csv',
+            'year_and_month' => 'required|date_format:Y-m'
         ]);
 
         try {
-            Excel::import(new EmployeeSalarySanctionImport, $request->file('file'));
+            // مرر قيمة السنة والشهر إلى كلاس الاستيراد
+            Excel::import(new EmployeeSalarySanctionImport($request->year_and_month), $request->file('file'));
 
             return back()->with('success', 'تم استيراد الملف بنجاح.');
         } catch (\Exception $e) {

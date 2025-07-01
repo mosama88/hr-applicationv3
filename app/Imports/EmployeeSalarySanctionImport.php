@@ -11,25 +11,30 @@ use Maatwebsite\Excel\Concerns\ToModel;
 class EmployeeSalarySanctionImport implements ToModel
 {
 
-    public $financeClnPeriodId;
-    /**
-     * @param array $row
-     *
-     * @return \Illuminate\Database\Eloquent\Model|null
-     */
+    protected $yearAndMonth;
+
+    public function __construct($yearAndMonth)
+    {
+        $this->yearAndMonth = $yearAndMonth;
+    }
+
     public function model(array $row)
     {
         $com_code = Auth::user()->com_code;
         $userId = Auth::user()->id;
+
+        // الحصول على الشهر المالي المطلوب
         $financeClnPeriod = FinanceClnPeriod::where('com_code', $com_code)
-            ->where('id', $this->financeClnPeriodId)
-            ->firstOrFail();
-        if ($financeClnPeriod->is_open != FinanceClnPeriodsIsOpen::Open) {
-            return redirect()->route('dashboard.sanctions.show', $financeClnPeriod->slug)->withErrors(['error' => 'عفوا الشهر المالى غير مفتوح !'])->withInput();
+            ->where('year_and_month', $this->yearAndMonth)
+            ->where('is_open', FinanceClnPeriodsIsOpen::Open)
+            ->first();
+
+        if (!$financeClnPeriod) {
+            throw new \Exception("الشهر المالي المحدد غير موجود أو غير مفتوح.");
         }
-        
+
         return new EmployeeSalarySanction([
-            'finance_calendar_id'       => $row['finance_calendar_id'],
+            'finance_calendar_id'       => $financeClnPeriod->yearAndMonth,
             'main_salary_employee_id'   => $row['main_salary_employee_id'],
             'employee_code'             => $row['employee_code'],
             'day_price'                 => $row['day_price'],
@@ -38,7 +43,7 @@ class EmployeeSalarySanctionImport implements ToModel
             'total'                     => $row['total'],
             'notes'                     => $row['notes'],
             'com_code'                  => $com_code,
-            'created_by'                =>  $userId,
+            'created_by'                => $userId,
         ]);
     }
 }
