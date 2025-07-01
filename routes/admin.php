@@ -104,6 +104,7 @@ Route::middleware(['auth:admin'])->group(function () {
         Route::match(['put', 'patch'], '/update/{slug}', 'update')->name('update');
         Route::delete('/delete/{sanction}', 'destroy')->name('destroy');
         Route::get('/sanctions/export/{slug}', 'export')->name('export');
+        Route::post('/sanctions/import','import')->name('import');
     });
 
 

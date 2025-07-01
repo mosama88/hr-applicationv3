@@ -10,11 +10,12 @@ use App\Models\FinanceClnPeriod;
 use App\Models\MainSalaryEmployee;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Enums\FinanceClnPeriodsIsOpen;
 use App\Models\EmployeeSalarySanction;
 use App\Exports\EmployeeSalarySanctionExport;
+use App\Imports\EmployeeSalarySanctionImport;
 use App\Http\Requests\Dashboard\Salaries\EmployeeSalarySanctionsRequest;
-use Maatwebsite\Excel\Facades\Excel;
 
 class SalarySanctionsController extends Controller
 {
@@ -233,6 +234,22 @@ class SalarySanctionsController extends Controller
                 'message' => 'حدث خطأ أثناء محاولة التصدير',
                 'error' => $e->getMessage()
             ], 500);
+        }
+    }
+
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls,csv'
+        ]);
+
+        try {
+            Excel::import(new EmployeeSalarySanctionImport, $request->file('file'));
+
+            return back()->with('success', 'تم استيراد الملف بنجاح.');
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => 'فشل الاستيراد: ' . $e->getMessage()]);
         }
     }
 }

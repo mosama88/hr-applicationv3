@@ -20,6 +20,12 @@
             href="{{ route('dashboard.sanctions.export', $financeClnPeriod->slug) }}">
             <i class="fas fa-arrow-alt-circle-down ml-2"></i> تحميل اكسيل شيت
         </a>
+
+        <form action="{{ route('dashboard.sanctions.import') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            <input type="file" name="file" class="form-control mb-2" required>
+            <button class="btn btn-primary">استيراد ملف</button>
+        </form>
         <form action="{{ route('dashboard.sanctions.show', $financeClnPeriod->slug) }}" method="GET">
             <div class="row">
 
