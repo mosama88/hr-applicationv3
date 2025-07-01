@@ -135,7 +135,7 @@ class MainSalaryRecordController extends Controller
                                 ->select('net_salary_after_close_for_deportation')
                                 ->where('com_code', $com_code)
                                 ->where('employee_code', $info->employee_code)
-                                ->where('is_archived', IsArchivedEnum::Yes)
+                                ->where('is_archived', IsArchivedEnum::Archived)
                                 ->first(); // ✅ رجع سجل واحد وليس مجموعة
 
                             if ($lastSalaryData) {
@@ -211,7 +211,7 @@ class MainSalaryRecordController extends Controller
     public function closeMonth($id)
     {
         try {
-            $userId= Auth::user()->id;
+            $userId = Auth::user()->id;
             $com_code = Auth::user()->com_code;
 
 
@@ -237,7 +237,7 @@ class MainSalaryRecordController extends Controller
 
             $dataToUpdate = [
                 'is_open' => FinanceClnPeriodsIsOpen::Archived,
-                'updated_by' =>$userId,
+                'updated_by' => $userId,
                 'com_code' => $com_code,
             ];
 
@@ -246,17 +246,17 @@ class MainSalaryRecordController extends Controller
                 $all_main_salary_employee = MainSalaryEmployee::orderBy('id', 'ASC')->where('com_code', $com_code)->where('finance_cln_period_id', $id)->get();
                 if ($all_main_salary_employee) {
                     foreach ($all_main_salary_employee as $info) {
-                        $dataUpdate['is_archived'] = IsArchivedEnum::Yes;
+                        $dataUpdate['is_archived'] = IsArchivedEnum::Archived;
                         $dataUpdate['archived_date'] = now();
-                        $dataUpdate['archived_by'] =$userId;
-                        $dataUpdate['updated_by'] =$userId;
+                        $dataUpdate['archived_by'] = $userId;
+                        $dataUpdate['updated_by'] = $userId;
                         if ($info->net_salary < 0) {
                             $dataUpdate['net_salary_after_close_for_deportation'] = $info->net_salary;
                         } else {
                             $dataUpdate['net_salary_after_close_for_deportation'] = 0;
                         }
                         MainSalaryEmployee::where('com_code', $com_code)->where('finance_cln_period_id', $id)
-                            ->where('is_stopped', IsStoppedSalaryEnum::Unstopped)->where('is_archived', IsArchivedEnum::No)->update($dataUpdate);
+                            ->where('is_stopped', IsStoppedSalaryEnum::Unstopped)->where('is_archived', IsArchivedEnum::Unarchived)->update($dataUpdate);
                     }
                 }
             }

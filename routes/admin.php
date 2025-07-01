@@ -100,6 +100,7 @@ Route::middleware(['auth:admin'])->group(function () {
         Route::post('/store/{financeClnPeriod}', 'store')->name('store');
         Route::get('/show/{financeClnPeriod}', 'show')->name('show');
         Route::get('/edit/{sanction}', 'edit')->name('edit');
+        Route::get('/show/data/{sanction}', 'showData')->name('show-data');
         Route::patch('/update/{slug}', 'update')->name('update');
         Route::delete('/delete/{slug}', 'destroy')->name('destroy');
     });

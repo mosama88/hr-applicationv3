@@ -187,7 +187,7 @@
 
 
                                             <td>
-                                                @include('dashboard.partials.actions', [
+                                                @include('dashboard.partials.actions_salaries', [
                                                     'name' => 'sanctions',
                                                     'name_id' => $info->slug,
                                                 ])

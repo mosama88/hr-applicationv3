@@ -31,7 +31,7 @@
                         <!--begin::Form-->
 
                         <form action="{{ route('dashboard.main_salary_records.open-month', $financeClnPeriod->id) }}"
-                            method="POST">
+                            method="POST" id="storeForm">
                             @csrf
                             @method('PUT')
                             <div class="card-body">
