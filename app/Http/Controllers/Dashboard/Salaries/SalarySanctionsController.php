@@ -98,7 +98,7 @@ class SalarySanctionsController extends Controller
             return redirect()->back()->withErrors(['error' => 'عفوا غير قادر للوصول على البيانات المطلوبه !'])->withInput();
         }
 
-        $data = EmployeeSalarySanction::orderBy('id', 'DESC')
+        $data = EmployeeSalarySanction::filter(request()->all())->orderBy('id', 'DESC')
             ->where('com_code', $com_code)
             ->where('finance_cln_period_id', $financeClnPeriod->id)
             ->paginate(5);

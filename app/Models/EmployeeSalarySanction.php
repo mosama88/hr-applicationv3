@@ -4,20 +4,21 @@ namespace App\Models;
 
 use Spatie\Image\Enums\Fit;
 use App\Enums\IsArchivedEnum;
+use Spatie\Sluggable\HasSlug;
+use EloquentFilter\Filterable;
 use Spatie\MediaLibrary\HasMedia;
+use Spatie\Sluggable\SlugOptions;
 use Illuminate\Database\Eloquent\Model;
 use App\Enums\Salaries\IsAutoSalaryEnum;
 use App\Enums\Salaries\SanctionTypeEnum;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
-use Spatie\Sluggable\HasSlug;
-use Spatie\Sluggable\SlugOptions;
 
 class EmployeeSalarySanction extends Model implements HasMedia
 
 {
-    use HasFactory, InteractsWithMedia, HasSlug;
+    use HasFactory, Filterable, InteractsWithMedia, HasSlug;
 
 
     protected $table = 'employee_salary_sanctions';

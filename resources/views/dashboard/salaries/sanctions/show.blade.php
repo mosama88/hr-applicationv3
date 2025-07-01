@@ -95,6 +95,7 @@
             <div class="row">
                 <div class="col-12">
 
+                    @include('dashboard.salaries.sanctions.partials.filter')
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">
@@ -108,6 +109,9 @@
                                         <i class="fa-solid fa-square-plus mx-1"></i>أضافة جديد</a>
                                 </div>
                             </h3>
+
+
+
 
                             <div class="card-tools">
                                 <h4 class="mb-0">جدول جزاءات الموظفين</h4>
@@ -200,7 +204,7 @@
                             </table>
                             <div class="row">
                                 <div class="col-12 my-2">
-                                    {{ $data->links() }}
+                                    {{ $data->appends(request()->query())->links() }}
                                 </div>
                             </div>
                         </div>
