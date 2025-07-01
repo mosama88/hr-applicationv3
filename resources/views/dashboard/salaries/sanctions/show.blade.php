@@ -9,6 +9,8 @@
 @section('active-sanctions', 'active')
 @section('title', 'جزاءات الموظفين')
 @push('css')
+    <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/dist/css/select2.min.css" />
+    <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/dist/css/select2-style.css" />
     <style>
         /* تنسيق عام لعارض السيرة الذاتية */
         .cv-container {
@@ -218,4 +220,32 @@
 
 @endsection
 @push('js')
+    <script src="{{ asset('dashboard') }}/assets/dist/js/select2.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            // job_category_select2
+            $('.main_salary_employee_id_select2').select2({
+                placeholder: '-- أختر الموظف --',
+                ajax: {
+                    url: "{{ route('dashboard.sanctions.search_employee') }}",
+                    dataType: 'json',
+                    delay: 250, // Delay for better UX
+                    data: function(params) {
+                        return {
+                            q: params.term // Search query
+                        };
+                    },
+                    processResults: function(data) {
+                        return {
+                            results: data.data.map(employees => ({
+                                id: employees.id,
+                                text: `${employees.employee_name} ➜ (${employees.employee_code})`
+                            }))
+                        };
+                    }
+                }
+            });
+        });
+    </script>
 @endpush

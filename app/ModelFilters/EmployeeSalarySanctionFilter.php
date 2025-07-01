@@ -16,7 +16,15 @@ class EmployeeSalarySanctionFilter extends ModelFilter
 
     public function name($value)
     {
-        return $this->whereLike('main_salary_employee_id', $value);
+        return $this->whereHas('mainSalaryEmployee', function ($q) use ($value) {
+            $q->where('employee_name', 'like', '%' . $value . '%');
+        });
+    }
+
+
+    public function employeeCodeSearch($value)
+    {
+        return $this->whereLike('employee_code', '%' . $value . '%');
     }
 
     public function sanctionTypes($value)

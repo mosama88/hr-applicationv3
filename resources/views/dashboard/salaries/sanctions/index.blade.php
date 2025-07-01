@@ -39,7 +39,7 @@
     <!-- Content Header (Page header) -->
     @include('dashboard.layouts.breadcrumbs', [
         'titlePage' => 'السجلات الرئيسية للجزاءات',
-           'previousPage' => '',
+        'previousPage' => '',
         'class' => 'fa-solid fa-house',
         'currentPage' => 'السجلات الرئيسية للجزاءات',
         'url' => 'index',
@@ -89,6 +89,11 @@
                                                     <span class="badge bg-dark">
                                                         {{ FinanceClnPeriodsIsOpen::Archived->label() }}
                                                     </span>
+                                                    <a title="عرض"
+                                                        href="{{ route('dashboard.sanctions.show', $financeClnPeriod->slug) }}"
+                                                        class="btn btn-sm btn-info text-white">
+                                                        <i class="fa-solid fa-eye"></i>
+                                                    </a>
                                                 @elseif ($financeClnPeriod->FinanceCalendar->is_open == FinanceCalendarsIsOpen::Open)
                                                     {{-- إذا كان التقويم المالي مفتوحا --}}
                                                     @if ($financeClnPeriod->is_open == FinanceClnPeriodsIsOpen::Open)

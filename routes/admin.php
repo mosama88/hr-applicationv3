@@ -101,8 +101,9 @@ Route::middleware(['auth:admin'])->group(function () {
         Route::get('/show/{financeClnPeriod}', 'show')->name('show');
         Route::get('/edit/{sanction}', 'edit')->name('edit');
         Route::get('/show/data/{sanction}', 'showData')->name('show-data');
-        Route::patch('/update/{slug}', 'update')->name('update');
+        Route::match(['put', 'patch'], '/update/{slug}', 'update')->name('update');
         Route::delete('/delete/{sanction}', 'destroy')->name('destroy');
+        Route::get('/export', 'export')->name('export');
     });
 
 

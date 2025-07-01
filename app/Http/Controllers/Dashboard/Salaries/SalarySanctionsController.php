@@ -12,7 +12,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Enums\FinanceClnPeriodsIsOpen;
 use App\Models\EmployeeSalarySanction;
+use App\Exports\EmployeeSalarySanctionExport;
 use App\Http\Requests\Dashboard\Salaries\EmployeeSalarySanctionsRequest;
+use Maatwebsite\Excel\Facades\Excel;
 
 class SalarySanctionsController extends Controller
 {
@@ -68,6 +70,9 @@ class SalarySanctionsController extends Controller
         $financeClnPeriod = FinanceClnPeriod::where('com_code', $com_code)
             ->where('id', $financeClnPeriodId)
             ->firstOrFail();
+        if ($financeClnPeriod->is_open != FinanceClnPeriodsIsOpen::Open) {
+            return redirect()->route('dashboard.sanctions.show', $financeClnPeriod->slug)->withErrors(['error' => 'عفوا الشهر المالى غير مفتوح !'])->withInput();
+        }
         $validateData = $request->validated();
         $dataInsert = array_merge($validateData, [
             'finance_cln_period_id' => $financeClnPeriod->id,
@@ -123,15 +128,38 @@ class SalarySanctionsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(EmployeeSalarySanctionsRequest $request, EmployeeSalarySanction $sanction)
+    public function update(EmployeeSalarySanctionsRequest $request, EmployeeSalarySanction $sanction, FinanceClnPeriod $financeClnPeriodId)
     {
-        //
+        $com_code = Auth::user()->com_code;
+        $userId = Auth::user()->id;
+        $financeClnPeriod = FinanceClnPeriod::where('com_code', $com_code)
+            ->where('id', $financeClnPeriodId)
+            ->firstOrFail();
+        if ($financeClnPeriod->is_open != FinanceClnPeriodsIsOpen::Open) {
+            return redirect()->route('dashboard.sanctions.show', $financeClnPeriod->slug)->withErrors(['error' => 'عفوا الشهر المالى غير مفتوح !'])->withInput();
+        }
+        $validateData = $request->validated();
+        $dataUpdate = array_merge($validateData, [
+            'finance_cln_period_id' => $financeClnPeriod->id,
+            'main_salary_employee_id' => $request->main_salary_employee_id,
+            'employee_code' => $request->employee_code,
+            'day_price' => $request->day_price,
+            'sanctions_type' => $request->sanctions_type,
+            'value' => $request->value,
+            'total' => $request->total,
+            'notes' => $request->notes,
+            'is_archived' => IsArchivedEnum::Unarchived,
+            'com_code' => $com_code,
+            'updated_by' => $userId,
+        ]);
+        $sanction->update($dataUpdate);
+        return redirect()->route('dashboard.sanctions.show', $financeClnPeriod->slug)->with('success', 'تم تعديل الجزاء بنجاح');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(EmployeeSalarySanction $sanction,FinanceClnPeriod $financeClnPeriod)
+    public function destroy(EmployeeSalarySanction $sanction, FinanceClnPeriod $financeClnPeriod)
     {
         try {
             $com_code = Auth::user()->com_code;
@@ -178,5 +206,11 @@ class SalarySanctionsController extends Controller
         return response()->json([
             'data' => $employees
         ]);
+    }
+
+    public function export()
+    {
+        $data = EmployeeSalarySanction::all(); // أو أي استعلام تريده
+        return Excel::download(new EmployeeSalarySanctionExport($data), 'الجزاءات.xlsx');
     }
 }

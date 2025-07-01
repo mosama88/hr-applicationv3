@@ -72,6 +72,7 @@ class EmployeeSalarySanction extends Model implements HasMedia
     {
         return $this->belongsTo(MainSalaryEmployee::class, 'main_salary_employee_id');
     }
+    
 
     public function financeClnPeriod()
     {
