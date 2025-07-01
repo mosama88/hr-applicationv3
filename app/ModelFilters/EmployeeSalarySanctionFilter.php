@@ -14,7 +14,7 @@ class EmployeeSalarySanctionFilter extends ModelFilter
      */
     public $relations = [];
 
-    public function mainSalaryEmployee($value)
+    public function name($value)
     {
         return $this->whereLike('main_salary_employee_id', $value);
     }

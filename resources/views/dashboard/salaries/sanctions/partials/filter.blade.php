@@ -25,11 +25,11 @@
                 <div class="col-md-4 mb-3">
                     <label class="form-label" for="main_salary_employee_id-input">
                         أسم الموظف</label>
-                    <select name="main_salary_employee_id" id="main_salary_employee_id-input"
+                    <select name="name" id="main_salary_employee_id-input"
                         class="select2 form-select main_salary_employee_id_select2" data-allow-clear="true">
-                        @if (old('main_salary_employee_id'))
-                            <option value="{{ request('main_salary_employee_id') }}" selected>
-                                {{ MainSalaryEmployee::find(request('main_salary_employee_id'))?->employee_name }}
+                        @if (request('name'))
+                            <option value="{{ request('name') }}" selected>
+                                {{ MainSalaryEmployee::find(request('name'))?->employee_name }}
                             </option>
                         @endif
                     </select>
@@ -43,7 +43,7 @@
                     <select class="form-select" name="sanction_types" aria-label="Default select example">
                         <option selected value="">-- أختر النوع--</option>
                         @foreach (SanctionTypeEnum::cases() as $sanction)
-                            <option value="{{ $sanction->value }}" @if (request('sanctions_type') == $sanction->value) selected @endif>
+                            <option value="{{ $sanction->value }}" @if (request('sanction_types') == $sanction->value) selected @endif>
                                 {{ $sanction->label() }}
                             </option>
                         @endforeach
@@ -56,7 +56,7 @@
                     <label class="form-label" for="value-input">
                         عدد أيام الجزاء</label>
                     <input type="text" name="days_sanctions" class="form-control"
-                        oninput="this.value=this.value.replace(/[^0-9.]/g,'');" value="{{ request('value') }}"
+                        oninput="this.value=this.value.replace(/[^0-9.]/g,'');" value="{{ request('days_sanctions') }}"
                         id="value-input">
                 </div>
             </div>
