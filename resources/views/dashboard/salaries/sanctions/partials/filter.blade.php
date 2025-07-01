@@ -16,7 +16,8 @@
     </div>
     <!-- /.card-header -->
     <div class="card-body">
-        <a class="btn btn-success float-right mx-2" href="{{ route('dashboard.sanctions.export') }}">
+        <a class="btn btn-success float-right mx-2"
+            href="{{ route('dashboard.sanctions.export', $financeClnPeriod->slug) }}">
             <i class="fas fa-arrow-alt-circle-down ml-2"></i> تحميل اكسيل شيت
         </a>
         <form action="{{ route('dashboard.sanctions.show', $financeClnPeriod->slug) }}" method="GET">

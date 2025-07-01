@@ -208,9 +208,31 @@ class SalarySanctionsController extends Controller
         ]);
     }
 
-    public function export()
+    public function export($slug)
     {
-        $data = EmployeeSalarySanction::all(); // أو أي استعلام تريده
-        return Excel::download(new EmployeeSalarySanctionExport($data), 'الجزاءات.xlsx');
+        $com_code = Auth::user()->com_code;
+
+        try {
+            $financeClnPeriod = FinanceClnPeriod::where('com_code', $com_code)
+                ->where('slug', $slug)
+                ->first();
+
+            if (!$financeClnPeriod) {
+                return redirect()->back()->withErrors(['error' => 'عفوا غير قادر للوصول على البيانات المطلوبة !']);
+            }
+
+            $data = EmployeeSalarySanction::where('finance_cln_period_id', $financeClnPeriod->id)
+                ->where('com_code', $com_code)
+                ->with('mainSalaryEmployee')
+                ->get();
+
+            return Excel::download(new EmployeeSalarySanctionExport($data), 'الجزاءات.xlsx');
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'حدث خطأ أثناء محاولة التصدير',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 }

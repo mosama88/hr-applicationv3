@@ -40,6 +40,7 @@ class EmployeeSalarySanctionFactory extends Factory
             'sanctions_type' => fake()->randomElement(SanctionTypeEnum::cases()),
             'value' => $value = fake()->numberBetween(1, 8),
             'total' => $value * $day_price,
+            'notes' => fake()->sentence(),
             'com_code' => 6000,
             'created_by' => IsArchivedEnum::Archived,
         ];
