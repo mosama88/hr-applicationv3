@@ -131,9 +131,27 @@ class SalarySanctionsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(EmployeeSalarySanction $sanction)
+    public function destroy(EmployeeSalarySanction $sanction,FinanceClnPeriod $financeClnPeriod)
     {
-        //
+        try {
+            $com_code = Auth::user()->com_code;
+
+            $finance_cln_periods_data = FinanceClnPeriod::where('com_code', $com_code)->where('id', $financeClnPeriod->id)->get();
+            if (!$finance_cln_periods_data) {
+                return redirect()->back()->withErrors(['error' => 'عفوا غير قادر للوصول على البيانات المطلوبه !'])->withInput();
+            }
+            $sanction->delete();
+            return response()->json([
+                'success' => true,
+                'message' => 'تم حذف الجزاء بنجاح'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'حدث خطأ أثناء محاولة الحذف',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 
     public function getDayPrice($id)
