@@ -23,6 +23,10 @@
                     data-accordion="false">
 
 
+                    <li class="nav-header text-center">برنامج إدارة الموارد البشرية
+                        <p class="text-center">مستشفى الرحمة</p>
+
+                    </li>
 
                     <li class="nav-item">
                         <a href="{{ route('dashboard.index') }}" class="nav-link  @yield('active-dashboard')">
