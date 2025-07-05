@@ -5,12 +5,12 @@
 @push('css')
 @endpush
 
-@if($errors->any())
-@foreach($errors->all() as $error)
-<div class="alert alert-danger text-center">
-        {{$error}}
-    </div>
-@endforeach
+@if ($errors->any())
+    @foreach ($errors->all() as $error)
+        <div class="alert alert-danger text-center">
+            {{ $error }}
+        </div>
+    @endforeach
 @endif
 
 
@@ -25,17 +25,26 @@
     </div>
     <!-- /.card-header -->
     <div class="card-body">
-        <a class="btn btn-success float-right mx-2"
-            href="{{ route('dashboard.sanctions.export', $financeClnPeriod->slug) }}">
-            <i class="fas fa-arrow-alt-circle-down ml-2"></i> تحميل اكسيل شيت
-        </a>
+        <div class="mb-3">
+            <a class="btn btn-success float-right mx-2"
+                href="{{ route('dashboard.sanctions.export', $financeClnPeriod->slug) }}">
+                <i class="fas fa-arrow-alt-circle-down ml-2"></i> تحميل اكسيل شيت
+            </a>
 
-        <form action="{{ route('dashboard.sanctions.import') }}" method="POST" enctype="multipart/form-data">
-            @csrf
-            <input type="file" name="file" class="form-control mb-2" required>
-            <button class="btn btn-primary">استيراد ملف</button>
-            
-        </form>
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#importExcel">
+                <i class="fas fa-arrow-alt-circle-up ml-2"></i> إستيراد إكسيل
+            </button>
+
+            @include('dashboard.salaries.sanctions.partials.import')
+
+
+            <!-- Button trigger modal -->
+            <button type="button" class="btn" style="background-color: #4d4d4e; color: white;">
+                <i class="fa-solid fa-print ml-2"></i> طباعه حسب البحث
+            </button>
+        </div>
+
         <form action="{{ route('dashboard.sanctions.show', $financeClnPeriod->slug) }}" method="GET">
             <div class="row">
 
