@@ -39,10 +39,19 @@
             @include('dashboard.salaries.sanctions.partials.import')
 
 
-            <!-- Button trigger modal -->
-            <button type="button" class="btn" style="background-color: #4d4d4e; color: white;">
-                <i class="fa-solid fa-print ml-2"></i> طباعه حسب البحث
-            </button>
+            <form id="printForm" action="{{ route('dashboard.sanctions.print') }}" method="POST">
+                @csrf
+                <!-- إضافة حقول البحث المخفية -->
+                <input type="hidden" name="employee_code_search" value="{{ request('employee_code_search') }}">
+                <input type="hidden" name="name" value="{{ request('name') }}">
+                <input type="hidden" name="sanction_types" value="{{ request('sanction_types') }}">
+                <input type="hidden" name="days_sanctions" value="{{ request('days_sanctions') }}">
+
+                <button type="submit" class="btn" style="background-color: #4d4d4e; color: white;">
+                    <i class="fa-solid fa-print ml-2"></i> طباعه حسب البحث
+                </button>
+            </form>
+
         </div>
 
         <form action="{{ route('dashboard.sanctions.show', $financeClnPeriod->slug) }}" method="GET">
@@ -95,4 +104,20 @@
     <!-- /.card-body -->
 </div>
 @push('js')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // نسخ بيانات البحث من الفورم الرئيسي إلى فورم الطباعة
+            const mainForm = document.querySelector('form[method="GET"]');
+            const printForm = document.getElementById('printForm');
+
+            if (mainForm && printForm) {
+                mainForm.querySelectorAll('input, select').forEach(input => {
+                    const hiddenInput = printForm.querySelector(`input[name="${input.name}"]`);
+                    if (hiddenInput) {
+                        hiddenInput.value = input.value;
+                    }
+                });
+            }
+        });
+    </script>
 @endpush

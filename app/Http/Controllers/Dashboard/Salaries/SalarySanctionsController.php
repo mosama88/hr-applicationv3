@@ -253,4 +253,35 @@ class SalarySanctionsController extends Controller
             return back()->withErrors(['error' => 'فشل الاستيراد: ' . $e->getMessage()]);
         }
     }
+    public function print(Request $request)
+    {
+        // الحصول على نفس شروط البحث المستخدمة في صفحة العرض
+        $query = EmployeeSalarySanction::query()
+            ->with(['financeClnPeriod', 'mainSalaryEmployee'])
+            ->where('com_code', Auth::user()->com_code);
+
+        // تطبيق عوامل التصفية
+        if ($request->filled('employee_code_search')) {
+            $query->where('employee_code', $request->employee_code_search);
+        }
+
+        if ($request->filled('name')) {
+            $query->whereHas('mainSalaryEmployee', function ($q) use ($request) {
+                $q->where('employee_name', 'like', '%' . $request->name . '%');
+            });
+        }
+
+        if ($request->filled('sanction_types')) {
+            $query->where('sanctions_type', $request->sanction_types);
+        }
+
+        if ($request->filled('days_sanctions')) {
+            $query->where('value', $request->days_sanctions);
+        }
+
+        $sanctions = $query->get();
+
+        // أو طباعة مباشرة
+        return view('dashboard.salaries.sanctions.partials.print', compact('sanctions'));
+    }
 }

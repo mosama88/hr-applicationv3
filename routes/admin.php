@@ -105,6 +105,7 @@ Route::middleware(['auth:admin'])->group(function () {
         Route::delete('/delete/{sanction}', 'destroy')->name('destroy');
         Route::get('/sanctions/export/{slug}', 'export')->name('export');
         Route::post('/sanctions/import','import')->name('import');
+        Route::post('/sanctions/print', 'print')->name('print');
     });
 
 
