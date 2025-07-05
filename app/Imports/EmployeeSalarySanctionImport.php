@@ -22,25 +22,23 @@ class EmployeeSalarySanctionImport implements ToModel
 
     public function model(array $row)
     {
-        $sanctionsValue = $this->parseSanctionType($row[4]);
+        $com_code = Auth::user()->com_code;
+        $userId = Auth::user()->id;
 
+        $sanctionsValue = $this->parseSanctionType($row[4]);
         if (is_null($sanctionsValue)) {
             throw new \Exception("نوع الجزاء غير صالح أو غير معروف: {$row[4]}");
         }
-
-        $com_code = Auth::user()->com_code;
-        $userId = Auth::user()->id;
 
         // الحصول على الشهر المالي المطلوب
         $financeClnPeriod = FinanceClnPeriod::where('com_code', $com_code)
             ->where('year_and_month', $this->yearAndMonth)
             ->where('is_open', FinanceClnPeriodsIsOpen::Open)->where('id', $row[0])
             ->first();
-
         if (!$financeClnPeriod) {
             throw new \Exception("الشهر المالي المحدد غير موجود أو غير مفتوح.");
         }
-        
+
         $mainSalaryEmployee = MainSalaryEmployee::where('com_code', $com_code)
             ->where('employee_code', $row[2])
             ->first();
