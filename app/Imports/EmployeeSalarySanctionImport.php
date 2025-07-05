@@ -13,12 +13,7 @@ use App\Models\MainSalaryEmployee;
 class EmployeeSalarySanctionImport implements ToModel
 {
 
-    protected $yearAndMonth;
 
-    public function __construct($yearAndMonth)
-    {
-        $this->yearAndMonth = $yearAndMonth;
-    }
 
     public function model(array $row)
     {
@@ -30,13 +25,12 @@ class EmployeeSalarySanctionImport implements ToModel
             throw new \Exception("نوع الجزاء غير صالح أو غير معروف: {$row[4]}");
         }
 
-        // الحصول على الشهر المالي المطلوب
         $financeClnPeriod = FinanceClnPeriod::where('com_code', $com_code)
-            ->where('year_and_month', $this->yearAndMonth)
-            ->where('is_open', FinanceClnPeriodsIsOpen::Open)->where('id', $row[0])
+            ->where('year_and_month', $row[0]) // العمود الأول في الإكسل
+            ->where('is_open', FinanceClnPeriodsIsOpen::Open)
             ->first();
         if (!$financeClnPeriod) {
-            throw new \Exception("الشهر المالي المحدد غير موجود أو غير مفتوح.");
+            throw new \Exception("الفترة المالية {$row[0]} غير موجودة أو مغلقة");
         }
 
         $mainSalaryEmployee = MainSalaryEmployee::where('com_code', $com_code)
@@ -46,8 +40,9 @@ class EmployeeSalarySanctionImport implements ToModel
         if (!$mainSalaryEmployee) {
             throw new \Exception("الموظف المرتبط بالراتب الأساسي غير موجود: {$row[1]}");
         }
+
         return new EmployeeSalarySanction([
-            'finance_calendar_id'       => $financeClnPeriod->id,
+            'finance_cln_period_id' => $financeClnPeriod->id,
             'main_salary_employee_id' => $mainSalaryEmployee?->id, // لحماية من null
             'employee_code'             => $row[2],
             'day_price'                 => $row[3],

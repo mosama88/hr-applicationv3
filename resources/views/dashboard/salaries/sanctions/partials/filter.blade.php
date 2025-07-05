@@ -5,6 +5,15 @@
 @push('css')
 @endpush
 
+@if($errors->any())
+@foreach($errors->all() as $error)
+<div class="alert alert-danger text-center">
+        {{$error}}
+    </div>
+@endforeach
+@endif
+
+
 <div class="card card-secondary">
     <div class="card-header">
         <h3 class="card-title">
@@ -25,7 +34,6 @@
             @csrf
             <input type="file" name="file" class="form-control mb-2" required>
             <button class="btn btn-primary">استيراد ملف</button>
-            <input type="text" name="finance_calendar_id" value="{{ $financeClnPeriod->id }}">
             
         </form>
         <form action="{{ route('dashboard.sanctions.show', $financeClnPeriod->slug) }}" method="GET">
