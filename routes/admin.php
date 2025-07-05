@@ -101,10 +101,10 @@ Route::middleware(['auth:admin'])->group(function () {
         Route::get('/show/{financeClnPeriod}', 'show')->name('show');
         Route::get('/edit/{sanction}', 'edit')->name('edit');
         Route::get('/show/data/{sanction}', 'showData')->name('show-data');
-        Route::match(['put', 'patch'], '/update/{slug}', 'update')->name('update');
+        Route::patch('/update/{sanction}', 'update')->name('update');
         Route::delete('/delete/{sanction}', 'destroy')->name('destroy');
         Route::get('/sanctions/export/{slug}', 'export')->name('export');
-        Route::post('/sanctions/import','import')->name('import');
+        Route::post('/sanctions/import', 'import')->name('import');
         Route::post('/sanctions/print', 'print')->name('print');
     });
 

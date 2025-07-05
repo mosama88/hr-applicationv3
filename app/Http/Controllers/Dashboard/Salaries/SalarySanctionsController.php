@@ -129,31 +129,31 @@ class SalarySanctionsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(EmployeeSalarySanctionsRequest $request, EmployeeSalarySanction $sanction, FinanceClnPeriod $financeClnPeriodId)
+    public function update(EmployeeSalarySanctionsRequest $request, EmployeeSalarySanction $sanction)
     {
         $com_code = Auth::user()->com_code;
         $userId = Auth::user()->id;
         $financeClnPeriod = FinanceClnPeriod::where('com_code', $com_code)
-            ->where('id', $financeClnPeriodId)
+            ->where('id', $sanction->finance_cln_period_id)
             ->firstOrFail();
         if ($financeClnPeriod->is_open != FinanceClnPeriodsIsOpen::Open) {
             return redirect()->route('dashboard.sanctions.show', $financeClnPeriod->slug)->withErrors(['error' => 'عفوا الشهر المالى غير مفتوح !'])->withInput();
         }
-        $validateData = $request->validated();
-        $dataUpdate = array_merge($validateData, [
+        $validated = $request->validated();
+        $sanction->update([
             'finance_cln_period_id' => $financeClnPeriod->id,
-            'main_salary_employee_id' => $request->main_salary_employee_id,
-            'employee_code' => $request->employee_code,
-            'day_price' => $request->day_price,
-            'sanctions_type' => $request->sanctions_type,
-            'value' => $request->value,
-            'total' => $request->total,
-            'notes' => $request->notes,
+            'main_salary_employee_id' => $validated['main_salary_employee_id'],
+            'employee_code' => $validated['employee_code'],
+            'day_price' => $validated['day_price'],
+            'sanctions_type' => $validated['sanctions_type'],
+            'value' => $validated['value'],
+            'total' => $validated['total'],
+            'notes' => $validated['notes'] ?? null,
             'is_archived' => IsArchivedEnum::Unarchived,
-            'com_code' => $com_code,
             'updated_by' => $userId,
+            'com_code' => $com_code,
         ]);
-        $sanction->update($dataUpdate);
+
         return redirect()->route('dashboard.sanctions.show', $financeClnPeriod->slug)->with('success', 'تم تعديل الجزاء بنجاح');
     }
 

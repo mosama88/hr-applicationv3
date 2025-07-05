@@ -30,12 +30,18 @@
 
                         <!--end::Header-->
                         <!--begin::Form-->
+                        @if ($errors->any())
+                            @foreach ($errors->all() as $error)
+                                <div class="alert alert-danger text-center">
+                                    {{ $error }}
+                                </div>
+                            @endforeach
+                        @endif
 
                         <form action="{{ route('dashboard.sanctions.update', $sanction->slug) }}" method="POST"
                             id="storeForm">
-
                             @csrf
-                            @method('PUT')
+                            @method('PATCH')
                             <div class="card-body">
                                 <div class="row">
                                     <!-- الشهر المالى -->
@@ -43,7 +49,7 @@
                                         <label for="exampleInputname">الشهر المالى</label>
                                         <input readonly type="text" name="finance_cln_period_id"
                                             class="form-control bg-white @error('finance_cln_period_id') is-invalid @enderror"
-                                            value="{{ old('finance_cln_period_id', $financeClnPeriod->year_and_month) }}"
+                                            value="{{ old('finance_cln_period_id', $sanction->finance_cln_period_id) }}"
                                             id="exampleInputname">
                                         @error('finance_cln_period_id')
                                             <span class="invalid-feedback text-right" role="alert">
@@ -91,7 +97,7 @@
                                             كود الموظف</label>
                                         <input readonly type="text" name="employee_code"
                                             class="form-control bg-white @error('employee_code') is-invalid @enderror"
-                                            value="{{ old('employee_code') }}" id="employee_code-input">
+                                            value="{{ old('employee_code', $sanction->employee_code) }}" id="employee_code-input">
                                         @error('employee_code')
                                             <span class="invalid-feedback text-right" role="alert">
                                                 <strong>{{ $message }}</strong>
