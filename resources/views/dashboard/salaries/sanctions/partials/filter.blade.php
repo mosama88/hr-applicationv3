@@ -25,9 +25,9 @@
     </div>
     <!-- /.card-header -->
     <div class="card-body">
-        <div class="mb-3">
-            <a class="btn btn-success float-right mx-2"
-                href="{{ route('dashboard.sanctions.export', $financeClnPeriod->slug) }}">
+        <div class="mb-3 d-flex gap-2">
+
+            <a class="btn btn-success" href="{{ route('dashboard.sanctions.export', $financeClnPeriod->slug) }}">
                 <i class="fas fa-arrow-alt-circle-down ml-2"></i> تحميل اكسيل شيت
             </a>
 
@@ -38,21 +38,20 @@
 
             @include('dashboard.salaries.sanctions.partials.import')
 
-
-            <form id="printForm" action="{{ route('dashboard.sanctions.print') }}" method="POST">
+            <form id="printForm" action="{{ route('dashboard.sanctions.print') }}" method="POST" target="_blank">
                 @csrf
-                <!-- إضافة حقول البحث المخفية -->
                 <input type="hidden" name="employee_code_search" value="{{ request('employee_code_search') }}">
                 <input type="hidden" name="name" value="{{ request('name') }}">
                 <input type="hidden" name="sanction_types" value="{{ request('sanction_types') }}">
                 <input type="hidden" name="days_sanctions" value="{{ request('days_sanctions') }}">
 
                 <button type="submit" class="btn" style="background-color: #4d4d4e; color: white;">
-                    <i class="fa-solid fa-print ml-2"></i> طباعه حسب البحث
+                    <i class="fa-solid fa-print ml-2"></i> طباعة حسب البحث
                 </button>
             </form>
 
         </div>
+
 
         <form action="{{ route('dashboard.sanctions.show', $financeClnPeriod->slug) }}" method="GET">
             <div class="row">
