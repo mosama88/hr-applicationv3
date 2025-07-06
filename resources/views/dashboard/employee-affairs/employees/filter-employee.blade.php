@@ -91,6 +91,7 @@
 
     <section class="content">
         <div class="container-fluid">
+            
             @include('dashboard.employee-affairs.employees.partials.filter')
 
         </div>

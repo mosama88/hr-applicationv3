@@ -12,11 +12,14 @@ use App\Models\Governorate;
 use App\Models\EmployeeFile;
 use Illuminate\Http\Request;
 use App\Enums\StatusActiveEnum;
-use App\Services\EmployeeAffairs\EmployeeService;
+use App\Exports\EmployeeExport;
+use App\Imports\EmployeeImport;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Services\EmployeeAffairs\EmployeeService;
 use App\Http\Requests\Dashboard\EmployeeAffairs\EmployeeRequest;
 use App\Http\Requests\Dashboard\EmployeeAffairs\EmoloyeeFilesRequest;
 
@@ -201,6 +204,25 @@ class EmployeeController extends Controller
         return view('dashboard.employee-affairs.employees.filter-employee', compact('data', 'other'));
     }
 
+    public function export()
+    {
+        $com_code = Auth::user()->com_code;
+        $dataExport = Employee::where('com_code', $com_code)->get();
 
+        return Excel::download(new EmployeeExport($dataExport), 'الموظفين.xlsx');
+    }
 
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls,csv',
+        ]);
+        try {
+            Excel::import(new EmployeeImport(), $request->file('file'));
+
+            return back()->with('success', 'تم استيراد الملف بنجاح.');
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => 'فشل الاستيراد: ' . $e->getMessage()]);
+        }
+    }
 }

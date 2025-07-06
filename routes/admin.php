@@ -92,8 +92,10 @@ Route::middleware(['auth:admin'])->group(function () {
     //################################### أنواع الخصومات ##################################
     Route::resource('discount_types', DiscountTypeController::class);
     //################################### الموظفين ##################################
+    Route::get('employees/export', [EmployeeController::class, 'export'])->name('employees.export');
+    Route::post('employees/import', [EmployeeController::class, 'import'])->name('employees.import');
+    Route::get('employees/filter', [EmployeeController::class, 'filterEmploee'])->name('employees.filter');
     Route::resource('/employees', EmployeeController::class); // إذا كنت تريد استخدام resource
-    Route::get('/filter', [EmployeeController::class, 'filterEmploee'])->name('employees.filter');
     Route::controller(EmployeeController::class)->prefix('/employees')->group(function () {
         Route::get('/get-governorates/{country}', 'getGovernorates')->name('get-governorates');
 
