@@ -3,11 +3,11 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">إستيراد ملف العملات</h1>
+                <h1 class="modal-title fs-5" id="exampleModalLabel">إستيراد ملف الادارات</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="{{ route('dashboard.currencies.import') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('dashboard.departments.import') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="alert alert-info" style="direction: rtl; text-align: right;">
                         <strong>تعليمات هامة قبل رفع الملف:</strong>
@@ -15,7 +15,7 @@
                             <li>📄 يجب أن يكون الملف Excel بصيغة: <code>.xlsx</code> أو <code>.xls</code> أو
                                 <code>.csv</code>.
                             </li>
-                            <li>✅ تأكد من أن الأعمدة مرتبة كما يلي: الاسم، كود العملة.</li>
+                            <li>✅ تأكد من أن الأعمدة مرتبة كما يلي: الاسم، الهاتف، الملاحظات.</li>
                             <li>📌 يجب أن تبدأ البيانات من الصف الأول.</li>
                             <li>⚠️ لا تترك خانات فارغة في الصفوف.</li>
                             <li>🔄 تأكد من أن الملف لا يحتوي على رموز أو أحرف خاصة غير مقبولة.</li>

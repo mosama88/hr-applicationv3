@@ -51,6 +51,8 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::post('currencies/import', [CurrencyController::class, 'import'])->name('currencies.import');
     Route::resource('currencies', CurrencyController::class);
     //################################### الادارات ##################################
+    Route::get('departments/export', [DepartmentController::class, 'export'])->name('departments.export');
+    Route::post('departments/import', [DepartmentController::class, 'import'])->name('departments.import');
     Route::resource('departments', DepartmentController::class);
     //################################### الوظائف ##################################
     Route::resource('job_categories', JobCategoryController::class);

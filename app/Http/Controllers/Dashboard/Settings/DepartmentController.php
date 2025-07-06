@@ -5,9 +5,12 @@ namespace App\Http\Controllers\Dashboard\Settings;
 use App\Models\Department;
 use Illuminate\Http\Request;
 use App\Enums\StatusActiveEnum;
-use App\Services\Settings\DepartmentService;
+use App\Exports\DepartmentExport;
+use App\Imports\DepartmentImport;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Services\Settings\DepartmentService;
 use App\Http\Requests\Dashboard\Settings\DepartmentRequest;
 
 class DepartmentController extends Controller
@@ -90,7 +93,7 @@ class DepartmentController extends Controller
                 'success' => true,
                 'message' => 'تم حذف الاداره بنجاح'
             ]);
-         } catch (\Exception $e) {
+        } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
                 'message' => 'حدث خطأ أثناء محاولة الحذف',
@@ -106,5 +109,27 @@ class DepartmentController extends Controller
         return response()->json([
             'data' => $departments
         ]);
+    }
+
+    public function export()
+    {
+        $com_code = Auth::user()->com_code;
+        $dataExport = Department::where('com_code', $com_code)->get();
+
+        return Excel::download(new DepartmentExport($dataExport), 'الادارات.xlsx');
+    }
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls,csv',
+        ]);
+        try {
+            Excel::import(new DepartmentImport(), $request->file('file'));
+
+            return back()->with('success', 'تم استيراد الملف بنجاح.');
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => 'فشل الاستيراد: ' . $e->getMessage()]);
+        }
     }
 }
