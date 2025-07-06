@@ -86,10 +86,16 @@ Route::middleware(['auth:admin'])->group(function () {
 
     //################################### شئون الموظفين ##################################
     //################################### أنواع الاضافى ##################################
+    Route::get('additional_types/export', [AdditionalTypeController::class, 'export'])->name('additional_types.export');
+    Route::post('additional_types/import', [AdditionalTypeController::class, 'import'])->name('additional_types.import');
     Route::resource('additional_types', AdditionalTypeController::class);
     //################################### أنواع البدلات ##################################
+    Route::get('allowances/export', [AllowanceController::class, 'export'])->name('allowances.export');
+    Route::post('allowances/import', [AllowanceController::class, 'import'])->name('allowances.import');
     Route::resource('allowances', AllowanceController::class);
     //################################### أنواع الخصومات ##################################
+    Route::get('discount_types/export', [DiscountTypeController::class, 'export'])->name('discount_types.export');
+    Route::post('discount_types/import', [DiscountTypeController::class, 'import'])->name('discount_types.import');
     Route::resource('discount_types', DiscountTypeController::class);
     //################################### الموظفين ##################################
     Route::get('employees/export', [EmployeeController::class, 'export'])->name('employees.export');

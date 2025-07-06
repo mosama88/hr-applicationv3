@@ -7,6 +7,9 @@ use App\Models\AdditionalType;
 use App\Enums\StatusActiveEnum;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\AdditionalTypeExport;
+use App\Imports\AdditionalTypeImport;
 use App\Services\EmployeeAffairs\AdditionalTypeService;
 use App\Http\Requests\Dashboard\EmployeeAffairs\AdditionalTypeRequest;
 
@@ -99,6 +102,29 @@ class AdditionalTypeController extends Controller
                 'message' => 'حدث خطأ أثناء محاولة الحذف',
                 'error' => $e->getMessage()
             ], 500);
+        }
+    }
+
+
+    public function export()
+    {
+        $com_code = Auth::user()->com_code;
+        $dataExport = AdditionalType::where('com_code', $com_code)->get();
+
+        return Excel::download(new AdditionalTypeExport($dataExport), 'أنواع الاضافى.xlsx');
+    }
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls,csv',
+        ]);
+        try {
+            Excel::import(new AdditionalTypeImport(), $request->file('file'));
+
+            return back()->with('success', 'تم استيراد الملف بنجاح.');
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => 'فشل الاستيراد: ' . $e->getMessage()]);
         }
     }
 }
