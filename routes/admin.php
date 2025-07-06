@@ -59,6 +59,8 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::post('job_categories/import', [JobCategoryController::class, 'import'])->name('job_categories.import');
     Route::resource('job_categories', JobCategoryController::class);
     //################################### المؤهلات ##################################
+    Route::get('qualifications/export', [QualificationController::class, 'export'])->name('qualifications.export');
+    Route::post('qualifications/import', [QualificationController::class, 'import'])->name('qualifications.import');
     Route::resource('qualifications', QualificationController::class);
     //################################### فصيلة الدم ##################################
     Route::resource('bloodTypes', BloodTypeController::class);

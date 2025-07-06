@@ -5,8 +5,11 @@ namespace App\Http\Controllers\Dashboard\Settings;
 use Illuminate\Http\Request;
 use App\Models\Qualification;
 use App\Enums\StatusActiveEnum;
+use App\Exports\QualificationExport;
 use App\Http\Controllers\Controller;
+use App\Imports\QualificationImport;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Services\Settings\QualificationService;
 use App\Http\Requests\Dashboard\Settings\QualificationRequest;
 
@@ -111,5 +114,27 @@ class QualificationController extends Controller
         return response()->json([
             'data' => $qualifications
         ]);
+    }
+
+    public function export()
+    {
+        $com_code = Auth::user()->com_code;
+        $dataExport = Qualification::where('com_code', $com_code)->get();
+
+        return Excel::download(new QualificationExport($dataExport), 'المؤهلات.xlsx');
+    }
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls,csv',
+        ]);
+        try {
+            Excel::import(new QualificationImport(), $request->file('file'));
+
+            return back()->with('success', 'تم استيراد الملف بنجاح.');
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => 'فشل الاستيراد: ' . $e->getMessage()]);
+        }
     }
 }
