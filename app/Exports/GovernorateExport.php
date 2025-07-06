@@ -18,7 +18,7 @@ class GovernorateExport implements FromArray, WithHeadings, WithStyles
         $this->data = $governorates->map(function ($governorate) {
             return [
                 'name'   => $governorate->name,
-                'country_id'   => $governorate->country->name,
+                'country_id' => $governorate->country ? $governorate->country->name : 'غير محددة',
             ];
         })->toArray();
     }

@@ -19,7 +19,7 @@ class CityExport implements FromArray, WithHeadings, WithStyles
         $this->data = $cities->map(function ($city) {
             return [
                 'name'   => $city->name,
-                'governorate_id'   => $city->governorate->name,
+                'governorate_id' => $city->governorate ? $city->governorate->name : 'غير محددة',
             ];
         })->toArray();
     }
