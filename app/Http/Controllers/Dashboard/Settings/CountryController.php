@@ -4,10 +4,13 @@ namespace App\Http\Controllers\Dashboard\Settings;
 
 use App\Models\Country;
 use Illuminate\Http\Request;
+use App\Exports\CountryExport;
+use App\Imports\CountryImport;
 use App\Enums\StatusActiveEnum;
-use App\Services\Settings\CountryService;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Services\Settings\CountryService;
 use App\Http\Requests\Dashboard\Settings\CountryRequest;
 
 class CountryController extends Controller
@@ -109,5 +112,27 @@ class CountryController extends Controller
         return response()->json([
             'data' => $countries
         ]);
+    }
+
+    public function export()
+    {
+        $com_code = Auth::user()->com_code;
+        $dataExport = Country::where('com_code', $com_code)->get();
+
+        return Excel::download(new CountryExport($dataExport), 'الدول.xlsx');
+    }
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls,csv',
+        ]);
+        try {
+            Excel::import(new CountryImport(), $request->file('file'));
+
+            return back()->with('success', 'تم استيراد الملف بنجاح.');
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => 'فشل الاستيراد: ' . $e->getMessage()]);
+        }
     }
 }

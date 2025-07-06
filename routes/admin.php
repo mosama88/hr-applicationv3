@@ -43,6 +43,8 @@ Route::middleware(['auth:admin'])->group(function () {
     //################################### الشفتات ##################################
     Route::resource('shiftTypes', ShiftTypesController::class);
     //################################### الدول ##################################
+    Route::get('countries/export', [CountryController::class, 'export'])->name('countries.export');
+    Route::post('countries/import', [CountryController::class, 'import'])->name('countries.import');
     Route::resource('countries', CountryController::class);
     //################################### اللغات ##################################
     Route::get('languages/export', [LanguageController::class, 'export'])->name('languages.export');
