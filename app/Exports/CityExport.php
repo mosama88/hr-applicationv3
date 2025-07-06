@@ -9,16 +9,17 @@ use Maatwebsite\Excel\Concerns\WithStyles;
 use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 
-class GovernorateExport implements FromArray, WithHeadings, WithStyles
+
+class CityExport implements FromArray, WithHeadings, WithStyles
 {
     protected $data;
 
-    public function __construct($governorates)
+    public function __construct($cities)
     {
-        $this->data = $governorates->map(function ($governorate) {
+        $this->data = $cities->map(function ($city) {
             return [
-                'name'   => $governorate->name,
-                'country_id'   => $governorate->country->name,
+                'name'   => $city->name,
+                'governorate_id'   => $city->governorate->name,
             ];
         })->toArray();
     }
@@ -30,7 +31,7 @@ class GovernorateExport implements FromArray, WithHeadings, WithStyles
 
     public function headings(): array
     {
-        return ['أسم المحافظة', 'الدوله']; // ترجم العناوين حسب الأعمدة المختارة
+        return ['أسم المدينه', 'المحافظة']; // ترجم العناوين حسب الأعمدة المختارة
     }
 
     public function styles(Worksheet $sheet)

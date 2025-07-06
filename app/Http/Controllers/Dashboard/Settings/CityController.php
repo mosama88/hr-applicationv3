@@ -3,12 +3,15 @@
 namespace App\Http\Controllers\Dashboard\Settings;
 
 use App\Models\City;
+use App\Exports\CityExport;
+use App\Imports\CityImport;
 use App\Models\Governorate;
 use Illuminate\Http\Request;
-use App\Services\Settings\CityService;
 use App\Enums\StatusActiveEnum;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Services\Settings\CityService;
 use App\Http\Requests\Dashboard\Settings\CityRequest;
 
 class CityController extends Controller
@@ -100,7 +103,7 @@ class CityController extends Controller
                 'success' => true,
                 'message' => 'تم حذف المدينة بنجاح'
             ]);
-         } catch (\Exception $e) {
+        } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
                 'message' => 'حدث خطأ أثناء محاولة الحذف',
@@ -116,5 +119,27 @@ class CityController extends Controller
         return response()->json([
             'data' => $cities
         ]);
+    }
+
+    public function export()
+    {
+        $com_code = Auth::user()->com_code;
+        $dataExport = City::where('com_code', $com_code)->get();
+
+        return Excel::download(new CityExport($dataExport), 'المدن.xlsx');
+    }
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls,csv',
+        ]);
+        try {
+            Excel::import(new CityImport(), $request->file('file'));
+
+            return back()->with('success', 'تم استيراد الملف بنجاح.');
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => 'فشل الاستيراد: ' . $e->getMessage()]);
+        }
     }
 }
