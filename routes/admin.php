@@ -36,7 +36,10 @@ Route::middleware(['auth:admin'])->group(function () {
         Route::patch('/close-year/{financeCalendar}', 'closeYear')->name('close-year');
     });
     //################################### الفروع ##################################
+    Route::get('branches/export', [BranchController::class, 'export'])->name('branches.export');
+    Route::post('branches/import', [BranchController::class, 'import'])->name('branches.import');
     Route::resource('branches', BranchController::class);
+
     //################################### الشفتات ##################################
     Route::resource('shiftTypes', ShiftTypesController::class);
     //################################### الدول ##################################

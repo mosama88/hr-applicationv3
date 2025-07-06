@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\Dashboard\Settings;
 
 use App\Models\Branch;
-use App\Enums\StatusActiveEnum;
 use Illuminate\Http\Request;
-use App\Services\Settings\BranchService;
+use App\Enums\StatusActiveEnum;
+use App\Exports\BranchesExport;
+use App\Imports\BranchesImport;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Services\Settings\BranchService;
 use App\Http\Requests\Dashboard\Settings\BranchRequest;
 
 class BranchController extends Controller
@@ -93,6 +96,28 @@ class BranchController extends Controller
                 'message' => 'حدث خطأ أثناء محاولة الحذف',
                 'error' => $e->getMessage()
             ], 500);
+        }
+    }
+
+    public function export()
+    {
+        $com_code = Auth::user()->com_code;
+        $dataExport = \App\Models\Branch::where('com_code', $com_code)->get();
+
+        return Excel::download(new BranchesExport($dataExport), 'الفروع.xlsx');
+    }
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls,csv',
+        ]);
+        try {
+            Excel::import(new BranchesImport(), $request->file('file'));
+
+            return back()->with('success', 'تم استيراد الملف بنجاح.');
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => 'فشل الاستيراد: ' . $e->getMessage()]);
         }
     }
 }
