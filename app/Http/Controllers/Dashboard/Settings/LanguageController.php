@@ -5,9 +5,12 @@ namespace App\Http\Controllers\Dashboard\Settings;
 use App\Models\Language;
 use Illuminate\Http\Request;
 use App\Enums\StatusActiveEnum;
-use App\Services\Settings\LanguageService;
+use App\Exports\LanguageExport;
+use App\Imports\LanguageImport;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Services\Settings\LanguageService;
 use App\Http\Requests\Dashboard\Settings\LanguageRequest;
 
 class LanguageController extends Controller
@@ -110,5 +113,27 @@ class LanguageController extends Controller
         return response()->json([
             'data' => $languages
         ]);
+    }
+
+    public function export()
+    {
+        $com_code = Auth::user()->com_code;
+        $dataExport = Language::where('com_code', $com_code)->get();
+
+        return Excel::download(new LanguageExport($dataExport), 'اللغات.xlsx');
+    }
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls,csv',
+        ]);
+        try {
+            Excel::import(new LanguageImport(), $request->file('file'));
+
+            return back()->with('success', 'تم استيراد الملف بنجاح.');
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => 'فشل الاستيراد: ' . $e->getMessage()]);
+        }
     }
 }

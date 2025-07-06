@@ -5,9 +5,12 @@ namespace App\Http\Controllers\Dashboard\Settings;
 use App\Models\Nationality;
 use Illuminate\Http\Request;
 use App\Enums\StatusActiveEnum;
+use App\Exports\NationalityExport;
+use App\Imports\NationalityImport;
 use App\Http\Controllers\Controller;
-use App\Services\Settings\NationalityService;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Services\Settings\NationalityService;
 use App\Http\Requests\Dashboard\Settings\NationalityRequest;
 
 class NationalityController extends Controller
@@ -95,7 +98,7 @@ class NationalityController extends Controller
                 'success' => true,
                 'message' => 'تم حذف الجنسية بنجاح'
             ]);
-         } catch (\Exception $e) {
+        } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
                 'message' => 'حدث خطأ أثناء محاولة الحذف',
@@ -111,5 +114,27 @@ class NationalityController extends Controller
         return response()->json([
             'data' => $nationalities
         ]);
+    }
+
+    public function export()
+    {
+        $com_code = Auth::user()->com_code;
+        $dataExport = Nationality::where('com_code', $com_code)->get();
+
+        return Excel::download(new NationalityExport($dataExport), 'الجنسيات.xlsx');
+    }
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls,csv',
+        ]);
+        try {
+            Excel::import(new NationalityImport(), $request->file('file'));
+
+            return back()->with('success', 'تم استيراد الملف بنجاح.');
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => 'فشل الاستيراد: ' . $e->getMessage()]);
+        }
     }
 }

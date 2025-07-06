@@ -45,6 +45,8 @@ Route::middleware(['auth:admin'])->group(function () {
     //################################### الدول ##################################
     Route::resource('countries', CountryController::class);
     //################################### اللغات ##################################
+    Route::get('languages/export', [LanguageController::class, 'export'])->name('languages.export');
+    Route::post('languages/import', [LanguageController::class, 'import'])->name('languages.import');
     Route::resource('languages', LanguageController::class);
     //################################### العملات ##################################
     Route::get('currencies/export', [CurrencyController::class, 'export'])->name('currencies.export');
@@ -65,6 +67,8 @@ Route::middleware(['auth:admin'])->group(function () {
     //################################### فصيلة الدم ##################################
     Route::resource('bloodTypes', BloodTypeController::class);
     //################################### الجنسيات ##################################
+    Route::get('nationalities/export', [NationalityController::class, 'export'])->name('nationalities.export');
+    Route::post('nationalities/import', [NationalityController::class, 'import'])->name('nationalities.import');
     Route::resource('nationalities', NationalityController::class);
     //################################### المحافظات ##################################
     Route::resource('governorates', GovernorateController::class);
