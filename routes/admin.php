@@ -55,6 +55,8 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::post('departments/import', [DepartmentController::class, 'import'])->name('departments.import');
     Route::resource('departments', DepartmentController::class);
     //################################### الوظائف ##################################
+    Route::get('job_categories/export', [JobCategoryController::class, 'export'])->name('job_categories.export');
+    Route::post('job_categories/import', [JobCategoryController::class, 'import'])->name('job_categories.import');
     Route::resource('job_categories', JobCategoryController::class);
     //################################### المؤهلات ##################################
     Route::resource('qualifications', QualificationController::class);
