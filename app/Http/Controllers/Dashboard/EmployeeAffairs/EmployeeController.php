@@ -204,13 +204,40 @@ class EmployeeController extends Controller
         return view('dashboard.employee-affairs.employees.filter-employee', compact('data', 'other'));
     }
 
-    public function export()
+
+    public function export(Request $request)
     {
         $com_code = Auth::user()->com_code;
-        $dataExport = Employee::where('com_code', $com_code)->get();
 
-        return Excel::download(new EmployeeExport($dataExport), 'الموظفين.xlsx');
+        $query = Employee::query()->where('com_code', $com_code);
+
+        if ($request->filled('fp_code_search')) {
+            $query->where('fp_code', $request->fp_code_search);
+        }
+
+        if ($request->filled('employee_code_search')) {
+            $query->where('employee_code', $request->employee_code_search);
+        }
+
+        if ($request->filled('employee_search')) {
+            $search = $request->employee_search;
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%$search%")
+                    ->orWhere('national_id', 'like', "%$search%");
+            });
+        }
+
+        if ($request->filled('branch_id')) {
+            $query->where('branche_id', $request->branch_id);
+        }
+
+        // باقي الفلاتر بنفس الطريقة...
+
+        $employees = $query->get();
+
+        return Excel::download(new EmployeeExport($employees), 'الموظفين.xlsx');
     }
+
 
     public function import(Request $request)
     {

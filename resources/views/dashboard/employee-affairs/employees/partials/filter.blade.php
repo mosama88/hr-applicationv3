@@ -14,43 +14,44 @@
     use App\Enums\AdminGenderEnum;
 @endphp
 
-<form action="{{ route('dashboard.employees.filter') }}" method="GET">
-    <div class="row">
+<div class="row">
 
-        <div class="col-12">
+    <div class="col-12">
 
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <!-- الزر على اليسار -->
-                        </div>
-                    </h3>
-
-                    <div class="card-tools">
-                        <h4 class="mb-0">جدول الموظفين</h4>
-
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <!-- الزر على اليسار -->
                     </div>
-                </div>
-                <div class="card">
-                    <div class="card-body">
-                        <div class="col-6 mx-2 mb-3">
-                            <a href="{{ route('dashboard.employees.export') }}" class="btn"
-                                style="background-color: #273F4F; color: #fff;">
-                                <i class="fas fa-arrow-alt-circle-down ml-2"></i> تحميل اكسيل شيت
-                            </a>
+                </h3>
 
-                            <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                data-bs-target="#importExcel">
-                                <i class="fas fa-arrow-alt-circle-up ml-2"></i> إستيراد إكسيل
-                            </button>
-                            @include('dashboard.employee-affairs.employees.partials.import')
-                        </div>
-                        <p class="text-muted">
-                            يمكنك استخدام الفلاتر التالية للبحث عن الموظفين حسب كود البصمة أو كود الموظف أو اسم
-                            الموظف أو الفرع التابع له.......
-                        </p>
+                <div class="card-tools">
+                    <h4 class="mb-0">جدول الموظفين</h4>
+
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <div class="col-6 mx-2 mb-3">
+                        <a href="{{ route('dashboard.employees.export', request()->query()) }}" class="btn"
+                            style="background-color: #273F4F; color: #fff;">
+                            <i class="fas fa-arrow-alt-circle-down ml-2"></i> تحميل اكسيل شيت
+                        </a>
+
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#importExcel">
+                            <i class="fas fa-arrow-alt-circle-up ml-2"></i> إستيراد إكسيل
+                        </button>
+                        @include('dashboard.employee-affairs.employees.partials.import')
+                    </div>
+                    <p class="text-muted">
+                        يمكنك استخدام الفلاتر التالية للبحث عن الموظفين حسب كود البصمة أو كود الموظف أو اسم
+                        الموظف أو الفرع التابع له.......
+                    </p>
+                    <form action="{{ route('dashboard.employees.filter') }}" method="GET">
+
                         <div class="col-12">
                             <div class="row mx-1 my-3">
                                 {{-- inputs --}}
@@ -393,8 +394,9 @@
 
                             </div>
                         </div>
-                    </div>
+                    </form>
+                </div>
 
-</form>
-@push('js')
-@endpush
+
+                @push('js')
+                @endpush

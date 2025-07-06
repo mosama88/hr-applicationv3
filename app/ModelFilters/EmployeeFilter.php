@@ -27,7 +27,7 @@ class EmployeeFilter extends ModelFilter
             $query->whereLike('fp_code', '%' . $value . '%');
         });
     }
-    
+
     public function employeeCodeSearch($value)
     {
         return $this->where(function ($query) use ($value) {
@@ -74,7 +74,7 @@ class EmployeeFilter extends ModelFilter
     public function religion($value)
     {
         return $this->where(function ($query) use ($value) {
-            $query->where('religion',  $value);
+            $query->whereLike('religion',  $value);
         });
     }
 
