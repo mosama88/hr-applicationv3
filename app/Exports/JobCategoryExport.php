@@ -13,12 +13,12 @@ class JobCategoryExport implements FromArray, WithHeadings, WithStyles
 {
     protected $data;
 
-    public function __construct($branches)
+    public function __construct($info)
     {
         // نحضّر فقط الأعمدة المطلوبة
-        $this->data = $branches->map(function ($branch) {
+        $this->data = $info->map(function ($jobCategory) {
             return [
-                'name'   => $branch->name,
+                'name'   => $jobCategory->name,
             ];
         })->toArray();
     }

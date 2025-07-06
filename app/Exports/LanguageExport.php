@@ -13,12 +13,12 @@ class LanguageExport implements FromArray, WithHeadings, WithStyles
 {
     protected $data;
 
-    public function __construct($branches)
+    public function __construct($languages)
     {
         // نحضّر فقط الأعمدة المطلوبة
-        $this->data = $branches->map(function ($branch) {
+        $this->data = $languages->map(function ($language) {
             return [
-                'name'   => $branch->name,
+                'name'   => $language->name,
             ];
         })->toArray();
     }

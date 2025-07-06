@@ -73,6 +73,8 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::post('nationalities/import', [NationalityController::class, 'import'])->name('nationalities.import');
     Route::resource('nationalities', NationalityController::class);
     //################################### المحافظات ##################################
+    Route::get('governorates/export', [GovernorateController::class, 'export'])->name('governorates.export');
+    Route::post('governorates/import', [GovernorateController::class, 'import'])->name('governorates.import');
     Route::resource('governorates', GovernorateController::class);
     //################################### المحافظات ##################################
     Route::resource('cities', CityController::class);

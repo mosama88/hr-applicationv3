@@ -14,13 +14,13 @@ class CurrencyExport implements FromArray, WithHeadings, WithStyles
 {
     protected $data;
 
-    public function __construct($branches)
+    public function __construct($currencies)
     {
         // نحضّر فقط الأعمدة المطلوبة
-        $this->data = $branches->map(function ($branch) {
+        $this->data = $currencies->map(function ($currency) {
             return [
-                'name'     => $branch->name,
-                'currency_symbol'  => $branch->currency_symbol,
+                'name'     => $currency->name,
+                'currency_symbol'  => $currency->currency_symbol,
             ];
         })->toArray();
     }

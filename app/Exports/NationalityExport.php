@@ -13,12 +13,12 @@ class NationalityExport implements FromArray, WithHeadings, WithStyles
 {
     protected $data;
 
-    public function __construct($branches)
+    public function __construct($nationalities)
     {
         // نحضّر فقط الأعمدة المطلوبة
-        $this->data = $branches->map(function ($branch) {
+        $this->data = $nationalities->map(function ($nationality) {
             return [
-                'name'   => $branch->name,
+                'name'   => $nationality->name,
             ];
         })->toArray();
     }

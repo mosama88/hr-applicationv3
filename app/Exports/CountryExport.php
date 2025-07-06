@@ -14,13 +14,13 @@ class CountryExport implements FromArray, WithHeadings, WithStyles
 {
     protected $data;
 
-    public function __construct($branches)
+    public function __construct($countries)
     {
         // نحضّر فقط الأعمدة المطلوبة
-        $this->data = $branches->map(function ($branch) {
+        $this->data = $countries->map(function ($country) {
             return [
-                'name'     => $branch->name,
-                'country_code'  => $branch->country_code,
+                'name'     => $country->name,
+                'country_code'  => $country->country_code,
             ];
         })->toArray();
     }

@@ -6,9 +6,12 @@ use App\Models\Country;
 use App\Models\Governorate;
 use Illuminate\Http\Request;
 use App\Enums\StatusActiveEnum;
+use App\Exports\GovernorateExport;
+use App\Imports\GovernorateImport;
 use App\Http\Controllers\Controller;
-use App\Services\Settings\GovernorateService;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Services\Settings\GovernorateService;
 use App\Http\Requests\Dashboard\Settings\GovernorateRequest;
 
 class GovernorateController extends Controller
@@ -111,6 +114,28 @@ class GovernorateController extends Controller
                 'message' => 'حدث خطأ أثناء محاولة الحذف',
                 'error' => $e->getMessage()
             ], 500);
+        }
+    }
+
+    public function export()
+    {
+        $com_code = Auth::user()->com_code;
+        $dataExport = Governorate::where('com_code', $com_code)->get();
+
+        return Excel::download(new GovernorateExport($dataExport), 'المحافظات.xlsx');
+    }
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls,csv',
+        ]);
+        try {
+            Excel::import(new GovernorateImport(), $request->file('file'));
+
+            return back()->with('success', 'تم استيراد الملف بنجاح.');
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => 'فشل الاستيراد: ' . $e->getMessage()]);
         }
     }
 }
