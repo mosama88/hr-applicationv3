@@ -47,6 +47,8 @@ Route::middleware(['auth:admin'])->group(function () {
     //################################### اللغات ##################################
     Route::resource('languages', LanguageController::class);
     //################################### العملات ##################################
+    Route::get('currencies/export', [CurrencyController::class, 'export'])->name('currencies.export');
+    Route::post('currencies/import', [CurrencyController::class, 'import'])->name('currencies.import');
     Route::resource('currencies', CurrencyController::class);
     //################################### الادارات ##################################
     Route::resource('departments', DepartmentController::class);

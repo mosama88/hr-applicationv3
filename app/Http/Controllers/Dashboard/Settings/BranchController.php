@@ -102,7 +102,7 @@ class BranchController extends Controller
     public function export()
     {
         $com_code = Auth::user()->com_code;
-        $dataExport = \App\Models\Branch::where('com_code', $com_code)->get();
+        $dataExport = Branch::where('com_code', $com_code)->get();
 
         return Excel::download(new BranchesExport($dataExport), 'الفروع.xlsx');
     }
