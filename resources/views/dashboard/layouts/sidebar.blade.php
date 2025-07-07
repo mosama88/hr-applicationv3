@@ -267,7 +267,7 @@
                     <li
                         class="nav-item {{ request()->is('dashboard/main_salary_records*') ||
                         request()->is('dashboard/sanctions*') ||
-                        request()->is('dashboard/discount_types*') ||
+                        request()->is('dashboard/absences*') ||
                         request()->is('dashboard/employees*')
                             ? 'menu-open'
                             : '' }}">
@@ -299,6 +299,13 @@
                                     class="nav-link @yield('active-sanctions')">
                                     <i class="nav-icon bi bi-circle"></i>
                                     <p>الجزاءات</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('dashboard.absences.index') }}"
+                                    class="nav-link @yield('active-absences')">
+                                    <i class="nav-icon bi bi-circle"></i>
+                                    <p>غياب أيام</p>
                                 </a>
                             </li>
                         </ul>

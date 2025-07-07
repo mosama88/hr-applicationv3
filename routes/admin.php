@@ -23,6 +23,7 @@ use App\Http\Controllers\Dashboard\Salaries\MainSalaryRecordController;
 use App\Http\Controllers\Dashboard\Settings\AdminPanelSettingController;
 use App\Http\Controllers\Dashboard\EmployeeAffairs\DiscountTypeController;
 use App\Http\Controllers\Dashboard\EmployeeAffairs\AdditionalTypeController;
+use App\Http\Controllers\Dashboard\Salaries\EmployeeSalaryAbsenceController;
 
 
 Route::middleware(['auth:admin'])->group(function () {
@@ -137,6 +138,20 @@ Route::middleware(['auth:admin'])->group(function () {
         Route::post('/sanctions/print', 'print')->name('print');
     });
 
+    //################################### الغيابات ##################################
+    Route::controller(EmployeeSalaryAbsenceController::class)->name('absences.')->prefix('/absences')->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::get('/create/{financeClnPeriod}', 'create')->name('create');
+        Route::post('/store/{financeClnPeriod}', 'store')->name('store');
+        Route::get('/show/{financeClnPeriod}', 'show')->name('show');
+        Route::get('/edit/{absence}', 'edit')->name('edit');
+        Route::get('/show/data/{absence}', 'showData')->name('show-data');
+        Route::patch('/update/{absence}', 'update')->name('update');
+        Route::delete('/delete/{absence}', 'destroy')->name('destroy');
+        Route::get('/absences/export/{slug}', 'export')->name('export');
+        Route::post('/absences/import', 'import')->name('import');
+        Route::post('/absences/print', 'print')->name('print');
+    });
 
     //################################### الأنتهاء من الاجور والمرتبات  ##################################
 

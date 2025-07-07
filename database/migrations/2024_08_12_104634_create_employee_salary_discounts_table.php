@@ -17,11 +17,12 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(MainSalaryEmployee::class)->nullable()->constrained()->nullOnDelete(); //المرتب
             $table->foreignIdFor(FinanceClnPeriod::class)->nullable()->constrained()->nullOnDelete(); //كود الشهر المالى
+            $table->string('slug')->unique()->nullable();
             $table->tinyInteger('is_auto')->nullable()->default(1); //هل تلقائى من النظام أم بشكل يدوى
-            $table->bigInteger('employee_code')->comment('كود الموظف');
-            $table->decimal('day_price', 10, 2)->comment('أجر يوم الموظف');
-            $table->foreignId('discount_types_id')->comment(' نوع الخصومات ')->references('id')->on('discount_types')->onUpdate('cascade');
-            $table->decimal('total', 10, 2)->comment('أجمالى الخصومات');
+            $table->bigInteger('employee_code'); //كود الموظف
+            $table->decimal('day_price', 10, 2); //أجر يوم الموظف
+            $table->foreignId('discount_types_id')->references('id')->on('discount_types')->onUpdate('cascade'); //نوع الخصومات 
+            $table->decimal('total', 10, 2); //أجمالى الخصومات
             $table->tinyInteger('is_archived')->default(2)->nullable(); //حالة الموظف لحظة الراتب
             $table->foreignId('archived_by')->nullable()->references('id')->on('admins')->onUpdate('cascade');
             $table->dateTime('archived_date')->nullable()->nullable(); //تاريخ ارشفه الراتب

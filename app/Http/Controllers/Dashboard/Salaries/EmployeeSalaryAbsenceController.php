@@ -2,22 +2,20 @@
 
 namespace App\Http\Controllers\Dashboard\Salaries;
 
-use App\Models\Employee;
 use Illuminate\Http\Request;
 use App\Enums\IsArchivedEnum;
-use App\Enums\StatusActiveEnum;
 use App\Models\FinanceClnPeriod;
 use App\Models\MainSalaryEmployee;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Models\EmployeeSalaryAbsence;
 use App\Enums\FinanceClnPeriodsIsOpen;
-use App\Models\EmployeeSalarySanction;
-use App\Exports\EmployeeSalarySanctionExport;
-use App\Imports\EmployeeSalarySanctionImport;
-use App\Http\Requests\Dashboard\Salaries\EmployeeSalarySanctionsRequest;
+use App\Exports\EmployeeSalaryAbsenceExport;
+use App\Imports\EmployeeSalaryAbsenceImport;
+use App\Http\Requests\Dashboard\Salaries\EmployeeSalaryAbsenceRequest;
 
-class SalarySanctionsController extends Controller
+class EmployeeSalaryAbsenceController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -51,7 +49,7 @@ class SalarySanctionsController extends Controller
                         ->count();
                 }
             }
-            return view('dashboard.salaries.sanctions.index', compact('data'));
+            return view('dashboard.salaries.absences.index', compact('data'));
         } catch (\Exception $e) {
             return redirect()
                 ->back()
@@ -64,19 +62,13 @@ class SalarySanctionsController extends Controller
      */
     public function create(FinanceClnPeriod $financeClnPeriod)
     {
-        try {
-            return view('dashboard.salaries.sanctions.create', compact('financeClnPeriod'));
-        } catch (\Exception $e) {
-            return redirect()
-                ->route('dashboard.sanctions.index')
-                ->withErrors(['error' => $e->getMessage()]);
-        }
+        return view('dashboard.salaries.absences.create', compact('financeClnPeriod'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(EmployeeSalarySanctionsRequest $request, $financeClnPeriodId)
+    public function store(EmployeeSalaryAbsenceRequest $request, $financeClnPeriodId)
     {
         try {
             $com_code = Auth::user()->com_code;
@@ -85,15 +77,15 @@ class SalarySanctionsController extends Controller
                 ->where('id', $financeClnPeriodId)
                 ->firstOrFail();
             if ($financeClnPeriod->is_open != FinanceClnPeriodsIsOpen::Open) {
-                return redirect()->route('dashboard.sanctions.show', $financeClnPeriod->slug)->withErrors(['error' => 'عفوا الشهر المالى غير مفتوح !'])->withInput();
+                return redirect()->route('dashboard.absences.show', $financeClnPeriod->slug)->withErrors(['error' => 'عفوا الشهر المالى غير مفتوح !'])->withInput();
             }
+
             $validateData = $request->validated();
             $dataInsert = array_merge($validateData, [
                 'finance_cln_period_id' => $financeClnPeriod->id,
                 'main_salary_employee_id' => $request->main_salary_employee_id,
                 'employee_code' => $request->employee_code,
                 'day_price' => $request->day_price,
-                'sanctions_type' => $request->sanctions_type,
                 'value' => $request->value,
                 'total' => $request->total,
                 'notes' => $request->notes,
@@ -101,11 +93,11 @@ class SalarySanctionsController extends Controller
                 'com_code' => $com_code,
                 'created_by' => $userId,
             ]);
-            EmployeeSalarySanction::create($dataInsert);
-            return redirect()->route('dashboard.sanctions.show', $financeClnPeriod->slug)->with('success', 'تم أضاف الجزاء بنجاح');
+            EmployeeSalaryAbsence::create($dataInsert);
+            return redirect()->route('dashboard.absences.show', $financeClnPeriod->slug)->with('success', 'تم أضاف الغياب بنجاح');
         } catch (\Exception $e) {
             return redirect()
-                ->route('dashboard.sanctions.index')
+                ->route('dashboard.absences.index')
                 ->withErrors(['error' => $e->getMessage()]);
         }
     }
@@ -122,15 +114,15 @@ class SalarySanctionsController extends Controller
                 return redirect()->back()->withErrors(['error' => 'عفوا غير قادر للوصول على البيانات المطلوبه !'])->withInput();
             }
 
-            $data = EmployeeSalarySanction::filter(request()->all())->orderBy('id', 'DESC')
+            $data = EmployeeSalaryAbsence::filter(request()->all())->orderBy('id', 'DESC')
                 ->where('com_code', $com_code)
                 ->where('finance_cln_period_id', $financeClnPeriod->id)
                 ->paginate(5);
 
-            return view('dashboard.salaries.sanctions.show', compact('financeClnPeriod', 'data'));
+            return view('dashboard.salaries.absences.show', compact('financeClnPeriod', 'data'));
         } catch (\Exception $e) {
             return redirect()
-                ->route('dashboard.sanctions.index')
+                ->route('dashboard.absences.index')
                 ->withErrors(['error' => $e->getMessage()]);
         }
     }
@@ -139,24 +131,24 @@ class SalarySanctionsController extends Controller
      * Show the form for editing the specified resource.
      */
 
-    public function showData(EmployeeSalarySanction $sanction, FinanceClnPeriod $financeClnPeriod)
+    public function showData(EmployeeSalaryAbsence $absence, FinanceClnPeriod $financeClnPeriod)
     {
         try {
-            return view('dashboard.salaries.sanctions.show_data', compact('sanction', 'financeClnPeriod'));
+            return view('dashboard.salaries.absences.show_data', compact('absence', 'financeClnPeriod'));
         } catch (\Exception $e) {
             return redirect()
-                ->route('dashboard.sanctions.index')
+                ->route('dashboard.absences.index')
                 ->withErrors(['error' => $e->getMessage()]);
         }
     }
 
-    public function edit(EmployeeSalarySanction $sanction, FinanceClnPeriod $financeClnPeriod)
+    public function edit(EmployeeSalaryAbsence $absence, FinanceClnPeriod $financeClnPeriod)
     {
         try {
-            return view('dashboard.salaries.sanctions.edit', compact('sanction', 'financeClnPeriod'));
+            return view('dashboard.salaries.absences.edit', compact('absence', 'financeClnPeriod'));
         } catch (\Exception $e) {
             return redirect()
-                ->route('dashboard.sanctions.index')
+                ->route('dashboard.absences.index')
                 ->withErrors(['error' => $e->getMessage()]);
         }
     }
@@ -164,24 +156,23 @@ class SalarySanctionsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(EmployeeSalarySanctionsRequest $request, EmployeeSalarySanction $sanction)
+    public function update(EmployeeSalaryAbsenceRequest $request, EmployeeSalaryAbsence $absence)
     {
         try {
             $com_code = Auth::user()->com_code;
             $userId = Auth::user()->id;
             $financeClnPeriod = FinanceClnPeriod::where('com_code', $com_code)
-                ->where('id', $sanction->finance_cln_period_id)
+                ->where('id', $absence->finance_cln_period_id)
                 ->firstOrFail();
             if ($financeClnPeriod->is_open != FinanceClnPeriodsIsOpen::Open) {
-                return redirect()->route('dashboard.sanctions.show', $financeClnPeriod->slug)->withErrors(['error' => 'عفوا الشهر المالى غير مفتوح !'])->withInput();
+                return redirect()->route('dashboard.absences.show', $financeClnPeriod->slug)->withErrors(['error' => 'عفوا الشهر المالى غير مفتوح !'])->withInput();
             }
             $validated = $request->validated();
-            $sanction->update([
+            $absence->update([
                 'finance_cln_period_id' => $financeClnPeriod->id,
                 'main_salary_employee_id' => $validated['main_salary_employee_id'],
                 'employee_code' => $validated['employee_code'],
                 'day_price' => $validated['day_price'],
-                'sanctions_type' => $validated['sanctions_type'],
                 'value' => $validated['value'],
                 'total' => $validated['total'],
                 'notes' => $validated['notes'] ?? null,
@@ -190,10 +181,10 @@ class SalarySanctionsController extends Controller
                 'com_code' => $com_code,
             ]);
 
-            return redirect()->route('dashboard.sanctions.show', $financeClnPeriod->slug)->with('success', 'تم تعديل الجزاء بنجاح');
+            return redirect()->route('dashboard.absences.show', $financeClnPeriod->slug)->with('success', 'تم تعديل الغياب بنجاح');
         } catch (\Exception $e) {
             return redirect()
-                ->route('dashboard.sanctions.index')
+                ->route('dashboard.absences.index')
                 ->withErrors(['error' => $e->getMessage()]);
         }
     }
@@ -201,7 +192,7 @@ class SalarySanctionsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(EmployeeSalarySanction $sanction, FinanceClnPeriod $financeClnPeriod)
+    public function destroy(EmployeeSalaryAbsence $absence, FinanceClnPeriod $financeClnPeriod)
     {
         try {
             $com_code = Auth::user()->com_code;
@@ -210,10 +201,10 @@ class SalarySanctionsController extends Controller
             if (!$finance_cln_periods_data) {
                 return redirect()->back()->withErrors(['error' => 'عفوا غير قادر للوصول على البيانات المطلوبه !'])->withInput();
             }
-            $sanction->delete();
+            $absence->delete();
             return response()->json([
                 'success' => true,
-                'message' => 'تم حذف الجزاء بنجاح'
+                'message' => 'تم حذف الغياب بنجاح'
             ]);
         } catch (\Exception $e) {
             return response()->json([
@@ -226,44 +217,28 @@ class SalarySanctionsController extends Controller
 
     public function getDayPrice($id)
     {
-        try {
-            $employee = MainSalaryEmployee::find($id); // تأكد من استخدام النموذج الصحيح
+        $employee = MainSalaryEmployee::find($id); // تأكد من استخدام النموذج الصحيح
 
-            if ($employee) {
-                return response()->json([
-                    'status' => true,
-                    'day_price' => $employee->day_price,
-                    'employee_code' => $employee->employee_code // تأكد من أن الحقل موجود في النموذج
-                ]);
-            }
-
+        if ($employee) {
             return response()->json([
-                'status' => false,
-                'message' => 'الموظف غير موجود'
-            ], 404);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'حدث خطأ أثناء محاولة الحذف',
-                'error' => $e->getMessage()
-            ], 500);
+                'status' => true,
+                'day_price' => $employee->day_price,
+                'employee_code' => $employee->employee_code // تأكد من أن الحقل موجود في النموذج
+            ]);
         }
+
+        return response()->json([
+            'status' => false,
+            'message' => 'الموظف غير موجود'
+        ], 404);
     }
 
     public function searchEmployee(Request $request)
     {
-        try {
-            $employees = MainSalaryEmployee::where('employee_name', 'LIKE', "%{$request->q}%")->orWhere('employee_code', 'LIKE', "%{$request->q}%")->limit(5)->get();
-            return response()->json([
-                'data' => $employees
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'حدث خطأ أثناء محاولة الحذف',
-                'error' => $e->getMessage()
-            ], 500);
-        }
+        $employees = MainSalaryEmployee::where('employee_name', 'LIKE', "%{$request->q}%")->orWhere('employee_code', 'LIKE', "%{$request->q}%")->limit(5)->get();
+        return response()->json([
+            'data' => $employees
+        ]);
     }
 
     public function export($slug)
@@ -279,12 +254,12 @@ class SalarySanctionsController extends Controller
                 return redirect()->back()->withErrors(['error' => 'عفوا غير قادر للوصول على البيانات المطلوبة !']);
             }
 
-            $data = EmployeeSalarySanction::where('finance_cln_period_id', $financeClnPeriod->id)
+            $data = EmployeeSalaryAbsence::where('finance_cln_period_id', $financeClnPeriod->id)
                 ->where('com_code', $com_code)
                 ->with('mainSalaryEmployee')
                 ->get();
 
-            return Excel::download(new EmployeeSalarySanctionExport($data), 'الجزاءات.xlsx');
+            return Excel::download(new EmployeeSalaryAbsenceExport($data), 'الغيابات.xlsx');
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
@@ -303,7 +278,7 @@ class SalarySanctionsController extends Controller
 
         try {
             // مرر قيمة السنة والشهر إلى كلاس الاستيراد
-            Excel::import(new EmployeeSalarySanctionImport(), $request->file('file'));
+            Excel::import(new EmployeeSalaryAbsenceImport(), $request->file('file'));
 
             return back()->with('success', 'تم استيراد الملف بنجاح.');
         } catch (\Exception $e) {
@@ -314,7 +289,7 @@ class SalarySanctionsController extends Controller
     {
         try {
             // الحصول على نفس شروط البحث المستخدمة في صفحة العرض
-            $query = EmployeeSalarySanction::query()
+            $query = EmployeeSalaryAbsence::query()
                 ->with(['financeClnPeriod', 'mainSalaryEmployee'])
                 ->where('com_code', Auth::user()->com_code);
 
@@ -329,21 +304,18 @@ class SalarySanctionsController extends Controller
                 });
             }
 
-            if ($request->filled('sanction_types')) {
-                $query->where('sanctions_type', $request->sanction_types);
-            }
 
-            if ($request->filled('days_sanctions')) {
-                $query->where('value', $request->days_sanctions);
+            if ($request->filled('days_absences')) {
+                $query->where('value', $request->days_absences);
             }
 
             $sanctions = $query->get();
 
             // أو طباعة مباشرة
-            return view('dashboard.salaries.sanctions.partials.print', compact('sanctions'));
+            return view('dashboard.salaries.absences.partials.print', compact('sanctions'));
         } catch (\Exception $e) {
             return redirect()
-                ->route('dashboard.sanctions.index')
+                ->route('dashboard.absences.index')
                 ->withErrors(['error' => $e->getMessage()]);
         }
     }

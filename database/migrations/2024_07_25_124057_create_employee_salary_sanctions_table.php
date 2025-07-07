@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignIdFor(MainSalaryEmployee::class)->nullable()->constrained()->nullOnDelete(); //المرتب
             $table->foreignIdFor(FinanceClnPeriod::class)->nullable()->constrained()->nullOnDelete(); //كود الشهر المالى
             $table->tinyInteger('is_auto')->nullable()->default(1); //هل تلقائى من النظام أم بشكل يدوى
+            $table->string('slug')->unique()->nullable();
             $table->bigInteger('employee_code')->comment(''); //كود الموظف
             $table->decimal('day_price', 10, 2)->comment(''); //أجر يوم الموظف
             $table->integer('sanctions_type')->comment(''); // واحد جزاء أيام - أثنين جزاء بصمة - ثلاثه جزاء تحقيق

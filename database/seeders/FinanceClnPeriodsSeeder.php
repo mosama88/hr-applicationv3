@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -43,7 +44,8 @@ class FinanceClnPeriodsSeeder extends Seeder
                 'id' => $item['id'],
                 'finance_calendar_id' => $commonFields['finance_calendar_id'],
                 'finance_yr' => $commonFields['finance_yr'],
-                'year_and_month' => "2025-{$item['month']}",
+                'year_and_month' => $year_and_month = "2025-{$item['month']}",
+                'slug' => Str::slug($year_and_month),
                 'start_date_m' => $start,
                 'end_date_m' => $end,
                 'number_of_days' => $item['days'],

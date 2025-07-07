@@ -17,9 +17,10 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(MainSalaryEmployee::class)->nullable()->constrained()->nullOnDelete(); //المرتب
             $table->foreignIdFor(FinanceClnPeriod::class)->nullable()->constrained()->nullOnDelete(); //كود الشهر المالى
-            $table->bigInteger('employee_code')->comment('كود الموظف');
-            $table->decimal('day_price', 10, 2)->comment('أجر يوم الموظف');
-            $table->decimal('total', 10, 2)->comment('أجمالى السلف');
+            $table->string('slug')->unique()->nullable();
+            $table->bigInteger('employee_code'); //كود الموظف
+            $table->decimal('day_price', 10, 2); //أجر يوم الموظف
+            $table->decimal('total', 10, 2); //أجمالى السلف
             $table->tinyInteger('is_archived')->default(2)->nullable(); //حالة الموظف لحظة الراتب
             $table->foreignId('archived_by')->nullable()->references('id')->on('admins')->onUpdate('cascade');
             $table->dateTime('archived_date')->nullable()->nullable(); //تاريخ ارشفه الراتب
