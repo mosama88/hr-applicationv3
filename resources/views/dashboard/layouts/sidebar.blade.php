@@ -268,14 +268,14 @@
                         class="nav-item {{ request()->is('dashboard/main_salary_records*') ||
                         request()->is('dashboard/sanctions*') ||
                         request()->is('dashboard/absences*') ||
-                        request()->is('dashboard/employees*')
+                        request()->is('dashboard/additionals*')
                             ? 'menu-open'
                             : '' }}">
                         <a href="#"
                             class="nav-link {{ request()->is('main_salary_records*') ||
                             request()->is('sanctions*') ||
-                            request()->is('discount_types*') ||
-                            request()->is('employees*')
+                            request()->is('absences*') ||
+                            request()->is('additionals*')
                                 ? 'active'
                                 : '' }}">
                             <i class="nav-icon fa-solid fa-money-check-dollar"></i>
@@ -306,6 +306,13 @@
                                     class="nav-link @yield('active-absences')">
                                     <i class="nav-icon bi bi-circle"></i>
                                     <p>غياب أيام</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('dashboard.additionals.index') }}"
+                                    class="nav-link @yield('active-additionals')">
+                                    <i class="nav-icon bi bi-circle"></i>
+                                    <p>أضافى أيام</p>
                                 </a>
                             </li>
                         </ul>

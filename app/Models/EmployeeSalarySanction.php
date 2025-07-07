@@ -42,15 +42,16 @@ class EmployeeSalarySanction extends Model implements HasMedia
         'updated_by'
     ];
 
-    public function getTypeLabelAttribute(): string
+    public function getEmployeeNameForSlugAttribute(): string
     {
-        return $this->sanctions_type->label();
+        return $this->mainSalaryEmployee?->employee_name ?? '';
     }
+
 
     public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
-            ->generateSlugsFrom('sanctions_type_label') // accessor
+            ->generateSlugsFrom('employee_name_for_slug')
             ->saveSlugsTo('slug');
     }
 
@@ -72,7 +73,7 @@ class EmployeeSalarySanction extends Model implements HasMedia
     {
         return $this->belongsTo(MainSalaryEmployee::class, 'main_salary_employee_id');
     }
-    
+
 
     public function financeClnPeriod()
     {

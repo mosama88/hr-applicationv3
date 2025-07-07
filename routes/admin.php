@@ -24,6 +24,7 @@ use App\Http\Controllers\Dashboard\Settings\AdminPanelSettingController;
 use App\Http\Controllers\Dashboard\EmployeeAffairs\DiscountTypeController;
 use App\Http\Controllers\Dashboard\EmployeeAffairs\AdditionalTypeController;
 use App\Http\Controllers\Dashboard\Salaries\EmployeeSalaryAbsenceController;
+use App\Http\Controllers\Dashboard\Salaries\EmployeeSalaryAdditionalController;
 
 
 Route::middleware(['auth:admin'])->group(function () {
@@ -151,6 +152,21 @@ Route::middleware(['auth:admin'])->group(function () {
         Route::get('/absences/export/{slug}', 'export')->name('export');
         Route::post('/absences/import', 'import')->name('import');
         Route::post('/absences/print', 'print')->name('print');
+    });
+
+    //################################### أضافى أيام ##################################
+    Route::controller(EmployeeSalaryAdditionalController::class)->name('additionals.')->prefix('/additionals')->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::get('/create/{financeClnPeriod}', 'create')->name('create');
+        Route::post('/store/{financeClnPeriod}', 'store')->name('store');
+        Route::get('/show/{financeClnPeriod}', 'show')->name('show');
+        Route::get('/edit/{additional}', 'edit')->name('edit');
+        Route::get('/show/data/{additional}', 'showData')->name('show-data');
+        Route::patch('/update/{additional}', 'update')->name('update');
+        Route::delete('/delete/{additional}', 'destroy')->name('destroy');
+        Route::get('/additionals/export/{slug}', 'export')->name('export');
+        Route::post('/additionals/import', 'import')->name('import');
+        Route::post('/additionals/print', 'print')->name('print');
     });
 
     //################################### الأنتهاء من الاجور والمرتبات  ##################################

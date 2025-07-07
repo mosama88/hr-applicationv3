@@ -14,17 +14,18 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class EmployeeSalaryAbsence extends Model implements HasMedia
+class EmployeeSalaryAdditional extends Model implements HasMedia
 
 {
     use HasFactory, Filterable, InteractsWithMedia, HasSlug;
 
 
-    protected $table = 'employee_salary_absence_days';
+    protected $table = 'employee_salary_additionals';
 
     protected $fillable = [
         'main_salary_employee_id',
         'finance_cln_period_id',
+        'slug',
         'is_auto',
         'employee_code',
         'day_price',
@@ -52,6 +53,7 @@ class EmployeeSalaryAbsence extends Model implements HasMedia
             ->generateSlugsFrom('employee_name_for_slug')
             ->saveSlugsTo('slug');
     }
+
 
 
     public function getRouteKeyName()
