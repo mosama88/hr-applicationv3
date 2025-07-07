@@ -25,6 +25,7 @@ use App\Http\Controllers\Dashboard\EmployeeAffairs\DiscountTypeController;
 use App\Http\Controllers\Dashboard\EmployeeAffairs\AdditionalTypeController;
 use App\Http\Controllers\Dashboard\Salaries\EmployeeSalaryAbsenceController;
 use App\Http\Controllers\Dashboard\Salaries\EmployeeSalaryAdditionalController;
+use App\Http\Controllers\Dashboard\Salaries\EmployeeSalaryFixedAllowanceController;
 
 
 Route::middleware(['auth:admin'])->group(function () {
@@ -168,7 +169,20 @@ Route::middleware(['auth:admin'])->group(function () {
         Route::post('/additionals/import', 'import')->name('import');
         Route::post('/additionals/print', 'print')->name('print');
     });
-
+    //################################### البدلات المتغيره ##################################
+    Route::controller(EmployeeSalaryFixedAllowanceController::class)->name('employee_salary_allowances.')->prefix('/employee_salary_allowances')->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::get('/create/{financeClnPeriod}', 'create')->name('create');
+        Route::post('/store/{financeClnPeriod}', 'store')->name('store');
+        Route::get('/show/{financeClnPeriod}', 'show')->name('show');
+        Route::get('/edit/{employee_salary_allowance}', 'edit')->name('edit');
+        Route::get('/show/data/{employee_salary_allowance}', 'showData')->name('show-data');
+        Route::patch('/update/{employee_salary_allowance}', 'update')->name('update');
+        Route::delete('/delete/{employee_salary_allowance}', 'destroy')->name('destroy');
+        Route::get('/employee_salary_allowances/export/{slug}', 'export')->name('export');
+        Route::post('/employee_salary_allowances/import', 'import')->name('import');
+        Route::post('/employee_salary_allowances/print', 'print')->name('print');
+    });
     //################################### الأنتهاء من الاجور والمرتبات  ##################################
 
 });

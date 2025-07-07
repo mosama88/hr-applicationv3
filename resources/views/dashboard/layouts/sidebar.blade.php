@@ -268,6 +268,7 @@
                         class="nav-item {{ request()->is('dashboard/main_salary_records*') ||
                         request()->is('dashboard/sanctions*') ||
                         request()->is('dashboard/absences*') ||
+                        request()->is('dashboard/employee_salary_allowances*') ||
                         request()->is('dashboard/additionals*')
                             ? 'menu-open'
                             : '' }}">
@@ -275,6 +276,7 @@
                             class="nav-link {{ request()->is('main_salary_records*') ||
                             request()->is('sanctions*') ||
                             request()->is('absences*') ||
+                            request()->is('employee_salary_allowances*') ||
                             request()->is('additionals*')
                                 ? 'active'
                                 : '' }}">
@@ -313,6 +315,13 @@
                                     class="nav-link @yield('active-additionals')">
                                     <i class="nav-icon bi bi-circle"></i>
                                     <p>أضافى أيام</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('dashboard.employee_salary_allowances.index') }}"
+                                    class="nav-link @yield('active-employee_salary_allowances')">
+                                    <i class="nav-icon bi bi-circle"></i>
+                                    <p>البدلات المتغيرة</p>
                                 </a>
                             </li>
                         </ul>
