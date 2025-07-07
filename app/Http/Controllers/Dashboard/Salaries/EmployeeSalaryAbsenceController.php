@@ -309,10 +309,10 @@ class EmployeeSalaryAbsenceController extends Controller
                 $query->where('value', $request->days_absences);
             }
 
-            $sanctions = $query->get();
+            $absences = $query->get();
 
             // أو طباعة مباشرة
-            return view('dashboard.salaries.absences.partials.print', compact('sanctions'));
+            return view('dashboard.salaries.absences.partials.print', compact('absences'));
         } catch (\Exception $e) {
             return redirect()
                 ->route('dashboard.absences.index')

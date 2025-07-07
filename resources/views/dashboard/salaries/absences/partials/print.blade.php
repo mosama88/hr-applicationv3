@@ -5,7 +5,7 @@
 <html>
 
 <head>
-    <title>تقرير الجزاءات</title>
+    <title>تقرير الغيابات</title>
 
     <style>
         /* تنسيق عام */
@@ -85,9 +85,9 @@
 
 <body>
     <div class="header">
-        <h2>تقرير الجزاءات ({{ $sanctions->count() }} جزاء) </h2>
+        <h2>تقرير الغيابات  </h2>
         <p>تاريخ التقرير: {{ now()->format('Y-m-d') }}</p>
-        <p>إجمالى الجزاءات: {{ number_format($sanctions->sum('total'), 2) }} جنيه</p>
+        <p>إجمالى الغيابات: {{ number_format($absences->sum('total'), 2) }} جنيه</p>
 
     </div>
 
@@ -102,13 +102,13 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($sanctions as $sanction)
+            @foreach ($absences as $absence)
                 <tr>
-                    <td>{{ $sanction->employee_code }}</td>
-                    <td>{{ $sanction->mainSalaryEmployee->employee_name }}</td>
-                    <td>{{ $sanction->value * 1 }}</td>
-                    <td>{{ $sanction->total * 1 }}</td>
-                    <td>{{ $sanction->financeClnPeriod->year_and_month ?? 'غير معروف' }}</td>
+                    <td>{{ $absence->employee_code }}</td>
+                    <td>{{ $absence->mainSalaryEmployee->employee_name }}</td>
+                    <td>{{ $absence->value * 1 }}</td>
+                    <td>{{ $absence->total * 1 }}</td>
+                    <td>{{ $absence->financeClnPeriod->year_and_month ?? 'غير معروف' }}</td>
                 </tr>
             @endforeach
         </tbody>
