@@ -62,7 +62,13 @@ class EmployeeSalaryAllowanceController extends Controller
      */
     public function create(FinanceClnPeriod $financeClnPeriod)
     {
-        return view('dashboard.salaries.employee_salary_allowances.create', compact('financeClnPeriod'));
+        try {
+            return view('dashboard.salaries.employee_salary_allowances.create', compact('financeClnPeriod'));
+        } catch (\Exception $e) {
+            return redirect()
+                ->back()
+                ->withErrors(['error' => $e->getMessage()]);
+        }
     }
 
     /**
@@ -116,7 +122,7 @@ class EmployeeSalaryAllowanceController extends Controller
 
             $data = EmployeeSalaryAllowance::with([
                 'mainSalaryEmployee' => function ($q) {
-                    $q->select(['id', 'employee_code', 'employee_name']);
+                    $q->select(['id', 'employee_code', 'employee_name', 'department_code', 'branch_id']);
                 },
                 'mainSalaryEmployee.employee' => function ($q) {
                     $q->select(['id', 'employee_code', 'name', 'gender'])->with('media');

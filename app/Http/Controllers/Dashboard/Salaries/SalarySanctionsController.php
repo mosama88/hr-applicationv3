@@ -125,7 +125,7 @@ class SalarySanctionsController extends Controller
 
             $data = EmployeeSalarySanction::with([
                 'mainSalaryEmployee' => function ($q) {
-                    $q->select(['id', 'employee_code', 'employee_name']);
+                    $q->select(['id', 'employee_code', 'employee_name', 'department_code', 'branch_id']);
                 },
                 'mainSalaryEmployee.employee' => function ($q) {
                     $q->select(['id', 'employee_code', 'name', 'gender'])->with('media');

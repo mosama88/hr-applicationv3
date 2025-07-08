@@ -127,6 +127,8 @@
                                         <th>صورة الموظف</th>
                                         <th>كود الموظف</th>
                                         <th>أسم الموظف</th>
+                                        <th>الادارة</th>
+                                        <th>الفرع</th>
                                         <th>نوع الجزاء</th>
                                         <th>عدد الأيام</th>
                                         <th>أجمالى</th>
@@ -179,11 +181,11 @@
                                                         alt="لا يوجد موظف">
                                                 @endif
                                             </td>
-
-
-
                                             <td>{{ $info->employee_code }}</td>
-                                            <td>{{ $info->employee->name }}</td>
+                                            <td>{{ $info->mainSalaryEmployee->employee_name }}</td>
+                                            <td>{{ $info->mainSalaryEmployee->department->name }}</td>
+                                            <td>{{ $info->mainSalaryEmployee->branch->name }}</td>
+
                                             <td>
                                                 @if ($info->sanctions_type)
                                                     {{ $info->sanctions_type->label() }}
@@ -191,7 +193,7 @@
                                             </td>
                                             <td>{{ $info->value * 1 }}</td>
                                             <td>{{ $info->total * 1 }}</td>
-                                            <td>{{ $info->notes }}</td>
+                                            <td>{{ Str::limit($info->notes, 30) }}</td>
                                             <td>
                                                 @if ($info->is_archived == IsArchivedEnum::Archived)
                                                     <span class="badge bg-danger">{{ $info->is_archived->label() }}</span>

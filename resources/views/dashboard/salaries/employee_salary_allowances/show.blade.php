@@ -127,7 +127,9 @@
                                         <th>صورة الموظف</th>
                                         <th>كود الموظف</th>
                                         <th>أسم الموظف</th>
-                                        <th>عدد الأيام</th>
+                                        <th>الادارة</th>
+                                        <th>الفرع</th>
+                                        <th>البدل</th>
                                         <th>أجمالى</th>
                                         <th>الملاحظات</th>
                                         <th>الحالة</th>
@@ -144,45 +146,46 @@
                                                 @php
                                                     $employee = $info->mainSalaryEmployee->employee ?? null;
                                                 @endphp
-                                            
+
                                                 @if ($employee)
                                                     @php
                                                         $photoUrl = $employee->getFirstMediaUrl('photo', 'preview');
                                                     @endphp
-                                            
+
                                                     @if ($photoUrl)
-                                                        <img class="img-thumbnail rounded-circle"
-                                                             src="{{ $photoUrl }}"
-                                                             style="width: 70px; height: 70px; object-fit: cover;"
-                                                             alt="{{ $employee->name }}">
+                                                        <img class="img-thumbnail rounded-circle" src="{{ $photoUrl }}"
+                                                            style="width: 70px; height: 70px; object-fit: cover;"
+                                                            alt="{{ $employee->name }}">
                                                     @elseif($employee->gender === AdminGenderEnum::Male)
                                                         <img class="img-thumbnail rounded-circle"
-                                                             src="{{ asset('dashboard/assets/dist/assets/img/employees-male-default.png') }}"
-                                                             style="width: 70px; height: 70px; object-fit: cover;"
-                                                             alt="{{ $employee->name }}">
+                                                            src="{{ asset('dashboard/assets/dist/assets/img/employees-male-default.png') }}"
+                                                            style="width: 70px; height: 70px; object-fit: cover;"
+                                                            alt="{{ $employee->name }}">
                                                     @elseif($employee->gender === AdminGenderEnum::Female)
                                                         <img class="img-thumbnail rounded-circle"
-                                                             src="{{ asset('dashboard/assets/dist/assets/img/employees-female-default.png') }}"
-                                                             style="width: 70px; height: 70px; object-fit: cover;"
-                                                             alt="{{ $employee->name }}">
+                                                            src="{{ asset('dashboard/assets/dist/assets/img/employees-female-default.png') }}"
+                                                            style="width: 70px; height: 70px; object-fit: cover;"
+                                                            alt="{{ $employee->name }}">
                                                     @else
                                                         <img class="img-thumbnail rounded-circle"
-                                                             src="{{ asset('dashboard/assets/img/Employee.png') }}"
-                                                             style="width: 70px; height: 70px; object-fit: cover;"
-                                                             alt="صورة افتراضية">
+                                                            src="{{ asset('dashboard/assets/img/Employee.png') }}"
+                                                            style="width: 70px; height: 70px; object-fit: cover;"
+                                                            alt="صورة افتراضية">
                                                     @endif
                                                 @else
                                                     <img class="img-thumbnail rounded-circle"
-                                                         src="{{ asset('dashboard/assets/img/Employee.png') }}"
-                                                         style="width: 70px; height: 70px; object-fit: cover;"
-                                                         alt="لا يوجد موظف">
+                                                        src="{{ asset('dashboard/assets/img/Employee.png') }}"
+                                                        style="width: 70px; height: 70px; object-fit: cover;"
+                                                        alt="لا يوجد موظف">
                                                 @endif
                                             </td>
                                             <td>{{ $info->employee_code }}</td>
                                             <td>{{ $info->mainSalaryEmployee->employee_name }}</td>
-                                            <td>{{ $info->value * 1 }}</td>
+                                            <td>{{ $info->mainSalaryEmployee->department->name }}</td>
+                                            <td>{{ $info->mainSalaryEmployee->branch->name }}</td>
+                                            <td>{{ $info->allowance->name }}</td>
                                             <td>{{ $info->total * 1 }}</td>
-                                            <td>{{ $info->notes }}</td>
+                                            <td>{{ Str::limit($info->notes, 30) }}</td>
                                             <td>
                                                 @if ($info->is_archived == IsArchivedEnum::Archived)
                                                     <span class="badge bg-danger">{{ $info->is_archived->label() }}</span>

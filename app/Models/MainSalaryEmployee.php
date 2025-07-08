@@ -96,6 +96,11 @@ class MainSalaryEmployee extends Model
     {
         return $this->belongsTo(Branch::class, 'branch_id');
     }
+    
+    public function department()
+    {
+        return $this->belongsTo(Department::class, 'department_code');
+    }
 
     public function createdBy()
     {
