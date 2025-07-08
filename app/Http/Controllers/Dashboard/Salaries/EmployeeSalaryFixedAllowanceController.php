@@ -114,10 +114,19 @@ class EmployeeSalaryFixedAllowanceController extends Controller
                 return redirect()->back()->withErrors(['error' => 'عفوا غير قادر للوصول على البيانات المطلوبه !'])->withInput();
             }
 
-            $data = EmployeeSalaryFixedAllowance::filter(request()->all())->orderBy('id', 'DESC')
+            $data = EmployeeSalaryFixedAllowance::with([
+                'mainSalaryEmployee' => function ($q) {
+                    $q->select(['id', 'employee_code', 'employee_name']);
+                },
+                'mainSalaryEmployee.employee' => function ($q) {
+                    $q->select(['id', 'employee_code', 'name', 'gender'])->with('media');
+                }
+            ])->filter(request()->all())
+                ->orderBy('id', 'DESC')
                 ->where('com_code', $com_code)
                 ->where('finance_cln_period_id', $financeClnPeriod->id)
                 ->paginate(5);
+
 
             return view('dashboard.salaries.employee_salary_allowances.show', compact('financeClnPeriod', 'data'));
         } catch (\Exception $e) {

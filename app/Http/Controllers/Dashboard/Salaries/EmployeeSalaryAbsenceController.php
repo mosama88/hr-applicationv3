@@ -114,7 +114,16 @@ class EmployeeSalaryAbsenceController extends Controller
                 return redirect()->back()->withErrors(['error' => 'عفوا غير قادر للوصول على البيانات المطلوبه !'])->withInput();
             }
 
-            $data = EmployeeSalaryAbsence::filter(request()->all())->orderBy('id', 'DESC')
+
+            $data = EmployeeSalaryAbsence::with([
+                'mainSalaryEmployee' => function ($q) {
+                    $q->select(['id', 'employee_code', 'employee_name']);
+                },
+                'mainSalaryEmployee.employee' => function ($q) {
+                    $q->select(['id', 'employee_code', 'name', 'gender'])->with('media');
+                }
+            ])->filter(request()->all())
+                ->orderBy('id', 'DESC')
                 ->where('com_code', $com_code)
                 ->where('finance_cln_period_id', $financeClnPeriod->id)
                 ->paginate(5);

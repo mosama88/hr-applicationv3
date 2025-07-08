@@ -82,7 +82,7 @@ class EmployeeSalarySanction extends Model implements HasMedia
 
     public function employee()
     {
-        return $this->belongsTo(Employee::class, 'employee_code');
+        return $this->belongsTo(Employee::class, 'employee_code', 'employee_code');
     }
 
     public function archivedBy()
