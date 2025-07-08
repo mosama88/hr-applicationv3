@@ -3,8 +3,8 @@
     use App\Models\MainSalaryEmployee;
 @endphp
 @extends('dashboard.layouts.master')
-@section('active-absences', 'active')
-@section('title', 'تعديل غياب الموظف')
+@section('active-employee_salary_allowances', 'active')
+@section('title', 'تعديل بدل الموظف')
 @push('css')
     <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/dist/css/select2.min.css" />
     <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/dist/css/select2-style.css" />
@@ -14,10 +14,10 @@
     @include('dashboard.layouts.message')
     <!-- Content Header (Page header) -->
     @include('dashboard.layouts.breadcrumbs', [
-        'titlePage' => 'تعديل غياب  للموظف ',
-        'previousPage' => 'جدول الغياب ات',
-        'currentPage' => 'تعديل غياب  للموظف ',
-        'url' => 'absences.index',
+        'titlePage' => 'تعديل بدل  للموظف ',
+        'previousPage' => 'جدول البدلات',
+        'currentPage' => 'تعديل بدل  للموظف ',
+        'url' => 'employee_salary_allowances.index',
     ])
 
     <section class="content">
@@ -38,7 +38,7 @@
                             @endforeach
                         @endif
 
-                        <form action="{{ route('dashboard.absences.update', $absence->slug) }}" method="POST"
+                        <form action="{{ route('dashboard.employee_salary_allowances.update', $absence->slug) }}" method="POST"
                             id="storeForm">
                             @csrf
                             @method('PATCH')
@@ -107,10 +107,10 @@
                                     </div>
 
 
-                                    <!-- عدد أيام الغياب  -->
+                                    <!-- عدد أيام البدل  -->
                                     <div class="col-md-3 mb-3">
                                         <label class="form-label" for="value-input">
-                                            عدد أيام الغياب </label>
+                                            عدد أيام البدل </label>
                                         <input type="text" name="value"
                                             class="form-control @error('value') is-invalid @enderror"
                                             oninput="this.value=this.value.replace(/[^0-9.]/g,'');"
@@ -122,10 +122,10 @@
                                         @enderror
                                     </div>
 
-                                    <!-- قيمة الغياب  -->
+                                    <!-- قيمة البدل  -->
                                     <div class="col-md-3 mb-3">
                                         <label class="form-label" for="total-input">
-                                            قيمة الغياب </label>
+                                            قيمة البدل </label>
                                         <input readonly type="text" name="total"
                                             class="form-control bg-white @error('total') is-invalid @enderror"
                                             value="{{ old('total', $absence->total) * 1 }}" id="total-input">
@@ -229,7 +229,7 @@
                 }
             });
 
-            // حساب القيمة الإجمالية للغياب  عند تغيير عدد الأيام
+            // حساب القيمة الإجمالية للبدل  عند تغيير عدد الأيام
             $('input[name="value"]').on('input', function() {
                 let days = parseFloat($(this).val()) || 0;
                 let dayPrice = parseFloat($('input[name="day_price"]').val()) || 0;
@@ -241,7 +241,7 @@
 
     <script>
         $(document).ready(function() {
-            // عند تغيير عدد أيام الغياب 
+            // عند تغيير عدد أيام البدل 
             $('#value-input').on('input', function() {
                 calculateTotal();
             });

@@ -14,7 +14,7 @@ use App\Enums\Salaries\IsAutoSalaryEnum;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class EmployeeSalaryFixedAllowance extends Model implements HasMedia
+class EmployeeSalaryAllowance extends Model implements HasMedia
 {
     use HasFactory, Filterable, InteractsWithMedia, HasSlug;
 

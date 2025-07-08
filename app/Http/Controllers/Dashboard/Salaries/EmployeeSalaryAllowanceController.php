@@ -10,12 +10,12 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Enums\FinanceClnPeriodsIsOpen;
-use App\Models\EmployeeSalaryFixedAllowance;
-use App\Exports\EmployeeSalaryFixedAllowanceExport;
-use App\Imports\EmployeeSalaryFixedAllowanceImport;
-use App\Http\Requests\Dashboard\Salaries\EmployeeSalaryFixedAllowanceRequest;
+use App\Models\EmployeeSalaryAllowance;
+use App\Exports\EmployeeSalaryAllowanceExport;
+use App\Imports\EmployeeSalaryAllowanceImport;
+use App\Http\Requests\Dashboard\Salaries\EmployeeSalaryAllowanceRequest;
 
-class EmployeeSalaryFixedAllowanceController extends Controller
+class EmployeeSalaryAllowanceController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -68,7 +68,7 @@ class EmployeeSalaryFixedAllowanceController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(EmployeeSalaryFixedAllowanceRequest $request, $financeClnPeriodId)
+    public function store(EmployeeSalaryAllowanceRequest $request, $financeClnPeriodId)
     {
         try {
             $com_code = Auth::user()->com_code;
@@ -93,7 +93,7 @@ class EmployeeSalaryFixedAllowanceController extends Controller
                 'com_code' => $com_code,
                 'created_by' => $userId,
             ]);
-            EmployeeSalaryFixedAllowance::create($dataInsert);
+            EmployeeSalaryAllowance::create($dataInsert);
             return redirect()->route('dashboard.employee_salary_allowances.show', $financeClnPeriod->slug)->with('success', 'تم أضاف البدلات المتغيرة بنجاح');
         } catch (\Exception $e) {
             return redirect()
@@ -114,7 +114,7 @@ class EmployeeSalaryFixedAllowanceController extends Controller
                 return redirect()->back()->withErrors(['error' => 'عفوا غير قادر للوصول على البيانات المطلوبه !'])->withInput();
             }
 
-            $data = EmployeeSalaryFixedAllowance::with([
+            $data = EmployeeSalaryAllowance::with([
                 'mainSalaryEmployee' => function ($q) {
                     $q->select(['id', 'employee_code', 'employee_name']);
                 },
@@ -140,7 +140,7 @@ class EmployeeSalaryFixedAllowanceController extends Controller
      * Show the form for editing the specified resource.
      */
 
-    public function showData(EmployeeSalaryFixedAllowance $employee_salary_fixed_allowance, FinanceClnPeriod $financeClnPeriod)
+    public function showData(EmployeeSalaryAllowance $employee_salary_fixed_allowance, FinanceClnPeriod $financeClnPeriod)
     {
         try {
             return view('dashboard.salaries.employee_salary_allowances.show_data', compact('employee_salary_fixed_allowance', 'financeClnPeriod'));
@@ -151,7 +151,7 @@ class EmployeeSalaryFixedAllowanceController extends Controller
         }
     }
 
-    public function edit(EmployeeSalaryFixedAllowance $employee_salary_fixed_allowance, FinanceClnPeriod $financeClnPeriod)
+    public function edit(EmployeeSalaryAllowance $employee_salary_fixed_allowance, FinanceClnPeriod $financeClnPeriod)
     {
         try {
             return view('dashboard.salaries.employee_salary_allowances.edit', compact('employee_salary_fixed_allowance', 'financeClnPeriod'));
@@ -165,7 +165,7 @@ class EmployeeSalaryFixedAllowanceController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(EmployeeSalaryFixedAllowanceRequest $request, EmployeeSalaryFixedAllowance $employee_salary_fixed_allowance)
+    public function update(EmployeeSalaryAllowanceRequest $request, EmployeeSalaryAllowance $employee_salary_fixed_allowance)
     {
         try {
             $com_code = Auth::user()->com_code;
@@ -201,7 +201,7 @@ class EmployeeSalaryFixedAllowanceController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(EmployeeSalaryFixedAllowance $employee_salary_fixed_allowance, FinanceClnPeriod $financeClnPeriod)
+    public function destroy(EmployeeSalaryAllowance $employee_salary_fixed_allowance, FinanceClnPeriod $financeClnPeriod)
     {
         try {
             $com_code = Auth::user()->com_code;
@@ -263,12 +263,12 @@ class EmployeeSalaryFixedAllowanceController extends Controller
                 return redirect()->back()->withErrors(['error' => 'عفوا غير قادر للوصول على البيانات المطلوبة !']);
             }
 
-            $data = EmployeeSalaryFixedAllowance::where('finance_cln_period_id', $financeClnPeriod->id)
+            $data = EmployeeSalaryAllowance::where('finance_cln_period_id', $financeClnPeriod->id)
                 ->where('com_code', $com_code)
                 ->with('mainSalaryEmployee')
                 ->get();
 
-            return Excel::download(new EmployeeSalaryFixedAllowanceExport($data), 'البدلات المتغيرة.xlsx');
+            return Excel::download(new EmployeeSalaryAllowanceExport($data), 'البدلات المتغيرة.xlsx');
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
@@ -287,7 +287,7 @@ class EmployeeSalaryFixedAllowanceController extends Controller
 
         try {
             // مرر قيمة السنة والشهر إلى كلاس الاستيراد
-            Excel::import(new EmployeeSalaryFixedAllowanceImport(), $request->file('file'));
+            Excel::import(new EmployeeSalaryAllowanceImport(), $request->file('file'));
 
             return back()->with('success', 'تم استيراد الملف بنجاح.');
         } catch (\Exception $e) {
@@ -300,7 +300,7 @@ class EmployeeSalaryFixedAllowanceController extends Controller
     {
         try {
             // الحصول على نفس شروط البحث المستخدمة في صفحة العرض
-            $query = EmployeeSalaryFixedAllowance::query()
+            $query = EmployeeSalaryAllowance::query()
                 ->with(['financeClnPeriod', 'mainSalaryEmployee'])
                 ->where('com_code', Auth::user()->com_code);
 

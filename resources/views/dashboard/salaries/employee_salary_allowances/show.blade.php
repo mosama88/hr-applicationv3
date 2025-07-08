@@ -6,8 +6,8 @@
 @endphp
 
 @extends('dashboard.layouts.master')
-@section('active-absences', 'active')
-@section('title', 'غياب الموظفين')
+@section('active-employee_salary_allowances', 'active')
+@section('title', 'بدل الموظفين')
 @push('css')
     <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/dist/css/select2.min.css" />
     <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/dist/css/select2-style.css" />
@@ -84,10 +84,10 @@
 
 
     @include('dashboard.layouts.breadcrumbs', [
-        'titlePage' => 'جدول غياب الموظفين',
-        'previousPage' => 'سجل الشهور المالية للغياب',
-        'currentPage' => 'جدول غياب الموظفين',
-        'url' => 'absences.index',
+        'titlePage' => 'جدول بدل الموظفين',
+        'previousPage' => 'سجل الشهور المالية للبدل',
+        'currentPage' => 'جدول بدل الموظفين',
+        'url' => 'employee_salary_allowances.index',
     ])
 
 
@@ -97,7 +97,7 @@
             <div class="row">
                 <div class="col-12">
 
-                    @include('dashboard.salaries.absences.partials.filter')
+                    @include('dashboard.salaries.employee_salary_allowances.partials.filter')
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">
@@ -106,7 +106,7 @@
 
 
                                     <!-- النص على اليمين -->
-                                    <a href="{{ route('dashboard.absences.create', $financeClnPeriod->slug) }}"
+                                    <a href="{{ route('dashboard.employee_salary_allowances.create', $financeClnPeriod->slug) }}"
                                         class="btn btn-md btn-success">
                                         <i class="fa-solid fa-square-plus mx-1"></i>أضافة جديد</a>
                                 </div>
@@ -116,7 +116,7 @@
 
 
                             <div class="card-tools">
-                                <h4 class="mb-0">جدول غياب الموظفين</h4>
+                                <h4 class="mb-0">جدول بدل الموظفين</h4>
                             </div>
                         </div>
                         <div class="table-responsive text-nowrap">
@@ -195,7 +195,7 @@
 
                                             <td>
                                                 @include('dashboard.partials.actions_salaries', [
-                                                    'name' => 'absences',
+                                                    'name' => 'employee_salary_allowances',
                                                     'name_id' => $info->slug,
                                                 ])
                                             </td>

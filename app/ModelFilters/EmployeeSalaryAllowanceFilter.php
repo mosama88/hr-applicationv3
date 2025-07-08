@@ -4,7 +4,7 @@ namespace App\ModelFilters;
 
 use EloquentFilter\ModelFilter;
 
-class EmployeeSalaryFixedAllowanceFilter extends ModelFilter
+class EmployeeSalaryAllowanceFilter extends ModelFilter
 {
     /**
     * Related Models that have ModelFilters as well as the method on the ModelFilter

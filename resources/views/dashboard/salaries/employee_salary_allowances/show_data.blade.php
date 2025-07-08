@@ -3,8 +3,8 @@
     use App\Models\MainSalaryEmployee;
 @endphp
 @extends('dashboard.layouts.master')
-@section('active-absences', 'active')
-@section('title', 'عرض غياب الموظف')
+@section('active-employee_salary_allowances', 'active')
+@section('title', 'عرض بدل الموظف')
 @push('css')
 @endpush
 @section('content')
@@ -12,10 +12,10 @@
     @include('dashboard.layouts.message')
     <!-- Content Header (Page header) -->
     @include('dashboard.layouts.breadcrumbs', [
-        'titlePage' => 'عرض غياب للموظف ',
-        'previousPage' => 'جدول الغيابات',
-        'currentPage' => 'عرض غياب للموظف ',
-        'url' => 'absences.index',
+        'titlePage' => 'عرض بدل للموظف ',
+        'previousPage' => 'جدول البدلات',
+        'currentPage' => 'عرض بدل للموظف ',
+        'url' => 'employee_salary_allowances.index',
     ])
 
     <section class="content">
@@ -67,20 +67,20 @@
                                         id="employee_code-input">
                                 </div>
 
-                                <!-- عدد أيام الغياب -->
+                                <!-- عدد أيام البدل -->
                                 <div class="col-md-3 mb-3">
                                     <label class="form-label" for="value-input">
-                                        عدد أيام الغياب</label>
+                                        عدد أيام البدل</label>
                                     <input readonly type="text" name="value" class="form-control"
                                         oninput="this.value=this.value.replace(/[^0-9.]/g,'');"
                                         value="{{ old('value', $absence->value) * 1 }}" id="value-input">
 
                                 </div>
 
-                                <!-- قيمة الغياب -->
+                                <!-- قيمة البدل -->
                                 <div class="col-md-3 mb-3">
                                     <label readonly class="form-label" for="total-input">
-                                        قيمة الغياب</label>
+                                        قيمة البدل</label>
                                     <input readonly type="text" name="total" class="form-control bg-white"
                                         value="{{ old('total', $absence->total) * 1 }}" id="total-input">
                                 </div>

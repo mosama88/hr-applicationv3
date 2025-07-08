@@ -2,10 +2,10 @@
 
 namespace App\Imports;
 
-use App\Models\EmployeeSalaryFixedAllowance;
+use App\Models\EmployeeSalaryAllowance;
 use Maatwebsite\Excel\Concerns\ToModel;
 
-class EmployeeSalaryFixedAllowanceImport implements ToModel
+class EmployeeSalaryAllowanceImport implements ToModel
 {
     /**
     * @param array $row
@@ -14,7 +14,7 @@ class EmployeeSalaryFixedAllowanceImport implements ToModel
     */
     public function model(array $row)
     {
-        return new EmployeeSalaryFixedAllowance([
+        return new EmployeeSalaryAllowance([
             //
         ]);
     }

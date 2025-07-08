@@ -2,16 +2,16 @@
 
 namespace App\Exports;
 
-use App\Models\EmployeeSalaryFixedAllowance;
+use App\Models\EmployeeSalaryAllowance;
 use Maatwebsite\Excel\Concerns\FromCollection;
 
-class EmployeeSalaryFixedAllowanceExport implements FromCollection
+class EmployeeSalaryAllowanceExport implements FromCollection
 {
     /**
     * @return \Illuminate\Support\Collection
     */
     public function collection()
     {
-        return EmployeeSalaryFixedAllowance::all();
+        return EmployeeSalaryAllowance::all();
     }
 }

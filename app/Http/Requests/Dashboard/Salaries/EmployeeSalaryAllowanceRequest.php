@@ -4,7 +4,7 @@ namespace App\Http\Requests\Dashboard\Salaries;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class EmployeeSalaryFixedAllowanceRequest extends FormRequest
+class EmployeeSalaryAllowanceRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

@@ -25,7 +25,7 @@ use App\Http\Controllers\Dashboard\EmployeeAffairs\DiscountTypeController;
 use App\Http\Controllers\Dashboard\EmployeeAffairs\AdditionalTypeController;
 use App\Http\Controllers\Dashboard\Salaries\EmployeeSalaryAbsenceController;
 use App\Http\Controllers\Dashboard\Salaries\EmployeeSalaryAdditionalController;
-use App\Http\Controllers\Dashboard\Salaries\EmployeeSalaryFixedAllowanceController;
+use App\Http\Controllers\Dashboard\Salaries\EmployeeSalaryAllowanceController;
 
 
 Route::middleware(['auth:admin'])->group(function () {
@@ -170,7 +170,7 @@ Route::middleware(['auth:admin'])->group(function () {
         Route::post('/additionals/print', 'print')->name('print');
     });
     //################################### البدلات المتغيره ##################################
-    Route::controller(EmployeeSalaryFixedAllowanceController::class)->name('employee_salary_allowances.')->prefix('/employee_salary_allowances')->group(function () {
+    Route::controller(EmployeeSalaryAllowanceController::class)->name('employee_salary_allowances.')->prefix('/employee_salary_allowances')->group(function () {
         Route::get('/', 'index')->name('index');
         Route::get('/create/{financeClnPeriod}', 'create')->name('create');
         Route::post('/store/{financeClnPeriod}', 'store')->name('store');

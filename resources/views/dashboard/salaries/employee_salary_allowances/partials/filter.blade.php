@@ -27,7 +27,7 @@
     <div class="card-body">
         <div class="mb-3 d-flex gap-2">
 
-            <a class="btn btn-success" href="{{ route('dashboard.absences.export', $financeClnPeriod->slug) }}">
+            <a class="btn btn-success" href="{{ route('dashboard.employee_salary_allowances.export', $financeClnPeriod->slug) }}">
                 <i class="fas fa-arrow-alt-circle-down ml-2"></i> تحميل اكسيل شيت
             </a>
 
@@ -36,13 +36,13 @@
                 <i class="fas fa-arrow-alt-circle-up ml-2"></i> إستيراد إكسيل
             </button>
 
-            @include('dashboard.salaries.absences.partials.import')
+            @include('dashboard.salaries.employee_salary_allowances.partials.import')
 
-            <form id="printForm" action="{{ route('dashboard.absences.print') }}" method="POST" target="_blank">
+            <form id="printForm" action="{{ route('dashboard.employee_salary_allowances.print') }}" method="POST" target="_blank">
                 @csrf
                 <input type="hidden" name="employee_code_search" value="{{ request('employee_code_search') }}">
                 <input type="hidden" name="name" value="{{ request('name') }}">
-                <input type="hidden" name="days_absences" value="{{ request('days_absences') }}">
+                <input type="hidden" name="days_employee_salary_allowances" value="{{ request('days_employee_salary_allowances') }}">
 
                 <button type="submit" class="btn" style="background-color: #4d4d4e; color: white;">
                     <i class="fa-solid fa-print ml-2"></i> طباعة حسب البحث
@@ -52,7 +52,7 @@
         </div>
 
 
-        <form action="{{ route('dashboard.absences.show', $financeClnPeriod->slug) }}" method="GET">
+        <form action="{{ route('dashboard.employee_salary_allowances.show', $financeClnPeriod->slug) }}" method="GET">
             <div class="row">
 
                 <!-- كود الموظف -->
@@ -76,8 +76,8 @@
                 <div class="col-md-2 mb-3">
                     <label class="form-label" for="value-input">
                         عدد أيام الغياب</label>
-                    <input type="text" name="days_absences" class="form-control"
-                        oninput="this.value=this.value.replace(/[^0-9.]/g,'');" value="{{ request('days_absences') }}"
+                    <input type="text" name="days_employee_salary_allowances" class="form-control"
+                        oninput="this.value=this.value.replace(/[^0-9.]/g,'');" value="{{ request('days_employee_salary_allowances') }}"
                         id="value-input">
                 </div>
             </div>
