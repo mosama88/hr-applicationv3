@@ -338,6 +338,19 @@ class SalarySanctionsController extends Controller
                 });
             }
 
+            if ($request->filled('department')) {
+                $query->whereHas('mainSalaryEmployee.department', function ($q) use ($request) {
+                    $q->where('name', 'like', '%' . $request->department . '%');
+                });
+            }
+
+            if ($request->filled('branch')) {
+                $query->whereHas('mainSalaryEmployee.branch', function ($q) use ($request) {
+                    $q->where('name', 'like', '%' . $request->branch . '%');
+                });
+            }
+
+
             if ($request->filled('sanction_types')) {
                 $query->where('sanctions_type', $request->sanction_types);
             }

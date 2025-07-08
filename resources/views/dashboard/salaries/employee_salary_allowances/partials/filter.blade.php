@@ -42,6 +42,8 @@
                 @csrf
                 <input type="hidden" name="employee_code_search" value="{{ request('employee_code_search') }}">
                 <input type="hidden" name="name" value="{{ request('name') }}">
+                <input type="hidden" name="department" value="{{ request('department') }}">
+                <input type="hidden" name="branch" value="{{ request('branch') }}">
                 <input type="hidden" name="days_employee_salary_allowances" value="{{ request('days_employee_salary_allowances') }}">
 
                 <button type="submit" class="btn" style="background-color: #4d4d4e; color: white;">

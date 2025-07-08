@@ -321,6 +321,19 @@ class EmployeeSalaryAllowanceController extends Controller
                 });
             }
 
+            if ($request->filled('department')) {
+                $query->whereHas('mainSalaryEmployee.department', function ($q) use ($request) {
+                    $q->where('name', 'like', '%' . $request->department . '%');
+                });
+            }
+
+            if ($request->filled('branch')) {
+                $query->whereHas('mainSalaryEmployee.branch', function ($q) use ($request) {
+                    $q->where('name', 'like', '%' . $request->branch . '%');
+                });
+            }
+
+            
             if ($request->filled('days_additional')) {
                 $query->where('value', $request->days_additional);
             }

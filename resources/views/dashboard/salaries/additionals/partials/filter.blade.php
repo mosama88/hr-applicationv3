@@ -42,6 +42,8 @@
                 @csrf
                 <input type="hidden" name="employee_code_search" value="{{ request('employee_code_search') }}">
                 <input type="hidden" name="name" value="{{ request('name') }}">
+                <input type="hidden" name="department" value="{{ request('department') }}">
+                <input type="hidden" name="branch" value="{{ request('branch') }}">
                 <input type="hidden" name="days_additional" value="{{ request('days_additional') }}">
 
                 <button type="submit" class="btn" style="background-color: #4d4d4e; color: white;">
@@ -55,21 +57,35 @@
         <form action="{{ route('dashboard.additionals.show', $financeClnPeriod->slug) }}" method="GET">
             <div class="row">
 
-                <!-- كود الموظف -->
-                <div class="col-md-2 mb-3">
-                    <label class="form-label" for="employee_code-input">كود
-                        الموظف</label>
-                    <input type="text" class="form-control" name="employee_code_search"
-                        value="{{ request('employee_code_search') }}" id="employee_code-input"
-                        oninput="this.value=this.value.replace(/[^0-9.]/g,'');" placeholder="مثال:1000" />
-                </div>
+               <!-- كود الموظف -->
+               <div class="col-md-3 mb-3">
+                <label class="form-label" for="employee_code-input">كود
+                    الموظف</label>
+                <input type="text" class="form-control" name="employee_code_search"
+                    value="{{ request('employee_code_search') }}" id="employee_code-input"
+                    oninput="this.value=this.value.replace(/[^0-9.]/g,'');" placeholder="مثال:1000" />
+            </div>
 
-                <!--  أسم الموظف  -->
-                <div class="col-md-4 mb-3">
-                    <label class="form-label" for="name-input">أسم الموظف</label>
-                    <input type="text" class="form-control" name="name" value="{{ request('name') }}"
-                        id="name-input" placeholder="مثال:احمد" />
-                </div>
+            <!--  أسم الموظف  -->
+            <div class="col-md-3 mb-3">
+                <label class="form-label" for="name-input">أسم الموظف</label>
+                <input type="text" class="form-control" name="name" value="{{ request('name') }}"
+                    id="name-input" placeholder="مثال:احمد" />
+            </div>
+            <!--  إدارة الموظف  -->
+            <div class="col-md-3 mb-3">
+                <label class="form-label" for="department-input">الادارة</label>
+                <input type="text" class="form-control" name="department"
+                    value="{{ request('department') }}" id="name-input"
+                    placeholder="مثال:إدارة الشؤون القانونية " />
+            </div>
+
+            <!--  فرع الموظف  -->
+            <div class="col-md-3 mb-3">
+                <label class="form-label" for="branch-input">الفرع</label>
+                <input type="text" class="form-control" name="branch"
+                    value="{{ request('branch') }}" id="name-input" placeholder="مثال:فرع المهندسين	 " />
+            </div>
 
 
                 <!-- عدد أيام الجزاء -->

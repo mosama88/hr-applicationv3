@@ -42,6 +42,8 @@
                 @csrf
                 <input type="hidden" name="employee_code_search" value="{{ request('employee_code_search') }}">
                 <input type="hidden" name="name" value="{{ request('name') }}">
+                <input type="hidden" name="department" value="{{ request('department') }}">
+                <input type="hidden" name="branch" value="{{ request('branch') }}">
                 <input type="hidden" name="sanction_types" value="{{ request('sanction_types') }}">
                 <input type="hidden" name="days_sanctions" value="{{ request('days_sanctions') }}">
 
@@ -57,7 +59,7 @@
             <div class="row">
 
                 <!-- كود الموظف -->
-                <div class="col-md-2 mb-3">
+                <div class="col-md-3 mb-3">
                     <label class="form-label" for="employee_code-input">كود
                         الموظف</label>
                     <input type="text" class="form-control" name="employee_code_search"
@@ -66,10 +68,24 @@
                 </div>
 
                 <!--  أسم الموظف  -->
-                <div class="col-md-4 mb-3">
+                <div class="col-md-3 mb-3">
                     <label class="form-label" for="name-input">أسم الموظف</label>
                     <input type="text" class="form-control" name="name" value="{{ request('name') }}"
                         id="name-input" placeholder="مثال:احمد" />
+                </div>
+                <!--  إدارة الموظف  -->
+                <div class="col-md-3 mb-3">
+                    <label class="form-label" for="department-input">الادارة</label>
+                    <input type="text" class="form-control" name="department"
+                        value="{{ request('department') }}" id="name-input"
+                        placeholder="مثال:إدارة الشؤون القانونية " />
+                </div>
+
+                <!--  فرع الموظف  -->
+                <div class="col-md-3 mb-3">
+                    <label class="form-label" for="branch-input">الفرع</label>
+                    <input type="text" class="form-control" name="branch"
+                        value="{{ request('branch') }}" id="name-input" placeholder="مثال:فرع المهندسين	 " />
                 </div>
 
 
