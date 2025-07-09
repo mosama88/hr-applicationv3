@@ -7,7 +7,7 @@
 
 
 <!-- فلتر -->
-<x-filter-component>
+<x-filter-component :otherInput="'days_absences'">
     <div class="mb-3 d-flex gap-2 mt-2">
         <a class="btn btn-success" href="{{ route('dashboard.absences.export', $financeClnPeriod->slug) }}">
             <i class="fas fa-arrow-alt-circle-down ml-2"></i> تحميل اكسيل شيت
