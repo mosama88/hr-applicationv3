@@ -29,11 +29,12 @@
     <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/dist/css/select2.min.css" />
     <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/dist/css/select2-style.css" />
 
-    <!-- مكتبة Flatpickr CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <!-- ستايل إضافي للغة العربية -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/material_blue.css">
-    <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/dist/css/flatpicker.css">
+  <!-- مكتبة Flatpickr CSS -->
+  <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/dist/css/flatpickr.min.css">
+
+  <!-- ستايل إضافي للغة العربية -->
+  <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/dist/css/material_blue.css">
+  <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/dist/css/flatpicker.css">
     <style>
         /* تحسين مظهر التبويبات */
         .nav-tabs .nav-link {

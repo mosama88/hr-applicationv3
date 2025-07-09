@@ -8,10 +8,18 @@
 
 <x-filter-component :otherInput="'allowance_id'">
     <div class="mb-3 d-flex gap-2 mt-2">
-        <a class="btn btn-success"
+        {{-- <a class="btn btn-success"
             href="{{ route('dashboard.employee_salary_allowances.export', $financeClnPeriod->slug) }}">
             <i class="fas fa-arrow-alt-circle-down ml-2"></i> تحميل اكسيل شيت
-        </a>
+        </a> --}}
+
+        <form action="{{ route('dashboard.employee_salary_allowances.export', $financeClnPeriod->slug) }}" method="GET">
+            @csrf
+            <button type="submit" class="btn" style="background-color: #273F4F; color: #fff;"> <i
+                    class="fas fa-arrow-alt-circle-down ml-2"></i> تحميل اكسيل شيت</button>
+            <input type="text" name="branch_id" hidden>
+            <input type="text" name="department_code" hidden>
+        </form>
 
         <!-- Button trigger modal -->
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#importExcel">

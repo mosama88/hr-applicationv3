@@ -78,6 +78,15 @@ class EmployeeSalaryAllowance extends Model implements HasMedia
         return $this->belongsTo(Allowance::class, 'allowance_id');
     }
 
+    public function branch()
+    {
+        return $this->belongsTo(Branch::class, 'branch_id');
+    }
+
+    public function departmentCode()
+    {
+        return $this->belongsTo(Department::class, 'department_code');
+    }
 
     public function financeClnPeriod()
     {
