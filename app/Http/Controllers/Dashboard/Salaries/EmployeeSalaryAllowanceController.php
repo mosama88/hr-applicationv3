@@ -333,15 +333,17 @@ class EmployeeSalaryAllowanceController extends Controller
                 });
             }
 
-            
-            if ($request->filled('days_additional')) {
-                $query->where('value', $request->days_additional);
+
+            if ($request->filled('allowance_id')) {
+                $query->whereHas('allowance', function ($q) use ($request) {
+                    $q->where('name', 'like', '%' . $request->branch . '%');
+                });
             }
 
-            $additionals = $query->get();
+            $allowances = $query->get();
 
             // أو طباعة مباشرة
-            return view('dashboard.salaries.employee_salary_allowances.partials.print', compact('additionals'));
+            return view('dashboard.salaries.employee_salary_allowances.partials.print', compact('allowances'));
         } catch (\Exception $e) {
             return redirect()
                 ->route('dashboard.employee_salary_allowances.index')

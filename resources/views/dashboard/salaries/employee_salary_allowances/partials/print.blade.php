@@ -85,9 +85,9 @@
 
 <body>
     <div class="header">
-        <h2>تقرير الغيابات  </h2>
+        <h2>تقرير البدلات المتغيرة </h2>
         <p>تاريخ التقرير: {{ now()->format('Y-m-d') }}</p>
-        <p>إجمالى الغيابات: {{ number_format($absences->sum('total'), 2) }} جنيه</p>
+        <p>إجمالى البدلات: {{ number_format($allowances->sum('total'), 2) }} جنيه</p>
 
     </div>
 
@@ -96,19 +96,23 @@
             <tr>
                 <th>كود الموظف</th>
                 <th>اسم الموظف</th>
-                <th>عدد الأيام</th>
+                <th>الادارة</th>
+                <th>الفرع</th>
+                <th>نوع البدل</th>
                 <th>القيمة</th>
                 <th>التاريخ</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($absences as $absence)
+            @foreach ($allowances as $allowance)
                 <tr>
-                    <td>{{ $absence->employee_code }}</td>
-                    <td>{{ $absence->mainSalaryEmployee->employee_name }}</td>
-                    <td>{{ $absence->value * 1 }}</td>
-                    <td>{{ $absence->total * 1 }}</td>
-                    <td>{{ $absence->financeClnPeriod->year_and_month ?? 'غير معروف' }}</td>
+                    <td>{{ $allowance->employee_code }}</td>
+                    <td>{{ $allowance->mainSalaryEmployee->employee_name }}</td>
+                    <td>{{ $allowance->mainSalaryEmployee->department->name }}</td>
+                    <td>{{ $allowance->mainSalaryEmployee->branch->name }}</td>
+                    <td>{{ $allowance->allowance->name }}</td>
+                    <td>{{ $allowance->total * 1 }}</td>
+                    <td>{{ $allowance->financeClnPeriod->year_and_month ?? 'غير معروف' }}</td>
                 </tr>
             @endforeach
         </tbody>

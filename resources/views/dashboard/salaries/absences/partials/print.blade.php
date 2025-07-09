@@ -85,7 +85,7 @@
 
 <body>
     <div class="header">
-        <h2>تقرير الغيابات  </h2>
+        <h2>تقرير الغيابات </h2>
         <p>تاريخ التقرير: {{ now()->format('Y-m-d') }}</p>
         <p>إجمالى الغيابات: {{ number_format($absences->sum('total'), 2) }} جنيه</p>
 
@@ -96,6 +96,8 @@
             <tr>
                 <th>كود الموظف</th>
                 <th>اسم الموظف</th>
+                <th>الادارة</th>
+                <th>الفرع</th>
                 <th>عدد الأيام</th>
                 <th>القيمة</th>
                 <th>التاريخ</th>
@@ -106,6 +108,8 @@
                 <tr>
                     <td>{{ $absence->employee_code }}</td>
                     <td>{{ $absence->mainSalaryEmployee->employee_name }}</td>
+                    <td>{{ $absence->mainSalaryEmployee->department->name }}</td>
+                    <td>{{ $absence->mainSalaryEmployee->branch->name }}</td>
                     <td>{{ $absence->value * 1 }}</td>
                     <td>{{ $absence->total * 1 }}</td>
                     <td>{{ $absence->financeClnPeriod->year_and_month ?? 'غير معروف' }}</td>

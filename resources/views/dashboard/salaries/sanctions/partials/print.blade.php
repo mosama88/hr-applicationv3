@@ -96,6 +96,8 @@
             <tr>
                 <th>كود الموظف</th>
                 <th>اسم الموظف</th>
+                <th>الادارة</th>
+                <th>الفرع</th>
                 <th>نوع الجزاء</th>
                 <th>عدد الأيام</th>
                 <th>القيمة</th>
@@ -107,6 +109,8 @@
                 <tr>
                     <td>{{ $sanction->employee_code }}</td>
                     <td>{{ $sanction->mainSalaryEmployee->employee_name }}</td>
+                    <td>{{ $sanction->mainSalaryEmployee->department->name }}</td>
+                    <td>{{ $sanction->mainSalaryEmployee->branch->name }}</td>
                     <td>
                         @if ($sanction->sanctions_type)
                             {{ $sanction->sanctions_type->label() }}
