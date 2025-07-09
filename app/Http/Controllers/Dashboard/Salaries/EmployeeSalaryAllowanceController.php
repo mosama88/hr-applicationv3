@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Dashboard\Salaries;
 
+use App\Models\Allowance;
 use Illuminate\Http\Request;
 use App\Enums\IsArchivedEnum;
+use App\Enums\StatusActiveEnum;
 use App\Models\FinanceClnPeriod;
 use App\Models\MainSalaryEmployee;
 use App\Http\Controllers\Controller;
@@ -63,7 +65,10 @@ class EmployeeSalaryAllowanceController extends Controller
     public function create(FinanceClnPeriod $financeClnPeriod)
     {
         try {
-            return view('dashboard.salaries.employee_salary_allowances.create', compact('financeClnPeriod'));
+            $com_code = Auth::user()->com_code;
+
+            $other['allowances'] = Allowance::where('com_code', $com_code)->where('active', StatusActiveEnum::ACTIVE)->get();
+            return view('dashboard.salaries.employee_salary_allowances.create', compact('financeClnPeriod', 'other'));
         } catch (\Exception $e) {
             return redirect()
                 ->back()
@@ -90,11 +95,6 @@ class EmployeeSalaryAllowanceController extends Controller
             $dataInsert = array_merge($validateData, [
                 'finance_cln_period_id' => $financeClnPeriod->id,
                 'main_salary_employee_id' => $request->main_salary_employee_id,
-                'employee_code' => $request->employee_code,
-                'day_price' => $request->day_price,
-                'value' => $request->value,
-                'total' => $request->total,
-                'notes' => $request->notes,
                 'is_archived' => IsArchivedEnum::Unarchived,
                 'com_code' => $com_code,
                 'created_by' => $userId,
@@ -146,10 +146,12 @@ class EmployeeSalaryAllowanceController extends Controller
      * Show the form for editing the specified resource.
      */
 
-    public function showData(EmployeeSalaryAllowance $employee_salary_fixed_allowance, FinanceClnPeriod $financeClnPeriod)
+    public function showData(EmployeeSalaryAllowance $employeeSalaryAllowance, FinanceClnPeriod $financeClnPeriod)
     {
         try {
-            return view('dashboard.salaries.employee_salary_allowances.show_data', compact('employee_salary_fixed_allowance', 'financeClnPeriod'));
+            $com_code = Auth::user()->com_code;
+            $other['allowances'] = Allowance::where('com_code', $com_code)->where('active', StatusActiveEnum::ACTIVE)->get();
+            return view('dashboard.salaries.employee_salary_allowances.show_data', compact('employeeSalaryAllowance', 'financeClnPeriod', 'other'));
         } catch (\Exception $e) {
             return redirect()
                 ->route('dashboard.employee_salary_allowances.index')
@@ -157,10 +159,12 @@ class EmployeeSalaryAllowanceController extends Controller
         }
     }
 
-    public function edit(EmployeeSalaryAllowance $employee_salary_fixed_allowance, FinanceClnPeriod $financeClnPeriod)
+    public function edit(EmployeeSalaryAllowance $employeeSalaryAllowance, FinanceClnPeriod $financeClnPeriod)
     {
         try {
-            return view('dashboard.salaries.employee_salary_allowances.edit', compact('employee_salary_fixed_allowance', 'financeClnPeriod'));
+            $com_code = Auth::user()->com_code;
+            $other['allowances'] = Allowance::where('com_code', $com_code)->where('active', StatusActiveEnum::ACTIVE)->get();
+            return view('dashboard.salaries.employee_salary_allowances.edit', compact('employeeSalaryAllowance', 'financeClnPeriod', 'other'));
         } catch (\Exception $e) {
             return redirect()
                 ->route('dashboard.employee_salary_allowances.index')
@@ -171,24 +175,24 @@ class EmployeeSalaryAllowanceController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(EmployeeSalaryAllowanceRequest $request, EmployeeSalaryAllowance $employee_salary_fixed_allowance)
+    public function update(EmployeeSalaryAllowanceRequest $request, EmployeeSalaryAllowance $employeeSalaryAllowance)
     {
         try {
             $com_code = Auth::user()->com_code;
             $userId = Auth::user()->id;
             $financeClnPeriod = FinanceClnPeriod::where('com_code', $com_code)
-                ->where('id', $employee_salary_fixed_allowance->finance_cln_period_id)
+                ->where('id', $employeeSalaryAllowance->finance_cln_period_id)
                 ->firstOrFail();
             if ($financeClnPeriod->is_open != FinanceClnPeriodsIsOpen::Open) {
                 return redirect()->route('dashboard.employee_salary_allowances.show', $financeClnPeriod->slug)->withErrors(['error' => 'عفوا الشهر المالى غير مفتوح !'])->withInput();
             }
             $validated = $request->validated();
-            $employee_salary_fixed_allowance->update([
+            $employeeSalaryAllowance->update([
                 'finance_cln_period_id' => $financeClnPeriod->id,
                 'main_salary_employee_id' => $validated['main_salary_employee_id'],
                 'employee_code' => $validated['employee_code'],
                 'day_price' => $validated['day_price'],
-                'value' => $validated['value'],
+                'allowance_id' => $validated['allowance_id'],
                 'total' => $validated['total'],
                 'notes' => $validated['notes'] ?? null,
                 'is_archived' => IsArchivedEnum::Unarchived,
@@ -207,7 +211,7 @@ class EmployeeSalaryAllowanceController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(EmployeeSalaryAllowance $employee_salary_fixed_allowance, FinanceClnPeriod $financeClnPeriod)
+    public function destroy(EmployeeSalaryAllowance $employeeSalaryAllowance, FinanceClnPeriod $financeClnPeriod)
     {
         try {
             $com_code = Auth::user()->com_code;
@@ -216,7 +220,7 @@ class EmployeeSalaryAllowanceController extends Controller
             if (!$finance_cln_periods_data) {
                 return redirect()->back()->withErrors(['error' => 'عفوا غير قادر للوصول على البيانات المطلوبه !'])->withInput();
             }
-            $employee_salary_fixed_allowance->delete();
+            $employeeSalaryAllowance->delete();
             return response()->json([
                 'success' => true,
                 'message' => 'تم حذف البدلات المتغيرة بنجاح'

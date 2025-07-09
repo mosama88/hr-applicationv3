@@ -27,19 +27,9 @@
                 <div class="col-12">
                     <div class="card card-info card-outline mb-4">
                         <!--begin::Header-->
-
-                        <!--end::Header-->
-                        <!--begin::Form-->
-                        @if ($errors->any())
-                            @foreach ($errors->all() as $error)
-                                <div class="alert alert-danger text-center">
-                                    {{ $error }}
-                                </div>
-                            @endforeach
-                        @endif
-
-                        <form action="{{ route('dashboard.employee_salary_allowances.update', $absence->slug) }}" method="POST"
-                            id="storeForm">
+                        <form
+                            action="{{ route('dashboard.employee_salary_allowances.update', $employeeSalaryAllowance->slug) }}"
+                            method="POST" id="storeForm">
                             @csrf
                             @method('PATCH')
                             <div class="card-body">
@@ -49,7 +39,7 @@
                                         <label for="exampleInputname">الشهر المالى</label>
                                         <input readonly type="text" name="finance_cln_period_id"
                                             class="form-control bg-white @error('finance_cln_period_id') is-invalid @enderror"
-                                            value="{{ old('finance_cln_period_id', $absence->finance_cln_period_id) }}"
+                                            value="{{ old('finance_cln_period_id', $employeeSalaryAllowance->finance_cln_period_id) }}"
                                             id="exampleInputname">
                                         @error('finance_cln_period_id')
                                             <span class="invalid-feedback text-right" role="alert">
@@ -65,9 +55,9 @@
                                             class="select2 form-select employee_select2 @error('main_salary_employee_id') is-invalid @enderror"
                                             data-allow-clear="true">
                                             <option
-                                                value="{{ old('main_salary_employee_id', $absence->main_salary_employee_id ?? '') }}"
+                                                value="{{ old('main_salary_employee_id', $employeeSalaryAllowance->main_salary_employee_id ?? '') }}"
                                                 selected>
-                                                {{ MainSalaryEmployee::find(old('main_salary_employee_id', $absence->main_salary_employee_id))->employee_name }}
+                                                {{ MainSalaryEmployee::find(old('main_salary_employee_id', $employeeSalaryAllowance->main_salary_employee_id))->employee_name }}
                                             </option>
                                         </select>
                                         @error('main_salary_employee_id')
@@ -83,7 +73,8 @@
                                             أجر اليوم الواحد</label>
                                         <input readonly type="text" name="day_price"
                                             class="form-control bg-white @error('day_price') is-invalid @enderror"
-                                            value="{{ old('day_price', $absence->day_price) * 1 }}" id="day_price-input">
+                                            value="{{ old('day_price', $employeeSalaryAllowance->day_price) * 1 }}"
+                                            id="day_price-input">
                                         @error('day_price')
                                             <span class="invalid-feedback text-right" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -97,7 +88,7 @@
                                             كود الموظف</label>
                                         <input readonly type="text" name="employee_code"
                                             class="form-control bg-white @error('employee_code') is-invalid @enderror"
-                                            value="{{ old('employee_code', $absence->employee_code) }}"
+                                            value="{{ old('employee_code', $employeeSalaryAllowance->employee_code) }}"
                                             id="employee_code-input">
                                         @error('employee_code')
                                             <span class="invalid-feedback text-right" role="alert">
@@ -106,29 +97,35 @@
                                         @enderror
                                     </div>
 
-
-                                    <!-- عدد أيام البدل  -->
-                                    <div class="col-md-3 mb-3">
-                                        <label class="form-label" for="value-input">
-                                            عدد أيام البدل </label>
-                                        <input type="text" name="value"
-                                            class="form-control @error('value') is-invalid @enderror"
-                                            oninput="this.value=this.value.replace(/[^0-9.]/g,'');"
-                                            value="{{ old('value', $absence->value) * 1 }}" id="value-input">
-                                        @error('value')
+                                    <!-- نوع البدل -->
+                                    <div class="col-md-3">
+                                        <label class="form-label" for="formtabs-country">نوع البدل</label>
+                                        <select class="select2 form-select @error('allowance_id') is-invalid @enderror"
+                                            name="allowance_id" data-allow-clear="true">
+                                            <option selected value="">-- أختر
+                                                البدل --
+                                            </option>
+                                            @foreach ($other['allowances'] as $allowance)
+                                                <option @if (old('allowance_id', $employeeSalaryAllowance->allowance_id) == $allowance->id) selected @endif
+                                                    value="{{ $allowance->id }}">
+                                                    {{ $allowance->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('allowance_id')
                                             <span class="invalid-feedback text-right" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
                                     </div>
 
-                                    <!-- قيمة البدل  -->
+                                    <!-- قيمة البدل -->
                                     <div class="col-md-3 mb-3">
                                         <label class="form-label" for="total-input">
-                                            قيمة البدل </label>
-                                        <input readonly type="text" name="total"
-                                            class="form-control bg-white @error('total') is-invalid @enderror"
-                                            value="{{ old('total', $absence->total) * 1 }}" id="total-input">
+                                            أجمالى قيمة البدل</label>
+                                        <input type="text" name="total"
+                                            oninput="this.value=this.value.replace(/[^0-9.]/g,'');"
+                                            class="form-control @error('total') is-invalid @enderror"
+                                            value="{{ old('total', $employeeSalaryAllowance->total) }}" id="total-input">
                                         @error('total')
                                             <span class="invalid-feedback text-right" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -136,16 +133,15 @@
                                         @enderror
                                     </div>
                                 </div>
+
                                 <div class="row">
-
-
                                     <!--  ملاحظات -->
                                     <div class="col-md-8 mb-3">
                                         <label class="form-label" for="notes-input">
                                             ملاحظات</label>
                                         <input type="text" name="notes"
                                             class="form-control bg-white @error('notes') is-invalid @enderror"
-                                            value="{{ old('notes', $absence->notes) }}" id="notes-input">
+                                            value="{{ old('notes', $employeeSalaryAllowance->notes) }}" id="notes-input">
                                         @error('notes')
                                             <span class="invalid-feedback text-right" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -174,6 +170,9 @@
 @push('js')
     <script src="{{ asset('dashboard') }}/assets/dist/js/select2.min.js"></script>
     <script>
+        $(document).ready(function() {
+            $('.select2').select2();
+        });
         $(document).ready(function() {
             // job_category_select2
             $('.employee_select2').select2({
@@ -236,27 +235,6 @@
                 let total = days * dayPrice;
                 $('input[name="total"]').val(total.toFixed(2));
             });
-        });
-    </script>
-
-    <script>
-        $(document).ready(function() {
-            // عند تغيير عدد أيام البدل 
-            $('#value-input').on('input', function() {
-                calculateTotal();
-            });
-
-            // لو تغير أجر اليوم أيضًا من أي عملية (مثلاً تغيير الموظف)
-            $('#day_price-input').on('input', function() {
-                calculateTotal();
-            });
-
-            function calculateTotal() {
-                var days = parseInt($('#value-input').val()) || 0;
-                var dayPrice = parseInt($('#day_price-input').val()) || 0;
-                var total = days * dayPrice;
-                $('#total-input').val(total);
-            }
         });
     </script>
 @endpush

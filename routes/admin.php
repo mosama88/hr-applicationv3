@@ -176,9 +176,9 @@ Route::middleware(['auth:admin'])->group(function () {
         Route::post('/store/{financeClnPeriod}', 'store')->name('store');
         Route::get('/show/{financeClnPeriod}', 'show')->name('show');
         Route::get('/edit/{employee_salary_allowance}', 'edit')->name('edit');
-        Route::get('/show/data/{employee_salary_allowance}', 'showData')->name('show-data');
-        Route::patch('/update/{employee_salary_allowance}', 'update')->name('update');
-        Route::delete('/delete/{employee_salary_allowance}', 'destroy')->name('destroy');
+        Route::get('/show/data/{employeeSalaryAllowance}', 'showData')->name('show-data');
+        Route::patch('/update/{employeeSalaryAllowance}', 'update')->name('update');
+        Route::delete('/delete/{employeeSalaryAllowance}', 'destroy')->name('destroy');
         Route::get('/employee_salary_allowances/export/{slug}', 'export')->name('export');
         Route::post('/employee_salary_allowances/import', 'import')->name('import');
         Route::post('/employee_salary_allowances/print', 'print')->name('print');

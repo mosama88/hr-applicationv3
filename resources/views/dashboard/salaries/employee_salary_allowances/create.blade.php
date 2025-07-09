@@ -32,8 +32,8 @@
                         <!--end::Header-->
                         <!--begin::Form-->
 
-                        <form action="{{ route('dashboard.employee_salary_allowances.store', $financeClnPeriod->id) }}" method="POST"
-                            id="storeForm">
+                        <form action="{{ route('dashboard.employee_salary_allowances.store', $financeClnPeriod->id) }}"
+                            method="POST" id="storeForm">
                             @csrf
                             <div class="card-body">
                                 <div class="row">
@@ -98,26 +98,35 @@
                                         @enderror
                                     </div>
 
-                                    <!-- عدد أيام البدل -->
-                                    <div class="col-md-3 mb-3">
-                                        <label class="form-label" for="value-input">
-                                            عدد أيام البدل</label>
-                                        <input type="text" name="value"
-                                            class="form-control @error('value') is-invalid @enderror"
-                                            oninput="this.value=this.value.replace(/[^0-9.]/g,'');"
-                                            value="{{ old('value') }}" id="value-input">
-                                        @error('value')
+
+                                    <!-- نوع البدل -->
+                                    <div class="col-md-3">
+                                        <label class="form-label" for="formtabs-country">نوع البدل</label>
+                                        <select class="select2 form-select @error('allowance_id') is-invalid @enderror"
+                                            name="allowance_id" data-allow-clear="true">
+                                            <option selected value="">-- أختر
+                                                البدل --
+                                            </option>
+                                            @foreach ($other['allowances'] as $allowance)
+                                                <option @if (old('allowance_id') == $allowance->id) selected @endif
+                                                    value="{{ $allowance->id }}">
+                                                    {{ $allowance->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('allowance_id')
                                             <span class="invalid-feedback text-right" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
                                     </div>
+
                                     <!-- قيمة البدل -->
                                     <div class="col-md-3 mb-3">
                                         <label class="form-label" for="total-input">
                                             أجمالى قيمة البدل</label>
-                                        <input readonly type="text" name="total"
-                                            class="form-control bg-white @error('total') is-invalid @enderror"
+                                        <input type="text" name="total"
+                                            oninput="this.value=this.value.replace(/[^0-9.]/g,'');"
+                                            class="form-control @error('total') is-invalid @enderror"
                                             value="{{ old('total') }}" id="total-input">
                                         @error('total')
                                             <span class="invalid-feedback text-right" role="alert">
@@ -127,8 +136,6 @@
                                     </div>
                                 </div>
                                 <div class="row">
-
-
                                     <!--  ملاحظات -->
                                     <div class="col-md-8 mb-3">
                                         <label class="form-label" for="notes-input">
@@ -164,6 +171,9 @@
 @push('js')
     <script src="{{ asset('dashboard') }}/assets/dist/js/select2.min.js"></script>
     <script>
+        $(document).ready(function() {
+            $('.select2').select2();
+        });
         $(document).ready(function() {
             // job_category_select2
             $('.employee_select2').select2({
@@ -226,27 +236,6 @@
                 let total = days * dayPrice;
                 $('input[name="total"]').val(total.toFixed(2));
             });
-        });
-    </script>
-
-    <script>
-        $(document).ready(function() {
-            // عند تغيير عدد أيام البدل
-            $('#value-input').on('input', function() {
-                calculateTotal();
-            });
-
-            // لو تغير أجر اليوم أيضًا من أي عملية (مثلاً تغيير الموظف)
-            $('#day_price-input').on('input', function() {
-                calculateTotal();
-            });
-
-            function calculateTotal() {
-                var days = parseInt($('#value-input').val()) || 0;
-                var dayPrice = parseInt($('#day_price-input').val()) || 0;
-                var total = days * dayPrice;
-                $('#total-input').val(total);
-            }
         });
     </script>
 @endpush
