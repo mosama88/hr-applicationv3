@@ -1,13 +1,20 @@
-    <div class="card card-secondary">
-        <div class="card-header">
-            <h4 class="card-title w-100">
-                <a href="" class="d-block w-100 collapsed text-decoration-none text-white" data-bs-toggle="collapse"
-                    data-bs-target="#collapseFilters" aria-expanded="false" aria-controls="collapseFilters">
-        
-                </a>
-            </h4>
+<div class="accordion mb-3" id="accordionExample">
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                <i class="fa-solid fa-filter mx-1"></i> فلتر و تحميل واستيراد إكسيل
+            </button>
+        </h2>
+        <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionExample" style="">
+            <div class="accordion-body">
+                <strong>( يمكنك استخدام الفلاتر التالية للبحث
+                    عن الموظفين حسب كود الموظف أو اسم الموظف والفرع والادارة.......)
+                </strong>
+                {{ $slot }}
+            </div>
         </div>
-
-       {{$slot}}
-         
     </div>
+
+
+</div>

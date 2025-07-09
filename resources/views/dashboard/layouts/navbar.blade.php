@@ -240,8 +240,11 @@
             <li class="nav-item d-none d-md-block"> <a href="#" class="nav-link">Home</a> </li>
             <li class="nav-item d-none d-md-block"> <a href="#" class="nav-link">Contact</a> </li>
         </ul> <!--end::Start Navbar Links--> <!--begin::End Navbar Links-->
+
+
+        <!-- Light Dark -->
         <ul class="navbar-nav ms-auto"> <!--begin::Navbar Search-->
-            <li class="nav-item dropdown">
+             <li class="nav-item dropdown">
                 <button class="btn btn-link nav-link py-2 px-0 px-lg-2 dropdown-toggle d-flex align-items-center"
                     id="bd-theme" type="button" aria-expanded="false" data-bs-toggle="dropdown"
                     data-bs-display="static">
@@ -252,6 +255,9 @@
                 </button>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="bd-theme-text"
                     style="--bs-dropdown-min-width: 8rem;">
+
+
+                    
                     <li>
                         <button type="button" class="dropdown-item d-flex align-items-center active"
                             data-bs-theme-value="light" aria-pressed="false">
@@ -277,7 +283,7 @@
                         </button>
                     </li>
                 </ul>
-            </li>
+            </li> 
 
 
             <!--begin::Messages Dropdown Menu-->
