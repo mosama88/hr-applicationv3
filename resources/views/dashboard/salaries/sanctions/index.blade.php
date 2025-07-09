@@ -6,32 +6,6 @@
 @section('active-sanctions', 'active')
 @section('title', 'السجلات الرئيسية للجزاءات')
 @push('css')
-    <!-- مكتبة Flatpickr CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <!-- ستايل إضافي للغة العربية -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/material_blue.css">
-    <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/dist/css/flatpicker.css">
-    <style>
-        /* تحسين مظهر التبويبات */
-        .nav-tabs .nav-link {
-            font-weight: 600;
-            padding: 0.8rem 1.5rem;
-            color: #6c757d;
-            border-top: 3px solid transparent;
-        }
-
-        .nav-tabs .nav-link.active {
-            color: #4e73df;
-            background-color: #fff;
-            border-top-color: #4e73df;
-            border-bottom-color: #dee2e6;
-        }
-
-        /* تحسين مظهر البطاقة */
-        .card-primary.card-outline {
-            border-top: 3px solid #4e73df;
-        }
-    </style>
 @endpush
 @section('content')
     @include('dashboard.layouts.message')
@@ -146,41 +120,6 @@
 
 @endsection
 @push('js')
-    <!-- مكتبة Flatpickr JS -->
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <!-- ملف اللغة العربية -->
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ar.js"></script>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            flatpickr(".date-picker", {
-                locale: "ar", // تفعيل اللغة العربية
-                dateFormat: "Y-m-d", // صيغة التاريخ
-                allowInput: true, // السماح بالإدخال اليدوي
-                altInput: true, // عرض بديل للتاريخ
-                altFormat: "j F Y", // صيغة العرض: 15 أكتوبر 2023
-                minDate: "today", // لا تسمح بتواريخ قبل اليوم
-                disableMobile: true, // تعطيل المحرك الافتراضي على الموبايل
-                nextArrow: '<i class="fa fa-angle-right"></i>',
-                prevArrow: '<i class="fa fa-angle-left"></i>'
-            });
-            const startDate = flatpickr(".date-input", {
-                onChange: function(selectedDates) {
-                    endDate.set("minDate", selectedDates[0]);
-                }
-            });
-
-        });
-    </script>
-    <script>
-        $(document).ready(function() {
-            $('.clear-date-btn').on('click', function() {
-                let targetInput = $(this).data('target');
-                $(targetInput).val('');
-            });
-        });
-    </script>
-
     <script>
         function confirmCloseMonth(id) {
             Swal.fire({

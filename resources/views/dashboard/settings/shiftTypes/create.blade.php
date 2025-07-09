@@ -5,31 +5,7 @@
 @section('active-shiftTypes', 'active')
 @section('title', 'الشفتات')
 @push('css')
-    <style>
-        /* تنسيق حقول الإدخال */
-        .time-picker {
-            direction: ltr;
-            text-align: center;
-        }
-
-        /* تنسيق حقل الساعات المحسوبة */
-        #total_hours {
-            font-weight: bold;
-            text-align: center;
-            background-color: #f8f9fa;
-        }
-
-        /* تنسيق التحذير للساعات الطويلة */
-        #total_hours.bg-warning {
-            background-color: #fff3cd !important;
-        }
-
-        /* تحسين مظهر الأيقونات */
-        .input-group-text {
-            min-width: 40px;
-            justify-content: center;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/dist/css/time-picker-style.css">
 @endpush
 @section('content')
 
@@ -153,7 +129,7 @@
     </section>
 @endsection
 @push('js')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="{{ asset('dashboard') }}/assets/dist/js/moment.min.js"></script>
     <script>
         function calculateHours() {
             const fromTimeInput = document.getElementById('from_time');

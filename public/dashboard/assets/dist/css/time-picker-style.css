@@ -1,0 +1,23 @@
+     /* تنسيق حقول الإدخال */
+     .time-picker {
+         direction: ltr;
+         text-align: center;
+     }
+
+     /* تنسيق حقل الساعات المحسوبة */
+     #total_hours {
+         font-weight: bold;
+         text-align: center;
+         background-color: #f8f9fa;
+     }
+
+     /* تنسيق التحذير للساعات الطويلة */
+     #total_hours.bg-warning {
+         background-color: #fff3cd !important;
+     }
+
+     /* تحسين مظهر الأيقونات */
+     .input-group-text {
+         min-width: 40px;
+         justify-content: center;
+     }

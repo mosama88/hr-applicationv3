@@ -30,9 +30,10 @@
     <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/dist/css/select2-style.css" />
 
     <!-- مكتبة Flatpickr CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/dist/css/flatpickr.min.css">
+
     <!-- ستايل إضافي للغة العربية -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/material_blue.css">
+    <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/dist/css/material_blue.css">
     <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/dist/css/flatpicker.css">
     <style>
         /* تحسين مظهر التبويبات */
@@ -1678,32 +1679,10 @@
     <script src="{{ asset('dashboard') }}/assets/dist/js/select2.min.js"></script>
 
     <!-- مكتبة Flatpickr JS -->
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="{{ asset('dashboard') }}/assets/dist/js/flatpickr.js"></script>
     <!-- ملف اللغة العربية -->
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ar.js"></script>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            flatpickr(".date-picker", {
-                locale: "ar", // تفعيل اللغة العربية
-                dateFormat: "Y-m-d", // صيغة التاريخ
-                allowInput: true, // السماح بالإدخال اليدوي
-                altInput: true, // عرض بديل للتاريخ
-                altFormat: "j F Y", // صيغة العرض: 15 أكتوبر 2023
-                minDate: "today", // لا تسمح بتواريخ قبل اليوم
-                disableMobile: true, // تعطيل المحرك الافتراضي على الموبايل
-                nextArrow: '<i class="fa fa-angle-right"></i>',
-                prevArrow: '<i class="fa fa-angle-left"></i>'
-            });
-            const startDate = flatpickr(".date-input", {
-                onChange: function(selectedDates) {
-                    endDate.set("minDate", selectedDates[0]);
-                }
-            });
-
-            const endDate = flatpickr(".end_national_id-input", {});
-        });
-    </script>
+    <script src="{{ asset('dashboard') }}/assets/dist/js/ar.js"></script>
+    <script src="{{ asset('dashboard') }}/assets/dist/js/flatpicker-scripts.js"></script>
     <script>
         $(document).ready(function() {
             $('.select2').select2();

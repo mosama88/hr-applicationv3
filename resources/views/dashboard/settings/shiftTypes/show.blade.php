@@ -7,31 +7,7 @@
 @section('active-shiftTypes', 'active')
 @section('title', 'عرض بيانات الشفت')
 @push('css')
-    <style>
-        /* تنسيق حقول الإدخال */
-        .time-picker {
-            direction: ltr;
-            text-align: center;
-        }
-
-        /* تنسيق حقل الساعات المحسوبة */
-        #total_hours {
-            font-weight: bold;
-            text-align: center;
-            background-color: #f8f9fa;
-        }
-
-        /* تنسيق التحذير للساعات الطويلة */
-        #total_hours.bg-warning {
-            background-color: #fff3cd !important;
-        }
-
-        /* تحسين مظهر الأيقونات */
-        .input-group-text {
-            min-width: 40px;
-            justify-content: center;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/dist/css/time-picker-style.css">
 @endpush
 @section('content')
 
