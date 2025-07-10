@@ -9,7 +9,6 @@ use App\Enums\FinanceClnPeriodsIsOpen;
 use App\Models\Allowance;
 use App\Models\EmployeeSalaryAllowance;
 use Maatwebsite\Excel\Concerns\ToModel;
-use App\Models\EmployeeSalaryAdditional;
 
 class EmployeeSalaryAllowanceImport implements ToModel
 {
@@ -41,12 +40,12 @@ class EmployeeSalaryAllowanceImport implements ToModel
         }
         $allownceId = Allowance::where('name', trim($row[4]))->value('id');
 
-        return new EmployeeSalaryAdditional([
+        return new EmployeeSalaryAllowance([
             'finance_cln_period_id' => $financeClnPeriod->id,
             'main_salary_employee_id' => $mainSalaryEmployee?->id, // لحماية من null
             'employee_code'             => $row[2],
             'day_price'                 => $row[3],
-            'allownce_id'               => $allownceId,
+            'allowance_id'               => $allownceId,
             'total'                     => $row[5],
             'notes'                     => $row[6],
             'com_code'                  => $com_code,
