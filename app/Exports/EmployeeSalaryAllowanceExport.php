@@ -23,9 +23,9 @@ class EmployeeSalaryAllowanceExport implements FromArray, WithHeadings, WithStyl
                 'mainSalaryEmployee' => $employeeSalaryAllowance->mainSalaryEmployee ? $employeeSalaryAllowance->mainSalaryEmployee->employee_name : 'غير محددة',
                 'employee_code'   => $employeeSalaryAllowance->employee_code,
                 'day_price'   => $employeeSalaryAllowance->day_price,
-                'allownce_id' => $employeeSalaryAllowance->allownce?->name ?? 'غير محددة', // أو المسار الصحيح
-                'branch_id' => $employeeSalaryAllowance->branch?->name ?? 'غير محددة', // أو المسار الصحيح
-                'department_code' => $employeeSalaryAllowance->departmentCode?->name ?? 'غير محددة', // 
+                'allowance_id' => $employeeSalaryAllowance->allowance?->name ?? 'غير محددة', // أو المسار الصحيح
+                'branch_id' => $employeeSalaryAllowance->mainSalaryEmployee->branch?->name ?? 'غير محددة', // أو المسار الصحيح
+                'department_code' => $employeeSalaryAllowance->mainSalaryEmployee->department?->name ?? 'غير محددة', // 
                 'total' => $employeeSalaryAllowance->total,
                 'notes' => $employeeSalaryAllowance->notes,
             ];

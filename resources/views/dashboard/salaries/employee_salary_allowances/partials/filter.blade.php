@@ -17,8 +17,16 @@
             @csrf
             <button type="submit" class="btn" style="background-color: #273F4F; color: #fff;"> <i
                     class="fas fa-arrow-alt-circle-down ml-2"></i> تحميل اكسيل شيت</button>
-            <input type="text" name="branch_id" hidden>
-            <input type="text" name="department_code" hidden>
+            <div class="d-none">
+                <input type="hidden" name="branch_id" value="{{ request('branch_id') }}">
+                <input type="hidden" name="department_code" value="{{ request('department_code') }}">
+                <input type="hidden" name="employee_code_search" value="{{ request('employee_code_search') }}">
+                <input type="hidden" name="name" value="{{ request('name') }}">
+                <input type="hidden" name="department" value="{{ request('department') }}">
+                <input type="hidden" name="branch" value="{{ request('branch') }}">
+                <input type="hidden" name="allowance_id" value="{{ request('allowance_id') }}">
+            </div>
+
         </form>
 
         <!-- Button trigger modal -->
@@ -31,11 +39,13 @@
         <form id="printForm" action="{{ route('dashboard.employee_salary_allowances.print') }}" method="POST"
             target="_blank">
             @csrf
-            <input type="hidden" name="employee_code_search" value="{{ request('employee_code_search') }}">
-            <input type="hidden" name="name" value="{{ request('name') }}">
-            <input type="hidden" name="department" value="{{ request('department') }}">
-            <input type="hidden" name="branch" value="{{ request('branch') }}">
-            <input type="hidden" name="allowance_id" value="{{ request('allowance_id') }}">
+            <div class="d-none">
+                <input type="hidden" name="employee_code_search" value="{{ request('employee_code_search') }}">
+                <input type="hidden" name="name" value="{{ request('name') }}">
+                <input type="hidden" name="department" value="{{ request('department') }}">
+                <input type="hidden" name="branch" value="{{ request('branch') }}">
+                <input type="hidden" name="allowance_id" value="{{ request('allowance_id') }}">
+            </div>
 
             <button type="submit" class="btn" style="background-color: #4d4d4e; color: white;">
                 <i class="fa-solid fa-print ml-2"></i> طباعة حسب البحث
@@ -73,15 +83,15 @@
             <div class="col-md-3 mb-3">
                 <label class="form-label" for="branch-input">الفرع</label>
                 <input type="text" class="form-control" name="branch" value="{{ request('branch') }}"
-                    id="name-input" placeholder="مثال:فرع المهندسين	 " />
+                    id="name-input" placeholder="مثال:فرع المهندسين	" />
             </div>
 
             <!-- البدل -->
             <div class="col-md-2 mb-3">
                 <label class="form-label" for="value-input">
                     البدل</label>
-                <input type="text" name="allowance_id" class="form-control" value="{{ request('allowance_id') }}"
-                    id="value-input">
+                <input type="text" name="allowance_id" class="form-control"
+                    value="{{ request('allowance_id') }}" id="value-input" placeholder="مثال:بدل مخاطر">
             </div>
         </div>
         @include('dashboard.partials.filter-actions')

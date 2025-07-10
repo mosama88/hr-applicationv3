@@ -2,22 +2,18 @@
 
 namespace App\Models;
 
-use Spatie\Image\Enums\Fit;
 use App\Enums\IsArchivedEnum;
 use Spatie\Sluggable\HasSlug;
 use EloquentFilter\Filterable;
-use Spatie\MediaLibrary\HasMedia;
 use Spatie\Sluggable\SlugOptions;
 use Illuminate\Database\Eloquent\Model;
 use App\Enums\Salaries\IsAutoSalaryEnum;
-use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class EmployeeSalaryAbsence extends Model implements HasMedia
+class EmployeeSalaryAbsence extends Model
 
 {
-    use HasFactory, Filterable, InteractsWithMedia, HasSlug;
+    use HasFactory, Filterable, HasSlug;
 
 
     protected $table = 'employee_salary_absence_days';
@@ -59,13 +55,6 @@ class EmployeeSalaryAbsence extends Model implements HasMedia
         return 'slug';
     }
 
-    public function registerMediaConversions(?Media $media = null): void
-    {
-        $this
-            ->addMediaConversion('preview')
-            ->fit(Fit::Contain, 300, 300)
-            ->nonQueued();
-    }
 
     public function mainSalaryEmployee()
     {

@@ -4,19 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Spatie\Image\Enums\Fit;
 use App\Enums\IsArchivedEnum;
 use Spatie\Sluggable\HasSlug;
 use EloquentFilter\Filterable;
-use Spatie\MediaLibrary\HasMedia;
 use Spatie\Sluggable\SlugOptions;
 use App\Enums\Salaries\IsAutoSalaryEnum;
-use Spatie\MediaLibrary\InteractsWithMedia;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class EmployeeSalaryAllowance extends Model implements HasMedia
+
+class EmployeeSalaryAllowance extends Model
+
 {
-    use HasFactory, Filterable, InteractsWithMedia, HasSlug;
+    use HasFactory, Filterable, HasSlug;
 
 
     protected $table = 'employee_salary_allowances';
@@ -60,13 +58,6 @@ class EmployeeSalaryAllowance extends Model implements HasMedia
         return 'slug';
     }
 
-    public function registerMediaConversions(?Media $media = null): void
-    {
-        $this
-            ->addMediaConversion('preview')
-            ->fit(Fit::Contain, 300, 300)
-            ->nonQueued();
-    }
 
     public function mainSalaryEmployee()
     {
@@ -78,14 +69,15 @@ class EmployeeSalaryAllowance extends Model implements HasMedia
         return $this->belongsTo(Allowance::class, 'allowance_id');
     }
 
+
     public function branch()
     {
-        return $this->belongsTo(Branch::class, 'branch_id');
+        return $this->belongsTo(Branch::class);
     }
 
     public function departmentCode()
     {
-        return $this->belongsTo(Department::class, 'department_code');
+        return $this->belongsTo(Department::class);
     }
 
     public function financeClnPeriod()
