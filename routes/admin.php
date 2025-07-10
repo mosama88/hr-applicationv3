@@ -22,6 +22,7 @@ use App\Http\Controllers\Dashboard\EmployeeAffairs\AllowanceController;
 use App\Http\Controllers\Dashboard\Salaries\MainSalaryRecordController;
 use App\Http\Controllers\Dashboard\Settings\AdminPanelSettingController;
 use App\Http\Controllers\Dashboard\EmployeeAffairs\DiscountTypeController;
+use App\Http\Controllers\Dashboard\Salaries\EmployeeSalaryRewardController;
 use App\Http\Controllers\Dashboard\EmployeeAffairs\AdditionalTypeController;
 use App\Http\Controllers\Dashboard\Salaries\EmployeeSalaryAbsenceController;
 use App\Http\Controllers\Dashboard\Salaries\EmployeeSalaryDiscountController;
@@ -197,6 +198,20 @@ Route::middleware(['auth:admin'])->group(function () {
         Route::get('/discounts/export/{slug}', 'export')->name('export');
         Route::post('/discounts/import', 'import')->name('import');
         Route::post('/discounts/print', 'print')->name('print');
+    });
+    //################################### الخصومات المالية ##################################
+    Route::controller(EmployeeSalaryRewardController::class)->name('rewards.')->prefix('/rewards')->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::get('/create/{financeClnPeriod}', 'create')->name('create');
+        Route::post('/store/{financeClnPeriod}', 'store')->name('store');
+        Route::get('/show/{financeClnPeriod}', 'show')->name('show');
+        Route::get('/edit/{employeeSalaryReward}', 'edit')->name('edit');
+        Route::get('/show/data/{employeeSalaryReward}', 'showData')->name('show-data');
+        Route::patch('/update/{employeeSalaryReward}', 'update')->name('update');
+        Route::delete('/delete/{employeeSalaryReward}', 'destroy')->name('destroy');
+        Route::get('/rewards/export/{slug}', 'export')->name('export');
+        Route::post('/rewards/import', 'import')->name('import');
+        Route::post('/rewards/print', 'print')->name('print');
     });
 
     //################################### الأنتهاء من الاجور والمرتبات  ##################################
