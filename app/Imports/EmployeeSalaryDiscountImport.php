@@ -7,7 +7,7 @@ use App\Models\MainSalaryEmployee;
 use Illuminate\Support\Facades\Auth;
 use App\Enums\FinanceClnPeriodsIsOpen;
 use App\Models\DiscountType;
-use App\Models\EmployeeSalaryAllowance;
+use App\Models\EmployeeSalaryDiscount;
 use Maatwebsite\Excel\Concerns\ToModel;
 
 class EmployeeSalaryDiscountImport implements ToModel
@@ -38,14 +38,14 @@ class EmployeeSalaryDiscountImport implements ToModel
         if (!$mainSalaryEmployee) {
             throw new \Exception("الموظف المرتبط بالراتب الأساسي غير موجود: {$row[1]}");
         }
-        $allownceId = DiscountType::where('name', trim($row[4]))->value('id');
+        $discountTypeId = DiscountType::where('name', trim($row[4]))->value('id');
 
-        return new EmployeeSalaryAllowance([
+        return new EmployeeSalaryDiscount([
             'finance_cln_period_id' => $financeClnPeriod->id,
             'main_salary_employee_id' => $mainSalaryEmployee?->id, // لحماية من null
             'employee_code'             => $row[2],
             'day_price'                 => $row[3],
-            'discount_type_id'               => $allownceId,
+            'discount_type_id'          => $discountTypeId,
             'total'                     => $row[5],
             'notes'                     => $row[6],
             'com_code'                  => $com_code,

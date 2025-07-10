@@ -85,9 +85,9 @@
 
 <body>
     <div class="header">
-        <h2>تقرير البدلات المتغيرة </h2>
+        <h2>تقرير الخصومات المالية </h2>
         <p>تاريخ التقرير: {{ now()->format('Y-m-d') }}</p>
-        <p>إجمالى البدلات: {{ number_format($discounts->sum('total'), 2) }} جنيه</p>
+        <p>إجمالى الخصومات: {{ number_format($discounts->sum('total'), 2) }} جنيه</p>
 
     </div>
 

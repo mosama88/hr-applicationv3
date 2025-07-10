@@ -24,7 +24,7 @@
         </form>
 
         @include('dashboard.partials.import', [
-            'title' => 'للبدلات المتغيرة',
+            'title' => 'للخصومات',
             'financeClnPeriod' => $financeClnPeriod->slug,
             'url' => 'discounts',
             'columns' => 'الأسم وكود الموظف الخصم والأجمالى والملاحظات',
