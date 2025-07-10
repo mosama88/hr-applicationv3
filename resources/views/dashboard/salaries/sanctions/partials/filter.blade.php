@@ -5,15 +5,7 @@
 @push('css')
 @endpush
 
-@if ($errors->any())
-    @foreach ($errors->all() as $error)
-        <div class="alert alert-danger text-center">
-            {{ $error }}
-        </div>
-    @endforeach
-@endif
-
-<x-filter-component :otherInput="'days_sanctions'">
+<x-filter-component :otherInput="'days_sanctions'" otherInputTwo='sanction_types'>
 
     <div class="mb-3 d-flex gap-2 mt-2">
         <form action="{{ route('dashboard.sanctions.export', $financeClnPeriod->slug) }}" method="GET">

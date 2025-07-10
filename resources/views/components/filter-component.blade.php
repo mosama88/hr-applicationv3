@@ -11,7 +11,8 @@
             request('name') ||
             request('department') ||
             request('branch') ||
-            request($otherInput)
+            request($otherInput) ||
+            ($otherInputTwo ? request($otherInputTwo) : false)
                 ? 'show'
                 : '' }}"
             data-bs-parent="#accordionExample">
@@ -21,6 +22,6 @@
                 </strong>
                 {{ $slot }}
             </div>
+        </div>
     </div>
-</div>
 </div>

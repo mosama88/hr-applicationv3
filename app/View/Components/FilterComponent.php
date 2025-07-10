@@ -11,7 +11,7 @@ class FilterComponent extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct(public string $otherInput)
+    public function __construct(public string $otherInput, public ?string $otherInputTwo = null)
     {
         //
     }
