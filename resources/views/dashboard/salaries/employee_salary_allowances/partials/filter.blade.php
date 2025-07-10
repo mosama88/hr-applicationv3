@@ -33,7 +33,12 @@
             <i class="fas fa-arrow-alt-circle-up ml-2"></i> إستيراد إكسيل
         </button>
 
-        @include('dashboard.salaries.employee_salary_allowances.partials.import')
+        @include('dashboard.partials.import', [
+            'title' => 'للبدلات المتغيرة',
+            'financeClnPeriod' => $financeClnPeriod->slug,
+            'url' => 'employee_salary_allowances',
+            'columns' => 'الأسم وكود الموظف والبدل والأجمالى والملاحظات',
+        ])
 
         <form id="printForm" action="{{ route('dashboard.employee_salary_allowances.print') }}" method="POST"
             target="_blank">

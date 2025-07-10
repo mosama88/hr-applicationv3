@@ -27,7 +27,12 @@
             <i class="fas fa-arrow-alt-circle-up ml-2"></i> إستيراد إكسيل
         </button>
 
-        @include('dashboard.salaries.additionals.partials.import')
+        @include('dashboard.partials.import', [
+            'title' => 'الاضافى',
+            'financeClnPeriod' => $financeClnPeriod->slug,
+            'url' => 'additionals',
+            'columns' => 'الأسم وكود الموظف وعدد الأيام والأجمالى والملاحظات',
+        ])
 
         <form id="printForm" action="{{ route('dashboard.additionals.print') }}" method="POST" target="_blank">
             @csrf

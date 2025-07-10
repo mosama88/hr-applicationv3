@@ -27,7 +27,12 @@
             <i class="fas fa-arrow-alt-circle-up ml-2"></i> إستيراد إكسيل
         </button>
 
-        @include('dashboard.salaries.sanctions.partials.import')
+        @include('dashboard.partials.import', [
+            'title' => 'الجزاءات',
+            'financeClnPeriod' => $financeClnPeriod->slug,
+            'url' => 'sanctions',
+            'columns' => 'الأسم وكود الموظف ونوع الجزاء عدد الايام والأجمالى والملاحظات',
+        ])
 
         <form id="printForm" action="{{ route('dashboard.sanctions.print') }}" method="POST" target="_blank">
             @csrf

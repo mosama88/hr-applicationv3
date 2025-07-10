@@ -28,7 +28,12 @@
             <i class="fas fa-arrow-alt-circle-up ml-2"></i> إستيراد إكسيل
         </button>
 
-        @include('dashboard.salaries.absences.partials.import')
+        @include('dashboard.partials.import', [
+            'title' => 'الغيابات',
+            'financeClnPeriod' => $financeClnPeriod->slug,
+            'url' => 'absences',
+            'columns' => 'الأسم وكود الموظف وعدد الأيام والأجمالى والملاحظات',
+        ])
 
         <form id="printForm" action="{{ route('dashboard.absences.print') }}" method="POST" target="_blank">
             @csrf

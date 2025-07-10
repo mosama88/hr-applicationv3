@@ -30,11 +30,11 @@ class EmployeeSalarySanctionExport implements FromArray, WithHeadings, WithStyle
                 'mainSalaryEmployee' => $item->mainSalaryEmployee ? $item->mainSalaryEmployee->employee_name : 'غير محددة',
                 'employee_code'   => $item->employee_code,
                 'day_price'   => $item->day_price,
-                'sanctions_type'=> $sanctionTypeLabel ?? '',
-                'branch_id' => $item->mainSalaryEmployee->branch?->name ?? 'غير محددة', // أو المسار الصحيح
-                'department_code' => $item->mainSalaryEmployee->department?->name ?? 'غير محددة', // 
+                'sanctions_type' => $sanctionTypeLabel ?? '',
                 'value' => $item->value,
                 'total' => $item->total,
+                'branch_id' => $item->mainSalaryEmployee->branch?->name ?? 'غير محددة', // أو المسار الصحيح
+                'department_code' => $item->mainSalaryEmployee->department?->name ?? 'غير محددة', // 
                 'notes' => $item->notes,
             ];
         })->toArray();
@@ -61,6 +61,8 @@ class EmployeeSalarySanctionExport implements FromArray, WithHeadings, WithStyle
             'نوع الجزاء',
             'عدد الايام',
             'الأجمالى',
+            'الفرع',
+            'الادارة',
             'ملاحظات',
         ];
     }
