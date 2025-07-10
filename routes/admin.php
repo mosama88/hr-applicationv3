@@ -24,8 +24,9 @@ use App\Http\Controllers\Dashboard\Settings\AdminPanelSettingController;
 use App\Http\Controllers\Dashboard\EmployeeAffairs\DiscountTypeController;
 use App\Http\Controllers\Dashboard\EmployeeAffairs\AdditionalTypeController;
 use App\Http\Controllers\Dashboard\Salaries\EmployeeSalaryAbsenceController;
-use App\Http\Controllers\Dashboard\Salaries\EmployeeSalaryAdditionalController;
+use App\Http\Controllers\Dashboard\Salaries\EmployeeSalaryDiscountController;
 use App\Http\Controllers\Dashboard\Salaries\EmployeeSalaryAllowanceController;
+use App\Http\Controllers\Dashboard\Salaries\EmployeeSalaryAdditionalController;
 
 
 Route::middleware(['auth:admin'])->group(function () {
@@ -183,6 +184,21 @@ Route::middleware(['auth:admin'])->group(function () {
         Route::post('/employee_salary_allowances/import', 'import')->name('import');
         Route::post('/employee_salary_allowances/print', 'print')->name('print');
     });
+    //################################### الخصومات المالية ##################################
+    Route::controller(EmployeeSalaryDiscountController::class)->name('discounts.')->prefix('/discounts')->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::get('/create/{financeClnPeriod}', 'create')->name('create');
+        Route::post('/store/{financeClnPeriod}', 'store')->name('store');
+        Route::get('/show/{financeClnPeriod}', 'show')->name('show');
+        Route::get('/edit/{employee_salary_allowance}', 'edit')->name('edit');
+        Route::get('/show/data/{employeeSalaryDiscount}', 'showData')->name('show-data');
+        Route::patch('/update/{employeeSalaryDiscount}', 'update')->name('update');
+        Route::delete('/delete/{employeeSalaryDiscount}', 'destroy')->name('destroy');
+        Route::get('/discounts/export/{slug}', 'export')->name('export');
+        Route::post('/discounts/import', 'import')->name('import');
+        Route::post('/discounts/print', 'print')->name('print');
+    });
+
     //################################### الأنتهاء من الاجور والمرتبات  ##################################
 
 });

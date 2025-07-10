@@ -2,6 +2,8 @@
 
 namespace App\Exports;
 
+
+
 use Maatwebsite\Excel\Concerns\WithStyles;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
@@ -9,25 +11,25 @@ use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 use Maatwebsite\Excel\Concerns\FromArray;
 
-class EmployeeSalaryAllowanceExport implements FromArray, WithHeadings, WithStyles
+class EmployeeSalaryDiscountExport implements FromArray, WithHeadings, WithStyles
 
 {
     protected $data;
 
-    public function __construct($employeeSalaryAllowances)
+    public function __construct($employeeSalarydiscounts)
     {
 
-        $this->data = $employeeSalaryAllowances->map(function ($employeeSalaryAllowance) {
+        $this->data = $employeeSalarydiscounts->map(function ($employeeSalarydiscount) {
             return [
-                'financeClnPeriod' => $employeeSalaryAllowance->financeClnPeriod ? $employeeSalaryAllowance->financeClnPeriod->year_and_month : 'غير محددة',
-                'mainSalaryEmployee' => $employeeSalaryAllowance->mainSalaryEmployee ? $employeeSalaryAllowance->mainSalaryEmployee->employee_name : 'غير محددة',
-                'employee_code'   => $employeeSalaryAllowance->employee_code,
-                'day_price'   => $employeeSalaryAllowance->day_price,
-                'branch_id' => $employeeSalaryAllowance->mainSalaryEmployee->branch?->name ?? 'غير محددة', // أو المسار الصحيح
-                'department_code' => $employeeSalaryAllowance->mainSalaryEmployee->department?->name ?? 'غير محددة', // 
-                'allowance_id' => $employeeSalaryAllowance->allowance?->name ?? 'غير محددة', // أو المسار الصحيح
-                'total' => $employeeSalaryAllowance->total,
-                'notes' => $employeeSalaryAllowance->notes,
+                'financeClnPeriod' => $employeeSalarydiscount->financeClnPeriod ? $employeeSalarydiscount->financeClnPeriod->year_and_month : 'غير محددة',
+                'mainSalaryEmployee' => $employeeSalarydiscount->mainSalaryEmployee ? $employeeSalarydiscount->mainSalaryEmployee->employee_name : 'غير محددة',
+                'employee_code'   => $employeeSalarydiscount->employee_code,
+                'day_price'   => $employeeSalarydiscount->day_price,
+                'branch_id' => $employeeSalarydiscount->mainSalaryEmployee->branch?->name ?? 'غير محددة', // أو المسار الصحيح
+                'department_code' => $employeeSalarydiscount->mainSalaryEmployee->department?->name ?? 'غير محددة', // 
+                'discount_type_id' => $employeeSalarydiscount->discountType?->name ?? 'غير محددة', // أو المسار الصحيح
+                'total' => $employeeSalarydiscount->total,
+                'notes' => $employeeSalarydiscount->notes,
             ];
         })->toArray();
     }
@@ -49,7 +51,7 @@ class EmployeeSalaryAllowanceExport implements FromArray, WithHeadings, WithStyl
             'المرتب اليومى',
             'الفرع',
             'الادارة',
-            'نوع البدل',
+            'نوع الخصم',
             'الأجمالى',
             'ملاحظات',
         ];

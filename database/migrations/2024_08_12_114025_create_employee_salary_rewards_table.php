@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\AdditionalType;
 use App\Models\FinanceClnPeriod;
 use App\Models\MainSalaryEmployee;
 use Illuminate\Support\Facades\Schema;
@@ -21,7 +22,8 @@ return new class extends Migration
             $table->tinyInteger('is_auto')->nullable()->default(1); //هل تلقائى من النظام أم بشكل يدوى
             $table->bigInteger('employee_code'); //كود الموظف
             $table->decimal('day_price', 10, 2); //أجر يوم الموظف
-            $table->foreignId('additional_types_id')->references('id')->on('additional_types')->onUpdate('cascade'); //نوع إضافى المكافئة
+            $table->foreignId('additional_types_id')->references('id')->on('additional_types')->onUpdate('cascade'); 
+            $table->foreignIdFor(AdditionalType::class)->nullable()->constrained()->nullOnDelete(); //نوع إضافى المكافئة
             $table->decimal('total', 10, 2); //أجمالى المكافئة
             $table->tinyInteger('is_archived')->default(2)->nullable(); //حالة الموظف لحظة الراتب
             $table->foreignId('archived_by')->nullable()->references('id')->on('admins')->onUpdate('cascade');
