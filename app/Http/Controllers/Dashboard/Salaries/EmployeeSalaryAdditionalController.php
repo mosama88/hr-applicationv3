@@ -250,7 +250,7 @@ class EmployeeSalaryAdditionalController extends Controller
         ]);
     }
 
-    public function export($slug)
+    public function export(Request $request, $slug)
     {
         $com_code = Auth::user()->com_code;
 
@@ -263,10 +263,15 @@ class EmployeeSalaryAdditionalController extends Controller
                 return redirect()->back()->withErrors(['error' => 'عفوا غير قادر للوصول على البيانات المطلوبة !']);
             }
 
-            $data = EmployeeSalaryAdditional::where('finance_cln_period_id', $financeClnPeriod->id)
+            // الحصول على نفس شروط البحث المستخدمة في صفحة العرض
+            $query = EmployeeSalaryAdditional::query()
+                ->where('finance_cln_period_id', $financeClnPeriod->id)
                 ->where('com_code', $com_code)
-                ->with('mainSalaryEmployee')
-                ->get();
+                ->with('mainSalaryEmployee');
+
+            $this->filterByRequest($request, $query);
+
+            $data = $query->get();
 
             return Excel::download(new EmployeeSalaryAdditionalExport($data), 'الأضافى.xlsx');
         } catch (\Exception $e) {
@@ -304,33 +309,8 @@ class EmployeeSalaryAdditionalController extends Controller
                 ->with(['financeClnPeriod', 'mainSalaryEmployee'])
                 ->where('com_code', Auth::user()->com_code);
 
-            // تطبيق عوامل التصفية
-            if ($request->filled('employee_code_search')) {
-                $query->where('employee_code', $request->employee_code_search);
-            }
+            $this->filterByRequest($request, $query);
 
-            if ($request->filled('name')) {
-                $query->whereHas('mainSalaryEmployee', function ($q) use ($request) {
-                    $q->where('employee_name', 'like', '%' . $request->name . '%');
-                });
-            }
-
-            if ($request->filled('department')) {
-                $query->whereHas('mainSalaryEmployee.department', function ($q) use ($request) {
-                    $q->where('name', 'like', '%' . $request->department . '%');
-                });
-            }
-
-            if ($request->filled('branch')) {
-                $query->whereHas('mainSalaryEmployee.branch', function ($q) use ($request) {
-                    $q->where('name', 'like', '%' . $request->branch . '%');
-                });
-            }
-
-
-            if ($request->filled('days_additional')) {
-                $query->where('value', $request->days_additional);
-            }
 
             $additionals = $query->get();
 
@@ -341,5 +321,39 @@ class EmployeeSalaryAdditionalController extends Controller
                 ->route('dashboard.additionals.index')
                 ->withErrors(['error' => $e->getMessage()]);
         }
+    }
+
+    public function filterByRequest(Request $request, $query)
+    {
+
+        // تطبيق عوامل التصفية
+        if ($request->filled('employee_code_search')) {
+            $query->where('employee_code', $request->employee_code_search);
+        }
+
+        if ($request->filled('name')) {
+            $query->whereHas('mainSalaryEmployee', function ($q) use ($request) {
+                $q->where('employee_name', 'like', '%' . $request->name . '%');
+            });
+        }
+
+        if ($request->filled('department')) {
+            $query->whereHas('mainSalaryEmployee.department', function ($q) use ($request) {
+                $q->where('name', 'like', '%' . $request->department . '%');
+            });
+        }
+
+        if ($request->filled('branch')) {
+            $query->whereHas('mainSalaryEmployee.branch', function ($q) use ($request) {
+                $q->where('name', 'like', '%' . $request->branch . '%');
+            });
+        }
+
+
+        if ($request->filled('days_additional')) {
+            $query->where('value', $request->days_additional);
+        }
+
+        return  $query;
     }
 }

@@ -9,9 +9,19 @@
 <!-- فلتر -->
 <x-filter-component :otherInput="'days_absences'">
     <div class="mb-3 d-flex gap-2 mt-2">
-        <a class="btn btn-success" href="{{ route('dashboard.absences.export', $financeClnPeriod->slug) }}">
-            <i class="fas fa-arrow-alt-circle-down ml-2"></i> تحميل اكسيل شيت
-        </a>
+
+        <form action="{{ route('dashboard.absences.export', $financeClnPeriod->slug) }}" method="GET">
+            @csrf
+            <button type="submit" class="btn" style="background-color: #273F4F; color: #fff;"> <i
+                    class="fas fa-arrow-alt-circle-down ml-2"></i> تحميل اكسيل شيت</button>
+            <div class="d-none">
+                <input type="hidden" name="employee_code_search" value="{{ request('employee_code_search') }}">
+                <input type="hidden" name="name" value="{{ request('name') }}">
+                <input type="hidden" name="department" value="{{ request('department') }}">
+                <input type="hidden" name="branch" value="{{ request('branch') }}">
+                <input type="hidden" name="days_absences" value="{{ request('days_absences') }}">
+            </div>
+        </form>
 
         <!-- Button trigger modal -->
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#importExcel">

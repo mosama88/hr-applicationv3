@@ -26,7 +26,6 @@
                 <input type="hidden" name="branch" value="{{ request('branch') }}">
                 <input type="hidden" name="allowance_id" value="{{ request('allowance_id') }}">
             </div>
-
         </form>
 
         <!-- Button trigger modal -->

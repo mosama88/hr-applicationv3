@@ -263,7 +263,6 @@ class EmployeeSalaryAllowanceController extends Controller
     public function export(Request $request, $slug)
     {
         $com_code = Auth::user()->com_code;
-
         try {
             $financeClnPeriod = FinanceClnPeriod::where('com_code', $com_code)
                 ->where('slug', $slug)
@@ -272,44 +271,15 @@ class EmployeeSalaryAllowanceController extends Controller
             if (!$financeClnPeriod) {
                 return redirect()->back()->withErrors(['error' => 'عفوا غير قادر للوصول على البيانات المطلوبة !']);
             }
-
-
             // الحصول على نفس شروط البحث المستخدمة في صفحة العرض
             $query = EmployeeSalaryAllowance::query()
                 ->where('finance_cln_period_id', $financeClnPeriod->id)
                 ->where('com_code', $com_code)
                 ->with('mainSalaryEmployee');
-            // تطبيق عوامل التصفية
-            if ($request->filled('employee_code_search')) {
-                $query->where('employee_code', $request->employee_code_search);
-            }
 
-            if ($request->filled('name')) {
-                $query->whereHas('mainSalaryEmployee', function ($q) use ($request) {
-                    $q->where('employee_name', 'like', '%' . $request->name . '%');
-                });
-            }
-
-            if ($request->filled('department')) {
-                $query->whereHas('mainSalaryEmployee.department', function ($q) use ($request) {
-                    $q->where('name', 'like', '%' . $request->department . '%');
-                });
-            }
-
-            if ($request->filled('branch')) {
-                $query->whereHas('mainSalaryEmployee.branch', function ($q) use ($request) {
-                    $q->where('name', 'like', '%' . $request->branch . '%');
-                });
-            }
-
-            if ($request->filled('allowance_id')) {
-                $query->whereHas('allowance', function ($q) use ($request) {
-                    $q->where('name', 'like', '%' . $request->allowance_id . '%');
-                });
-            }
+            $this->filterByRequest($request, $query);
 
             $data = $query->get();
-
 
             return Excel::download(new EmployeeSalaryAllowanceExport($data), 'البدلات المتغيرة.xlsx');
         } catch (\Exception $e) {
@@ -347,35 +317,7 @@ class EmployeeSalaryAllowanceController extends Controller
                 ->with(['financeClnPeriod', 'mainSalaryEmployee'])
                 ->where('com_code', Auth::user()->com_code);
 
-            // تطبيق عوامل التصفية
-            if ($request->filled('employee_code_search')) {
-                $query->where('employee_code', $request->employee_code_search);
-            }
-
-            if ($request->filled('name')) {
-                $query->whereHas('mainSalaryEmployee', function ($q) use ($request) {
-                    $q->where('employee_name', 'like', '%' . $request->name . '%');
-                });
-            }
-
-            if ($request->filled('department')) {
-                $query->whereHas('mainSalaryEmployee.department', function ($q) use ($request) {
-                    $q->where('name', 'like', '%' . $request->department . '%');
-                });
-            }
-
-            if ($request->filled('branch')) {
-                $query->whereHas('mainSalaryEmployee.branch', function ($q) use ($request) {
-                    $q->where('name', 'like', '%' . $request->branch . '%');
-                });
-            }
-
-
-            if ($request->filled('allowance_id')) {
-                $query->whereHas('allowance', function ($q) use ($request) {
-                    $q->where('name', 'like', '%' . $request->allowance_id . '%');
-                });
-            }
+            $this->filterByRequest($request, $query);
 
             $allowances = $query->get();
 
@@ -386,5 +328,41 @@ class EmployeeSalaryAllowanceController extends Controller
                 ->route('dashboard.employee_salary_allowances.index')
                 ->withErrors(['error' => $e->getMessage()]);
         }
+    }
+
+    public function filterByRequest(Request $request, $query)
+    {
+
+        // تطبيق عوامل التصفية
+        if ($request->filled('employee_code_search')) {
+            $query->where('employee_code', $request->employee_code_search);
+        }
+
+        if ($request->filled('name')) {
+            $query->whereHas('mainSalaryEmployee', function ($q) use ($request) {
+                $q->where('employee_name', 'like', '%' . $request->name . '%');
+            });
+        }
+
+        if ($request->filled('department')) {
+            $query->whereHas('mainSalaryEmployee.department', function ($q) use ($request) {
+                $q->where('name', 'like', '%' . $request->department . '%');
+            });
+        }
+
+        if ($request->filled('branch')) {
+            $query->whereHas('mainSalaryEmployee.branch', function ($q) use ($request) {
+                $q->where('name', 'like', '%' . $request->branch . '%');
+            });
+        }
+
+
+        if ($request->filled('allowance_id')) {
+            $query->whereHas('allowance', function ($q) use ($request) {
+                $q->where('name', 'like', '%' . $request->allowance_id . '%');
+            });
+        }
+
+        return  $query;
     }
 }

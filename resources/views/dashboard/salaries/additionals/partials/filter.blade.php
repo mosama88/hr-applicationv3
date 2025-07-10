@@ -8,9 +8,19 @@
 <!-- فلتر -->
 <x-filter-component :otherInput="'days_additional'">
     <div class="mb-3 d-flex gap-2 mt-2">
-        <a class="btn btn-success" href="{{ route('dashboard.additionals.export', $financeClnPeriod->slug) }}">
-            <i class="fas fa-arrow-alt-circle-down ml-2"></i> تحميل اكسيل شيت
-        </a>
+
+        <form action="{{ route('dashboard.additionals.export', $financeClnPeriod->slug) }}" method="GET">
+            @csrf
+            <button type="submit" class="btn" style="background-color: #273F4F; color: #fff;"> <i
+                    class="fas fa-arrow-alt-circle-down ml-2"></i> تحميل اكسيل شيت</button>
+            <div class="d-none">
+                <input type="hidden" name="employee_code_search" value="{{ request('employee_code_search') }}">
+                <input type="hidden" name="name" value="{{ request('name') }}">
+                <input type="hidden" name="department" value="{{ request('department') }}">
+                <input type="hidden" name="branch" value="{{ request('branch') }}">
+                <input type="hidden" name="days_additional" value="{{ request('days_additional') }}">
+            </div>
+        </form>
 
         <!-- Button trigger modal -->
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#importExcel">
@@ -21,11 +31,14 @@
 
         <form id="printForm" action="{{ route('dashboard.additionals.print') }}" method="POST" target="_blank">
             @csrf
-            <input type="hidden" name="employee_code_search" value="{{ request('employee_code_search') }}">
-            <input type="hidden" name="name" value="{{ request('name') }}">
-            <input type="hidden" name="department" value="{{ request('department') }}">
-            <input type="hidden" name="branch" value="{{ request('branch') }}">
-            <input type="hidden" name="days_additional" value="{{ request('days_additional') }}">
+            <div class="d-none">
+                <input type="hidden" name="employee_code_search" value="{{ request('employee_code_search') }}">
+                <input type="hidden" name="name" value="{{ request('name') }}">
+                <input type="hidden" name="department" value="{{ request('department') }}">
+                <input type="hidden" name="branch" value="{{ request('branch') }}">
+                <input type="hidden" name="days_additional" value="{{ request('days_additional') }}">
+            </div>
+
 
             <button type="submit" class="btn" style="background-color: #4d4d4e; color: white;">
                 <i class="fa-solid fa-print ml-2"></i> طباعة حسب البحث

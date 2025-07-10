@@ -4,46 +4,48 @@ namespace App\Exports;
 
 
 use App\Enums\Salaries\SanctionTypeEnum;
-use Maatwebsite\Excel\Concerns\WithStyles;
-use Maatwebsite\Excel\Concerns\WithHeadings;
-use Maatwebsite\Excel\Concerns\FromCollection;
-use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
-use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
+use Maatwebsite\Excel\Concerns\FromArray;
+use Maatwebsite\Excel\Concerns\WithStyles;
+use PhpOffice\PhpSpreadsheet\Style\Border;
+use Maatwebsite\Excel\Concerns\WithHeadings;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class EmployeeSalarySanctionExport implements FromCollection, WithHeadings, WithStyles
+class EmployeeSalarySanctionExport implements FromArray, WithHeadings, WithStyles
+
 {
     protected $data;
 
-    public function __construct($data)
+    public function __construct($employeeSalaryAllowances)
     {
-        $this->data = $data;
+
+
+        $this->data = $employeeSalaryAllowances->map(function ($item) {
+            // استخراج نوع الجزاء كنص باستخدام enum
+            $sanctionTypeLabel = is_int($item->sanctions_type)
+                ? SanctionTypeEnum::tryFrom($item->sanctions_type)?->label()
+                : $item->sanctions_type?->label();
+            return [
+                'financeClnPeriod' => $item->financeClnPeriod ? $item->financeClnPeriod->year_and_month : 'غير محددة',
+                'mainSalaryEmployee' => $item->mainSalaryEmployee ? $item->mainSalaryEmployee->employee_name : 'غير محددة',
+                'employee_code'   => $item->employee_code,
+                'day_price'   => $item->day_price,
+                'sanctions_type'=> $sanctionTypeLabel ?? '',
+                'branch_id' => $item->mainSalaryEmployee->branch?->name ?? 'غير محددة', // أو المسار الصحيح
+                'department_code' => $item->mainSalaryEmployee->department?->name ?? 'غير محددة', // 
+                'value' => $item->value,
+                'total' => $item->total,
+                'notes' => $item->notes,
+            ];
+        })->toArray();
     }
 
     /**
      * تُرجع البيانات التي سيتم تصديرها.
      */
-    public function collection()
+    public function array(): array
     {
-
-        // تأكد من أن $this->data عبارة عن Collection أو Array of arrays
-        return collect($this->data)->map(function ($item) {
-            $sanctionTypeLabel = is_int($item->sanctions_type)
-                ? SanctionTypeEnum::tryFrom($item->sanctions_type)?->label()
-                : $item->sanctions_type?->label();
-
-
-            return [
-                optional($item->financeClnPeriod)->year_and_month,
-                optional($item->mainSalaryEmployee)->employee_name,
-                $item->employee_code,
-                $item->day_price,
-                $sanctionTypeLabel ?? '',
-                $item->value,
-                $item->total,
-                $item->notes,
-            ];
-        });
+        return $this->data;
     }
 
     /**

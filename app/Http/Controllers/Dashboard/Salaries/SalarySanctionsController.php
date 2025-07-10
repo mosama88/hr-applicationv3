@@ -275,7 +275,7 @@ class SalarySanctionsController extends Controller
         }
     }
 
-    public function export($slug)
+    public function export(Request $request, $slug)
     {
         $com_code = Auth::user()->com_code;
 
@@ -288,10 +288,17 @@ class SalarySanctionsController extends Controller
                 return redirect()->back()->withErrors(['error' => 'عفوا غير قادر للوصول على البيانات المطلوبة !']);
             }
 
-            $data = EmployeeSalarySanction::where('finance_cln_period_id', $financeClnPeriod->id)
+
+            // الحصول على نفس شروط البحث المستخدمة في صفحة العرض
+            $query = EmployeeSalarySanction::query()
+                ->where('finance_cln_period_id', $financeClnPeriod->id)
                 ->where('com_code', $com_code)
-                ->with('mainSalaryEmployee')
-                ->get();
+                ->with('mainSalaryEmployee');
+
+            $this->filterByRequest($request, $query);
+
+            $data = $query->get();
+
 
             return Excel::download(new EmployeeSalarySanctionExport($data), 'الجزاءات.xlsx');
         } catch (\Exception $e) {
@@ -327,37 +334,8 @@ class SalarySanctionsController extends Controller
                 ->with(['financeClnPeriod', 'mainSalaryEmployee'])
                 ->where('com_code', Auth::user()->com_code);
 
-            // تطبيق عوامل التصفية
-            if ($request->filled('employee_code_search')) {
-                $query->where('employee_code', $request->employee_code_search);
-            }
 
-            if ($request->filled('name')) {
-                $query->whereHas('mainSalaryEmployee', function ($q) use ($request) {
-                    $q->where('employee_name', 'like', '%' . $request->name . '%');
-                });
-            }
-
-            if ($request->filled('department')) {
-                $query->whereHas('mainSalaryEmployee.department', function ($q) use ($request) {
-                    $q->where('name', 'like', '%' . $request->department . '%');
-                });
-            }
-
-            if ($request->filled('branch')) {
-                $query->whereHas('mainSalaryEmployee.branch', function ($q) use ($request) {
-                    $q->where('name', 'like', '%' . $request->branch . '%');
-                });
-            }
-
-
-            if ($request->filled('sanction_types')) {
-                $query->where('sanctions_type', $request->sanction_types);
-            }
-
-            if ($request->filled('days_sanctions')) {
-                $query->where('value', $request->days_sanctions);
-            }
+            $this->filterByRequest($request, $query);
 
             $sanctions = $query->get();
 
@@ -368,5 +346,44 @@ class SalarySanctionsController extends Controller
                 ->route('dashboard.sanctions.index')
                 ->withErrors(['error' => $e->getMessage()]);
         }
+    }
+
+
+    public function filterByRequest(Request $request, $query)
+    {
+
+        // تطبيق عوامل التصفية
+        if ($request->filled('employee_code_search')) {
+            $query->where('employee_code', $request->employee_code_search);
+        }
+
+        if ($request->filled('name')) {
+            $query->whereHas('mainSalaryEmployee', function ($q) use ($request) {
+                $q->where('employee_name', 'like', '%' . $request->name . '%');
+            });
+        }
+
+        if ($request->filled('department')) {
+            $query->whereHas('mainSalaryEmployee.department', function ($q) use ($request) {
+                $q->where('name', 'like', '%' . $request->department . '%');
+            });
+        }
+
+        if ($request->filled('branch')) {
+            $query->whereHas('mainSalaryEmployee.branch', function ($q) use ($request) {
+                $q->where('name', 'like', '%' . $request->branch . '%');
+            });
+        }
+
+
+        if ($request->filled('sanction_types')) {
+            $query->where('sanctions_type', $request->sanction_types);
+        }
+
+        if ($request->filled('days_sanctions')) {
+            $query->where('value', $request->days_sanctions);
+        }
+
+        return  $query;
     }
 }

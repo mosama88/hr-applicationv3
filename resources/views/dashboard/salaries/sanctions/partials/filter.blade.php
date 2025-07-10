@@ -13,12 +13,22 @@
     @endforeach
 @endif
 
-<x-filter-component :otherInput='"days_sanctions"'>
+<x-filter-component :otherInput="'days_sanctions'">
 
     <div class="mb-3 d-flex gap-2 mt-2">
-        <a class="btn btn-success" href="{{ route('dashboard.sanctions.export', $financeClnPeriod->slug) }}">
-            <i class="fas fa-arrow-alt-circle-down ml-2"></i> تحميل اكسيل شيت
-        </a>
+        <form action="{{ route('dashboard.sanctions.export', $financeClnPeriod->slug) }}" method="GET">
+            @csrf
+            <button type="submit" class="btn" style="background-color: #273F4F; color: #fff;"> <i
+                    class="fas fa-arrow-alt-circle-down ml-2"></i> تحميل اكسيل شيت</button>
+            <div class="d-none">
+                <input type="text" name="employee_code_search" value="{{ request('employee_code_search') }}">
+                <input type="text" name="name" value="{{ request('name') }}">
+                <input type="text" name="department" value="{{ request('department') }}">
+                <input type="text" name="branch" value="{{ request('branch') }}">
+                <input type="text" name="sanction_types" value="{{ request('sanction_types') }}">
+                <input type="text" name="days_sanctions" value="{{ request('days_sanctions') }}">
+            </div>
+        </form>
 
         <!-- Button trigger modal -->
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#importExcel">
@@ -29,12 +39,15 @@
 
         <form id="printForm" action="{{ route('dashboard.sanctions.print') }}" method="POST" target="_blank">
             @csrf
-            <input type="hidden" name="employee_code_search" value="{{ request('employee_code_search') }}">
-            <input type="hidden" name="name" value="{{ request('name') }}">
-            <input type="hidden" name="department" value="{{ request('department') }}">
-            <input type="hidden" name="branch" value="{{ request('branch') }}">
-            <input type="hidden" name="sanction_types" value="{{ request('sanction_types') }}">
-            <input type="hidden" name="days_sanctions" value="{{ request('days_sanctions') }}">
+
+            <div class="d-none">
+                <input type="text" name="employee_code_search" value="{{ request('employee_code_search') }}">
+                <input type="text" name="name" value="{{ request('name') }}">
+                <input type="text" name="department" value="{{ request('department') }}">
+                <input type="text" name="branch" value="{{ request('branch') }}">
+                <input type="text" name="sanction_types" value="{{ request('sanction_types') }}">
+                <input type="text" name="days_sanctions" value="{{ request('days_sanctions') }}">
+            </div>
 
             <button type="submit" class="btn" style="background-color: #4d4d4e; color: white;">
                 <i class="fa-solid fa-print ml-2"></i> طباعة حسب البحث
@@ -114,7 +127,7 @@
 
             if (mainForm && printForm) {
                 mainForm.querySelectorAll('input, select').forEach(input => {
-                    const hiddenInput = printForm.querySelector(`input[name="${input.name}"]`);
+                    const textInput = printForm.querySelector(`input[name="${input.name}"]`);
                     if (hiddenInput) {
                         hiddenInput.value = input.value;
                     }
