@@ -6,8 +6,8 @@
 @endphp
 
 @extends('dashboard.layouts.master')
-@section('active-employee_salary_allowances', 'active')
-@section('title', 'بدل الموظفين')
+@section('active-discounts', 'active')
+@section('title', 'خصومات الموظفين')
 @push('css')
     <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/dist/css/select2.min.css" />
     <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/dist/css/select2-style.css" />
@@ -84,10 +84,10 @@
 
 
     @include('dashboard.layouts.breadcrumbs', [
-        'titlePage' => 'جدول بدل الموظفين',
-        'previousPage' => 'سجل الشهور المالية للبدل',
-        'currentPage' => 'جدول بدل الموظفين',
-        'url' => 'employee_salary_allowances.index',
+        'titlePage' => 'جدول خصومات الموظفين',
+        'previousPage' => 'سجل الشهور المالية للخصومات',
+        'currentPage' => 'جدول خصومات الموظفين',
+        'url' => 'discounts.index',
     ])
 
 
@@ -97,7 +97,7 @@
             <div class="row">
                 <div class="col-12">
 
-                    @include('dashboard.salaries.employee_salary_allowances.partials.filter')
+                    @include('dashboard.salaries.employee_salary_discounts.partials.filter')
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">
@@ -106,7 +106,7 @@
 
 
                                     <!-- النص على اليمين -->
-                                    <a href="{{ route('dashboard.employee_salary_allowances.create', $financeClnPeriod->slug) }}"
+                                    <a href="{{ route('dashboard.discounts.create', $financeClnPeriod->slug) }}"
                                         class="btn btn-md btn-success">
                                         <i class="fa-solid fa-square-plus mx-1"></i>أضافة جديد</a>
                                 </div>
@@ -116,7 +116,7 @@
 
 
                             <div class="card-tools">
-                                <h4 class="mb-0">جدول بدل الموظفين</h4>
+                                <h4 class="mb-0">جدول خصومات الموظفين</h4>
                             </div>
                         </div>
                         <div class="table-responsive text-nowrap">
@@ -129,7 +129,7 @@
                                         <th>أسم الموظف</th>
                                         <th>الادارة</th>
                                         <th>الفرع</th>
-                                        <th>البدل</th>
+                                        <th>الخصومات</th>
                                         <th>أجمالى</th>
                                         <th>الملاحظات</th>
                                         <th>الحالة</th>
@@ -183,7 +183,7 @@
                                             <td>{{ $info->mainSalaryEmployee->employee_name }}</td>
                                             <td>{{ $info->mainSalaryEmployee->department->name }}</td>
                                             <td>{{ $info->mainSalaryEmployee->branch->name }}</td>
-                                            <td>{{ $info->allowance->name }}</td>
+                                            <td>{{ $info->discountType->name }}</td>
                                             <td>{{ $info->total * 1 }}</td>
                                             <td>{{ Str::limit($info->notes, 30) }}</td>
                                             <td>
@@ -198,7 +198,7 @@
 
                                             <td>
                                                 @include('dashboard.partials.actions_salaries', [
-                                                    'name' => 'employee_salary_allowances',
+                                                    'name' => 'discounts',
                                                     'name_id' => $info->slug,
                                                 ])
                                             </td>

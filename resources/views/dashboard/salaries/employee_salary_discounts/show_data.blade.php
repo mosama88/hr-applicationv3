@@ -3,8 +3,8 @@
     use App\Models\MainSalaryEmployee;
 @endphp
 @extends('dashboard.layouts.master')
-@section('active-employee_salary_allowances', 'active')
-@section('title', 'عرض بدل الموظف')
+@section('active-discounts', 'active')
+@section('title', 'عرض خصم الموظف')
 @push('css')
 @endpush
 @section('content')
@@ -12,10 +12,10 @@
     @include('dashboard.layouts.message')
     <!-- Content Header (Page header) -->
     @include('dashboard.layouts.breadcrumbs', [
-        'titlePage' => 'عرض بدل للموظف ',
-        'previousPage' => 'جدول البدلات',
-        'currentPage' => 'عرض بدل للموظف ',
-        'url' => 'employee_salary_allowances.index',
+        'titlePage' => 'عرض خصم للموظف ',
+        'previousPage' => 'جدول الخصومات',
+        'currentPage' => 'عرض خصم للموظف ',
+        'url' => 'discounts.index',
     ])
 
     <section class="content">
@@ -46,7 +46,7 @@
                                         أسم الموظف</label>
                                     <input readonly type="text" name="main_salary_employee_id"
                                         class="form-control bg-white"
-                                        value="{{ old('main_salary_employee_id', $employeeSalaryAllowance->mainSalaryEmployee->employee_name) }}"
+                                        value="{{ old('main_salary_employee_id', $employeeSalaryDiscount->mainSalaryEmployee->employee_name) }}"
                                         id="main_salary_employee_id-input">
                                 </div>
 
@@ -55,7 +55,7 @@
                                     <label class="form-label" for="day_price-input">
                                         أجر اليوم الواحد</label>
                                     <input readonly type="text" name="day_price" class="form-control bg-white"
-                                        value="{{ old('day_price', $employeeSalaryAllowance->day_price) * 1 }}"
+                                        value="{{ old('day_price', $employeeSalaryDiscount->day_price) * 1 }}"
                                         id="day_price-input">
                                 </div>
 
@@ -64,27 +64,27 @@
                                     <label class="form-label" for="employee_code-input">
                                         كود الموظف</label>
                                     <input readonly type="text" name="employee_code" class="form-control bg-white"
-                                        value="{{ old('employee_code', $employeeSalaryAllowance->employee_code) }}"
+                                        value="{{ old('employee_code', $employeeSalaryDiscount->employee_code) }}"
                                         id="employee_code-input">
                                 </div>
 
-                                <!-- نوع البدل -->
+                                <!-- نوع الخصم -->
                                 <div class="col-md-3">
-                                    <label class="form-label" for="formtabs-country">نوع البدل</label>
-                                    <input readonly type="text" name="total"
-                                        class="form-control bg-white @error('total') is-invalid @enderror"
-                                        value="{{ old('total', $employeeSalaryAllowance->allowance->name) }}"
-                                        id="total-input">
+                                    <label class="form-label" for="formtabs-country">نوع الخصم</label>
+                                    <input readonly type="text" name="discount_type_id"
+                                        class="form-control bg-white @error('discount_type_id') is-invalid @enderror"
+                                        value="{{ old('discount_type_id', $employeeSalaryDiscount->discountType->name) }}"
+                                        id="discount_type_id-input">
                                 </div>
 
-                                <!-- قيمة البدل -->
+                                <!-- قيمة الخصم -->
                                 <div class="col-md-3 mb-3">
                                     <label class="form-label" for="total-input">
-                                        أجمالى قيمة البدل</label>
+                                        أجمالى قيمة الخصم</label>
                                     <input readonly type="text" name="total"
                                         oninput="this.value=this.value.replace(/[^0-9.]/g,'');"
                                         class="form-control bg-white @error('total') is-invalid @enderror"
-                                        value="{{ old('total', $employeeSalaryAllowance->total) }}" id="total-input">
+                                        value="{{ old('total', $employeeSalaryDiscount->total) }}" id="total-input">
                                 </div>
 
                             </div>
@@ -94,7 +94,7 @@
                                     <label readonly class="form-label" for="notes-input">
                                         ملاحظات</label>
                                     <input readonly type="text" name="notes" class="form-control bg-white"
-                                        value="{{ old('notes', $employeeSalaryAllowance->notes) }}" id="notes-input">
+                                        value="{{ old('notes', $employeeSalaryDiscount->notes) }}" id="notes-input">
                                 </div>
                             </div>
 

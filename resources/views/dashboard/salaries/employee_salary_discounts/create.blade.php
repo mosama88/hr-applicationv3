@@ -3,8 +3,8 @@
     use App\Models\MainSalaryEmployee;
 @endphp
 @extends('dashboard.layouts.master')
-@section('active-employee_salary_allowances', 'active')
-@section('title', 'انشاء بدل للموظف')
+@section('active-discounts', 'active')
+@section('title', 'انشاء خصم للموظف')
 @push('css')
     <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/dist/css/select2.min.css" />
     <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/dist/css/select2-style.css" />
@@ -14,10 +14,10 @@
     @include('dashboard.layouts.message')
     <!-- Content Header (Page header) -->
     @include('dashboard.layouts.breadcrumbs', [
-        'titlePage' => 'انشاء بدل للموظف ',
-        'previousPage' => 'جدول البدلات',
-        'currentPage' => 'انشاء بدل للموظف ',
-        'url' => 'employee_salary_allowances.show',
+        'titlePage' => 'انشاء خصم للموظف ',
+        'previousPage' => 'جدول الخصومات',
+        'currentPage' => 'انشاء خصم للموظف ',
+        'url' => 'discounts.show',
         'url2' => $financeClnPeriod->slug,
     ])
 
@@ -32,7 +32,7 @@
                         <!--end::Header-->
                         <!--begin::Form-->
 
-                        <form action="{{ route('dashboard.employee_salary_allowances.store', $financeClnPeriod->id) }}"
+                        <form action="{{ route('dashboard.discounts.store', $financeClnPeriod->id) }}"
                             method="POST" id="storeForm">
                             @csrf
                             <div class="card-body">
@@ -99,31 +99,31 @@
                                     </div>
 
 
-                                    <!-- نوع البدل -->
+                                    <!-- نوع الخصم -->
                                     <div class="col-md-3">
-                                        <label class="form-label" for="formtabs-country">نوع البدل</label>
-                                        <select class="select2 form-select @error('allowance_id') is-invalid @enderror"
-                                            name="allowance_id" data-allow-clear="true">
+                                        <label class="form-label" for="formtabs-country">نوع الخصم</label>
+                                        <select class="select2 form-select @error('discount_type_id') is-invalid @enderror"
+                                            name="discount_type_id" data-allow-clear="true">
                                             <option selected value="">-- أختر
-                                                البدل --
+                                                الخصم --
                                             </option>
-                                            @foreach ($other['allowances'] as $allowance)
-                                                <option @if (old('allowance_id') == $allowance->id) selected @endif
-                                                    value="{{ $allowance->id }}">
-                                                    {{ $allowance->name }}</option>
+                                            @foreach ($other['discount_types'] as $discounts)
+                                                <option @if (old('discount_type_id') == $discounts->id) selected @endif
+                                                    value="{{ $discounts->id }}">
+                                                    {{ $discounts->name }}</option>
                                             @endforeach
                                         </select>
-                                        @error('allowance_id')
+                                        @error('discount_type_id')
                                             <span class="invalid-feedback text-right" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
                                     </div>
 
-                                    <!-- قيمة البدل -->
+                                    <!-- قيمة الخصم -->
                                     <div class="col-md-3 mb-3">
                                         <label class="form-label" for="total-input">
-                                            أجمالى قيمة البدل</label>
+                                            أجمالى قيمة الخصم</label>
                                         <input type="text" name="total"
                                             oninput="this.value=this.value.replace(/[^0-9.]/g,'');"
                                             class="form-control @error('total') is-invalid @enderror"
@@ -229,7 +229,7 @@
                 }
             });
 
-            // حساب القيمة الإجمالية للبدل عند تغيير عدد الأيام
+            // حساب القيمة الإجمالية للخصم عند تغيير عدد الأيام
             $('input[name="value"]').on('input', function() {
                 let days = parseFloat($(this).val()) || 0;
                 let dayPrice = parseFloat($('input[name="day_price"]').val()) || 0;

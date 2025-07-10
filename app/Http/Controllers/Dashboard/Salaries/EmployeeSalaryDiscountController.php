@@ -88,7 +88,7 @@ class EmployeeSalaryDiscountController extends Controller
                 ->where('id', $financeClnPeriodId)
                 ->firstOrFail();
             if ($financeClnPeriod->is_open != FinanceClnPeriodsIsOpen::Open) {
-                return redirect()->route('dashboard.employee_salary_discounts.show', $financeClnPeriod->slug)->withErrors(['error' => 'عفوا الشهر المالى غير مفتوح !'])->withInput();
+                return redirect()->route('dashboard.discounts.show', $financeClnPeriod->slug)->withErrors(['error' => 'عفوا الشهر المالى غير مفتوح !'])->withInput();
             }
 
             $validateData = $request->validated();
@@ -100,10 +100,10 @@ class EmployeeSalaryDiscountController extends Controller
                 'created_by' => $userId,
             ]);
             EmployeeSalaryDiscount::create($dataInsert);
-            return redirect()->route('dashboard.employee_salary_discounts.show', $financeClnPeriod->slug)->with('success', 'تم أضافة الخصم بنجاح');
+            return redirect()->route('dashboard.discounts.show', $financeClnPeriod->slug)->with('success', 'تم أضافة الخصم بنجاح');
         } catch (\Exception $e) {
             return redirect()
-                ->route('dashboard.employee_salary_discounts.index')
+                ->route('dashboard.discounts.index')
                 ->withErrors(['error' => $e->getMessage()]);
         }
     }
@@ -137,7 +137,7 @@ class EmployeeSalaryDiscountController extends Controller
             return view('dashboard.salaries.employee_salary_discounts.show', compact('financeClnPeriod', 'data'));
         } catch (\Exception $e) {
             return redirect()
-                ->route('dashboard.employee_salary_discounts.index')
+                ->route('dashboard.discounts.index')
                 ->withErrors(['error' => $e->getMessage()]);
         }
     }
@@ -154,7 +154,7 @@ class EmployeeSalaryDiscountController extends Controller
             return view('dashboard.salaries.employee_salary_discounts.show_data', compact('employeeSalaryDiscount', 'financeClnPeriod', 'other'));
         } catch (\Exception $e) {
             return redirect()
-                ->route('dashboard.employee_salary_discounts.index')
+                ->route('dashboard.discounts.index')
                 ->withErrors(['error' => $e->getMessage()]);
         }
     }
@@ -167,7 +167,7 @@ class EmployeeSalaryDiscountController extends Controller
             return view('dashboard.salaries.employee_salary_discounts.edit', compact('employeeSalaryDiscount', 'financeClnPeriod', 'other'));
         } catch (\Exception $e) {
             return redirect()
-                ->route('dashboard.employee_salary_discounts.index')
+                ->route('dashboard.discounts.index')
                 ->withErrors(['error' => $e->getMessage()]);
         }
     }
@@ -184,7 +184,7 @@ class EmployeeSalaryDiscountController extends Controller
                 ->where('id', $employeeSalaryDiscount->finance_cln_period_id)
                 ->firstOrFail();
             if ($financeClnPeriod->is_open != FinanceClnPeriodsIsOpen::Open) {
-                return redirect()->route('dashboard.employee_salary_discounts.show', $financeClnPeriod->slug)->withErrors(['error' => 'عفوا الشهر المالى غير مفتوح !'])->withInput();
+                return redirect()->route('dashboard.discounts.show', $financeClnPeriod->slug)->withErrors(['error' => 'عفوا الشهر المالى غير مفتوح !'])->withInput();
             }
             $validated = $request->validated();
             $employeeSalaryDiscount->update([
@@ -200,10 +200,10 @@ class EmployeeSalaryDiscountController extends Controller
                 'com_code' => $com_code,
             ]);
 
-            return redirect()->route('dashboard.employee_salary_discounts.show', $financeClnPeriod->slug)->with('success', 'تم تعديل الخصم بنجاح');
+            return redirect()->route('dashboard.discounts.show', $financeClnPeriod->slug)->with('success', 'تم تعديل الخصم بنجاح');
         } catch (\Exception $e) {
             return redirect()
-                ->route('dashboard.employee_salary_discounts.index')
+                ->route('dashboard.discounts.index')
                 ->withErrors(['error' => $e->getMessage()]);
         }
     }
@@ -319,13 +319,13 @@ class EmployeeSalaryDiscountController extends Controller
 
             $this->filterByRequest($request, $query);
 
-            $allowances = $query->get();
+            $discounts = $query->get();
 
             // أو طباعة مباشرة
-            return view('dashboard.salaries.employee_salary_discounts.partials.print', compact('allowances'));
+            return view('dashboard.salaries.employee_salary_discounts.partials.print', compact('discounts'));
         } catch (\Exception $e) {
             return redirect()
-                ->route('dashboard.employee_salary_discounts.index')
+                ->route('dashboard.discounts.index')
                 ->withErrors(['error' => $e->getMessage()]);
         }
     }

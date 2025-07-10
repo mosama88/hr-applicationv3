@@ -6,14 +6,9 @@
 @endpush
 
 
-<x-filter-component :otherInput="'allowance_id'">
+<x-filter-component :otherInput="'discount_type_id'">
     <div class="mb-3 d-flex gap-2 mt-2">
-        {{-- <a class="btn btn-success"
-            href="{{ route('dashboard.employee_salary_allowances.export', $financeClnPeriod->slug) }}">
-            <i class="fas fa-arrow-alt-circle-down ml-2"></i> تحميل اكسيل شيت
-        </a> --}}
-
-        <form action="{{ route('dashboard.employee_salary_allowances.export', $financeClnPeriod->slug) }}" method="GET">
+        <form action="{{ route('dashboard.discounts.export', $financeClnPeriod->slug) }}" method="GET">
             @csrf
             <button type="submit" class="btn" style="background-color: #273F4F; color: #fff;"> <i
                     class="fas fa-arrow-alt-circle-down ml-2"></i> تحميل اكسيل شيت</button>
@@ -24,26 +19,25 @@
                 <input type="hidden" name="name" value="{{ request('name') }}">
                 <input type="hidden" name="department" value="{{ request('department') }}">
                 <input type="hidden" name="branch" value="{{ request('branch') }}">
-                <input type="hidden" name="allowance_id" value="{{ request('allowance_id') }}">
+                <input type="hidden" name="discount_type_id" value="{{ request('discount_type_id') }}">
             </div>
         </form>
 
         @include('dashboard.partials.import', [
             'title' => 'للبدلات المتغيرة',
             'financeClnPeriod' => $financeClnPeriod->slug,
-            'url' => 'employee_salary_allowances',
-            'columns' => 'الأسم وكود الموظف والبدل والأجمالى والملاحظات',
+            'url' => 'discounts',
+            'columns' => 'الأسم وكود الموظف الخصم والأجمالى والملاحظات',
         ])
 
-        <form id="printForm" action="{{ route('dashboard.employee_salary_allowances.print') }}" method="POST"
-            target="_blank">
+        <form id="printForm" action="{{ route('dashboard.discounts.print') }}" method="POST" target="_blank">
             @csrf
             <div class="d-none">
                 <input type="hidden" name="employee_code_search" value="{{ request('employee_code_search') }}">
                 <input type="hidden" name="name" value="{{ request('name') }}">
                 <input type="hidden" name="department" value="{{ request('department') }}">
                 <input type="hidden" name="branch" value="{{ request('branch') }}">
-                <input type="hidden" name="allowance_id" value="{{ request('allowance_id') }}">
+                <input type="hidden" name="discount_type_id" value="{{ request('discount_type_id') }}">
             </div>
 
             <button type="submit" class="btn" style="background-color: #4d4d4e; color: white;">
@@ -53,7 +47,7 @@
     </div>
 
 
-    <form action="{{ route('dashboard.employee_salary_allowances.show', $financeClnPeriod->slug) }}" method="GET">
+    <form action="{{ route('dashboard.discounts.show', $financeClnPeriod->slug) }}" method="GET">
         <div class="row">
 
             <!-- كود الموظف -->
@@ -88,9 +82,9 @@
             <!-- البدل -->
             <div class="col-md-2 mb-3">
                 <label class="form-label" for="value-input">
-                    البدل</label>
-                <input type="text" name="allowance_id" class="form-control"
-                    value="{{ request('allowance_id') }}" id="value-input" placeholder="مثال:بدل مخاطر">
+                    الخصم</label>
+                <input type="text" name="discount_type_id" class="form-control"
+                    value="{{ request('discount_type_id') }}" id="value-input" placeholder="مثال:خصم صندوق">
             </div>
         </div>
         @include('dashboard.partials.filter-actions')

@@ -3,8 +3,8 @@
     use App\Models\MainSalaryEmployee;
 @endphp
 @extends('dashboard.layouts.master')
-@section('active-employee_salary_allowances', 'active')
-@section('title', 'تعديل بدل الموظف')
+@section('active-discounts', 'active')
+@section('title', 'تعديل خصم الموظف')
 @push('css')
     <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/dist/css/select2.min.css" />
     <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/dist/css/select2-style.css" />
@@ -14,10 +14,10 @@
     @include('dashboard.layouts.message')
     <!-- Content Header (Page header) -->
     @include('dashboard.layouts.breadcrumbs', [
-        'titlePage' => 'تعديل بدل  للموظف ',
-        'previousPage' => 'جدول البدلات',
-        'currentPage' => 'تعديل بدل  للموظف ',
-        'url' => 'employee_salary_allowances.index',
+        'titlePage' => 'تعديل خصم  للموظف ',
+        'previousPage' => 'جدول الخصومات',
+        'currentPage' => 'تعديل خصم  للموظف ',
+        'url' => 'discounts.index',
     ])
 
     <section class="content">
@@ -28,7 +28,7 @@
                     <div class="card card-info card-outline mb-4">
                         <!--begin::Header-->
                         <form
-                            action="{{ route('dashboard.employee_salary_allowances.update', $employeeSalaryAllowance->slug) }}"
+                            action="{{ route('dashboard.discounts.update', $employeeSalaryDiscount->slug) }}"
                             method="POST" id="storeForm">
                             @csrf
                             @method('PATCH')
@@ -39,7 +39,7 @@
                                         <label for="exampleInputname">الشهر المالى</label>
                                         <input readonly type="text" name="finance_cln_period_id"
                                             class="form-control bg-white @error('finance_cln_period_id') is-invalid @enderror"
-                                            value="{{ old('finance_cln_period_id', $employeeSalaryAllowance->finance_cln_period_id) }}"
+                                            value="{{ old('finance_cln_period_id', $employeeSalaryDiscount->finance_cln_period_id) }}"
                                             id="exampleInputname">
                                         @error('finance_cln_period_id')
                                             <span class="invalid-feedback text-right" role="alert">
@@ -55,9 +55,9 @@
                                             class="select2 form-select employee_select2 @error('main_salary_employee_id') is-invalid @enderror"
                                             data-allow-clear="true">
                                             <option
-                                                value="{{ old('main_salary_employee_id', $employeeSalaryAllowance->main_salary_employee_id ?? '') }}"
+                                                value="{{ old('main_salary_employee_id', $employeeSalaryDiscount->main_salary_employee_id ?? '') }}"
                                                 selected>
-                                                {{ MainSalaryEmployee::find(old('main_salary_employee_id', $employeeSalaryAllowance->main_salary_employee_id))->employee_name }}
+                                                {{ MainSalaryEmployee::find(old('main_salary_employee_id', $employeeSalaryDiscount->main_salary_employee_id))->employee_name }}
                                             </option>
                                         </select>
                                         @error('main_salary_employee_id')
@@ -73,7 +73,7 @@
                                             أجر اليوم الواحد</label>
                                         <input readonly type="text" name="day_price"
                                             class="form-control bg-white @error('day_price') is-invalid @enderror"
-                                            value="{{ old('day_price', $employeeSalaryAllowance->day_price) * 1 }}"
+                                            value="{{ old('day_price', $employeeSalaryDiscount->day_price) * 1 }}"
                                             id="day_price-input">
                                         @error('day_price')
                                             <span class="invalid-feedback text-right" role="alert">
@@ -88,7 +88,7 @@
                                             كود الموظف</label>
                                         <input readonly type="text" name="employee_code"
                                             class="form-control bg-white @error('employee_code') is-invalid @enderror"
-                                            value="{{ old('employee_code', $employeeSalaryAllowance->employee_code) }}"
+                                            value="{{ old('employee_code', $employeeSalaryDiscount->employee_code) }}"
                                             id="employee_code-input">
                                         @error('employee_code')
                                             <span class="invalid-feedback text-right" role="alert">
@@ -97,35 +97,35 @@
                                         @enderror
                                     </div>
 
-                                    <!-- نوع البدل -->
+                                    <!-- نوع الخصم -->
                                     <div class="col-md-3">
-                                        <label class="form-label" for="formtabs-country">نوع البدل</label>
-                                        <select class="select2 form-select @error('allowance_id') is-invalid @enderror"
-                                            name="allowance_id" data-allow-clear="true">
+                                        <label class="form-label" for="formtabs-country">نوع الخصم</label>
+                                        <select class="select2 form-select @error('discount_type_id') is-invalid @enderror"
+                                            name="discount_type_id" data-allow-clear="true">
                                             <option selected value="">-- أختر
-                                                البدل --
+                                                الخصم --
                                             </option>
-                                            @foreach ($other['allowances'] as $allowance)
-                                                <option @if (old('allowance_id', $employeeSalaryAllowance->allowance_id) == $allowance->id) selected @endif
-                                                    value="{{ $allowance->id }}">
-                                                    {{ $allowance->name }}</option>
+                                            @foreach ($other['discount_types'] as $discounts)
+                                                <option @if (old('discount_type_id', $employeeSalaryDiscount->discount_type_id) == $discounts->id) selected @endif
+                                                    value="{{ $discounts->id }}">
+                                                    {{ $discounts->name }}</option>
                                             @endforeach
                                         </select>
-                                        @error('allowance_id')
+                                        @error('discount_type_id')
                                             <span class="invalid-feedback text-right" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
                                     </div>
 
-                                    <!-- قيمة البدل -->
+                                    <!-- قيمة الخصم -->
                                     <div class="col-md-3 mb-3">
                                         <label class="form-label" for="total-input">
-                                            أجمالى قيمة البدل</label>
+                                            أجمالى قيمة الخصم</label>
                                         <input type="text" name="total"
                                             oninput="this.value=this.value.replace(/[^0-9.]/g,'');"
                                             class="form-control @error('total') is-invalid @enderror"
-                                            value="{{ old('total', $employeeSalaryAllowance->total) }}" id="total-input">
+                                            value="{{ old('total', $employeeSalaryDiscount->total) }}" id="total-input">
                                         @error('total')
                                             <span class="invalid-feedback text-right" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -141,7 +141,7 @@
                                             ملاحظات</label>
                                         <input type="text" name="notes"
                                             class="form-control bg-white @error('notes') is-invalid @enderror"
-                                            value="{{ old('notes', $employeeSalaryAllowance->notes) }}" id="notes-input">
+                                            value="{{ old('notes', $employeeSalaryDiscount->notes) }}" id="notes-input">
                                         @error('notes')
                                             <span class="invalid-feedback text-right" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -228,7 +228,7 @@
                 }
             });
 
-            // حساب القيمة الإجمالية للبدل  عند تغيير عدد الأيام
+            // حساب القيمة الإجمالية للخصم  عند تغيير عدد الأيام
             $('input[name="value"]').on('input', function() {
                 let days = parseFloat($(this).val()) || 0;
                 let dayPrice = parseFloat($('input[name="day_price"]').val()) || 0;

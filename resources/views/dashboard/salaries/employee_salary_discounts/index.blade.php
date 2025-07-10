@@ -3,8 +3,8 @@
     use App\Enums\FinanceClnPeriodsIsOpen;
 @endphp
 @extends('dashboard.layouts.master')
-@section('active-employee_salary_allowances', 'active')
-@section('title', 'السجلات الرئيسية للبدلات المتغيرة')
+@section('active-discounts', 'active')
+@section('title', 'السجلات الرئيسية للخصومات')
 @push('css')
 @endpush
 @section('content')
@@ -12,10 +12,10 @@
 
     <!-- Content Header (Page header) -->
     @include('dashboard.layouts.breadcrumbs', [
-        'titlePage' => 'السجلات الرئيسية للبدلات المتغيرة',
+        'titlePage' => 'السجلات الرئيسية للخصومات',
         'previousPage' => '',
         'class' => 'fa-solid fa-house',
-        'currentPage' => 'السجلات الرئيسية للبدلات المتغيرة',
+        'currentPage' => 'السجلات الرئيسية للخصومات',
         'url' => 'index',
     ])
 
@@ -27,7 +27,7 @@
                 <div class="col-12">
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">السجلات الرئيسية البدلات المتغيرة </h3>
+                            <h3 class="card-title">السجلات الرئيسية للخصومات </h3>
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
@@ -64,7 +64,7 @@
                                                         {{ FinanceClnPeriodsIsOpen::Archived->label() }}
                                                     </span>
                                                     <a title="عرض"
-                                                        href="{{ route('dashboard.employee_salary_allowances.show', $financeClnPeriod->slug) }}"
+                                                        href="{{ route('dashboard.discounts.show', $financeClnPeriod->slug) }}"
                                                         class="btn btn-sm btn-info text-white">
                                                         <i class="fa-solid fa-eye"></i>
                                                     </a>
@@ -77,7 +77,7 @@
                                                                 {{ FinanceClnPeriodsIsOpen::Open->label() }}
                                                             </span>
                                                             <a title="عرض"
-                                                                href="{{ route('dashboard.employee_salary_allowances.show', $financeClnPeriod->slug) }}"
+                                                                href="{{ route('dashboard.discounts.show', $financeClnPeriod->slug) }}"
                                                                 class="btn btn-sm btn-info text-white">
                                                                 <i class="fa-solid fa-eye"></i>
                                                             </a>

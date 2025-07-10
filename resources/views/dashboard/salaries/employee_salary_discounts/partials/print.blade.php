@@ -87,7 +87,7 @@
     <div class="header">
         <h2>تقرير البدلات المتغيرة </h2>
         <p>تاريخ التقرير: {{ now()->format('Y-m-d') }}</p>
-        <p>إجمالى البدلات: {{ number_format($allowances->sum('total'), 2) }} جنيه</p>
+        <p>إجمالى البدلات: {{ number_format($discounts->sum('total'), 2) }} جنيه</p>
 
     </div>
 
@@ -98,21 +98,21 @@
                 <th>اسم الموظف</th>
                 <th>الادارة</th>
                 <th>الفرع</th>
-                <th>نوع البدل</th>
+                <th>نوع الخصم</th>
                 <th>القيمة</th>
                 <th>التاريخ</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($allowances as $allowance)
+            @foreach ($discounts as $discount)
                 <tr>
-                    <td>{{ $allowance->employee_code }}</td>
-                    <td>{{ $allowance->mainSalaryEmployee->employee_name }}</td>
-                    <td>{{ $allowance->mainSalaryEmployee->department->name }}</td>
-                    <td>{{ $allowance->mainSalaryEmployee->branch->name }}</td>
-                    <td>{{ $allowance->allowance->name }}</td>
-                    <td>{{ $allowance->total * 1 }}</td>
-                    <td>{{ $allowance->financeClnPeriod->year_and_month ?? 'غير معروف' }}</td>
+                    <td>{{ $discount->employee_code }}</td>
+                    <td>{{ $discount->mainSalaryEmployee->employee_name }}</td>
+                    <td>{{ $discount->mainSalaryEmployee->department->name }}</td>
+                    <td>{{ $discount->mainSalaryEmployee->branch->name }}</td>
+                    <td>{{ $discount->discountType->name }}</td>
+                    <td>{{ $discount->total * 1 }}</td>
+                    <td>{{ $discount->financeClnPeriod->year_and_month ?? 'غير معروف' }}</td>
                 </tr>
             @endforeach
         </tbody>

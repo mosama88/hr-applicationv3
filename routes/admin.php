@@ -190,7 +190,7 @@ Route::middleware(['auth:admin'])->group(function () {
         Route::get('/create/{financeClnPeriod}', 'create')->name('create');
         Route::post('/store/{financeClnPeriod}', 'store')->name('store');
         Route::get('/show/{financeClnPeriod}', 'show')->name('show');
-        Route::get('/edit/{employee_salary_allowance}', 'edit')->name('edit');
+        Route::get('/edit/{employeeSalaryDiscount}', 'edit')->name('edit');
         Route::get('/show/data/{employeeSalaryDiscount}', 'showData')->name('show-data');
         Route::patch('/update/{employeeSalaryDiscount}', 'update')->name('update');
         Route::delete('/delete/{employeeSalaryDiscount}', 'destroy')->name('destroy');
