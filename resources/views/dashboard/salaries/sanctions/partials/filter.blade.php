@@ -21,12 +21,12 @@
             <button type="submit" class="btn" style="background-color: #273F4F; color: #fff;"> <i
                     class="fas fa-arrow-alt-circle-down ml-2"></i> تحميل اكسيل شيت</button>
             <div class="d-none">
-                <input type="text" name="employee_code_search" value="{{ request('employee_code_search') }}">
-                <input type="text" name="name" value="{{ request('name') }}">
-                <input type="text" name="department" value="{{ request('department') }}">
-                <input type="text" name="branch" value="{{ request('branch') }}">
-                <input type="text" name="sanction_types" value="{{ request('sanction_types') }}">
-                <input type="text" name="days_sanctions" value="{{ request('days_sanctions') }}">
+                <input type="hiiden" name="employee_code_search" value="{{ request('employee_code_search') }}">
+                <input type="hiiden" name="name" value="{{ request('name') }}">
+                <input type="hiiden" name="department" value="{{ request('department') }}">
+                <input type="hiiden" name="branch" value="{{ request('branch') }}">
+                <input type="hiiden" name="sanction_types" value="{{ request('sanction_types') }}">
+                <input type="hiiden" name="days_sanctions" value="{{ request('days_sanctions') }}">
             </div>
         </form>
 
@@ -41,12 +41,12 @@
             @csrf
 
             <div class="d-none">
-                <input type="text" name="employee_code_search" value="{{ request('employee_code_search') }}">
-                <input type="text" name="name" value="{{ request('name') }}">
-                <input type="text" name="department" value="{{ request('department') }}">
-                <input type="text" name="branch" value="{{ request('branch') }}">
-                <input type="text" name="sanction_types" value="{{ request('sanction_types') }}">
-                <input type="text" name="days_sanctions" value="{{ request('days_sanctions') }}">
+                <input type="hiiden" name="employee_code_search" value="{{ request('employee_code_search') }}">
+                <input type="hiiden" name="name" value="{{ request('name') }}">
+                <input type="hiiden" name="department" value="{{ request('department') }}">
+                <input type="hiiden" name="branch" value="{{ request('branch') }}">
+                <input type="hiiden" name="sanction_types" value="{{ request('sanction_types') }}">
+                <input type="hiiden" name="days_sanctions" value="{{ request('days_sanctions') }}">
             </div>
 
             <button type="submit" class="btn" style="background-color: #4d4d4e; color: white;">
