@@ -74,6 +74,12 @@ class DatabaseSeeder extends Seeder
             AdditionalTypeSeeder::class,
             AllowanceSeeder::class,
             DiscountTypeSeeder::class,
+            // EmployeeSalaryAbsenceSeeder::class,
+            // EmployeeSalaryAdditionalSeeder::class,
+            // EmployeeSalaryAllowanceSeeder::class,
+            // EmployeeSalaryDiscountSeeder::class,
+            // EmployeeSalaryRewardSeeder::class,
+            // EmployeeSalarySanctionSeeder::class,
         ]);
     }
 }
