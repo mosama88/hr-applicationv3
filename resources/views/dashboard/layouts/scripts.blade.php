@@ -11,8 +11,7 @@
 <script src="{{ asset('dashboard') }}/assets/dist/js/adminlte.js"></script>
 <!--end::Required Plugin(AdminLTE)--><!--begin::OverlayScrollbars Configure-->
 <script src="{{ asset('dashboard') }}/assets/dist/js/fontawesome.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+<script src="{{ asset('dashboard') }}/assets/dist/js/sweetalert2@11.js"></script>
 
 @stack('js')
 

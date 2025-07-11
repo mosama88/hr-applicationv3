@@ -2,7 +2,7 @@
     <title>@yield('title')| مستشفى الرحمة</title>
     <!--begin::Primary Meta Tags-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="title" content="AdminLTE | Dashboard v3" />
+    <meta name="title" content="مستشفى الرحمة | @yield('title')" />
     <meta name="author" content="ColorlibHQ" />
     <meta name="description"
         content="AdminLTE is a Free Bootstrap 5 Admin Dashboard, 30 example pages using Vanilla JS." />
@@ -12,7 +12,8 @@
     <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/dist/css/all.min.css" />
     <link rel="stylesheet" href="{{ asset('dashboard') }}/fonts/stylesheet.css" />
 
-
+    <!--arabic font-->
+    <link rel="stylesheet" href="{{ asset('dashboard') }}/fonts/stylesheet.css" />
 
 
     <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/dist/css/index.css">
@@ -26,6 +27,9 @@
     <!--end::Third Party Plugin(Bootstrap Icons)-->
     <!--begin::Required Plugin(AdminLTE)-->
     <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/dist/css/adminlte.rtl.css" />
+
+        <!--arabic font-->
+    <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/dist/css/style.css" />
     @stack('css')
     <style>
         .select2-container--default .select2-selection--single {
