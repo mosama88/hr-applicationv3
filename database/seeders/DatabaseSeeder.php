@@ -80,6 +80,7 @@ class DatabaseSeeder extends Seeder
             // EmployeeSalaryDiscountSeeder::class,
             // EmployeeSalaryRewardSeeder::class,
             // EmployeeSalarySanctionSeeder::class,
+            // EmployeeSalaryLoanSeeder::class,
         ]);
     }
 }

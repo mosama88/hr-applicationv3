@@ -10,7 +10,7 @@ use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 use Maatwebsite\Excel\Concerns\FromArray;
 
-class EmployeeSalaryAbsenceExport implements FromArray, WithHeadings, WithStyles
+class EmployeeSalaryLoanExport implements FromArray, WithHeadings, WithStyles
 
 {
     protected $data;
@@ -24,7 +24,6 @@ class EmployeeSalaryAbsenceExport implements FromArray, WithHeadings, WithStyles
                 optional($item->mainSalaryEmployee)->employee_name,
                 $item->employee_code,
                 $item->day_price,
-                $item->value,
                 $item->total,
                 $item->notes,
             ];
@@ -46,7 +45,6 @@ class EmployeeSalaryAbsenceExport implements FromArray, WithHeadings, WithStyles
             'أسم الموظف',
             'كود الموظف',
             'المرتب اليومى',
-            'عدد الايام',
             'الأجمالى',
             'ملاحظات',
         ];

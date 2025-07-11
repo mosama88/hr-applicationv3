@@ -271,6 +271,7 @@
                         request()->is('dashboard/absences*') ||
                         request()->is('dashboard/discounts*') ||
                         request()->is('dashboard/rewards*') ||
+                        request()->is('dashboard/loans*') ||
                         request()->is('dashboard/employee_salary_allowances*') ||
                         request()->is('dashboard/additionals*')
                             ? 'menu-open'
@@ -281,6 +282,7 @@
                             request()->is('absences*') ||
                             request()->is('discounts*') ||
                             request()->is('rewards*') ||
+                            request()->is('loans*') ||
                             request()->is('employee_salary_allowances*') ||
                             request()->is('additionals*')
                                 ? 'active'
@@ -337,10 +339,15 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('dashboard.rewards.index') }}"
-                                    class="nav-link @yield('active-rewards')">
+                                <a href="{{ route('dashboard.rewards.index') }}" class="nav-link @yield('active-rewards')">
                                     <i class="nav-icon bi bi-circle"></i>
                                     <p>المكافأت المالية</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('dashboard.loans.index') }}" class="nav-link @yield('active-loans')">
+                                    <i class="nav-icon bi bi-circle"></i>
+                                    <p>السلف الشهرية</p>
                                 </a>
                             </li>
                         </ul>

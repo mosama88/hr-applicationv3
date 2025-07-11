@@ -21,6 +21,7 @@ use App\Http\Controllers\Dashboard\Settings\FinanceCalendarController;
 use App\Http\Controllers\Dashboard\EmployeeAffairs\AllowanceController;
 use App\Http\Controllers\Dashboard\Salaries\MainSalaryRecordController;
 use App\Http\Controllers\Dashboard\Settings\AdminPanelSettingController;
+use App\Http\Controllers\Dashboard\Salaries\EmployeeSalaryLoanController;
 use App\Http\Controllers\Dashboard\EmployeeAffairs\DiscountTypeController;
 use App\Http\Controllers\Dashboard\Salaries\EmployeeSalaryRewardController;
 use App\Http\Controllers\Dashboard\EmployeeAffairs\AdditionalTypeController;
@@ -212,6 +213,21 @@ Route::middleware(['auth:admin'])->group(function () {
         Route::get('/rewards/export/{slug}', 'export')->name('export');
         Route::post('/rewards/import', 'import')->name('import');
         Route::post('/rewards/print', 'print')->name('print');
+    });
+
+    //################################### السلف الشهرية ##################################
+    Route::controller(EmployeeSalaryLoanController::class)->name('loans.')->prefix('/loans')->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::get('/create/{financeClnPeriod}', 'create')->name('create');
+        Route::post('/store/{financeClnPeriod}', 'store')->name('store');
+        Route::get('/show/{financeClnPeriod}', 'show')->name('show');
+        Route::get('/edit/{employeeSalaryLoan}', 'edit')->name('edit');
+        Route::get('/show/data/{employeeSalaryLoan}', 'showData')->name('show-data');
+        Route::patch('/update/{employeeSalaryLoan}', 'update')->name('update');
+        Route::delete('/delete/{employeeSalaryLoan}', 'destroy')->name('destroy');
+        Route::get('/loans/export/{slug}', 'export')->name('export');
+        Route::post('/loans/import', 'import')->name('import');
+        Route::post('/loans/print', 'print')->name('print');
     });
 
     //################################### الأنتهاء من الاجور والمرتبات  ##################################

@@ -21,6 +21,7 @@ return new class extends Migration
             $table->bigInteger('employee_code'); //كود الموظف
             $table->decimal('day_price', 10, 2); //أجر يوم الموظف
             $table->decimal('total', 10, 2); //أجمالى السلف
+            $table->tinyInteger('is_auto')->nullable()->default(1); //هل تلقائى من النظام أم بشكل يدوى
             $table->tinyInteger('is_archived')->default(2)->nullable(); //حالة الموظف لحظة الراتب
             $table->foreignId('archived_by')->nullable()->references('id')->on('admins')->onUpdate('cascade');
             $table->dateTime('archived_date')->nullable()->nullable(); //تاريخ ارشفه الراتب
