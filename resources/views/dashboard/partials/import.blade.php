@@ -27,7 +27,14 @@
                              <li>⚠️ لا تترك خانات فارغة في الصفوف.</li>
                              <li>🔄 تأكد من أن الملف لا يحتوي على رموز أو أحرف خاصة غير مقبولة.</li>
                          </ul>
-                     </div> <input type="file" name="file" class="form-control mb-2" required>
+                     </div>
+                     <input type="file" name="file" class="form-control mb-2" required
+                         oninvalid="this.setCustomValidity('برجاء اختيار الملف')" oninput="this.setCustomValidity('')">
+                     @error('file')
+                         <span class="invalid-feedback text-right" role="alert">
+                             <strong>{{ $message }}</strong>
+                         </span>
+                     @enderror
              </div>
              <div class="modal-footer">
                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إغلاق</button>
