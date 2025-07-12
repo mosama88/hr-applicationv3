@@ -39,8 +39,6 @@
                     <th>الهاتف</th>
                     <th>ملاحظات</th>
                     <th>الحالة</th>
-                    <th>أضافة بواسطة</th>
-                    <th>تعديل بواسطة</th>
                     <th>الإجراءات</th>
                 </tr>
             </thead>
@@ -57,15 +55,6 @@
                             @else
                                 <span class="badge bg-danger">غير مفعل</span>
                             @endif
-                        </td>
-                        <td>{{ $info->createdBy->name }}</td>
-                        <td>
-                            @if ($info->updated_by > 0)
-                                {{ $info->updatedBy->name }}
-                            @else
-                                لا يوجد تحديث
-                            @endif
-
                         </td>
 
                         <td>
