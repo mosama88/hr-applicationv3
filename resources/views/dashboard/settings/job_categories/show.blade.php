@@ -35,7 +35,8 @@
                                 <div class="row">
                                     <div class="col-md-4 mb-3">
                                         <label for="exampleFormControlInput1" class="form-label">أسم الوظيفة</label>
-                                        <input disabled name="name" type="text" value="{{ old('name', $jobCategory->name) }}"
+                                        <input disabled name="name" type="text"
+                                            value="{{ old('name', $jobCategory->name) }}"
                                             class="form-control bg-white @error('name') is-invalid @enderror"
                                             id="exampleFormControlInput1" placeholder="مثال:محاسب....">
                                         @error('name')
@@ -66,7 +67,26 @@
                                         @enderror
                                     </div>
                                 </div>
+                                <div class="row">
+                                    {{-- الانشاء بواسطة --}}
+                                    <div class="form-group col-md-6 mb-3">
+                                        <label for="exampleInputdecision_number">الانشاء بواسطة</label>
+                                        <input disabled type="text"
+                                            value="{{ optional($jobCategory->createdBy)->name }} {{ $jobCategory->created_at ? '(' . $jobCategory->created_at->format('Y-m-d H:i') . ')' : '' }}"
+                                            name="decision_number" class="form-control bg-white"
+                                            id="exampleInputdecision_number">
+                                    </div>
 
+
+                                    {{-- التعديل بواسطة --}}
+                                    <div class="form-group col-md-6 mb-3">
+                                        <label for="exampleInputdecision_number">التعديل بواسطة</label>
+                                        <input disabled type="text"
+                                            value="{{ $jobCategory->updated_by ? $jobCategory->updatedBy->name : '' }}{{ ' ' }}({{ optional($jobCategory->updated_at)->format('Y-m-d H:i') }})"
+                                            name="decision_number" class="form-control bg-white"
+                                            id="exampleInputdecision_number">
+                                    </div>
+                                </div>
 
                             </div>
                         </div>

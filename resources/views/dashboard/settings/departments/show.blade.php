@@ -95,6 +95,27 @@
                                     </div>
 
                                 </div>
+
+                                <div class="row">
+                                    {{-- الانشاء بواسطة --}}
+                                    <div class="form-group col-md-6 mb-3">
+                                        <label for="exampleInputdecision_number">الانشاء بواسطة</label>
+                                        <input disabled type="text"
+                                            value="{{ optional($department->createdBy)->name }} {{ $department->created_at ? '(' . $department->created_at->format('Y-m-d H:i') . ')' : '' }}"
+                                            name="decision_number" class="form-control bg-white"
+                                            id="exampleInputdecision_number">
+                                    </div>
+
+
+                                    {{-- التعديل بواسطة --}}
+                                    <div class="form-group col-md-6 mb-3">
+                                        <label for="exampleInputdecision_number">التعديل بواسطة</label>
+                                        <input disabled type="text"
+                                            value="{{ $department->updated_by ? $department->updatedBy->name : '' }}{{ ' ' }}({{ optional($department->updated_at)->format('Y-m-d H:i') }})"
+                                            name="decision_number" class="form-control bg-white"
+                                            id="exampleInputdecision_number">
+                                    </div>
+                                </div>
                             </div>
                             <!-- /.card-body -->
 
