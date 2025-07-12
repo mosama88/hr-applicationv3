@@ -28,7 +28,6 @@ class AdminFactory extends Factory
             'username' => fake()->unique()->userName(),
             'password' => 'password', // password
             'mobile' => fake()->regexify('/^(012|015|010|011)[0-9]{8}$/'),
-            'created_by' => fake()->numberBetween(1, 5), // على حسب عدد الإدخالات
             'active' => fake()->randomElement([StatusActiveEnum::ACTIVE->value, StatusActiveEnum::INACTIVE->value]),
             'gender' => fake()->randomElement([AdminGenderEnum::Male->value, AdminGenderEnum::Female->value]),
         ];

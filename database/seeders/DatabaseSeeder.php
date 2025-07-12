@@ -31,7 +31,6 @@ class DatabaseSeeder extends Seeder
             'mobile' => '01228759920', // password
             'active' => StatusActiveEnum::ACTIVE,
             'gender' => AdminGenderEnum::Male,
-            'created_by' => Auth::user()->id,
         ]);
 
         AdminPanelSetting::updateOrCreate([
