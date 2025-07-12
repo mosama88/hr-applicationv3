@@ -353,6 +353,29 @@
                         </ul>
                     </li>
 
+
+                    <li class="nav-header">قائمة إدارة شئون الموظفين</li>
+
+                    <li
+                        class="nav-item {{ request()->is('dashboard/admins*') ? 'menu-open' : '' }}">
+                        <a href="#"
+                            class="nav-link {{ request()->is('admins*') ? 'active' : '' }}">
+                            <i class="nav-icon fa-solid fa-users"></i>
+                            <p>
+                                قائمة شئون المستخدمين
+                                <i class="nav-arrow bi bi-chevron-right"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ route('dashboard.admins.index') }}" class="nav-link @yield('active-admins')">
+                                    <i class="nav-icon bi bi-circle"></i>
+                                    <p>جدول المستخدمين</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
                 </ul>
                 <!--end::Sidebar Menu-->
             </nav>

@@ -6,9 +6,10 @@ use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\Admin;
 use App\Enums\AdminGenderEnum;
-use App\Enums\AdminStatusEnum;
+use App\Enums\StatusActiveEnum;
 use Illuminate\Database\Seeder;
 use App\Models\AdminPanelSetting;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Enums\PanelSettingSystemStatusEnum;
 use Database\Seeders\AdminPanelSettingSeeder;
@@ -27,8 +28,10 @@ class DatabaseSeeder extends Seeder
             'email' => "mosama@gmail.com",
             'username' => "mosama",
             'password' => Hash::make('password'), // password
-            'status' => AdminStatusEnum::Active,
+            'mobile' => '01228759920', // password
+            'active' => StatusActiveEnum::ACTIVE,
             'gender' => AdminGenderEnum::Male,
+            'created_by' => Auth::user()->id,
         ]);
 
         AdminPanelSetting::updateOrCreate([

@@ -4,7 +4,9 @@ namespace Database\Factories;
 
 use App\Enums\AdminGenderEnum;
 use App\Enums\AdminStatusEnum;
+use App\Enums\StatusActiveEnum;
 use App\Models\AdminPanelSetting;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -25,7 +27,9 @@ class AdminFactory extends Factory
             'email' => fake()->unique()->safeEmail(),
             'username' => fake()->unique()->userName(),
             'password' => 'password', // password
-            'status' => fake()->randomElement([AdminStatusEnum::Active->value, AdminStatusEnum::Inactive->value]),
+            'mobile' => fake()->regexify('/^(012|015|010|011)[0-9]{8}$/'),
+            'created_by' => fake()->numberBetween(1, 5), // على حسب عدد الإدخالات
+            'active' => fake()->randomElement([StatusActiveEnum::ACTIVE->value, StatusActiveEnum::INACTIVE->value]),
             'gender' => fake()->randomElement([AdminGenderEnum::Male->value, AdminGenderEnum::Female->value]),
         ];
     }

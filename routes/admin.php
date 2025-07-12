@@ -1,10 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Dashboard\AdminController;
+use App\Http\Controllers\Dashboard\HomeController;
 use App\Http\Controllers\Dashboard\Settings\CityController;
 use App\Http\Controllers\Dashboard\Settings\BranchController;
 use App\Http\Controllers\Dashboard\Settings\CountryController;
+use App\Http\Controllers\Dashboard\AdminRoles\AdminController;
 use App\Http\Controllers\Dashboard\Settings\CurrencyController;
 use App\Http\Controllers\Dashboard\Settings\JobGradeController;
 use App\Http\Controllers\Dashboard\Settings\LanguageController;
@@ -32,7 +33,7 @@ use App\Http\Controllers\Dashboard\Salaries\EmployeeSalaryAdditionalController;
 
 
 Route::middleware(['auth:admin'])->group(function () {
-    Route::get('/', [AdminController::class, 'index'])->name('index')->middleware('redirect.employee');
+    Route::get('/', [HomeController::class, 'index'])->name('index')->middleware('redirect.employee');
     //################################### الأعدات #########################################
     Route::resource('admin_panel_settings', AdminPanelSettingController::class);
     //################################### السنوات المالية ##################################
@@ -231,5 +232,8 @@ Route::middleware(['auth:admin'])->group(function () {
     });
 
     //################################### الأنتهاء من الاجور والمرتبات  ##################################
-
+    //################################### إدارة شئون المستخدمين ##################################
+    Route::get('admins/export', [AdminController::class, 'export'])->name('admins.export');
+    Route::post('admins/import', [AdminController::class, 'import'])->name('admins.import');
+    Route::resource('admins', AdminController::class);
 });

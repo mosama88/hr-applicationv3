@@ -2,6 +2,9 @@
 
 namespace App\Http\Requests\Dashboard;
 
+use App\Enums\AdminGenderEnum;
+use App\Enums\StatusActiveEnum;
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class AdminRequest extends FormRequest
@@ -21,21 +24,59 @@ class AdminRequest extends FormRequest
      */
     public function rules(): array
     {
+        $adminId = $this->route('admin') ? $this->route('admin')->id : null;
+
         return [
-            'username' => ['required', 'string', 'min:3', 'max:50'],
-            'password' => ['required', 'string'],
+
+            'name' => 'required|string|max:255',
+            'username' => 'required|string|unique:admins,username|max:255,' . $adminId,
+            'email' => 'required|email|unique:admins,email,' . $adminId,
+            'mobile' => 'nullable|string|unique:admins,mobile|max:20,' . $adminId,
+            'password' => 'required|string|min:6|confirmed',
+            'active' => [
+                'nullable',
+                Rule::in(array_column(StatusActiveEnum::cases(), 'value')),
+            ],
+
+            'gender' => [
+                'required',
+                Rule::in(array_column(AdminGenderEnum::cases(), 'value')),
+            ],
         ];
     }
 
     public function messages()
     {
         return [
+            'name.required' => 'الاسم مطلوب.',
+            'name.string' => 'الاسم يجب أن يكون نصًا.',
+            'name.max' => 'الاسم لا يجب أن يزيد عن 255 حرفًا.',
+
+            'slug.string' => 'المعرف النصي يجب أن يكون نصًا.',
+            'slug.unique' => 'المعرف النصي مستخدم من قبل.',
+
             'username.required' => 'اسم المستخدم مطلوب.',
             'username.string' => 'اسم المستخدم يجب أن يكون نصًا.',
-            'username.min' => 'اسم المستخدم يجب أن يحتوي على 3 أحرف على الأقل.',
-            'username.max' => 'اسم المستخدم يجب ألا يزيد عن 50 حرفًا.',
+            'username.unique' => 'اسم المستخدم مستخدم من قبل.',
+            'username.max' => 'اسم المستخدم لا يجب أن يزيد عن 255 حرفًا.',
+
+            'email.required' => 'البريد الإلكتروني مطلوب.',
+            'email.email' => 'صيغة البريد الإلكتروني غير صحيحة.',
+            'email.unique' => 'البريد الإلكتروني مستخدم من قبل.',
+
+            'mobile.string' => 'رقم الجوال يجب أن يكون نصًا.',
+            'mobile.unique' => 'رقم الجوال مستخدم من قبل.',
+            'mobile.max' => 'رقم الجوال لا يجب أن يزيد عن 20 رقمًا.',
+
             'password.required' => 'كلمة المرور مطلوبة.',
             'password.string' => 'كلمة المرور يجب أن تكون نصًا.',
+            'password.min' => 'كلمة المرور يجب أن تكون على الأقل 6 أحرف.',
+            'password.confirmed' => 'تأكيد كلمة المرور غير مطابق.',
+
+            'gender.required' => 'نوع الجنس مطلوب.',
+            'gender.in' => 'الجنس يجب أن يكون  (ذكر) أو  (أنثى).',
+
+            'active.in' => 'حالة التفعيل يجب أن تكون إما  (غير مفعل) أو  (مفعل).',
         ];
     }
 }

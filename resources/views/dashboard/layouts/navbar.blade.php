@@ -244,7 +244,7 @@
 
         <!-- Light Dark -->
         <ul class="navbar-nav ms-auto"> <!--begin::Navbar Search-->
-             <li class="nav-item dropdown">
+            <li class="nav-item dropdown">
                 <button class="btn btn-link nav-link py-2 px-0 px-lg-2 dropdown-toggle d-flex align-items-center"
                     id="bd-theme" type="button" aria-expanded="false" data-bs-toggle="dropdown"
                     data-bs-display="static">
@@ -257,7 +257,7 @@
                     style="--bs-dropdown-min-width: 8rem;">
 
 
-                    
+
                     <li>
                         <button type="button" class="dropdown-item d-flex align-items-center active"
                             data-bs-theme-value="light" aria-pressed="false">
@@ -283,7 +283,7 @@
                         </button>
                     </li>
                 </ul>
-            </li> 
+            </li>
 
 
             <!--begin::Messages Dropdown Menu-->
@@ -384,8 +384,23 @@
                             <div class="col-4 text-center"> <a href="#">Friends</a> </div>
                         </div> <!--end::Row-->
                     </li> <!--end::Menu Body--> <!--begin::Menu Footer-->
-                    <li class="user-footer"> <a href="#" class="btn btn-default btn-flat">Profile</a> <a
-                            href="#" class="btn btn-default btn-flat float-end">Sign out</a> </li>
+                    <li class="user-footer d-flex justify-content-between align-items-center">
+
+                        <a href="#" class="btn btn-default btn-flat">
+                            <i class="fa-regular fa-user mx-1"></i>
+                            الملف الشخصى
+                        </a>
+
+                        <form action="{{ route('logout') }}" method="POST" class="mb-0">
+                            @csrf
+                            <button type="submit" class="btn btn-default btn-flat">
+                                <i class="fas fa-power-off text-primary mx-1"></i>
+                                تسجيل الخروج
+                            </button>
+                        </form>
+
+                    </li>
+
                     <!--end::Menu Footer-->
                 </ul>
             </li> <!--end::User Menu Dropdown-->
