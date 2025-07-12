@@ -20,7 +20,8 @@
                 <span class="input-group-text" id="basic-addon1">
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </span>
-                <input type="text" wire:model.live="name" class="form-control" placeholder="إبحث بالاسم">
+                <input type="text" wire:model.live="name" class="form-control"
+                    placeholder="إبحث بالاسم أو الموبايل أو البريد الالكترونى">
                 @if (empty($name))
                     <button class="btn btn-light" disabled>أمسح</button>
                 @else
@@ -50,9 +51,9 @@
                     <tr>
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $info->name }}</td>
-                        <td>{{ $info->username  }}</td>
-                        <td>{{ $info->mobile   }}</td>
-                        <td>{{ $info->email   }}</td>
+                        <td>{{ $info->username }}</td>
+                        <td>{{ $info->mobile }}</td>
+                        <td>{{ $info->email }}</td>
                         <td>
                             @if ($info->active == StatusActiveEnum::ACTIVE)
                                 <span class="badge bg-success">مفعل</span>
@@ -60,10 +61,10 @@
                                 <span class="badge bg-danger">غير مفعل</span>
                             @endif
                         </td>
-                       <td>{{ $info->createdBy->name }}</td> 
+                        <td>{{ $info->createdBy?->name }}</td>
                         <td>
                             @if ($info->updated_by > 0)
-                                {{ $info->updatedBy->name }}
+                                {{ $info->updatedBy?->name }}
                             @else
                                 لا يوجد تحديث
                             @endif

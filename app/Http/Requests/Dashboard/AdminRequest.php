@@ -29,10 +29,10 @@ class AdminRequest extends FormRequest
         return [
 
             'name' => 'required|string|max:255',
-            'username' => 'required|string|unique:admins,username|max:255,' . $adminId,
+            'username' => 'required|string|max:255|unique:admins,username,' . $adminId,
             'email' => 'required|email|unique:admins,email,' . $adminId,
-            'mobile' => 'nullable|string|unique:admins,mobile|max:20,' . $adminId,
-            'password' => 'required|string|min:6|confirmed',
+            'mobile' => 'required|string|max:20|unique:admins,mobile,' . $adminId,
+            'password' => 'nullable|string|min:6|confirmed',
             'active' => [
                 'nullable',
                 Rule::in(array_column(StatusActiveEnum::cases(), 'value')),
@@ -64,11 +64,11 @@ class AdminRequest extends FormRequest
             'email.email' => 'صيغة البريد الإلكتروني غير صحيحة.',
             'email.unique' => 'البريد الإلكتروني مستخدم من قبل.',
 
+            'mobile.required' => 'رقم الجوال مطلوب.',
             'mobile.string' => 'رقم الجوال يجب أن يكون نصًا.',
             'mobile.unique' => 'رقم الجوال مستخدم من قبل.',
             'mobile.max' => 'رقم الجوال لا يجب أن يزيد عن 20 رقمًا.',
 
-            'password.required' => 'كلمة المرور مطلوبة.',
             'password.string' => 'كلمة المرور يجب أن تكون نصًا.',
             'password.min' => 'كلمة المرور يجب أن تكون على الأقل 6 أحرف.',
             'password.confirmed' => 'تأكيد كلمة المرور غير مطابق.',

@@ -1,3 +1,6 @@
+@php
+    use App\Enums\AdminGenderEnum;
+@endphp
 @extends('dashboard.layouts.master')
 @section('active-admins', 'active')
 @section('title', 'المستخدمين')
@@ -31,7 +34,7 @@
                             <div class="col-md-12">
                                 <div class="card-body">
                                     <div class="row">
-                                        <div class="col-md-4 mb-3">
+                                        <div class="col-md-3 mb-3">
                                             <label for="exampleFormControlInput1" class="form-label">أسم المستخدم</label>
                                             <input name="name" type="text" value="{{ old('name') }}"
                                                 class="form-control @error('name') is-invalid @enderror"
@@ -42,18 +45,51 @@
                                                 </span>
                                             @enderror
                                         </div>
-                                        <div class="col-md-4 mb-3">
+                                        <div class="col-md-3 mb-3">
                                             <label for="exampleFormControlReadOnlyInput1" class="form-label">هاتف
                                                 المستخدم</label>
-                                            <input name="phones" value="{{ old('phones') }}"
-                                                class="form-control @error('phones') is-invalid @enderror" type="text"
+                                            <input name="mobile" value="{{ old('mobile') }}"
+                                                class="form-control @error('mobile') is-invalid @enderror" type="text"
                                                 id="exampleFormControlReadOnlyInput1" placeholder="010...">
-                                            @error('phones')
+                                            @error('mobile')
                                                 <span class="invalid-feedback text-right" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
                                             @enderror
                                         </div>
+                                        <div class="col-md-3">
+                                            <label for="gender-input" class="form-label">نوع
+                                                الجنس</label>
+                                            <select id="gender-input"
+                                                class="form-select @error('gender') is-invalid @enderror" name="gender"
+                                                aria-label="Default select example">
+                                                <option selected value="">-- أختر نوع الجنس --</option>
+                                                @foreach (AdminGenderEnum::cases() as $gender)
+                                                    <option value="{{ $gender->value }}"
+                                                        @if (old('gender') == $gender->value) selected @endif>
+                                                        {{ $gender->label() }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                            @error('gender')
+                                                <span class="invalid-feedback text-right" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                        <div class="col-md-3 mb-3">
+                                            <label for="exampleFormControlReadOnlyInput1" class="form-label">أسم
+                                                المستخدم</label>
+                                            <input name="username" value="{{ old('username') }}"
+                                                class="form-control @error('username') is-invalid @enderror" type="text"
+                                                id="exampleFormControlReadOnlyInput1" placeholder="p@p.com...">
+                                            @error('username')
+                                                <span class="invalid-feedback text-right" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+
                                         <div class="col-md-4 mb-3">
                                             <label for="exampleFormControlReadOnlyInput1" class="form-label">البريد
                                                 الالكترونى
@@ -67,25 +103,8 @@
                                                 </span>
                                             @enderror
                                         </div>
+
                                     </div>
-
-
-
-                                    <div class="col-md-12 mb-3">
-                                        <label for="exampleFormControlReadOnlyInput1" class="form-label">عنوان المستخدم
-                                        </label>
-                                        <input name="address" value="{{ old('address') }}"
-                                            class="form-control @error('address') is-invalid @enderror" type="text"
-                                            id="exampleFormControlReadOnlyInput1" placeholder="21 ش...">
-                                        @error('address')
-                                            <span class="invalid-feedback text-right" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-
-
-
                                 </div>
                             </div>
                             <!-- /.card-body -->

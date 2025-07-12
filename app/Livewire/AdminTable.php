@@ -37,7 +37,8 @@ class AdminTable extends Component
         $query = Admin::query();
 
         if ($this->name) {
-            $query->where('name', 'LIKE', '%' . $this->name . '%');
+            $query->where('name', 'LIKE', '%' . $this->name . '%')->orWhere('mobile', 'LIKE', '%' . $this->name . '%')
+                ->orWhere('email', 'LIKE', '%' . $this->name . '%');
         }
 
         $com_code  = Auth::user()->com_code;

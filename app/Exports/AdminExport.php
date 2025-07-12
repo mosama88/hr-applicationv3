@@ -8,17 +8,21 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
+
 class AdminExport implements FromArray, WithHeadings, WithStyles
 {
     protected $data;
 
-    public function __construct($branches)
+    public function __construct($admins)
     {
         // نحضّر فقط الأعمدة المطلوبة
-        $this->data = $branches->map(function ($branch) {
+        $this->data = $admins->map(function ($admin) {
             return [
-                'name'     => $branch->name,
-                // أضف أو احذف الأعمدة حسب الحاجة
+                'name'     => $admin->name,
+                'username'     => $admin->username,
+                'email'     => $admin->email,
+                'mobile'     => $admin->mobile,
+                'gender'     => $admin->gender->label(),
             ];
         })->toArray();
     }
@@ -30,7 +34,13 @@ class AdminExport implements FromArray, WithHeadings, WithStyles
 
     public function headings(): array
     {
-        return ['أسم الفرع', 'العنوان', 'الهاتف', 'البريد الالكترونى']; // ترجم العناوين حسب الأعمدة المختارة
+        return [
+            'الأسم ',
+            'أسم المستخدم',
+            'البريد الالكترونى',
+            'الهاتف',
+            'نوع الجنس'
+        ]; // ترجم العناوين حسب الأعمدة المختارة
     }
 
     public function styles(Worksheet $sheet)
