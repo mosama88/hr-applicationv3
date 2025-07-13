@@ -3,6 +3,7 @@
 use App\Models\MainSalaryEmployee;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
+use App\Models\EmployeeSalaryPermanentLoan;
 use Illuminate\Database\Migrations\Migration;
 
 return new class extends Migration
@@ -16,11 +17,11 @@ return new class extends Migration
             $table->id();
             $table->string('slug')->unique()->nullable();
             $table->bigInteger('employee_code');
-            $table->foreignId('employee_permanent_loans_id')->nullable()->references('id')->on('employee_salary_permanent_loans')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignIdFor(EmployeeSalaryPermanentLoan::class)->nullable()->constrained()->nullOnDelete(); //القسط
             $table->foreignIdFor(MainSalaryEmployee::class)->nullable()->constrained()->nullOnDelete(); //المرتب
             $table->string('year_month', 20)->nullable(); //تاريخ الاستحقاق
             $table->tinyInteger('status')->nullable()->default(0); //حالة الدفع: صفر معلق - واحد تم الدفع على المرتب - أثنين تم الدفع كاش
-            $table->integer('has_parent_disbursed_done')->nullable()->default(0); //حالة الصرف
+            $table->tinyInteger('has_parent_disbursed_done')->default(1)->nullable(); //حالة الصرف
             $table->tinyInteger('is_archived')->default(2)->nullable(); //حالة الموظف لحظة الراتب
             $table->foreignId('archived_by')->nullable()->references('id')->on('admins')->onUpdate('cascade');
             $table->dateTime('archived_date')->nullable()->nullable(); //تاريخ ارشفه الراتب

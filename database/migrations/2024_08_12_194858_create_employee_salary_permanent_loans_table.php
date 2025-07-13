@@ -24,7 +24,7 @@ return new class extends Migration
             $table->decimal('installment_paid', 10, 2)->nullable()->default(0); //قيمة القسط المدفوع
             $table->decimal('installment_remain', 10, 2)->nullable()->default(0); //قيمة القسط المتبقى
             $table->text('notes')->nullable();
-            $table->integer('has_disbursed_done')->nullable()->default(0); //حالة الصرف
+            $table->tinyInteger('has_disbursed_done')->default(1)->nullable();
             $table->foreignId('disbursed_by')->nullable()->references('id')->on('admins')->onUpdate('cascade');
             $table->date('disbursed_at')->nullable(); //متى صرف
             $table->tinyInteger('is_archived')->default(2)->nullable(); //حالة الموظف لحظة الراتب

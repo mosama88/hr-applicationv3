@@ -13,14 +13,14 @@ return new class extends Migration
     {
         Schema::create('main_employees_vacation_balances', function (Blueprint $table) {
             $table->id();
-            $table->integer('employee_code')->comment('كود الموظف');
-            $table->string('year_month', 30)->comment('الشهر المالى المرتب')->nullable();
-            $table->string('financial_year', 10)->comment('السنه المالية ');
-            $table->decimal('carryover_from_previous_month', 10, 2)->comment('الرصيد المرحل من الشهر السابق')->nullable()->default('0');
-            $table->decimal('current_month_balance', 10, 2)->comment('رصيد الشهر الحالى')->nullable()->default('0');
-            $table->decimal('total_available_balance', 10, 2)->comment('اجمالى الرصيد المتاح')->nullable()->default('0');
-            $table->decimal('spent_balance', 10, 2)->comment('الرصيد المستهلك')->nullable()->default('0');
-            $table->decimal('net_balance', 10, 2)->comment('صافى الرصيد')->nullable()->default('0');
+            $table->integer('employee_code'); //كود الموظف
+            $table->string('year_month', 30)->nullable(); //الشهر المالى المرتب
+            $table->string('financial_year', 10); //السنه المالية
+            $table->decimal('carryover_from_previous_month', 10, 2)->nullable()->default('0'); //الرصيد المرحل من الشهر السابق
+            $table->decimal('current_month_balance', 10, 2)->nullable()->default('0'); //رصيد الشهر الحالى
+            $table->decimal('total_available_balance', 10, 2)->nullable()->default('0'); //اجمالى الرصيد المتاح
+            $table->decimal('spent_balance', 10, 2)->nullable()->default('0'); //الرصيد المستهلك
+            $table->decimal('net_balance', 10, 2)->nullable()->default('0'); //صافى الرصيد
             $table->foreignId('created_by')->nullable()->references('id')->on('admins')->onUpdate('cascade');
             $table->foreignId('updated_by')->nullable()->references('id')->on('admins')->onUpdate('cascade');
             $table->integer('com_code');
