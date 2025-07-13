@@ -2,7 +2,7 @@
 
 namespace App\Enums\AttendanceDepartureAction;
 
-enum StatusMove
+enum IsMakeActionEmployeeEnum
 {
     //
 }

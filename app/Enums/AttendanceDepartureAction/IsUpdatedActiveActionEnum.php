@@ -2,7 +2,7 @@
 
 namespace App\Enums\AttendanceDepartureAction;
 
-enum IsActiveWithParent
+enum IsUpdatedActiveActionEnum
 {
     //
 }

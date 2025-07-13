@@ -2,7 +2,7 @@
 
 namespace App\Enums\AttendanceDepartureAction;
 
-enum AddedMethod
+enum ActionTypeEnum
 {
     //
 }
