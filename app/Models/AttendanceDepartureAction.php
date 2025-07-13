@@ -9,7 +9,7 @@ class AttendanceDepartureAction extends Model
 {
     use HasFactory;
 
-    protected $table = '';
+    protected $table = 'attendance_departure_action_excels';
 
     protected $fillable = [];
 

@@ -9,7 +9,7 @@ class PermanentLoansInstallment extends Model
 {
     use HasFactory;
 
-    protected $table = '';
+    protected $table = 'permanent_loans_installments';
 
     protected $fillable = [];
 

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->bigInteger('employee_code'); //كود الموظف
             $table->dateTime('date_time_action'); //توقيت البصمه من جهاز البصمة
             $table->tinyInteger('action_type'); //(1 حضور) - (2 انصراف)نوع حركة البصمة
-            $table->foreignIdFor(MainSalaryEmployee::class)->nullable()->constrained()->nullOnDelete(); //كود الراتب بالشهر المالى ان وجد
+            $table->foreignId('main_salary_employee_id')->nullable()->comment('');
             $table->foreignId('created_by')->references('id')->on('admins')->onUpdate('cascade');
             $table->dateTime('created_at'); //تاريخ الأضافة
             $table->integer('com_code');

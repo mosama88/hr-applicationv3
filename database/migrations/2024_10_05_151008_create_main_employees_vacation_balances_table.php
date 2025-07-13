@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('main_employees_vacation_balances', function (Blueprint $table) {
             $table->id();
             $table->integer('employee_code'); //كود الموظف
+            $table->string('slug')->unique()->nullable();
             $table->string('year_month', 30)->nullable(); //الشهر المالى المرتب
             $table->string('financial_year', 10); //السنه المالية
             $table->decimal('carryover_from_previous_month', 10, 2)->nullable()->default('0'); //الرصيد المرحل من الشهر السابق

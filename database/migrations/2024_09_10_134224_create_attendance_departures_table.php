@@ -16,6 +16,7 @@ return new class extends Migration
     {
         Schema::create('attendance_departures', function (Blueprint $table) {
             $table->id();
+            $table->string('slug')->unique()->nullable();
             $table->foreignIdFor(FinanceClnPeriod::class)->nullable()->constrained()->nullOnDelete(); //كود الشهر المالى
             $table->bigInteger('employee_code'); //كود الموظف
             $table->decimal('shift_hour_contract', 10, 2)->nullable(); //عدد ساعات العمل اليومى المتعاقد عليها فى تلك الوقت

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Employee::class)->nullable()->constrained()->nullOnDelete(); 
             $table->foreignIdFor(Allowance::class)->nullable()->constrained()->nullOnDelete();
+            $table->string('slug')->unique()->nullable();
             $table->decimal('value', 10, 2)->nullable(); //قيمة البدل الثابت
             $table->string('notes', 600)->nullable(); //ملاحظات
             $table->integer('com_code');

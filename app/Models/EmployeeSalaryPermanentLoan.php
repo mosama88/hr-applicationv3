@@ -9,7 +9,7 @@ class EmployeeSalaryPermanentLoan extends Model
 {
     use HasFactory;
 
-    protected $table = '';
+    protected $table = 'employee_salary_permanent_loans';
 
     protected $fillable = [];
 

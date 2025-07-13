@@ -2,7 +2,6 @@
 
 use App\Models\FinanceClnPeriod;
 use Illuminate\Support\Facades\Schema;
-use App\Models\AttendanceDepartureAction;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
@@ -15,7 +14,8 @@ return new class extends Migration
     {
         Schema::create('attendance_departure_actions', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(AttendanceDepartureAction::class)->nullable()->constrained()->nullOnDelete();
+            $table->string('slug')->unique()->nullable();
+            $table->foreignId('attendance_departure_id')->references('id')->on('attendance_departures')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignIdFor(FinanceClnPeriod::class)->nullable()->constrained()->nullOnDelete(); //كود الشهر المالى
             $table->bigInteger('employee_code'); //كود الموظف
             $table->bigInteger('attendance_departure_action_excel_id'); //رقم البصمة فى الارشيف
