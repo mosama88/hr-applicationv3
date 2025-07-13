@@ -363,14 +363,45 @@
                         class="bi bi-fullscreen-exit" style="display: none;"></i> </a> </li>
             <!--end::Fullscreen Toggle--> <!--begin::User Menu Dropdown-->
             <li class="nav-item dropdown user-menu"> <a href="#" class="nav-link dropdown-toggle"
-                    data-bs-toggle="dropdown"> <img
-                        src="{{ asset('dashboard') }}/assets/dist/assets/img/user2-160x160.jpg"
-                        class="user-image rounded-circle shadow" alt="User Image"> <span
-                        class="d-none d-md-inline">{{ Auth::user()->name }}</span> </a>
+                    data-bs-toggle="dropdown">
+                    @if (Auth::user()->getFirstMediaUrl('photo', 'preview'))
+                        <img alt="{{ Auth::user()->name }}" class="user-image rounded-circle shadow"
+                            src="{{ Auth::user()->getFirstMediaUrl('photo', 'preview') }}"
+                            style="max-width: 70px;max-height: 70px;">
+                    @elseif(Auth::user()->gender === AdminGenderEnum::Male)
+                        <img alt="{{ Auth::user()->name }}" class="user-image rounded-circle shadow"
+                            src="{{ asset('dashboard') }}/assets/dist/assets/img/employees-male-default.png"
+                            style="max-width: 70px;max-height: 70px;">
+                    @elseif(Auth::user()->gender === AdminGenderEnum::Female)
+                        <img alt="{{ Auth::user()->name }}" class="user-image rounded-circle shadow"
+                            src="{{ asset('dashboard') }}/assets/dist/assets/img/employees-female-default.png"
+                            style="max-width: 70px;max-height: 70px;">
+                    @else
+                        <img alt="{{ Auth::user()->name }}" class="user-image rounded-circle shadow"
+                            src="{{ asset('dashboard') }}/assets/img/Employee.png"
+                            style="max-width: 70px;max-height: 70px;">
+                    @endif
+                    <span class="d-none d-md-inline">{{ Auth::user()->name }}</span>
+                </a>
                 <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end"> <!--begin::User Image-->
                     <li class="user-header text-bg-primary">
-                        <img src="{{ asset('dashboard') }}/assets/dist/assets/img/user2-160x160.jpg"
-                            class="rounded-circle shadow" alt="User Image" />
+                        @if (Auth::user()->getFirstMediaUrl('photo', 'preview'))
+                            <img alt="{{ Auth::user()->name }}" class="rounded-circle shadow"
+                                src="{{ Auth::user()->getFirstMediaUrl('photo', 'preview') }}"
+                                style="max-width: 70px;max-height: 70px;">
+                        @elseif(Auth::user()->gender === AdminGenderEnum::Male)
+                            <img alt="{{ Auth::user()->name }}" class="rounded-circle shadow"
+                                src="{{ asset('dashboard') }}/assets/dist/assets/img/employees-male-default.png"
+                                style="max-width: 70px;max-height: 70px;">
+                        @elseif(Auth::user()->gender === AdminGenderEnum::Female)
+                            <img alt="{{ Auth::user()->name }}" class="rounded-circle shadow"
+                                src="{{ asset('dashboard') }}/assets/dist/assets/img/employees-female-default.png"
+                                style="max-width: 70px;max-height: 70px;">
+                        @else
+                            <img alt="{{ Auth::user()->name }}" class="rounded-circle shadow"
+                                src="{{ asset('dashboard') }}/assets/img/Employee.png"
+                                style="max-width: 70px;max-height: 70px;">
+                        @endif
                         <p>
                             {{ Auth::user()->username }} - Web Developer
                             <small>Member since Nov. 2023</small>
