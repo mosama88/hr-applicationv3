@@ -10,10 +10,15 @@ use Spatie\Sluggable\SlugOptions;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Spatie\Image\Enums\Fit;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Admin extends Authenticatable
+class Admin extends Authenticatable implements HasMedia
 {
-    use HasFactory, Notifiable, HasSlug;
+    use HasFactory, Notifiable, HasSlug, InteractsWithMedia;
+
 
     protected $table = 'admins';
 
@@ -32,6 +37,21 @@ class Admin extends Authenticatable
         'com_code',
         'remember_token'
     ];
+
+    public function registerMediaConversions(?Media $media = null): void
+    {
+        $this
+            ->addMediaConversion('preview')
+            ->fit(Fit::Contain, 300, 300)
+            ->nonQueued();
+    }
+
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('photo')->singleFile();
+    }
+
 
     public function getSlugOptions(): SlugOptions
     {

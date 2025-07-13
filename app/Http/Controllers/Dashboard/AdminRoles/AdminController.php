@@ -59,7 +59,14 @@ class AdminController extends Controller
                 'com_code' => $com_code,
                 'active' => StatusActiveEnum::ACTIVE,
             ]);
-            Admin::create($dataInsert);
+            $admin = Admin::create($dataInsert);
+
+            // ثم رفع الصورة إذا وجدت
+            if ($request->hasFile('photo')) {
+                $admin->addMediaFromRequest('photo')
+                    ->toMediaCollection('photo');
+            }
+
             return redirect()->route('dashboard.admins.index')->with('success', 'تم أضافة الأدمن بنجاح');
         } catch (\Exception $e) {
             return redirect()
@@ -110,6 +117,17 @@ class AdminController extends Controller
                 'com_code' => $com_code,
                 'active' => $request->active,
             ]);
+
+            if ($request->hasFile('photo')) {
+                // Remove old photo if exists
+                $admin->clearMediaCollection('photo');
+
+                // Upload new photo
+                $admin->addMediaFromRequest('photo')
+                    ->toMediaCollection('photo');
+            }
+
+
             $admin->update($dataUpdate);
             return redirect()->route('dashboard.admins.index')->with('success', 'تم تعديل بيانات الأدمن بنجاح');
         } catch (\Exception $e) {
@@ -125,6 +143,10 @@ class AdminController extends Controller
     public function destroy(Admin $admin)
     {
         try {
+            if ($admin->getFirstMedia('photo')) {
+                $admin->clearMediaCollection('photo');
+            }
+
             $admin->delete();
             return response()->json([
                 'success' => true,

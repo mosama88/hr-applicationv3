@@ -89,7 +89,7 @@ class EmployeeRequest extends FormRequest
                 'required',
                 Rule::in(array_column(FunctionalStatus::cases(), 'value')),
             ],
-            'department_id' => ['nullable','exists:departments,id'],
+            'department_id' => ['nullable', 'exists:departments,id'],
             'job_category_id' => 'nullable|exists:job_categories,id',
             'has_attendance' => [
                 'required',
@@ -154,7 +154,7 @@ class EmployeeRequest extends FormRequest
                 'nullable',
                 Rule::in(array_column(StatusActiveEnum::cases(), 'value')),
             ],
-           'photo' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
 
         ];
     }
@@ -425,6 +425,10 @@ class EmployeeRequest extends FormRequest
             'has_fixed_allowances.in' => 'قيمة البدلات الثابتة غير صحيحة.',
 
             'active.in' => 'حالة التفعيل غير صحيحة.',
+
+            'photo.image' => 'يجب أن يكون الملف صورة.',
+            'photo.mimes' => 'يجب أن تكون الصورة من نوع: jpeg، png، jpg.',
+            'photo.max' => 'يجب ألا يتجاوز حجم الصورة 2 ميغابايت.',
         ];
     }
 }

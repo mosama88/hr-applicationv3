@@ -1643,6 +1643,11 @@
 
                                                     <div class="col-md-6">
                                                         <x-image-preview name='photo' title="أرفق صورة الموظف" />
+                                                        @error('photo')
+                                                            <span class="invalid-feedback text-right" role="alert">
+                                                                <strong>{{ $message }}</strong>
+                                                            </span>
+                                                        @enderror
                                                     </div>
                                                     <div class="col-md-6">
                                                         <label for="formFile" class="form-label">أرفاق
@@ -1650,6 +1655,11 @@
                                                             الذاتية</label>
                                                         <input class="form-control" name="cv" type="file"
                                                             id="formFile">
+                                                        @error('cv')
+                                                            <span class="invalid-feedback text-right" role="alert">
+                                                                <strong>{{ $message }}</strong>
+                                                            </span>
+                                                        @enderror
                                                     </div>
                                                 </div>
 

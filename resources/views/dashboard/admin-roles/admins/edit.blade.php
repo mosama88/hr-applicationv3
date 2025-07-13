@@ -29,7 +29,8 @@
 
                         <!--end::Header-->
                         <!--begin::Form-->
-                        <form action="{{ route('dashboard.admins.update', $admin->slug) }}" method="POST" id="updateForm">
+                        <form action="{{ route('dashboard.admins.update', $admin->slug) }}" method="POST" id="updateForm"
+                            enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
 
@@ -125,8 +126,8 @@
                                             </label>
                                             <input name="password_confirmation"
                                                 class="form-control @error('password_confirmation') is-invalid @enderror"
-                                                type="password" id="exampleFormControlReadOnlyInput1" value="{{ $admin->password }}"
-                                                placeholder="**********">
+                                                type="password" id="exampleFormControlReadOnlyInput1"
+                                                value="{{ $admin->password }}" placeholder="**********">
                                             @error('password_confirmation')
                                                 <span class="invalid-feedback text-right" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -153,6 +154,14 @@
                                             @enderror
                                         </div>
 
+                                    </div>
+                                    <div class="col-md-6">
+                                        <x-image-preview name='photo' title="أرفق صورة الأدمن" />
+                                        @error('photo')
+                                            <span class="invalid-feedback text-right" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>

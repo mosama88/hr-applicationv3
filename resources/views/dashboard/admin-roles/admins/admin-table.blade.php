@@ -1,4 +1,5 @@
 @php
+    use App\Enums\AdminGenderEnum;
     use App\Enums\StatusActiveEnum;
 @endphp
 <div>
@@ -36,6 +37,7 @@
             <thead>
                 <tr>
                     <th>#</th>
+                    <th>صورة</th>
                     <th>أسم الادمن</th>
                     <th>أسم المستخدم</th>
                     <th>الهاتف</th>
@@ -50,6 +52,23 @@
                 @forelse ($data as $info)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
+                        <td>
+                            @if ($info->getFirstMediaUrl('photo', 'preview'))
+                                <img class="img-thumbnail" src="{{ $info->getFirstMediaUrl('photo', 'preview') }}"
+                                    style="max-width: 70px;max-height: 70px;" alt="{{ $info->name }}">
+                            @elseif($info->gender === AdminGenderEnum::Male)
+                                <img class="img-thumbnail"
+                                    src="{{ asset('dashboard') }}/assets/dist/assets/img/employees-male-default.png"
+                                    style="max-width: 70px;max-height: 70px;" alt="{{ $info->name }}">
+                            @elseif($info->gender === AdminGenderEnum::Female)
+                                <img class="img-thumbnail"
+                                    src="{{ asset('dashboard') }}/assets/dist/assets/img/employees-female-default.png"
+                                    style="max-width: 70px;max-height: 70px;" alt="{{ $info->name }}">
+                            @else
+                                <img class="img-thumbnail" src="{{ asset('dashboard') }}/assets/img/Employee.png"
+                                    style="max-width: 70px;max-height: 70px;" alt="{{ $info->name }}">
+                            @endif
+                        </td>
                         <td>{{ $info->name }}</td>
                         <td>{{ $info->username }}</td>
                         <td>{{ $info->mobile }}</td>

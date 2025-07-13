@@ -42,6 +42,8 @@ class AdminRequest extends FormRequest
                 'required',
                 Rule::in(array_column(AdminGenderEnum::cases(), 'value')),
             ],
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+
         ];
     }
 
@@ -77,6 +79,10 @@ class AdminRequest extends FormRequest
             'gender.in' => 'الجنس يجب أن يكون  (ذكر) أو  (أنثى).',
 
             'active.in' => 'حالة التفعيل يجب أن تكون إما  (غير مفعل) أو  (مفعل).',
+            
+            'photo.image' => 'يجب أن يكون الملف صورة.',
+            'photo.mimes' => 'يجب أن تكون الصورة من نوع: jpeg، png، jpg.',
+            'photo.max' => 'يجب ألا يتجاوز حجم الصورة 2 ميغابايت.',
         ];
     }
 }

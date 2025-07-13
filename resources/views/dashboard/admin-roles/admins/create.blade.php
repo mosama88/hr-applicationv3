@@ -28,7 +28,7 @@
 
                         <!--end::Header-->
                         <!--begin::Form-->
-                        <form action="{{ route('dashboard.admins.store') }}" method="POST" id="storeForm">
+                        <form action="{{ route('dashboard.admins.store') }}" method="POST" id="storeForm" enctype="multipart/form-data">
                             @csrf
 
                             <div class="col-md-12">
@@ -103,7 +103,14 @@
                                                 </span>
                                             @enderror
                                         </div>
-
+                                    </div>
+                                    <div class="col-md-6">
+                                        <x-image-preview name='photo' title="أرفق صورة الأدمن" />
+                                        @error('photo')
+                                            <span class="invalid-feedback text-right" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>
