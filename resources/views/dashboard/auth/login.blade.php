@@ -39,7 +39,7 @@
             </div>
             <div class="col-8 mx-auto mt-2">
                 <div class="d-grid gap-2">
-                    <button type="submit" id="submitButton" style="background-color: #855BEF;color:#DFECFA"
+                    <button type="submit" id="submitButton" style="background-color: #065084;color:#91C8E4"
                         class="btn">تسجيل
                         الدخول</button>
                 </div>

@@ -25,7 +25,7 @@
 <!--end::Head-->
 <!--begin::Body-->
 
-<body style="background-color: #37474f;"> <!-- أسود أنيق بدل black -->
+<body style="background-color: #316681;"> <!-- أسود أنيق بدل black -->
 
     <div class="login-page"
         style="
