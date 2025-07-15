@@ -1,5 +1,5 @@
     {{-- <aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark"> --}}
-    <aside class="app-sidebar shadow text-light" style="background-color: #432a81;color:#DFECFA" data-bs-theme="dark">
+    <aside class="app-sidebar shadow text-light" style="background-color: #065084;color:#DFECFA" data-bs-theme="dark">
         <!--begin::Sidebar Brand-->
         <div class="sidebar-brand">
             <!--begin::Brand Link-->
@@ -272,6 +272,7 @@
                         request()->is('dashboard/discounts*') ||
                         request()->is('dashboard/rewards*') ||
                         request()->is('dashboard/loans*') ||
+                        request()->is('dashboard/permanent_loan*') ||
                         request()->is('dashboard/employee_salary_allowances*') ||
                         request()->is('dashboard/additionals*')
                             ? 'menu-open'
@@ -283,6 +284,7 @@
                             request()->is('discounts*') ||
                             request()->is('rewards*') ||
                             request()->is('loans*') ||
+                            request()->is('permanent_loan*') ||
                             request()->is('employee_salary_allowances*') ||
                             request()->is('additionals*')
                                 ? 'active'
@@ -350,16 +352,21 @@
                                     <p>السلف الشهرية</p>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a href="{{ route('dashboard.permanent_loan.index') }}"
+                                    class="nav-link @yield('active-permanent_loan')">
+                                    <i class="nav-icon bi bi-circle"></i>
+                                    <p>السلف المستديمة</p>
+                                </a>
+                            </li>
                         </ul>
                     </li>
 
 
                     <li class="nav-header">قائمة إدارة شئون الموظفين</li>
 
-                    <li
-                        class="nav-item {{ request()->is('dashboard/admins*') ? 'menu-open' : '' }}">
-                        <a href="#"
-                            class="nav-link {{ request()->is('admins*') ? 'active' : '' }}">
+                    <li class="nav-item {{ request()->is('dashboard/admins*') ? 'menu-open' : '' }}">
+                        <a href="#" class="nav-link {{ request()->is('admins*') ? 'active' : '' }}">
                             <i class="nav-icon fa-solid fa-users"></i>
                             <p>
                                 قائمة شئون المستخدمين

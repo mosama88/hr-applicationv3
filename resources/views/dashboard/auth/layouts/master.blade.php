@@ -25,29 +25,39 @@
 <!--end::Head-->
 <!--begin::Body-->
 
-<body class="login-page bg-body-secondary"
-    style="background: url('{{ asset('dashboard/assets/dist/assets/img/hospitalrahma.png') }}') no-repeat center center fixed;
-           background-size: cover;
-           background-position: center;
-           background-repeat: no-repeat;
-           background-attachment: fixed;">
-    <div class="login-box">
-        <div class="card card-outline text-secondary card-primary" style="background-color: rgba(255, 255, 255, 0.7);">
-            <div class="card-header">
-                <div class="text-center">
-                    <h2 class="mb-0" style="text-decoration: none;"><b>مستشفى </b>الرحمه</h2>
-                    <h4 class="mb-0" style="text-decoration: none;"><b>إدارة </b>الموارد البشرية</h4>
-                </div>
-            </div>
-            <div class="card-body login-card-body">
-                <p class="login-box-msg">قم بتسجيل الدخول لبدء جلستك</p>
-                @yield('content')
+<body style="background-color: #37474f;"> <!-- أسود أنيق بدل black -->
 
+    <div class="login-page"
+        style="
+           background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('{{ asset('dashboard/assets/dist/assets/img/hr-system.jpg') }}');
+           background-repeat: no-repeat;
+           background-position: center center;
+           background-attachment: fixed;
+           background-size: contain;
+           min-height: 100vh;
+           display: flex;
+           align-items: center;
+           justify-content: center;
+        ">
+
+        <div class="login-box">
+            <div class="card card-outline text-secondary card-primary"
+                style="background-color: rgba(255, 255, 255, 0.8); box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);">
+                <div class="card-header text-center">
+                    <h2 class="mb-0"><b>مستشفى </b>الرحمه</h2>
+                    <h4 class="mb-0"><b>إدارة </b>الموارد البشرية</h4>
+                </div>
+                <div class="card-body login-card-body">
+                    <p class="login-box-msg">قم بتسجيل الدخول لبدء جلستك</p>
+                    @yield('content')
+                </div>
             </div>
         </div>
     </div>
+
     @include('dashboard.auth.layouts.js')
 </body>
+
 <!--end::Body-->
 
 </html>

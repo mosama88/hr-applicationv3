@@ -28,7 +28,7 @@
     <!--begin::Required Plugin(AdminLTE)-->
     <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/dist/css/adminlte.rtl.css" />
 
-        <!--arabic font-->
+    <!--arabic font-->
     <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/dist/css/style.css" />
     @stack('css')
     <style>
@@ -42,5 +42,10 @@
         .select2-container--default .select2-selection--single .select2-selection__arrow {
             height: 40px;
             /* لضبط السهم */
+        }
+    </style>
+    <style>
+        .navbar .nav-link {
+            color: #91C8E4 !important;
         }
     </style>

@@ -4,8 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Dashboard\HomeController;
 use App\Http\Controllers\Dashboard\Settings\CityController;
 use App\Http\Controllers\Dashboard\Settings\BranchController;
-use App\Http\Controllers\Dashboard\Settings\CountryController;
 use App\Http\Controllers\Dashboard\AdminRoles\AdminController;
+use App\Http\Controllers\Dashboard\Settings\CountryController;
 use App\Http\Controllers\Dashboard\Settings\CurrencyController;
 use App\Http\Controllers\Dashboard\Settings\JobGradeController;
 use App\Http\Controllers\Dashboard\Settings\LanguageController;
@@ -30,6 +30,7 @@ use App\Http\Controllers\Dashboard\Salaries\EmployeeSalaryAbsenceController;
 use App\Http\Controllers\Dashboard\Salaries\EmployeeSalaryDiscountController;
 use App\Http\Controllers\Dashboard\Salaries\EmployeeSalaryAllowanceController;
 use App\Http\Controllers\Dashboard\Salaries\EmployeeSalaryAdditionalController;
+use App\Http\Controllers\Dashboard\Salaries\EmployeeSalaryPermanentLoanController;
 
 
 Route::middleware(['auth:admin'])->group(function () {
@@ -230,6 +231,14 @@ Route::middleware(['auth:admin'])->group(function () {
         Route::post('/loans/import', 'import')->name('import');
         Route::post('/loans/print', 'print')->name('print');
     });
+    //################################### السلف المستديمة ##################################
+
+
+    Route::get('permanent_loan/export', [EmployeeSalaryPermanentLoanController::class, 'export'])->name('permanent_loan.export');
+    Route::post('permanent_loan/import', [EmployeeSalaryPermanentLoanController::class, 'import'])->name('permanent_loan.import');
+    Route::post('permanent_loan/print', [EmployeeSalaryPermanentLoanController::class, 'print'])->name('permanent_loan.print');
+    Route::resource('permanent_loan', EmployeeSalaryPermanentLoanController::class);
+
 
     //################################### الأنتهاء من الاجور والمرتبات  ##################################
     //################################### إدارة شئون المستخدمين ##################################
