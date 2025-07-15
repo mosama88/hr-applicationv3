@@ -41,7 +41,7 @@ class EmployeeSalaryRewardFactory extends Factory
             'total' => fake()->randomFloat(1, 200, 3000),
             'notes' => fake()->sentence(),
             'com_code' => 6000,
-            'created_by' => IsArchivedEnum::Archived,
+            'created_by' => 1,
         ];
     }
 }

@@ -39,7 +39,7 @@ class EmployeeSalaryLoanFactory extends Factory
             'total' => fake()->numberBetween(5000, 25000),
             'notes' => fake()->sentence(),
             'com_code' => 6000,
-            'created_by' => IsArchivedEnum::Archived,
+            'created_by' => 1,
         ];
     }
 }

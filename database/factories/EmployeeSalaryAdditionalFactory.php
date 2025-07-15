@@ -40,7 +40,7 @@ class EmployeeSalaryAdditionalFactory extends Factory
             'total' => $value * $day_price,
             'notes' => fake()->sentence(),
             'com_code' => 6000,
-            'created_by' => IsArchivedEnum::Archived,
+            'created_by' => 1,
         ];
     }
 }
