@@ -66,7 +66,7 @@
 
 
                                 <div class="row">
-                                    <div class="form-group mb-3 col-6">
+                                    <div class="form-group mb-3 col-3">
                                         <label for="start_date" class="form-label">تاريخ البدء</label>
                                         <div class="input-group">
                                             <span class="input-group-text bg-primary"
@@ -89,7 +89,7 @@
                                         @enderror
                                     </div>
 
-                                    <div class="form-group mb-3 col-6">
+                                    <div class="form-group mb-3 col-3">
                                         <label for="end_date" class="form-label">تاريخ الانتهاء</label>
                                         <div class="input-group">
                                             <span class="input-group-text bg-primary"

@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Dashboard\Salaries;
 
 use Illuminate\Http\Request;
+use App\Enums\IsArchivedEnum;
 use App\Models\MainSalaryEmployee;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Models\EmployeeSalaryPermanentLoan;
+use App\Http\Requests\Dashboard\Salaries\EmployeeSalaryPermanentLoanRequest;
 
 class EmployeeSalaryPermanentLoanController extends Controller
 {
@@ -48,9 +50,26 @@ class EmployeeSalaryPermanentLoanController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(EmployeeSalaryPermanentLoanRequest $request)
     {
-        //
+        try {
+            $com_code = Auth::user()->com_code;
+            $userId = Auth::user()->id;
+
+            $validateData = $request->validated();
+            $dataInsert = array_merge($validateData, [
+                'notes' => $request->notes,
+                'is_archived' => IsArchivedEnum::Unarchived,
+                'com_code' => $com_code,
+                'created_by' => $userId,
+            ]);
+            EmployeeSalaryPermanentLoan::create($dataInsert);
+            return redirect()->route('dashboard.permanent_loan.index')->with('success', 'تم أضافة السلفه بنجاح');
+        } catch (\Exception $e) {
+            return redirect()
+                ->route('dashboard.permanent_loan.index')
+                ->withErrors(['error' => $e->getMessage()]);
+        }
     }
 
     /**

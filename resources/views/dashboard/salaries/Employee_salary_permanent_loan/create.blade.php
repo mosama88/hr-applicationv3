@@ -8,6 +8,12 @@
 @push('css')
     <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/dist/css/select2.min.css" />
     <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/dist/css/select2-style.css" />
+    <!-- مكتبة Flatpickr CSS -->
+    <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/dist/css/flatpickr.min.css">
+
+    <!-- ستايل إضافي للغة العربية -->
+    <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/dist/css/material_blue.css">
+    <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/dist/css/flatpicker.css">
 @endpush
 @section('content')
 
@@ -22,7 +28,13 @@
 
     <section class="content">
         <div class="container-fluid">
-
+            @if ($errors->any())
+                @foreach ($errors->all() as $error)
+                    <div class="alert alert-danger text-center">
+                        {{ $error }}
+                    </div>
+                @endforeach
+            @endif
             <div class="row">
                 <div class="col-12">
                     <div class="card card-primary card-outline mb-4">
@@ -45,7 +57,7 @@
                                             data-allow-clear="true">
                                             @if (old('main_salary_employee_id'))
                                                 <option value="{{ old('main_salary_employee_id') }}" selected>
-                                                    {{ MainSalaryEmployee::find(old('main_salary_employee_id'))?->name }}
+                                                    {{ MainSalaryEmployee::find(old('main_salary_employee_id'))?->employee_name }}
                                                 </option>
                                             @endif
                                         </select>
@@ -98,21 +110,80 @@
                                         @enderror
                                     </div>
 
+                                    <div class="row">
+                                        <!-- قيمة السلفه مستديمة -->
+                                        <div class="col-md-3 mb-3">
+                                            <label class="form-label" for="total-input">
+                                                أجمالى قيمة السلفه المستديمة</label>
+                                            <input type="text" name="total"
+                                                oninput="this.value=this.value.replace(/[^0-9.]/g,'');"
+                                                class="form-control @error('total') is-invalid @enderror"
+                                                value="{{ old('total') }}" id="total-input">
+                                            @error('total')
+                                                <span class="invalid-feedback text-right" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                        <!-- عدد شهور الأقساط -->
+                                        <div class="col-md-3 mb-3">
+                                            <label class="form-label" for="month_number_installment-input">
+                                                عدد شهور الأقساط</label>
+                                            <input type="text" name="month_number_installment"
+                                                oninput="this.value=this.value.replace(/[^0-9.]/g,'');"
+                                                class="form-control @error('month_number_installment') is-invalid @enderror"
+                                                value="{{ old('month_number_installment') }}"
+                                                id="month_number_installment-input">
+                                            @error('month_number_installment')
+                                                <span class="invalid-feedback text-right" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                        <!-- قيمة القسط الشهرى -->
+                                        <div class="col-md-3 mb-3">
+                                            <label class="form-label" for="month_installment_value-input">
+                                                قيمة القسط الشهرى</label>
+                                            <input readonly type="text" name="month_installment_value"
+                                                oninput="this.value=this.value.replace(/[^0-9.]/g,'');"
+                                                class="form-control @error('month_installment_value') is-invalid @enderror"
+                                                value="{{ old('month_installment_value') }}"
+                                                id="month_installment_value-input">
+                                            @error('month_installment_value')
+                                                <span class="invalid-feedback text-right" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
 
-                                    <!-- قيمة السلفه مستديمة -->
-                                    <div class="col-md-3 mb-3">
-                                        <label class="form-label" for="total-input">
-                                            أجمالى قيمة السلفه مستديمة</label>
-                                        <input type="text" name="total"
-                                            oninput="this.value=this.value.replace(/[^0-9.]/g,'');"
-                                            class="form-control @error('total') is-invalid @enderror"
-                                            value="{{ old('total') }}" id="total-input">
-                                        @error('total')
-                                            <span class="invalid-feedback text-right" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
+                                        <!-- يبدأ سداد أول قسط فى تاريخ -->
+                                        <div class="form-group mb-3 col-md-3">
+                                            <label for="year_month_start_date" class="form-label">يبدأ سداد أول قسط فى تاريخ
+                                            </label>
+                                            <div class="input-group">
+                                                <span class="input-group-text bg-primary"
+                                                    style="background-color: #2C6391 !important; border-color: #2C6391;">
+                                                    <i class="far fa-calendar-alt text-white"></i>
+                                                </span>
+                                                <input type="text"
+                                                    class="form-control date-input date-picker @error('year_month_start_date') is-invalid @enderror"
+                                                    name="year_month_start_date" id="year_month_start_date-input"
+                                                    placeholder="يوم / شهر / سنة"
+                                                    value="{{ old('year_month_start_date') }}">
+                                                <button type="button" class="btn btn-outline-secondary clear-date-btn"
+                                                    data-target="#year_month_start_date-input">
+                                                    <i class="fas fa-times"></i>
+                                                </button>
+                                            </div>
+                                            @error('year_month_start_date')
+                                                <span class="invalid-feedback text-right" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
                                     </div>
+
+
                                 </div>
                                 <div class="row">
                                     <!--  ملاحظات -->
@@ -149,6 +220,11 @@
 @endsection
 @push('js')
     <script src="{{ asset('dashboard') }}/assets/dist/js/select2.min.js"></script>
+    <!-- مكتبة Flatpickr JS -->
+    <script src="{{ asset('dashboard') }}/assets/dist/js/flatpickr.js"></script>
+    <!-- ملف اللغة العربية -->
+    <script src="{{ asset('dashboard') }}/assets/dist/js/ar.js"></script>
+    <script src="{{ asset('dashboard') }}/assets/dist/js/flatpicker-scripts.js"></script>
     <script>
         $(document).ready(function() {
             $('.select2').select2();
@@ -193,7 +269,7 @@
                                 $('input[name="day_price"]').val(dayPrice);
                                 $('input[name="employee_code"]').val(response.employee_code);
                                 $('input[name="employee_salary"]').val(response
-                                .employee_salary);
+                                    .employee_salary);
                             } else {
                                 $('input[name="day_price"]').val('');
                                 $('input[name="employee_salary"]').val('');
@@ -220,6 +296,26 @@
                 let total = days * dayPrice;
                 $('input[name="total"]').val(total.toFixed(2));
             });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            // حساب القسط الشهري عند تغيير قيمة السلفة أو عدد الشهور
+            $('input[name="total"], input[name="month_number_installment"]').on('input', function() {
+                calculateMonthlyInstallment();
+            });
+
+            function calculateMonthlyInstallment() {
+                let totalLoan = parseFloat($('input[name="total"]').val()) || 0;
+                let months = parseFloat($('input[name="month_number_installment"]').val()) || 0;
+
+                if (totalLoan > 0 && months > 0) {
+                    let monthlyInstallment = totalLoan / months;
+                    $('input[name="month_installment_value"]').val(monthlyInstallment.toFixed(2));
+                } else {
+                    $('input[name="month_installment_value"]').val('');
+                }
+            }
         });
     </script>
 @endpush

@@ -59,7 +59,7 @@
                                             data-allow-clear="true">
                                             @if (old('main_salary_employee_id'))
                                                 <option value="{{ old('main_salary_employee_id') }}" selected>
-                                                    {{ MainSalaryEmployee::find(old('main_salary_employee_id'))?->name }}
+                                                    {{ MainSalaryEmployee::find(old('main_salary_employee_id'))?->employee_name }}
                                                 </option>
                                             @endif
                                         </select>
