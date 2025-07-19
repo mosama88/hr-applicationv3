@@ -11,6 +11,7 @@ use App\Http\Controllers\Dashboard\Settings\JobCategoryController;
 use App\Http\Controllers\Dashboard\Settings\NationalityController;
 use App\Http\Controllers\Dashboard\Settings\QualificationController;
 use App\Http\Controllers\Dashboard\Salaries\SalarySanctionsController;
+use App\Http\Controllers\Dashboard\Salaries\EmployeeSalaryPermanentLoanController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -33,3 +34,4 @@ Route::get('employees/searchEmployee', [SalarySanctionsController::class, 'searc
 
 
 Route::get('/get-day-price/{id}', [SalarySanctionsController::class, 'getDayPrice'])->name('get.day.price');
+Route::get('/get-day-price/permanent_loan/{id}', [EmployeeSalaryPermanentLoanController::class, 'getDayPrice'])->name('dashboard.permanent_loan.get.day.price');

@@ -4,7 +4,7 @@
 @endphp
 @extends('dashboard.layouts.master')
 @section('active-permanent_loan', 'active')
-@section('title', 'انشاء سلفه للموظف')
+@section('title', 'انشاء سلفه مستديمة للموظف')
 @push('css')
     <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/dist/css/select2.min.css" />
     <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/dist/css/select2-style.css" />
@@ -14,11 +14,10 @@
     @include('dashboard.layouts.message')
     <!-- Content Header (Page header) -->
     @include('dashboard.layouts.breadcrumbs', [
-        'titlePage' => 'انشاء سلفه للموظف ',
+        'titlePage' => 'انشاء سلفه مستديمة للموظف ',
         'previousPage' => 'جدول السلف المستديمة',
-        'currentPage' => 'انشاء سلفه للموظف ',
-        'url' => 'permanent_loan.show',
-        'url2' => $financeClnPeriod->slug,
+        'currentPage' => 'انشاء سلفه مستديمة للموظف ',
+        'url' => 'permanent_loan.index',
     ])
 
     <section class="content">
@@ -32,24 +31,11 @@
                         <!--end::Header-->
                         <!--begin::Form-->
 
-                        <form action="{{ route('dashboard.permanent_loan.store', $financeClnPeriod->id) }}" method="POST"
-                            id="storeForm">
+                        <form action="{{ route('dashboard.permanent_loan.store') }}" method="POST" id="storeForm">
                             @csrf
                             <div class="card-body">
                                 <div class="row">
-                                    <!-- الشهر المالى -->
-                                    <div class="form-group mb-3 col-md-3" style="display: none">
-                                        <label for="exampleInputname">الشهر المالى</label>
-                                        <input readonly type="text" name="finance_cln_period_id"
-                                            class="form-control bg-white @error('finance_cln_period_id') is-invalid @enderror"
-                                            value="{{ old('finance_cln_period_id', $financeClnPeriod->year_and_month) }}"
-                                            id="exampleInputname">
-                                        @error('finance_cln_period_id')
-                                            <span class="invalid-feedback text-right" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
+
                                     <!--  أسم الموظف  -->
                                     <div class="col-md-4 mb-3">
                                         <label class="form-label" for="main_salary_employee_id-input">
@@ -84,6 +70,20 @@
                                         @enderror
                                     </div>
 
+                                    <!--  مرتب الموظف -->
+                                    <div class="col-md-2 mb-3">
+                                        <label class="form-label" for="employee_salary-input">
+                                            مرتب الموظف</label>
+                                        <input readonly type="text" name="employee_salary"
+                                            class="form-control bg-white @error('employee_salary') is-invalid @enderror"
+                                            value="{{ old('employee_salary') }}" id="employee_salary-input">
+                                        @error('employee_salary')
+                                            <span class="invalid-feedback text-right" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+
                                     <!--  كود الوظف -->
                                     <div class="col-md-2 mb-3" style="display: none">
                                         <label class="form-label" for="employee_code-input">
@@ -98,12 +98,14 @@
                                         @enderror
                                     </div>
 
-                                    <!-- قيمة السلف -->
+
+                                    <!-- قيمة السلفه مستديمة -->
                                     <div class="col-md-3 mb-3">
                                         <label class="form-label" for="total-input">
-                                            أجمالى قيمة السلفة</label>
+                                            أجمالى قيمة السلفه مستديمة</label>
                                         <input type="text" name="total"
-                                            class="form-control bg-white @error('total') is-invalid @enderror"
+                                            oninput="this.value=this.value.replace(/[^0-9.]/g,'');"
+                                            class="form-control @error('total') is-invalid @enderror"
                                             value="{{ old('total') }}" id="total-input">
                                         @error('total')
                                             <span class="invalid-feedback text-right" role="alert">
@@ -113,8 +115,6 @@
                                     </div>
                                 </div>
                                 <div class="row">
-
-
                                     <!--  ملاحظات -->
                                     <div class="col-md-8 mb-3">
                                         <label class="form-label" for="notes-input">
@@ -151,6 +151,9 @@
     <script src="{{ asset('dashboard') }}/assets/dist/js/select2.min.js"></script>
     <script>
         $(document).ready(function() {
+            $('.select2').select2();
+        });
+        $(document).ready(function() {
             // job_category_select2
             $('.employee_select2').select2({
                 placeholder: '-- أختر الموظف --',
@@ -175,64 +178,48 @@
             });
         });
     </script>
+
     <script>
         $(document).ready(function() {
             $('#main_salary_employee_id-input').on('change', function() {
                 var employeeId = $(this).val();
                 if (employeeId) {
                     $.ajax({
-                        url: '/api/get-day-price/' + employeeId,
+                        url: '/api/get-day-price/permanent_loan/' + employeeId,
                         method: 'GET',
                         success: function(response) {
                             if (response.status) {
                                 let dayPrice = Math.round(response.day_price);
                                 $('input[name="day_price"]').val(dayPrice);
-                                $('input[name="employee_code"]').val(response
-                                    .employee_code); // التصحيح هنا
+                                $('input[name="employee_code"]').val(response.employee_code);
+                                $('input[name="employee_salary"]').val(response
+                                .employee_salary);
                             } else {
                                 $('input[name="day_price"]').val('');
+                                $('input[name="employee_salary"]').val('');
                                 $('input[name="employee_code"]').val('');
                             }
                         },
                         error: function() {
                             $('input[name="day_price"]').val('');
                             $('input[name="employee_code"]').val('');
+                            $('input[name="employee_salary"]').val('');
                         }
                     });
                 } else {
                     $('input[name="day_price"]').val('');
+                    $('input[name="employee_salary"]').val('');
                     $('input[name="employee_code"]').val('');
                 }
             });
 
-            // حساب القيمة الإجمالية للسلفه عند تغيير عدد الأيام
+            // حساب القيمة الإجمالية للسلفه مستديمة عند تغيير عدد الأيام
             $('input[name="value"]').on('input', function() {
                 let days = parseFloat($(this).val()) || 0;
                 let dayPrice = parseFloat($('input[name="day_price"]').val()) || 0;
                 let total = days * dayPrice;
                 $('input[name="total"]').val(total.toFixed(2));
             });
-        });
-    </script>
-
-    <script>
-        $(document).ready(function() {
-            // عند تغيير عدد أيام السلف
-            $('#value-input').on('input', function() {
-                calculateTotal();
-            });
-
-            // لو تغير أجر اليوم أيضًا من أي عملية (مثلاً تغيير الموظف)
-            $('#day_price-input').on('input', function() {
-                calculateTotal();
-            });
-
-            function calculateTotal() {
-                var days = parseInt($('#value-input').val()) || 0;
-                var dayPrice = parseInt($('#day_price-input').val()) || 0;
-                var total = days * dayPrice;
-                $('#total-input').val(total);
-            }
         });
     </script>
 @endpush

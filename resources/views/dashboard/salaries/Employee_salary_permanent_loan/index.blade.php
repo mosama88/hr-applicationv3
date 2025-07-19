@@ -193,7 +193,7 @@
 
 
                                             <td>
-                                                @include('dashboard.partials.actions_salaries', [
+                                                @include('dashboard.partials.actions', [
                                                     'name' => 'permanent_loan',
                                                     'name_id' => $info->slug,
                                                 ])
