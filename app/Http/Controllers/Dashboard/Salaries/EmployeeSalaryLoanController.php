@@ -101,7 +101,7 @@ class EmployeeSalaryLoanController extends Controller
                 'created_by' => $userId,
             ]);
             EmployeeSalaryLoan::create($dataInsert);
-            return redirect()->route('dashboard.loans.show', $financeClnPeriod->slug)->with('success', 'تم أضاف السلفه بنجاح');
+            return redirect()->route('dashboard.loans.show', $financeClnPeriod->slug)->with('success', 'تم أضافة السلفه بنجاح');
         } catch (\Exception $e) {
             return redirect()
                 ->route('dashboard.loans.index')

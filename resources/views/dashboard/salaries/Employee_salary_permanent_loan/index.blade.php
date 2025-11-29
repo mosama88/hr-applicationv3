@@ -125,9 +125,9 @@
                                         <th>صورة الموظف</th>
                                         <th>كود الموظف</th>
                                         <th>أسم الموظف</th>
-                                        <th>الادارة</th>
-                                        <th>الفرع</th>
-                                        <th>أجمالى</th>
+                                        <th>قيمة السلفه</th>
+                                        <th>عدد الشهور</th>
+                                        <th>قيمة القسط</th>
                                         <th>الملاحظات</th>
                                         <th>الحالة</th>
                                         <th>العمليات</th>
@@ -178,9 +178,9 @@
 
                                             <td>{{ $info->employee_code }}</td>
                                             <td>{{ $info->mainSalaryEmployee->employee_name }}</td>
-                                            <td>{{ $info->mainSalaryEmployee->department->name }}</td>
-                                            <td>{{ $info->mainSalaryEmployee->branch->name }}</td>
                                             <td>{{ $info->total * 1 }}</td>
+                                            <td>{{ $info->month_number_installment * 1 }}</td>
+                                            <td>{{ $info->month_installment_value * 1 }}</td>
                                             <td>{{ Str::limit($info->notes, 30) }}</td>
                                             <td>
                                                 @if ($info->is_archived == IsArchivedEnum::Archived)
@@ -193,7 +193,7 @@
 
 
                                             <td>
-                                                @include('dashboard.partials.actions_salaries', [
+                                                @include('dashboard.partials.actions', [
                                                     'name' => 'permanent_loan',
                                                     'name_id' => $info->slug,
                                                 ])

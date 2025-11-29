@@ -66,7 +66,7 @@ class EmployeeSalaryPermanentLoan extends Model
 
     public function mainSalaryEmployee()
     {
-        return $this->belongsTo(MainSalaryEmployee::class, 'main_salary_employee_id');
+        return $this->belongsTo(MainSalaryEmployee::class, 'employee_code', 'employee_code');
     }
 
 
