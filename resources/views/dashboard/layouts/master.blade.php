@@ -1,65 +1,76 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en" dir="rtl">
-<!--begin::Head-->
 
 <head>
 
-   
-    <!--end::Required Plugin(AdminLTE)-->
     @include('dashboard.layouts.head')
 
 </head>
+<!--
+`body` tag options:
+
+  Apply one or more of the following classes to to the body tag
+  to get the desired effect
+
+  * sidebar-collapse
+  * sidebar-mini
+-->
 
 <body class="layout-fixed sidebar-expand-lg sidebar-mini bg-body-tertiary app-loaded sidebar-open">
-    <!--begin::App Wrapper-->
-    <div class="app-wrapper">
-
-        <!--begin::Header-->
+    <div class="wrapper">
+        <!-- Navbar -->
         @include('dashboard.layouts.navbar')
-        <!--end::Header-->
-        <!--begin::Sidebar-->
+        <!-- /.navbar -->
+
+        <!-- Main Sidebar Container -->
         @include('dashboard.layouts.sidebar')
 
-        <!--end::Sidebar-->
-        <!--begin::App Main-->
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="m-0">{{ $titlePage }}</h1>
+                        </div><!-- /.col -->
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <x-breadcrumb :breadcrumbs="generate_breadcrumbs()" />
+                            </ol>
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.content-header -->
 
+            <!-- Main content -->
+            <div class="content">
+                <div class="container-fluid">
+                    @yield('content')
+                    <!-- /.row -->
+                </div>
+                <!-- /.container-fluid -->
+            </div>
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
 
-        <main class="app-main">
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Control sidebar content goes here -->
+        </aside>
+        <!-- /.control-sidebar -->
 
-
-
-
-            @yield('content')
-            <!--end::App Main-->
-            <!--begin::Footer-->
-
-        </main>
-
-
-
-
+        <!-- Main Footer -->
         @include('dashboard.layouts.footer')
-
-
-
-        <!--end::Footer-->
     </div>
-    <!--end::App Wrapper-->
-    <!--begin::Script-->
+    <!-- ./wrapper -->
 
+    <!-- REQUIRED SCRIPTS -->
 
     @include('dashboard.layouts.scripts')
 
-
-
-    <!--end::OverlayScrollbars Configure-->
-    <!-- OPTIONAL SCRIPTS -->
-    <!-- apexcharts -->
-
-
-
-    <!--end::Script-->
 </body>
-<!--end::Body-->
 
 </html>
