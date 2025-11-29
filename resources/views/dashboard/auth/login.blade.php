@@ -6,11 +6,12 @@
 
     <form action="{{ route('login.store') }}" method="POST" id="loginForm">
         @csrf
+        
         <div class="input-group mb-1">
             <span class="input-group-text"><i class="bi bi-envelope"></i></span>
             <div class="form-floating flex-grow-1">
-                <input id="loginEmail" type="text" name="username"
-                    class="form-control  @error('username') is-invalid @enderror" placeholder="أسم المستخدم" />
+                <input type="text" name="username" class="form-control @error('username') is-invalid @enderror"
+                    placeholder="أسم المستخدم" />
                 <label for="loginEmail">أسم المستخدم</label>
             </div>
         </div>
@@ -21,8 +22,8 @@
         <div class="input-group mb-1">
             <div class="input-group-text"><span class="bi bi-lock-fill"></span></div>
             <div class="form-floating flex-grow-1">
-                <input id="loginEmail" type="password" name="password"
-                    class="form-control @error('password') is-invalid @enderror" placeholder="**************" />
+                <input type="password" name="password" class="form-control @error('password') is-invalid @enderror"
+                    placeholder="**************" />
                 <label for="loginEmail">كلمة المرور</label>
             </div>
         </div>
