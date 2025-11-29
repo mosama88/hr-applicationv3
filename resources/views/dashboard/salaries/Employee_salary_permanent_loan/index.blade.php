@@ -6,8 +6,8 @@
 @endphp
 
 @extends('dashboard.layouts.master')
-@section('active-permanent_loan', 'active')
-@section('title', 'سلفه الموظفين')
+@section('active-permanent_loans', 'active')
+@section('title', 'سلفه مستديمة للموظف')
 @push('css')
     <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/dist/css/select2.min.css" />
     <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/dist/css/select2-style.css" />
@@ -87,7 +87,7 @@
         'titlePage' => 'جدول سلفه الموظفين',
         'previousPage' => 'سجل الشهور المالية للسلفه',
         'currentPage' => 'جدول سلفه الموظفين',
-        'url' => 'permanent_loan.index',
+        'url' => 'permanent_loans.index',
     ])
 
 
@@ -105,7 +105,7 @@
 
 
                                     <!-- النص على اليمين -->
-                                    <a href="{{ route('dashboard.permanent_loan.create') }}" class="btn btn-md btn-success">
+                                    <a href="{{ route('dashboard.permanent_loans.create') }}" class="btn btn-md btn-success">
                                         <i class="fa-solid fa-square-plus mx-1"></i>أضافة جديد</a>
                                 </div>
                             </h3>
@@ -194,7 +194,7 @@
 
                                             <td>
                                                 @include('dashboard.partials.actions', [
-                                                    'name' => 'permanent_loan',
+                                                    'name' => 'permanent_loans',
                                                     'name_id' => $info->slug,
                                                 ])
                                             </td>

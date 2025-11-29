@@ -272,7 +272,7 @@
                         request()->is('dashboard/discounts*') ||
                         request()->is('dashboard/rewards*') ||
                         request()->is('dashboard/loans*') ||
-                        request()->is('dashboard/permanent_loan*') ||
+                        request()->is('dashboard/permanent_loans*') ||
                         request()->is('dashboard/employee_salary_allowances*') ||
                         request()->is('dashboard/additionals*')
                             ? 'menu-open'
@@ -284,7 +284,7 @@
                             request()->is('discounts*') ||
                             request()->is('rewards*') ||
                             request()->is('loans*') ||
-                            request()->is('permanent_loan*') ||
+                            request()->is('permanent_loans*') ||
                             request()->is('employee_salary_allowances*') ||
                             request()->is('additionals*')
                                 ? 'active'
@@ -353,8 +353,8 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('dashboard.permanent_loan.index') }}"
-                                    class="nav-link @yield('active-permanent_loan')">
+                                <a href="{{ route('dashboard.permanent_loans.index') }}"
+                                    class="nav-link @yield('active-permanent_loans')">
                                     <i class="nav-icon bi bi-circle"></i>
                                     <p>السلف المستديمة</p>
                                 </a>

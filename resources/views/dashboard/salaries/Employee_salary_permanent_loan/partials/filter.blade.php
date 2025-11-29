@@ -10,7 +10,7 @@
 <x-filter-component :otherInput="'total_loan'">
     <div class="mb-3 d-flex gap-2 mt-2">
 
-        <form action="{{ route('dashboard.permanent_loan.export') }}" method="GET">
+        <form action="{{ route('dashboard.permanent_loans.export') }}" method="GET">
             @csrf
             <button type="submit" class="btn" style="background-color: #273F4F; color: #fff;"> <i
                     class="fas fa-arrow-alt-circle-down ml-2"></i> تحميل اكسيل شيت</button>
@@ -30,7 +30,7 @@
             'columns' => 'الأسم وكود الموظف والأجمالى والملاحظات',
         ])
 
-        <form id="printForm" action="{{ route('dashboard.permanent_loan.print') }}" method="POST" target="_blank">
+        <form id="printForm" action="{{ route('dashboard.permanent_loans.print') }}" method="POST" target="_blank">
             @csrf
             <input type="hidden" name="employee_code_search" value="{{ request('employee_code_search') }}">
             <input type="hidden" name="name" value="{{ request('name') }}">
@@ -45,7 +45,7 @@
 
     </div>
 
-    <form action="{{ route('dashboard.permanent_loan.index') }}" method="GET">
+    <form action="{{ route('dashboard.permanent_loans.index') }}" method="GET">
         <div class="row">
 
             <!-- كود الموظف -->

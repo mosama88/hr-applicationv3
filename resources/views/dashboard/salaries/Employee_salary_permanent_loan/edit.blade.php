@@ -3,8 +3,8 @@
     use App\Models\MainSalaryEmployee;
 @endphp
 @extends('dashboard.layouts.master')
-@section('active-permanent_loan', 'active')
-@section('title', 'تعديل سلفة الموظف')
+@section('active-permanent_loans', 'active')
+@section('title', 'تعديل سلفه مستديمة للموظف')
 @push('css')
     <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/dist/css/select2.min.css" />
     <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/dist/css/select2-style.css" />
@@ -28,8 +28,8 @@
                     <div class="card card-info card-outline mb-4">
                         <!--begin::Header-->
 
-                        <form action="{{ route('dashboard.permanent_loan.update', $employeeSalaryLoan->slug) }}" method="POST"
-                            id="storeForm">
+                        <form action="{{ route('dashboard.permanent_loans.update', $employeeSalaryPermanentLoan->slug) }}"
+                            method="POST" id="storeForm">
                             @csrf
                             @method('PATCH')
                             <div class="card-body">
@@ -39,7 +39,7 @@
                                         <label for="exampleInputname">الشهر المالى</label>
                                         <input readonly type="text" name="finance_cln_period_id"
                                             class="form-control bg-white @error('finance_cln_period_id') is-invalid @enderror"
-                                            value="{{ old('finance_cln_period_id', $employeeSalaryLoan->finance_cln_period_id) }}"
+                                            value="{{ old('finance_cln_period_id', $employeeSalaryPermanentLoan->finance_cln_period_id) }}"
                                             id="exampleInputname">
                                         @error('finance_cln_period_id')
                                             <span class="invalid-feedback text-right" role="alert">
@@ -55,9 +55,9 @@
                                             class="select2 form-select employee_select2 @error('main_salary_employee_id') is-invalid @enderror"
                                             data-allow-clear="true">
                                             <option
-                                                value="{{ old('main_salary_employee_id', $employeeSalaryLoan->main_salary_employee_id ?? '') }}"
+                                                value="{{ old('main_salary_employee_id', $employeeSalaryPermanentLoan->main_salary_employee_id ?? '') }}"
                                                 selected>
-                                                {{ MainSalaryEmployee::find(old('main_salary_employee_id', $employeeSalaryLoan->main_salary_employee_id))->employee_name }}
+                                                {{ MainSalaryEmployee::find(old('main_salary_employee_id', $employeeSalaryPermanentLoan->main_salary_employee_id))->employee_name }}
                                             </option>
                                         </select>
                                         @error('main_salary_employee_id')
@@ -73,7 +73,8 @@
                                             أجر اليوم الواحد</label>
                                         <input readonly type="text" name="day_price"
                                             class="form-control bg-white @error('day_price') is-invalid @enderror"
-                                            value="{{ old('day_price', $employeeSalaryLoan->day_price) * 1 }}" id="day_price-input">
+                                            value="{{ old('day_price', $employeeSalaryPermanentLoan->day_price) * 1 }}"
+                                            id="day_price-input">
                                         @error('day_price')
                                             <span class="invalid-feedback text-right" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -87,7 +88,7 @@
                                             كود الموظف</label>
                                         <input readonly type="text" name="employee_code"
                                             class="form-control bg-white @error('employee_code') is-invalid @enderror"
-                                            value="{{ old('employee_code', $employeeSalaryLoan->employee_code) }}"
+                                            value="{{ old('employee_code', $employeeSalaryPermanentLoan->employee_code) }}"
                                             id="employee_code-input">
                                         @error('employee_code')
                                             <span class="invalid-feedback text-right" role="alert">
@@ -101,9 +102,10 @@
                                     <div class="col-md-3 mb-3">
                                         <label class="form-label" for="total-input">
                                             قيمة السلفة </label>
-                                        <input  type="text" name="total"
+                                        <input type="text" name="total"
                                             class="form-control bg-white @error('total') is-invalid @enderror"
-                                            value="{{ old('total', $employeeSalaryLoan->total) * 1 }}" id="total-input">
+                                            value="{{ old('total', $employeeSalaryPermanentLoan->total) * 1 }}"
+                                            id="total-input">
                                         @error('total')
                                             <span class="invalid-feedback text-right" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -118,7 +120,8 @@
                                             ملاحظات</label>
                                         <input type="text" name="notes"
                                             class="form-control bg-white @error('notes') is-invalid @enderror"
-                                            value="{{ old('notes', $employeeSalaryLoan->notes) }}" id="notes-input">
+                                            value="{{ old('notes', $employeeSalaryPermanentLoan->notes) }}"
+                                            id="notes-input">
                                         @error('notes')
                                             <span class="invalid-feedback text-right" role="alert">
                                                 <strong>{{ $message }}</strong>

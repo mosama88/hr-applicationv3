@@ -3,7 +3,7 @@
     use App\Models\MainSalaryEmployee;
 @endphp
 @extends('dashboard.layouts.master')
-@section('active-permanent_loan', 'active')
+@section('active-permanent_loans', 'active')
 @section('title', 'انشاء سلفه مستديمة للموظف')
 @push('css')
     <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/dist/css/select2.min.css" />
@@ -23,7 +23,7 @@
         'titlePage' => 'انشاء سلفه مستديمة للموظف ',
         'previousPage' => 'جدول السلف المستديمة',
         'currentPage' => 'انشاء سلفه مستديمة للموظف ',
-        'url' => 'permanent_loan.index',
+        'url' => 'permanent_loans.index',
     ])
 
     <section class="content">
@@ -43,13 +43,13 @@
                         <!--end::Header-->
                         <!--begin::Form-->
 
-                        <form action="{{ route('dashboard.permanent_loan.store') }}" method="POST" id="storeForm">
+                        <form action="{{ route('dashboard.dashboard.permanent_loan.index.store') }}" method="POST" id="storeForm">
                             @csrf
                             <div class="card-body">
                                 <div class="row">
 
                                     <!--  أسم الموظف  -->
-                                    <div class="col-md-4 mb-3">
+                                    <div class="col-md-6 mb-3">
                                         <label class="form-label" for="main_salary_employee_id-input">
                                             أسم الموظف</label>
                                         <select name="main_salary_employee_id" id="main_salary_employee_id-input"
@@ -69,7 +69,7 @@
                                     </div>
 
                                     <!--  أجر اليوم الواحد -->
-                                    <div class="col-md-2 mb-3">
+                                    <div class="col-md-3 mb-3">
                                         <label class="form-label" for="day_price-input">
                                             أجر اليوم الواحد</label>
                                         <input readonly type="text" name="day_price"
@@ -83,7 +83,7 @@
                                     </div>
 
                                     <!--  مرتب الموظف -->
-                                    <div class="col-md-2 mb-3">
+                                    <div class="col-md-3 mb-3">
                                         <label class="form-label" for="employee_salary-input">
                                             مرتب الموظف</label>
                                         <input readonly type="text" name="employee_salary"
@@ -112,7 +112,7 @@
 
                                     <div class="row">
                                         <!-- قيمة السلفه مستديمة -->
-                                        <div class="col-md-3 mb-3">
+                                        <div class="col-md-6 mb-3">
                                             <label class="form-label" for="total-input">
                                                 أجمالى قيمة السلفه المستديمة</label>
                                             <input type="text" name="total"
@@ -157,7 +157,7 @@
                                         </div>
 
                                         <!-- يبدأ سداد أول قسط فى تاريخ -->
-                                        <div class="form-group mb-3 col-md-3">
+                                        <div class="form-group mb-3 col-md-6">
                                             <label for="year_month_start_date" class="form-label">يبدأ سداد أول قسط فى تاريخ
                                             </label>
                                             <div class="input-group">
@@ -261,7 +261,7 @@
                 var employeeId = $(this).val();
                 if (employeeId) {
                     $.ajax({
-                        url: '/api/get-day-price/permanent_loan/' + employeeId,
+                        url: '/api/get-day-price/permanent_loans/' + employeeId,
                         method: 'GET',
                         success: function(response) {
                             if (response.status) {

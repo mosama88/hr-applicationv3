@@ -64,10 +64,10 @@ class EmployeeSalaryPermanentLoanController extends Controller
                 'created_by' => $userId,
             ]);
             EmployeeSalaryPermanentLoan::create($dataInsert);
-            return redirect()->route('dashboard.permanent_loan.index')->with('success', 'تم أضافة السلفه بنجاح');
+            return redirect()->route('dashboard.permanent_loans.index')->with('success', 'تم أضافة السلفه بنجاح');
         } catch (\Exception $e) {
             return redirect()
-                ->route('dashboard.permanent_loan.index')
+                ->route('dashboard.permanent_loans.index')
                 ->withErrors(['error' => $e->getMessage()]);
         }
     }
@@ -75,17 +75,17 @@ class EmployeeSalaryPermanentLoanController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(EmployeeSalaryPermanentLoan $employeeSalaryPermanentLoan)
     {
-        //
+        return view('dashboard.salaries.Employee_salary_permanent_loan.show', compact('employeeSalaryPermanentLoan'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(EmployeeSalaryPermanentLoan $employeeSalaryPermanentLoan)
     {
-        //
+        return view('dashboard.salaries.Employee_salary_permanent_loan.edit', compact('employeeSalaryPermanentLoan'));
     }
 
     /**

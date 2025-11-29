@@ -234,10 +234,10 @@ Route::middleware(['auth:admin'])->group(function () {
     //################################### السلف المستديمة ##################################
 
 
-    Route::get('permanent_loan/export', [EmployeeSalaryPermanentLoanController::class, 'export'])->name('permanent_loan.export');
-    Route::post('permanent_loan/import', [EmployeeSalaryPermanentLoanController::class, 'import'])->name('permanent_loan.import');
-    Route::post('permanent_loan/print', [EmployeeSalaryPermanentLoanController::class, 'print'])->name('permanent_loan.print');
-    Route::resource('permanent_loan', EmployeeSalaryPermanentLoanController::class);
+    Route::get('permanent_loans/export', [EmployeeSalaryPermanentLoanController::class, 'export'])->name('permanent_loans.export');
+    Route::post('permanent_loans/import', [EmployeeSalaryPermanentLoanController::class, 'import'])->name('permanent_loans.import');
+    Route::post('permanent_loans/print', [EmployeeSalaryPermanentLoanController::class, 'print'])->name('permanent_loans.print');
+    Route::resource('permanent_loans', EmployeeSalaryPermanentLoanController::class);
 
 
     //################################### الأنتهاء من الاجور والمرتبات  ##################################
