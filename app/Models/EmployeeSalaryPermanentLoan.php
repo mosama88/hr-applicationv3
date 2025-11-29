@@ -80,6 +80,7 @@ class EmployeeSalaryPermanentLoan extends Model
         return $this->belongsTo(Department::class);
     }
 
+    
     public function financeClnPeriod()
     {
         return $this->belongsTo(FinanceClnPeriod::class, 'finance_cln_period_id');
